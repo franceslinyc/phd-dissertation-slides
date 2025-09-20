@@ -1,7 +1,9 @@
 ---
 format:
   revealjs:
-    logo: osu.png
+    height: 900
+    width: 1600
+    logo: "images/osu.png"
     slide-number: true
     scrollable: true
 ---
@@ -16,7 +18,7 @@ Oregon State University
 
 November 5, 2025
 
-## Motivation {.smaller}
+## Motivation  
 
 Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation. 
 
@@ -30,7 +32,63 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 - Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
 
-## Objectives {.smaller}
+## NASA MERRA-2 Data
+
+::: {.panel-tabset}
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(gridExtra)
+```
+
+```{r}
+plot_variable_by_year <- function(data, variable, m, plot) {
+  p_ts <- data %>%
+    ggplot(aes(x = Date, y = .data[[variable]])) + 
+    geom_line() + 
+    theme_minimal(base_size = 16) +
+    labs(x = "time", y = paste0("windspeedat",m,"mms")) + 
+    #ylim(0, 22) +  # Adjust ylim a bit
+    theme(
+      axis.title.x = element_text(size = 18), 
+      axis.title.y = element_text(size = 18), 
+      axis.text.x = element_text(size = 18), 
+      axis.text.y = element_text(size = 18), 
+      plot.caption = element_text(size = 18, hjust = 0) 
+    ) 
+  return(p_ts)
+}
+```
+
+```{r}
+data_dir <- "/Users/franceslin/Documents/Summer2024/data-example/merra2_wind_code_scripts_v2"
+data <- readRDS(file.path(data_dir, "MWH.rds"))
+data$Date <- data$MD %>% as_datetime()
+data$Year <- year(data$Date)
+```
+
+### windspeeds at 50m above ground
+
+```{r}
+plot_variable_by_year(data, "WHuv50", "50")
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+plot_variable_by_year(data, "WHuv10", "10")
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+plot_variable_by_year(data, "WHuv2", "2")
+```
+
+::: 
+
+## Objectives 
 
 Part I and II
 
@@ -42,15 +100,15 @@ Part III
 
 > Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness. 
 
-## Roadmap {.smaller}
+## Roadmap 
 
 Part I Models for Forecasting Skewed Time Series 
 
 - Recap of Previous Work
 
-- Sensitivity Analysis (Skip)
+- Sensitivity Analysis 
 
-- Coverage Assessment (Skip)
+- Coverage Assessment 
 
 Part II Models for Forecasting Zero-Inflated Skewed Time Series
 
@@ -64,7 +122,7 @@ Part II Models for Forecasting Zero-Inflated Skewed Time Series
 
 - Prediction
 
-## Roadmap {.smaller}
+## Roadmap 
 
 Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
 
@@ -80,7 +138,7 @@ Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
 
 # Part I Models for Forecasting Skewed Time Series {background-color="#D73F09" color="white"} 
 
-## Introduction {.smaller}
+## Introduction 
 
 Time series model captures how past values contribute to current value and uses this information to predict future value.
 
@@ -92,7 +150,7 @@ The mixture transition distribution (MTD) models
 
 - Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.
 
-## Introduction and Objectives {.smaller}
+## Introduction and Objectives 
 
 Our work builds upon the architecture of the MTD model introduced by Zheng et al. (2022). 
 
@@ -108,7 +166,7 @@ However, for certain invariant marginal distributions, the transition kernel may
 
 ## Background 
 
-## Model Framework: DAG; also known as Bayesian network {.smaller}
+## Model Framework: DAG; also known as Bayesian network 
 
 Let $\{ X_t: t \in \mathbb{N} \}$ be a time series. Construct the model on a DAG, the joint distribution of $X_1$ to $X_t$ can be factorized into a product of conditional distributions as
 ```{=latex}
@@ -123,7 +181,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
 
-## Model Framework: Transition kernels & mixture weights {.smaller}
+## Model Framework: Transition kernels & mixture weights 
 
 For $t > L$, the MTD model specifies the conditional distribution of $X_t$ given $\textbf{X}^{t-1} = \textbf{x}^{t-1}$ as 
 ```{=latex}
@@ -144,7 +202,7 @@ There are two components in (2):
   
   - Weight parameter, $w_l$, determines the relative contribution of that influence. 
 
-## Existing Method to Proposed Method {.smaller}
+## Existing Method to Proposed Method 
 
 Based on Proposition 1 by Zheng et al. (2022), the bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
 
@@ -159,7 +217,7 @@ $$
 \ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
 $$
 
-## Copula {.smaller}
+## Copula 
 
 Copula is widely used for dependence modeling.
 
@@ -177,7 +235,7 @@ Using copula, any joint distribution, $F$, can be decomposed into two parts: the
   
   - Consists of families of copula. 
 
-## Proposed Method {.smaller} 
+## Proposed Method  
 
 Replace $f_{U_l}$ and $f_{V_l}$ with a pre-specified stationary marginal density, $f_X$, for every $x_t$ and for all $l$. For $t > L$, the proposed copula-based MTD model specifies the conditional distribution as
 ```{=latex}
@@ -198,7 +256,7 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
   
   - Stationary marginal density, $f_X$, describes the marginal behavior through distribution parameters.
 
-## Background: Bayesian Implementation {.smaller} 
+## Background: Bayesian Implementation  
 
 Earlier MTD models were built through frequentist approaches. 
 
@@ -208,7 +266,7 @@ Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed
   
   - We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
 
-## Background: Bayesian Implementation {.smaller} 
+## Background: Bayesian Implementation  
 
 Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel or component the data belongs to. 
 
@@ -229,7 +287,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 
 With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
 
-## Simulation Studies {.smaller} 
+## Simulation Studies  
 
 We have assessed accuracy and performance of the proposed model. 
 
@@ -253,7 +311,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 7-9:Unusual case involving high skewness
 
-## What's New {.smaller} 
+## What's New  
 
 Since the Preliminary Exam, we have also conducted:
 
@@ -269,7 +327,7 @@ Most parameters achieve full coverage, indicating that the posterior intervals r
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
-## Introduction {.smaller} 
+## Introduction  
 
 Zero-inflated data are characterized by an excess of zero values and  frequently appear in domains such as healthcare, insurance, environment, and transportation. 
 
@@ -285,7 +343,7 @@ Examples include
 
 If left unaddressed, zero-inflation undermines model robustness and weakens inference.
 
-## Introduction and Objectives {.smaller}
+## Introduction and Objectives 
 
 In Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals. 
 
@@ -301,7 +359,7 @@ However,
 
 ## Background
 
-## Proposed Method {.smaller} 
+## Proposed Method  
 
 To construct zero-inflated Gamma for the marginal distribution, 
 
@@ -319,7 +377,7 @@ Specifically,
 ```
 where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values. 
 
-## Proposed Method {.smaller} 
+## Proposed Method  
 
 The resulting distribution, denoted as $ZIGamma(\mu, \beta, P, \epsilon)$, is expressed as:
 ```{=latex} 
@@ -341,15 +399,9 @@ In (5), there are two parts:
 
 - The shifted Gamma distribution, $ShiftedGamma(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
 
-## dzig {.smaller} 
+## dzig   
 
 ::: {.panel-tabset}
-
-```{r}
-#| echo: false
-library(tidyverse)
-library(gridExtra)
-```
 
 ```{r}
 #| echo: false
@@ -443,7 +495,7 @@ plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 :::
 
-## pzig {.smaller} 
+## pzig   
 
 ::: {.panel-tabset}
 
@@ -531,7 +583,7 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 :::
 
-## Simulation Setting {.smaller} 
+## Simulation Setting   
 
 Simulated data: 
 
@@ -547,7 +599,7 @@ MCMC setting:
 
 - Run four MCMC chains with $8000$ iterations each for all of the following scenarios. 
 
-## Simulation Studies {.smaller} 
+## Simulation Studies   
 
 We have assessed accuracy and performance of the proposed model.
 
@@ -565,9 +617,9 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 7-9: Unusual case involving high skewness
 
-## Simulation Studies {.smaller} 
+## Simulation Studies   
 
-In all scenarios, we vary $P$ and $\epsilon$, resulting in six cases: 
+In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases: 
 
 - $P = 0.1$, $\epsilon = 0.1$
 
@@ -581,29 +633,442 @@ In all scenarios, we vary $P$ and $\epsilon$, resulting in six cases:
 
 - $P = 0.7$, $\epsilon = 0.4$
 
-For brevity, we will only show a few examples.
+For brevity, we will focus on Scenario 1.
 
-## Simulation Results {.smaller} 
+## Simulation Results   
 
-## Prediction {.smaller} 
+```{r}
+library(coda)
+library(knitr)
+```
+
+```{r}
+data_dir <- "/Users/franceslin/Downloads/code_mtd_v17_b3/data-test-cluster-cdp"
+```
+
+```{r}
+chain1 = readRDS(file.path(data_dir, "chain1_iter8000.rds"))
+chain2 = readRDS(file.path(data_dir, "chain2_iter8000.rds"))
+chain3 = readRDS(file.path(data_dir, "chain3_iter8000.rds"))
+chain4 = readRDS(file.path(data_dir, "chain4_iter8000.rds"))
+```
+
+```{r}
+mcmc_chains <- function(chain_list, parameter, index) {
+  # Function to create and analyze mcmc chains FOR RHO ONLY
+  mcmc_list <- lapply(chain_list, function(chain) {
+    chain[[parameter]][index, ] %>% mcmc()
+  })
+  
+  mcmc_chains <- mcmc_list %>% as.mcmc.list()
+  
+  return(mcmc_chains)
+}
+```
+
+```{r}
+set.seed(42)
+mtdorder <- 5
+expDecay <- function(x, la) exp(-la*x)
+weight <- expDecay(1:mtdorder, 1)
+weight_vec <- weight / sum(weight)
+weight_vec <- weight_vec %>% round(digits = 4)
+```
+
+::: {.panel-tabset}
+
+### $w$ 
+
+```{r}
+chain_list <- list(chain1, chain2, chain3, chain4)
+Point_est <- numeric(5)
+Upper_ci <- numeric(5)
+Gelman_Rubin <- character(5)
+Mean <- numeric(5)
+SD <- numeric(5)
+Summary <- character(5)
+Naive_SE <- numeric(5)
+Time_series_SE <- numeric(5)
+
+for (weight in 1:5) {
+  result <- mcmc_chains(chain_list, "weight", weight)
+  diag_result <- result %>% gelman.diag()
+  
+  # Extract the psrf matrix
+  psrf_matrix <- diag_result$psrf
+  
+  # Store point estimates and upper CI 
+  Point_est[weight] <- psrf_matrix[1, "Point est."] %>% round(digits = 2)
+  Upper_ci[weight] <- psrf_matrix[1, "Upper C.I."] %>% round(digits = 2)
+  # Change format 
+  Gelman_Rubin[weight] <- paste(Point_est[weight], " (", Upper_ci[weight], ")", sep = "")
+  
+  r <- result %>% summary()
+  Mean[weight]  <- r$statistics[[1]] %>% round(digits = 4)
+  SD[weight]  <- r$statistics[[2]] %>% round(digits = 4)
+  # Change format 
+  Summary[weight] <- paste(Mean[weight], " (", SD[weight], ")", sep = "")
+  
+  Naive_SE[weight]  <- r$statistics[[3]]
+  Time_series_SE[weight]  <- r$statistics[[4]]
+}
+
+results_df_w <- tibble(
+  `.` = sprintf("$w_%d = %.3f$", 1:5, weight_vec), #= paste0("$w_", 1:5, "$"), 
+  #point_est = point_est %>% round(digits = 2),
+  #upper_ci = upper_ci %>% round(digits = 2), 
+  `Mean (SD)` = Summary, 
+  `R (Upper CI)` = Gelman_Rubin, 
+  #mean = Mean %>% round(digits = 4), 
+  #sd = SD %>% round(digits = 4), 
+
+  `Naive SE` = Naive_SE %>% round(digits = 4), 
+  `Time-series SE` = Time_series_SE %>% round(digits = 4)
+)
+results_df_w <- results_df_w |> kable(digits = 4)
+results_df_w
+```
+
+### $\rho$
+
+```{r}
+mcmc_chains <- function(chain_list, parameter, index) {
+  # Function to create and analyze mcmc chains FOR RHO ONLY
+  mcmc_list <- lapply(chain_list, function(chain) {
+    chain[[parameter]][index, ] %>% mcmc()
+  })
+  
+  mcmc_chains <- mcmc_list %>% as.mcmc.list()
+  
+  return(mcmc_chains)
+}
+```
+
+```{r}
+rho_vec = c(0.7, 0.5, 0.3, 0.1, 0.1)
+```
+
+```{r}
+chain_list <- list(chain1, chain2, chain3, chain4)
+Point_est <- numeric(5)
+Upper_ci <- numeric(5)
+Gelman_Rubin <- character(5)
+Mean <- numeric(5)
+SD <- numeric(5)
+Summary <- character(5)
+Naive_SE <- numeric(5)
+Time_series_SE <- numeric(5)
+
+for (rho in 1:5) {
+  result <- mcmc_chains(chain_list, "rho", rho)
+  diag_result <- result %>% gelman.diag()
+  
+  # Extract the psrf matrix
+  psrf_matrix <- diag_result$psrf
+  
+  # Store point estimates and upper CI 
+  Point_est[rho] <- psrf_matrix[1, "Point est."] %>% round(digits = 2)
+  Upper_ci[rho] <- psrf_matrix[1, "Upper C.I."] %>% round(digits = 2)
+  # Change format 
+  Gelman_Rubin[rho] <- paste(Point_est[rho], " (", Upper_ci[rho], ")", sep = "")
+  
+  r <- result %>% summary()
+  Mean[rho]  <- r$statistics[[1]] %>% round(digits = 4)
+  SD[rho]  <- r$statistics[[2]] %>% round(digits = 4)
+  # Change format 
+  Summary[rho] <- paste(Mean[rho], " (", SD[rho], ")", sep = "")
+  
+  Naive_SE[rho]  <- r$statistics[[3]]
+  Time_series_SE[rho]  <- r$statistics[[4]]
+}
+
+results_df_rho <- tibble(
+  `.` = sprintf("$\\rho_%d = %.3f$", 1:5, rho_vec), 
+  #point_est = point_est %>% round(digits = 2),
+  #upper_ci = upper_ci %>% round(digits = 2), 
+  `Mean (SD)` = Summary, 
+  `R (Upper CI)` = Gelman_Rubin, 
+  #mean = Mean %>% round(digits = 4), 
+  #sd = SD %>% round(digits = 4), 
+  `Naive SE` = Naive_SE %>% round(digits = 4), 
+  `Time-series SE` = Time_series_SE %>% round(digits = 4)
+)
+results_df_rho <- results_df_rho |> kable(digits = 4)
+results_df_rho
+```
+
+::: 
+
+## Simulation Results   
+
+```{r}
+make_table_mar <- function(chain1, chain2, chain3, chain4) {
+  
+  mcmc_chains <- function(chain_list, parameter) {
+    # Create and analyze mcmc chains
+    mcmc_list <- lapply(chain_list, function(chain) {
+      chain[[parameter]] %>% mcmc()
+    })
+    
+    return(mcmc_list %>% as.mcmc.list())
+  }
+  
+  conv_table <- function(parameter) {
+    chain_list <- list(chain1, chain2, chain3, chain4)
+    result <- mcmc_chains(chain_list, parameter)
+    
+    diag_result <- result %>% gelman.diag()
+    psrf_matrix <- diag_result$psrf
+    Point_est <- psrf_matrix[1, "Point est."] %>% round(digits = 2)
+    Upper_ci <- psrf_matrix[1, "Upper C.I."] %>% round(digits = 2)
+    Gelman_Rubin <- paste0(Point_est, " (", Upper_ci, ")")
+    
+    r <- result %>% summary()
+    Mean <- r$statistics[1] %>% round(digits = 4)
+    SD <- r$statistics[2] %>% round(digits = 4)
+    Summary <- paste0(Mean, " (", SD, ")")
+    Naive_SE <- r$statistics[3] %>% round(digits = 4)
+    Time_series_SE <- r$statistics[4] %>% round(digits = 4)
+    
+    # Display names based on parameter
+    param_display <- switch(
+      parameter,
+      "shape1" = "$\\mu$",
+      "shape2" = "$\\beta$",
+      "Pi" = "$P$",
+      "$\\epsilon$" # default
+    )
+    
+    results_df <- tibble(
+      `.` = param_display,
+      `Mean (SD)` = Summary, 
+      `R (Upper CI)` = Gelman_Rubin, 
+      `Naive SE` = Naive_SE, 
+      `Time-series SE` = Time_series_SE
+    )
+    
+    return(results_df)
+  }
+  
+  results_alp <- conv_table("shape1")
+  results_be <- conv_table("shape2")
+  results_Pi <- conv_table("Pi")
+  results_eps <- conv_table("eps")
+  
+  results_df_mar <- bind_rows(results_alp, results_be, results_Pi, results_eps)
+  
+  results_df_mar <- results_df_mar |> kable(digits = 4)
+
+  return(results_df_mar) 
+}
+```
+
+```{r}
+data_dir <- "/Users/franceslin/Downloads/code_mtd_v17_b3/data-test-cluster-cdp"
+```
+
+```{r}
+chain1 = readRDS(file.path(data_dir, "chain1_iter8000.rds"))
+chain2 = readRDS(file.path(data_dir, "chain2_iter8000.rds"))
+chain3 = readRDS(file.path(data_dir, "chain3_iter8000.rds"))
+chain4 = readRDS(file.path(data_dir, "chain4_iter8000.rds"))
+t1 = make_table_mar(chain1, chain2, chain3, chain4)
+chain1 = readRDS(file.path(data_dir, "chain1_iter8000_eps04.rds"))
+chain2 = readRDS(file.path(data_dir, "chain2_iter8000_eps04.rds"))
+chain3 = readRDS(file.path(data_dir, "chain3_iter8000_eps04.rds"))
+chain4 = readRDS(file.path(data_dir, "chain4_iter8000_eps04.rds"))
+t2 = make_table_mar(chain1, chain2, chain3, chain4)
+p <- "05"
+chain1 <- readRDS(file.path(data_dir, paste0("chain1_iter8000_p", p, ".rds")))
+chain2 <- readRDS(file.path(data_dir, paste0("chain2_iter8000_p", p, ".rds")))
+chain3 <- readRDS(file.path(data_dir, paste0("chain3_iter8000_p", p, ".rds")))
+chain4 <- readRDS(file.path(data_dir, paste0("chain4_iter8000_p", p, ".rds")))
+t3 = make_table_mar(chain1, chain2, chain3, chain4)
+p <- "05"
+eps <- "04"
+chain1 = readRDS(file.path(data_dir, paste0("chain1_iter8000_p", p, "_eps", eps, ".rds")))
+chain2 = readRDS(file.path(data_dir, paste0("chain2_iter8000_p", p, "_eps", eps, ".rds")))
+chain3 = readRDS(file.path(data_dir, paste0("chain3_iter8000_p", p, "_eps", eps, ".rds")))
+chain4 = readRDS(file.path(data_dir, paste0("chain4_iter8000_p", p, "_eps", eps, ".rds")))
+t4 = make_table_mar(chain1, chain2, chain3, chain4)
+p <- "07"
+chain1 <- readRDS(file.path(data_dir, paste0("chain1_iter8000_p", p, ".rds")))
+chain2 <- readRDS(file.path(data_dir, paste0("chain2_iter8000_p", p, ".rds")))
+chain3 <- readRDS(file.path(data_dir, paste0("chain3_iter8000_p", p, ".rds")))
+chain4 <- readRDS(file.path(data_dir, paste0("chain4_iter8000_p", p, ".rds")))
+t5 = make_table_mar(chain1, chain2, chain3, chain4)
+p <- "07"
+eps <- "04"
+chain1 = readRDS(file.path(data_dir, paste0("chain1_iter8000_p", p, "_eps", eps, ".rds")))
+chain2 = readRDS(file.path(data_dir, paste0("chain2_iter8000_p", p, "_eps", eps, ".rds")))
+chain3 = readRDS(file.path(data_dir, paste0("chain3_iter8000_p", p, "_eps", eps, ".rds")))
+chain4 = readRDS(file.path(data_dir, paste0("chain4_iter8000_p", p, "_eps", eps, ".rds")))
+t6 = make_table_mar(chain1, chain2, chain3, chain4)
+```
+
+::: {.panel-tabset}
+
+### $P = 0.1$ $\epsilon = 0.1$
+
+```{r}
+t1
+```
+
+### $P = 0.1$ $\epsilon = 0.4$
+
+```{r}
+t2
+```
+
+### $P = 0.5$ $\epsilon = 0.1$
+
+```{r}
+t3
+```
+
+### $P = 0.5$ $\epsilon = 0.4$
+
+```{r}
+t4
+```
+
+### $P = 0.7$ $\epsilon = 0.1$
+
+```{r}
+t5
+```
+
+### $P = 0.7$ $\epsilon = 0.4$
+
+```{r}
+t6
+```
+
+:::
+
+## Prediction   
+
+::::: columns
+
+::: column
+
+### 
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+table_combind <- readRDS(file.path(output_dir, "table_combind.rds"))
+table_combind <- table_combind |> kable(digits = 4)
+table_combind
+```
+
+::: 
+
+::: column
+
+### 
+
+- The overall coverage can obscure important differences in predictive performance.
+
+- To provide a clearer picture, we decompose the coverage into **below** and **above**. 
+
+- When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
+
+- As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** (i.e., the coverage for data less than or equal to $\epsilon$) becomes increasingly dominant. 
+
+::: 
+
+::::: 
+
+## Prediction   
+
+::: {.panel-tabset}
+
+### $P = 0.1$ $\epsilon = 0.1$
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1.rds"))
+```
+
+### $P = 0.1$ $\epsilon = 0.4$
+
+```{r}
+readRDS(file.path(output_dir, "p2.rds"))
+```
+
+### $P = 0.5$ $\epsilon = 0.1$
+
+```{r}
+readRDS(file.path(output_dir, "p3.rds"))
+```
+
+### $P = 0.5$ $\epsilon = 0.4$
+
+```{r}
+readRDS(file.path(output_dir, "p4.rds"))
+```
+
+### $P = 0.7$ $\epsilon = 0.1$
+
+```{r}
+readRDS(file.path(output_dir, "p5.rds"))
+```
+
+### $P = 0.7$ $\epsilon = 0.4$
+
+```{r}
+readRDS(file.path(output_dir, "p6.rds"))
+```
+
+::: 
 
 # Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
 
-## Introduction {.smaller} 
+## Introduction   
 
-## Introduction and Objectives {.smaller}
+Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture both short- and long-term dependencies.
 
-## Background {.smaller} 
+. . .
 
-## Network Configuration {.smaller} 
+Beyond natural language processing (NLP), RNNs and LSTMs have also shown effective in time series forecasting and have been employed for applications including
 
-## Experimental Setup {.smaller} 
+- financial market prediction, 
 
-## Simulation Studies {.smaller} 
+- energy forecasting,
 
-## Simulation Results {.smaller} 
+- weather and climate modeling, and
 
-## Data Application {.smaller} 
+- epidemiological trend analysis.
+
+## Introduction and Objectives  
+
+However, 
+
+- a prior study found comparable performance between the probabilistic MTD model and the deep learning long short-term memory (LSTM) network for predicting disease spread.
+
+- Previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
+
+. . .
+
+> **Objectives:** Systemically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness. 
+
+## Background   
+
+## Network Configuration   
+
+## Experimental Setup   
+
+## Simulation Studies   
+
+## Simulation Results   
+
+## Data Application   
 
 ## Conclusion 
 
@@ -612,3 +1077,9 @@ For brevity, we will only show a few examples.
 ## Practical Implications
 
 # Thank you!
+
+## Acknowledgement
+
+## References 
+
+# Supplement

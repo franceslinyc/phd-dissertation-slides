@@ -7,6 +7,13 @@
     "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\nReal-world time series often show skewness and zero inflation, which can hinder prediction if ignored.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear dependence and long-range correlation.\n\nPrior work found comparable predictive performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for disease spread.\nClaims of LSTM superiority can be misleading when compared to inappropriate benchmarks."
   },
   {
+    "objectID": "index.html#nasa-merra-2-data",
+    "href": "index.html#nasa-merra-2-data",
+    "title": "",
+    "section": "NASA MERRA-2 Data",
+    "text": "NASA MERRA-2 Data\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+  },
+  {
     "objectID": "index.html#objectives",
     "href": "index.html#objectives",
     "title": "",
@@ -18,7 +25,7 @@
     "href": "index.html#roadmap",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of Previous Work\nSensitivity Analysis (Skip)\nCoverage Assessment (Skip)\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nBackground\nProposed Method\nSimulation Studies\nPrediction"
+    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of Previous Work\nSensitivity Analysis\nCoverage Assessment\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nBackground\nProposed Method\nSimulation Studies\nPrediction"
   },
   {
     "objectID": "index.html#roadmap-1",
@@ -179,35 +186,49 @@
     "href": "index.html#simulation-studies-2",
     "title": "",
     "section": "Simulation Studies",
-    "text": "Simulation Studies\nIn all scenarios, we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we will only show a few examples."
+    "text": "Simulation Studies\nIn all nine scenarios, we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we will focus on Scenario 1."
   },
   {
     "objectID": "index.html#simulation-results",
     "href": "index.html#simulation-results",
     "title": "",
     "section": "Simulation Results",
-    "text": "Simulation Results"
+    "text": "Simulation Results\n\n\\(w\\)\\(\\rho\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(w_1 = 0.636\\)\n0.6395 (0.0425)\n1 (1)\n2e-04\n0.0003\n\n\n\\(w_2 = 0.234\\)\n0.1905 (0.0636)\n1.01 (1.01)\n4e-04\n0.0013\n\n\n\\(w_3 = 0.086\\)\n0.1315 (0.0739)\n1 (1)\n4e-04\n0.0021\n\n\n\\(w_4 = 0.032\\)\n0.0346 (0.0529)\n1.01 (1.03)\n3e-04\n0.0017\n\n\n\\(w_5 = 0.012\\)\n0.0039 (0.0171)\n1 (1)\n1e-04\n0.0004\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\rho_1 = 0.700\\)\n0.6847 (0.0274)\n1 (1)\n0.0002\n0.0002\n\n\n\\(\\rho_2 = 0.500\\)\n0.606 (0.1426)\n1.01 (1.01)\n0.0008\n0.0027\n\n\n\\(\\rho_3 = 0.300\\)\n0.1168 (0.2389)\n1 (1)\n0.0013\n0.0018\n\n\n\\(\\rho_4 = 0.100\\)\n0.0147 (0.4675)\n1 (1)\n0.0026\n0.0027\n\n\n\\(\\rho_5 = 0.100\\)\n-0.0046 (0.5659)\n1 (1)\n0.0032\n0.0032"
+  },
+  {
+    "objectID": "index.html#simulation-results-1",
+    "href": "index.html#simulation-results-1",
+    "title": "",
+    "section": "Simulation Results",
+    "text": "Simulation Results\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"
   },
   {
     "objectID": "index.html#prediction",
     "href": "index.html#prediction",
     "title": "",
     "section": "Prediction",
-    "text": "Prediction"
+    "text": "Prediction\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9544\n0.7014\n0.9741\n\n\nP01Eps04\n0.9138\n0.3927\n0.9780\n\n\nP05Eps01\n0.9268\n0.9886\n0.8584\n\n\nP05Eps04\n0.9489\n0.9671\n0.9305\n\n\nP07Eps01\n0.8662\n0.9928\n0.5710\n\n\nP07Eps04\n0.9293\n0.9881\n0.7828\n\n\n\n\n\n\n\n\nThe overall coverage can obscure important differences in predictive performance.\nTo provide a clearer picture, we decompose the coverage into below and above.\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant."
+  },
+  {
+    "objectID": "index.html#prediction-1",
+    "href": "index.html#prediction-1",
+    "title": "",
+    "section": "Prediction",
+    "text": "Prediction\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
   },
   {
     "objectID": "index.html#introduction-2",
     "href": "index.html#introduction-2",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction"
+    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture both short- and long-term dependencies.\n\nBeyond natural language processing (NLP), RNNs and LSTMs have also shown effective in time series forecasting and have been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
   },
   {
     "objectID": "index.html#introduction-and-objectives-2",
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives"
+    "text": "Introduction and Objectives\nHowever,\n\na prior study found comparable performance between the probabilistic MTD model and the deep learning long short-term memory (LSTM) network for predicting disease spread.\nPrevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\n\n\n\nObjectives: Systemically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness."
   },
   {
     "objectID": "index.html#background-2",
@@ -238,8 +259,8 @@
     "text": "Simulation Studies"
   },
   {
-    "objectID": "index.html#simulation-results-1",
-    "href": "index.html#simulation-results-1",
+    "objectID": "index.html#simulation-results-2",
+    "href": "index.html#simulation-results-2",
     "title": "",
     "section": "Simulation Results",
     "text": "Simulation Results"
@@ -271,5 +292,19 @@
     "title": "",
     "section": "Practical Implications",
     "text": "Practical Implications"
+  },
+  {
+    "objectID": "index.html#acknowledgement",
+    "href": "index.html#acknowledgement",
+    "title": "",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement"
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "",
+    "section": "References",
+    "text": "References"
   }
 ]

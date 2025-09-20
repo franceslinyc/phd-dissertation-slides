@@ -334,7 +334,7 @@
 <p>Oregon State University</p>
 <p>November 5, 2025</p>
 </section>
-<section id="motivation" class="slide level2 smaller">
+<section id="motivation" class="slide level2">
 <h2>Motivation</h2>
 <p>Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.</p>
 <ul>
@@ -348,280 +348,10 @@
 </ul>
 </div>
 </section>
-<section id="objectives" class="slide level2 smaller">
-<h2>Objectives</h2>
-<p>Part I and II</p>
-<blockquote>
-<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns.</p>
-</blockquote>
-<div class="fragment">
-<p>Part III</p>
-<blockquote>
-<p>Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness.</p>
-</blockquote>
-</div>
-</section>
-<section id="roadmap" class="slide level2 smaller">
-<h2>Roadmap</h2>
-<p>Part I Models for Forecasting Skewed Time Series</p>
-<ul>
-<li><p>Recap of Previous Work</p></li>
-<li><p>Sensitivity Analysis (Skip)</p></li>
-<li><p>Coverage Assessment (Skip)</p></li>
-</ul>
-<p>Part II Models for Forecasting Zero-Inflated Skewed Time Series</p>
-<ul>
-<li><p>Introduction</p></li>
-<li><p>Background</p></li>
-<li><p>Proposed Method</p></li>
-<li><p>Simulation Studies</p></li>
-<li><p>Prediction</p></li>
-</ul>
-</section>
-<section id="roadmap-1" class="slide level2 smaller">
-<h2>Roadmap</h2>
-<p>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
-<ul>
-<li><p>Introduction</p></li>
-<li><p>Background</p></li>
-<li><p>Hyperparameter Tuning, Training, and Metrics</p></li>
-<li><p>Simulation Studies</p></li>
-<li><p>Data Application</p></li>
-</ul>
-</section>
-<section>
-<section id="part-i-models-for-forecasting-skewed-time-series" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
-<h1>Part I Models for Forecasting Skewed Time Series</h1>
-
-</section>
-<section id="introduction" class="slide level2 smaller">
-<h2>Introduction</h2>
-<p>Time series model captures how past values contribute to current value and uses this information to predict future value.</p>
-<div class="fragment">
-<p>The mixture transition distribution (MTD) models</p>
-<ul>
-<li><p>Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.</p></li>
-<li><p>Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.</p></li>
-</ul>
-</div>
-</section>
-<section id="introduction-and-objectives" class="slide level2 smaller">
-<h2>Introduction and Objectives</h2>
-<p>Our work builds upon the architecture of the MTD model introduced by Zheng et al.&nbsp;(2022).</p>
-<ul>
-<li>Includes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.</li>
-</ul>
-<div class="fragment">
-<p>However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.</p>
-</div>
-<div class="fragment">
-<blockquote>
-<p><strong>Objectives:</strong> Propose to incorporate copulas into the transition kernels to address this limitation.</p>
-</blockquote>
-</div>
-</section>
-<section id="background" class="slide level2">
-<h2>Background</h2>
-</section>
-<section id="model-framework-dag-also-known-as-bayesian-network" class="slide level2 smaller">
-<h2>Model Framework: DAG; also known as Bayesian network</h2>
-<p>Let <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span> be a time series. Construct the model on a DAG, the joint distribution of <span class="math inline">\(X_1\)</span> to <span class="math inline">\(X_t\)</span> can be factorized into a product of conditional distributions as</p>
-<span class="math display">\[\begin{equation}
-f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
-\label{eq:joint_distribution}
-\end{equation}\]</span>
-<p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
-<div class="fragment">
-<p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
-</div>
-</section>
-<section id="model-framework-transition-kernels-mixture-weights" class="slide level2 smaller">
-<h2>Model Framework: Transition kernels &amp; mixture weights</h2>
-<p>For <span class="math inline">\(t &gt; L\)</span>, the MTD model specifies the conditional distribution of <span class="math inline">\(X_t\)</span> given <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span> as</p>
-<span class="math display">\[\begin{equation}
-f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
-\label{eq:cond_distribution}
-\end{equation}\]</span>
-<p><span class="math inline">\(f_l (x_t | x_{t-l})\)</span> is the conditional pdf of <span class="math inline">\(X_t\)</span> with respect to the <span class="math inline">\(l\)</span>th transition kernel given that <span class="math inline">\({X}_{t-l} = {x}_{t-l}\)</span>. <span class="math inline">\(w_l\)</span> are weight parameters, where <span class="math inline">\(w_l \geq 0\)</span> such that <span class="math inline">\(\sum_{l=1}^L w_l = 1\)</span>.</p>
-<div class="fragment">
-<p>There are two components in (2):</p>
-<ul>
-<li><p>Transition kernel, <span class="math inline">\(f_l\)</span>, captures the influence of the <span class="math inline">\(l\)</span>th lag value on the current value.</p></li>
-<li><p>Weight parameter, <span class="math inline">\(w_l\)</span>, determines the relative contribution of that influence.</p></li>
-</ul>
-</div>
-</section>
-<section id="existing-method-to-proposed-method" class="slide level2 smaller">
-<h2>Existing Method to Proposed Method</h2>
-<p>Based on Proposition 1 by Zheng et al.&nbsp;(2022), the bivariate distribution approach, for example, identifies a bivariate distribution of <span class="math inline">\((U_l, V_l)\)</span> such that the marginal densities, <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span>, are equal to a pre-specified stationary marginal density <span class="math inline">\(f_X\)</span> for all <span class="math inline">\(l\)</span> transition kernels.</p>
-<div class="fragment">
-<p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
-<p><span class="math display">\[
-\textbf{transition kernel} \longrightarrow \textbf{copula} \times \textbf{marginal}
-\]</span> <span class="math display">\[
-\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
-\]</span></p>
-</div>
-</section>
-<section id="copula" class="slide level2 smaller">
-<h2>Copula</h2>
-<p>Copula is widely used for dependence modeling.</p>
-<ul>
-<li><p>Is applied in quantitative finance, reliability engineering, hydrology, etc.</p></li>
-<li><p>Constitutes a substantial research area.</p></li>
-</ul>
-<div class="fragment">
-<p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(Unif(0, 1)\)</span>.</p>
-<p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
-<ul>
-<li><p>Is rooted in Sklar’s theorem.</p></li>
-<li><p>Consists of families of copula.</p></li>
-</ul>
-</div>
-</section>
-<section id="proposed-method" class="slide level2 smaller">
-<h2>Proposed Method</h2>
-<p>Replace <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span> with a pre-specified stationary marginal density, <span class="math inline">\(f_X\)</span>, for every <span class="math inline">\(x_t\)</span> and for all <span class="math inline">\(l\)</span>. For <span class="math inline">\(t &gt; L\)</span>, the proposed copula-based MTD model specifies the conditional distribution as</p>
-<span class="math display">\[\begin{equation}
-f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3}
-\label{eq:cond_distribution_copula}
-\end{equation}\]</span>
-<p><span class="math inline">\(c_l (x_t, x_{t-l})\)</span> is the copula density evaluated at <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-l}\)</span>, and <span class="math inline">\(f_X(x_t)\)</span> is the stationary marginal density evaluated at <span class="math inline">\(x_t\)</span>.</p>
-<div class="fragment">
-<p>Compared to (2), the transition kernel, <span class="math inline">\(f_l\)</span>, is now replaced by two components:</p>
-<ul>
-<li><p>Copula density, <span class="math inline">\(c_l\)</span>, captures and controls the strength of the dependence through a dependence parameter.</p></li>
-<li><p>Stationary marginal density, <span class="math inline">\(f_X\)</span>, describes the marginal behavior through distribution parameters.</p></li>
-</ul>
-</div>
-</section>
-<section id="background-bayesian-implementation" class="slide level2 smaller">
-<h2>Background: Bayesian Implementation</h2>
-<p>Earlier MTD models were built through frequentist approaches.</p>
-<p>Estimation and prediction in the MTD model by Zheng et al.&nbsp;(2022) is constructed with Bayesian methodologies.</p>
-<ul>
-<li><p>Our proposed copula-based MTD model builds upon this model version.</p></li>
-<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.</p></li>
-</ul>
-</section>
-<section id="background-bayesian-implementation-1" class="slide level2 smaller">
-<h2>Background: Bayesian Implementation</h2>
-<p>Inference is facilitated through a set of latent variables <span class="math inline">\({\{Z_t\}}_{t=L+1}^n\)</span>. <span class="math inline">\(Z_t = l\)</span> indicates which <span class="math inline">\(l\)</span>th kernel or component the data belongs to.</p>
-<p>The posterior distribution of the parameters, based on the conditional likelihood, is</p>
-<span class="math display">\[\begin{equation}
-\begin{split}
-p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(\boldsymbol{w}) \prod_{l=1}^L \pi_l(\boldsymbol{\theta}_l) \\
-\prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
-\end{split}
-\end{equation}\]</span>
-<p><span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</p>
-<div class="fragment">
-<p>With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
-</div>
-</section>
-<section id="simulation-studies" class="slide level2 smaller">
-<h2>Simulation Studies</h2>
-<p>We have assessed accuracy and performance of the proposed model.</p>
-<ul>
-<li><p>Convergence Diagnostics (<span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span>, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>)</p></li>
-<li><p>Weight and Dependence Parameters for Copula (<span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span>)</p></li>
-<li><p>Parameters for Marginal Distribution (<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>)</p></li>
-</ul>
-<div class="fragment">
-<p>Simulation studies demonstrate promising results across various scenarios.</p>
-<ul>
-<li><p>Scenario 1 and 2: Default setup; Compatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span></p></li>
-<li><p>Scenario 1.3 and 1.4: Incompatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span></p></li>
-<li><p>Scenario 1.5 and 1.6: Compatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span>; Rarely observable patterns</p></li>
-<li><p>Scenario 3-6: Usual case for gamma marginals</p></li>
-<li><p>Scenario 7-9:Unusual case involving high skewness</p></li>
-</ul>
-</div>
-</section>
-<section id="whats-new" class="slide level2 smaller">
-<h2>What’s New</h2>
-<p>Since the Preliminary Exam, we have also conducted:</p>
-<ul>
-<li><p>Sensitivity Analysis</p></li>
-<li><p>Coverage Assessment</p></li>
-</ul>
-<div class="fragment">
-<p>Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.</p>
-<p>Most parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values.</p>
-</div>
-</section></section>
-<section>
-<section id="part-ii-models-for-forecasting-zero-inflated-skewed-time-series" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
-<h1>Part II Models for Forecasting Zero-Inflated Skewed Time Series</h1>
-
-</section>
-<section id="introduction-1" class="slide level2 smaller">
-<h2>Introduction</h2>
-<p>Zero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.</p>
-<p>Examples include</p>
-<ul>
-<li><p>medical costs,</p></li>
-<li><p>insurance claims,</p></li>
-<li><p>precipitation amounts, and</p></li>
-<li><p>safety measures.</p></li>
-</ul>
-<p>If left unaddressed, zero-inflation undermines model robustness and weakens inference.</p>
-</section>
-<section id="introduction-and-objectives-1" class="slide level2 smaller">
-<h2>Introduction and Objectives</h2>
-<p>In Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.</p>
-<p>However,</p>
-<ul>
-<li><p>it remains limited in handling excessive zeros commonly observed in real-world continuous data.</p></li>
-<li><p>Copula-based approaches face identifiability issues when modeling discrete or mixed marginals.</p></li>
-</ul>
-<div class="fragment">
-<blockquote>
-<p><strong>Objectives:</strong> Propose reconstructing the marginal distribution to account for zero-inflation.</p>
-</blockquote>
-</div>
-</section>
-<section id="background-1" class="slide level2">
-<h2>Background</h2>
-</section>
-<section id="proposed-method-1" class="slide level2 smaller">
-<h2>Proposed Method</h2>
-<p>To construct zero-inflated Gamma for the marginal distribution,</p>
-<ul>
-<li><p>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>.</p></li>
-<li><p>Zero values are then replaced with non-zero values drawn from a uniform distribution.</p></li>
-</ul>
-<div class="fragment">
-<p>Specifically,</p>
-<span class="math display">\[\begin{equation}
-0 \leftarrow U_i, \tag{4}
-\end{equation}\]</span>
-<p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
-</div>
-</section>
-<section id="proposed-method-2" class="slide level2 smaller">
-<h2>Proposed Method</h2>
-<p>The resulting distribution, denoted as <span class="math inline">\(ZIGamma(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
-<span class="math display">\[\begin{equation}
-f(x) =
-\begin{cases}
-Unif(0, \epsilon) &amp; \text{with probability } P \\
-ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
-\end{cases}, \tag{5}
-\end{equation}\]</span>
-<p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
-<div class="fragment">
-<p>In (5), there are two parts:</p>
-<ul>
-<li><p>We have already discussed the uniform distribution.</p></li>
-<li><p>The shifted Gamma distribution, <span class="math inline">\(ShiftedGamma(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
-</ul>
-</div>
-</section>
-<section id="dzig" class="slide level2 smaller">
-<h2>dzig</h2>
+<section id="nasa-merra-2-data" class="slide level2">
+<h2>NASA MERRA-2 Data</h2>
 <div class="panel-tabset">
-<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-1-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-1-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-1-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-1-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-1-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-1-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-1-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
@@ -656,29 +386,285 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<div id="tabset-1-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
-</figure>
 </div>
 </div>
+</section>
+<section id="objectives" class="slide level2">
+<h2>Objectives</h2>
+<p>Part I and II</p>
+<blockquote>
+<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns.</p>
+</blockquote>
+<div class="fragment">
+<p>Part III</p>
+<blockquote>
+<p>Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness.</p>
+</blockquote>
 </div>
+</section>
+<section id="roadmap" class="slide level2">
+<h2>Roadmap</h2>
+<p>Part I Models for Forecasting Skewed Time Series</p>
+<ul>
+<li><p>Recap of Previous Work</p></li>
+<li><p>Sensitivity Analysis</p></li>
+<li><p>Coverage Assessment</p></li>
+</ul>
+<p>Part II Models for Forecasting Zero-Inflated Skewed Time Series</p>
+<ul>
+<li><p>Introduction</p></li>
+<li><p>Background</p></li>
+<li><p>Proposed Method</p></li>
+<li><p>Simulation Studies</p></li>
+<li><p>Prediction</p></li>
+</ul>
+</section>
+<section id="roadmap-1" class="slide level2">
+<h2>Roadmap</h2>
+<p>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
+<ul>
+<li><p>Introduction</p></li>
+<li><p>Background</p></li>
+<li><p>Hyperparameter Tuning, Training, and Metrics</p></li>
+<li><p>Simulation Studies</p></li>
+<li><p>Data Application</p></li>
+</ul>
+</section>
+<section>
+<section id="part-i-models-for-forecasting-skewed-time-series" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
+<h1>Part I Models for Forecasting Skewed Time Series</h1>
+
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<p>Time series model captures how past values contribute to current value and uses this information to predict future value.</p>
+<div class="fragment">
+<p>The mixture transition distribution (MTD) models</p>
+<ul>
+<li><p>Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.</p></li>
+<li><p>Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.</p></li>
+</ul>
 </div>
-<div id="tabset-1-5">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
-</figure>
+</section>
+<section id="introduction-and-objectives" class="slide level2">
+<h2>Introduction and Objectives</h2>
+<p>Our work builds upon the architecture of the MTD model introduced by Zheng et al.&nbsp;(2022).</p>
+<ul>
+<li>Includes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.</li>
+</ul>
+<div class="fragment">
+<p>However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.</p>
 </div>
+<div class="fragment">
+<blockquote>
+<p><strong>Objectives:</strong> Propose to incorporate copulas into the transition kernels to address this limitation.</p>
+</blockquote>
 </div>
+</section>
+<section id="background" class="slide level2">
+<h2>Background</h2>
+</section>
+<section id="model-framework-dag-also-known-as-bayesian-network" class="slide level2">
+<h2>Model Framework: DAG; also known as Bayesian network</h2>
+<p>Let <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span> be a time series. Construct the model on a DAG, the joint distribution of <span class="math inline">\(X_1\)</span> to <span class="math inline">\(X_t\)</span> can be factorized into a product of conditional distributions as</p>
+<span class="math display">\[\begin{equation}
+f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
+\label{eq:joint_distribution}
+\end{equation}\]</span>
+<p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
+<div class="fragment">
+<p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
 </div>
+</section>
+<section id="model-framework-transition-kernels-mixture-weights" class="slide level2">
+<h2>Model Framework: Transition kernels &amp; mixture weights</h2>
+<p>For <span class="math inline">\(t &gt; L\)</span>, the MTD model specifies the conditional distribution of <span class="math inline">\(X_t\)</span> given <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span> as</p>
+<span class="math display">\[\begin{equation}
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
+\label{eq:cond_distribution}
+\end{equation}\]</span>
+<p><span class="math inline">\(f_l (x_t | x_{t-l})\)</span> is the conditional pdf of <span class="math inline">\(X_t\)</span> with respect to the <span class="math inline">\(l\)</span>th transition kernel given that <span class="math inline">\({X}_{t-l} = {x}_{t-l}\)</span>. <span class="math inline">\(w_l\)</span> are weight parameters, where <span class="math inline">\(w_l \geq 0\)</span> such that <span class="math inline">\(\sum_{l=1}^L w_l = 1\)</span>.</p>
+<div class="fragment">
+<p>There are two components in (2):</p>
+<ul>
+<li><p>Transition kernel, <span class="math inline">\(f_l\)</span>, captures the influence of the <span class="math inline">\(l\)</span>th lag value on the current value.</p></li>
+<li><p>Weight parameter, <span class="math inline">\(w_l\)</span>, determines the relative contribution of that influence.</p></li>
+</ul>
 </div>
-<div id="tabset-1-6">
+</section>
+<section id="existing-method-to-proposed-method" class="slide level2">
+<h2>Existing Method to Proposed Method</h2>
+<p>Based on Proposition 1 by Zheng et al.&nbsp;(2022), the bivariate distribution approach, for example, identifies a bivariate distribution of <span class="math inline">\((U_l, V_l)\)</span> such that the marginal densities, <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span>, are equal to a pre-specified stationary marginal density <span class="math inline">\(f_X\)</span> for all <span class="math inline">\(l\)</span> transition kernels.</p>
+<div class="fragment">
+<p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
+<p><span class="math display">\[
+\textbf{transition kernel} \longrightarrow \textbf{copula} \times \textbf{marginal}
+\]</span> <span class="math display">\[
+\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
+\]</span></p>
+</div>
+</section>
+<section id="copula" class="slide level2">
+<h2>Copula</h2>
+<p>Copula is widely used for dependence modeling.</p>
+<ul>
+<li><p>Is applied in quantitative finance, reliability engineering, hydrology, etc.</p></li>
+<li><p>Constitutes a substantial research area.</p></li>
+</ul>
+<div class="fragment">
+<p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(Unif(0, 1)\)</span>.</p>
+<p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
+<ul>
+<li><p>Is rooted in Sklar’s theorem.</p></li>
+<li><p>Consists of families of copula.</p></li>
+</ul>
+</div>
+</section>
+<section id="proposed-method" class="slide level2">
+<h2>Proposed Method</h2>
+<p>Replace <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span> with a pre-specified stationary marginal density, <span class="math inline">\(f_X\)</span>, for every <span class="math inline">\(x_t\)</span> and for all <span class="math inline">\(l\)</span>. For <span class="math inline">\(t &gt; L\)</span>, the proposed copula-based MTD model specifies the conditional distribution as</p>
+<span class="math display">\[\begin{equation}
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3}
+\label{eq:cond_distribution_copula}
+\end{equation}\]</span>
+<p><span class="math inline">\(c_l (x_t, x_{t-l})\)</span> is the copula density evaluated at <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-l}\)</span>, and <span class="math inline">\(f_X(x_t)\)</span> is the stationary marginal density evaluated at <span class="math inline">\(x_t\)</span>.</p>
+<div class="fragment">
+<p>Compared to (2), the transition kernel, <span class="math inline">\(f_l\)</span>, is now replaced by two components:</p>
+<ul>
+<li><p>Copula density, <span class="math inline">\(c_l\)</span>, captures and controls the strength of the dependence through a dependence parameter.</p></li>
+<li><p>Stationary marginal density, <span class="math inline">\(f_X\)</span>, describes the marginal behavior through distribution parameters.</p></li>
+</ul>
+</div>
+</section>
+<section id="background-bayesian-implementation" class="slide level2">
+<h2>Background: Bayesian Implementation</h2>
+<p>Earlier MTD models were built through frequentist approaches.</p>
+<p>Estimation and prediction in the MTD model by Zheng et al.&nbsp;(2022) is constructed with Bayesian methodologies.</p>
+<ul>
+<li><p>Our proposed copula-based MTD model builds upon this model version.</p></li>
+<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.</p></li>
+</ul>
+</section>
+<section id="background-bayesian-implementation-1" class="slide level2">
+<h2>Background: Bayesian Implementation</h2>
+<p>Inference is facilitated through a set of latent variables <span class="math inline">\({\{Z_t\}}_{t=L+1}^n\)</span>. <span class="math inline">\(Z_t = l\)</span> indicates which <span class="math inline">\(l\)</span>th kernel or component the data belongs to.</p>
+<p>The posterior distribution of the parameters, based on the conditional likelihood, is</p>
+<span class="math display">\[\begin{equation}
+\begin{split}
+p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(\boldsymbol{w}) \prod_{l=1}^L \pi_l(\boldsymbol{\theta}_l) \\
+\prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
+\end{split}
+\end{equation}\]</span>
+<p><span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</p>
+<div class="fragment">
+<p>With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
+</div>
+</section>
+<section id="simulation-studies" class="slide level2">
+<h2>Simulation Studies</h2>
+<p>We have assessed accuracy and performance of the proposed model.</p>
+<ul>
+<li><p>Convergence Diagnostics (<span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span>, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>)</p></li>
+<li><p>Weight and Dependence Parameters for Copula (<span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span>)</p></li>
+<li><p>Parameters for Marginal Distribution (<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>)</p></li>
+</ul>
+<div class="fragment">
+<p>Simulation studies demonstrate promising results across various scenarios.</p>
+<ul>
+<li><p>Scenario 1 and 2: Default setup; Compatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span></p></li>
+<li><p>Scenario 1.3 and 1.4: Incompatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span></p></li>
+<li><p>Scenario 1.5 and 1.6: Compatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span>; Rarely observable patterns</p></li>
+<li><p>Scenario 3-6: Usual case for gamma marginals</p></li>
+<li><p>Scenario 7-9:Unusual case involving high skewness</p></li>
+</ul>
+</div>
+</section>
+<section id="whats-new" class="slide level2">
+<h2>What’s New</h2>
+<p>Since the Preliminary Exam, we have also conducted:</p>
+<ul>
+<li><p>Sensitivity Analysis</p></li>
+<li><p>Coverage Assessment</p></li>
+</ul>
+<div class="fragment">
+<p>Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.</p>
+<p>Most parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values.</p>
+</div>
+</section></section>
+<section>
+<section id="part-ii-models-for-forecasting-zero-inflated-skewed-time-series" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
+<h1>Part II Models for Forecasting Zero-Inflated Skewed Time Series</h1>
+
+</section>
+<section id="introduction-1" class="slide level2">
+<h2>Introduction</h2>
+<p>Zero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.</p>
+<p>Examples include</p>
+<ul>
+<li><p>medical costs,</p></li>
+<li><p>insurance claims,</p></li>
+<li><p>precipitation amounts, and</p></li>
+<li><p>safety measures.</p></li>
+</ul>
+<p>If left unaddressed, zero-inflation undermines model robustness and weakens inference.</p>
+</section>
+<section id="introduction-and-objectives-1" class="slide level2">
+<h2>Introduction and Objectives</h2>
+<p>In Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.</p>
+<p>However,</p>
+<ul>
+<li><p>it remains limited in handling excessive zeros commonly observed in real-world continuous data.</p></li>
+<li><p>Copula-based approaches face identifiability issues when modeling discrete or mixed marginals.</p></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><strong>Objectives:</strong> Propose reconstructing the marginal distribution to account for zero-inflation.</p>
+</blockquote>
+</div>
+</section>
+<section id="background-1" class="slide level2">
+<h2>Background</h2>
+</section>
+<section id="proposed-method-1" class="slide level2">
+<h2>Proposed Method</h2>
+<p>To construct zero-inflated Gamma for the marginal distribution,</p>
+<ul>
+<li><p>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p>Zero values are then replaced with non-zero values drawn from a uniform distribution.</p></li>
+</ul>
+<div class="fragment">
+<p>Specifically,</p>
+<span class="math display">\[\begin{equation}
+0 \leftarrow U_i, \tag{4}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
+</div>
+</section>
+<section id="proposed-method-2" class="slide level2">
+<h2>Proposed Method</h2>
+<p>The resulting distribution, denoted as <span class="math inline">\(ZIGamma(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
+<span class="math display">\[\begin{equation}
+f(x) =
+\begin{cases}
+Unif(0, \epsilon) &amp; \text{with probability } P \\
+ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
+\end{cases}, \tag{5}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
+<div class="fragment">
+<p>In (5), there are two parts:</p>
+<ul>
+<li><p>We have already discussed the uniform distribution.</p></li>
+<li><p>The shifted Gamma distribution, <span class="math inline">\(ShiftedGamma(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
+</ul>
+</div>
+</section>
+<section id="dzig" class="slide level2">
+<h2>dzig</h2>
+<div class="panel-tabset">
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-2-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-2-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -689,31 +675,12 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="pzig" class="slide level2 smaller">
-<h2>pzig</h2>
-<div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-2-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-2-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-2-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
-<div class="tab-content">
-<div id="tabset-2-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
 <div id="tabset-2-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -724,7 +691,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -735,7 +702,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -746,7 +713,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -757,7 +724,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -766,7 +733,81 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </section>
-<section id="simulation-setting" class="slide level2 smaller">
+<section id="pzig" class="slide level2">
+<h2>pzig</h2>
+<div class="panel-tabset">
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-3-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-3-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-3-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-3-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-3-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-6">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="simulation-setting" class="slide level2">
 <h2>Simulation Setting</h2>
 <p>Simulated data:</p>
 <ul>
@@ -782,7 +823,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p>Run four MCMC chains with <span class="math inline">\(8000\)</span> iterations each for all of the following scenarios.</p></li>
 </ul>
 </section>
-<section id="simulation-studies-1" class="slide level2 smaller">
+<section id="simulation-studies-1" class="slide level2">
 <h2>Simulation Studies</h2>
 <p>We have assessed accuracy and performance of the proposed model.</p>
 <ul>
@@ -797,9 +838,9 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p>Scenario 7-9: Unusual case involving high skewness</p></li>
 </ul>
 </section>
-<section id="simulation-studies-2" class="slide level2 smaller">
+<section id="simulation-studies-2" class="slide level2">
 <h2>Simulation Studies</h2>
-<p>In all scenarios, we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases:</p>
+<p>In all nine scenarios, we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases:</p>
 <ul>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
@@ -808,41 +849,616 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p><span class="math inline">\(P = 0.7\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.7\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
 </ul>
-<p>For brevity, we will only show a few examples.</p>
+<p>For brevity, we will focus on Scenario 1.</p>
 </section>
-<section id="simulation-results" class="slide level2 smaller">
+<section id="simulation-results" class="slide level2">
 <h2>Simulation Results</h2>
+<div class="panel-tabset">
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1"><span class="math inline">\(w\)</span></a></li><li><a href="#tabset-4-2"><span class="math inline">\(\rho\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 23%">
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_1 = 0.636\)</span></td>
+<td style="text-align: left;">0.6395 (0.0425)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">2e-04</td>
+<td style="text-align: right;">0.0003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(w_2 = 0.234\)</span></td>
+<td style="text-align: left;">0.1905 (0.0636)</td>
+<td style="text-align: left;">1.01 (1.01)</td>
+<td style="text-align: right;">4e-04</td>
+<td style="text-align: right;">0.0013</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_3 = 0.086\)</span></td>
+<td style="text-align: left;">0.1315 (0.0739)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">4e-04</td>
+<td style="text-align: right;">0.0021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(w_4 = 0.032\)</span></td>
+<td style="text-align: left;">0.0346 (0.0529)</td>
+<td style="text-align: left;">1.01 (1.03)</td>
+<td style="text-align: right;">3e-04</td>
+<td style="text-align: right;">0.0017</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(w_5 = 0.012\)</span></td>
+<td style="text-align: left;">0.0039 (0.0171)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">0.0004</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-4-2">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 18%">
+<col style="width: 12%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\rho_1 = 0.700\)</span></td>
+<td style="text-align: left;">0.6847 (0.0274)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0.0002</td>
+<td style="text-align: right;">0.0002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\rho_2 = 0.500\)</span></td>
+<td style="text-align: left;">0.606 (0.1426)</td>
+<td style="text-align: left;">1.01 (1.01)</td>
+<td style="text-align: right;">0.0008</td>
+<td style="text-align: right;">0.0027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\rho_3 = 0.300\)</span></td>
+<td style="text-align: left;">0.1168 (0.2389)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0.0013</td>
+<td style="text-align: right;">0.0018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\rho_4 = 0.100\)</span></td>
+<td style="text-align: left;">0.0147 (0.4675)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0.0026</td>
+<td style="text-align: right;">0.0027</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\rho_5 = 0.100\)</span></td>
+<td style="text-align: left;">-0.0046 (0.5659)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0.0032</td>
+<td style="text-align: right;">0.0032</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="prediction" class="slide level2 smaller">
+<section id="simulation-results-1" class="slide level2">
+<h2>Simulation Results</h2>
+<div class="panel-tabset">
+<ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-5-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-5-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">7.35 (0.1132)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">6e-04</td>
+<td style="text-align: right;">6e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">1.0082 (0.0433)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">2e-04</td>
+<td style="text-align: right;">2e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.0769 (0.0085)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.1 (7e-04)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-5-2">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">7.1454 (0.12)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">7e-04</td>
+<td style="text-align: right;">7e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">1.0994 (0.0472)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">3e-04</td>
+<td style="text-align: right;">3e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.1091 (0.0103)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.4017 (0.0019)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-5-3">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">6.9447 (0.1207)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">7e-04</td>
+<td style="text-align: right;">7e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">1.0659 (0.0542)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">3e-04</td>
+<td style="text-align: right;">3e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.5248 (0.0172)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.1001 (1e-04)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-5-4">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">6.8454 (0.1154)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">6e-04</td>
+<td style="text-align: right;">6e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">1.0086 (0.0512)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">3e-04</td>
+<td style="text-align: right;">3e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.5064 (0.0173)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.4 (4e-04)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-5-5">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">6.988 (0.1303)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">7e-04</td>
+<td style="text-align: right;">7e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">0.9593 (0.0594)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">3e-04</td>
+<td style="text-align: right;">3e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.6879 (0.016)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.0999 (1e-04)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-5-6">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">Mean (SD)</th>
+<th style="text-align: left;">R (Upper CI)</th>
+<th style="text-align: right;">Naive SE</th>
+<th style="text-align: right;">Time-series SE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\mu\)</span></td>
+<td style="text-align: left;">6.8482 (0.1373)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">8e-04</td>
+<td style="text-align: right;">8e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\beta\)</span></td>
+<td style="text-align: left;">1.0506 (0.0665)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">4e-04</td>
+<td style="text-align: right;">4e-04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(P\)</span></td>
+<td style="text-align: left;">0.7048 (0.0154)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">1e-04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\epsilon\)</span></td>
+<td style="text-align: left;">0.4002 (3e-04)</td>
+<td style="text-align: left;">1 (1)</td>
+<td style="text-align: right;">0e+00</td>
+<td style="text-align: right;">0e+00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="prediction" class="slide level2">
 <h2>Prediction</h2>
+<div class="columns">
+<div class="column">
+<h3 id="section"></h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Coverage</th>
+<th style="text-align: right;">Below</th>
+<th style="text-align: right;">Above</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P01Eps01</td>
+<td style="text-align: right;">0.9544</td>
+<td style="text-align: right;">0.7014</td>
+<td style="text-align: right;">0.9741</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P01Eps04</td>
+<td style="text-align: right;">0.9138</td>
+<td style="text-align: right;">0.3927</td>
+<td style="text-align: right;">0.9780</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P05Eps01</td>
+<td style="text-align: right;">0.9268</td>
+<td style="text-align: right;">0.9886</td>
+<td style="text-align: right;">0.8584</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P05Eps04</td>
+<td style="text-align: right;">0.9489</td>
+<td style="text-align: right;">0.9671</td>
+<td style="text-align: right;">0.9305</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P07Eps01</td>
+<td style="text-align: right;">0.8662</td>
+<td style="text-align: right;">0.9928</td>
+<td style="text-align: right;">0.5710</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P07Eps04</td>
+<td style="text-align: right;">0.9293</td>
+<td style="text-align: right;">0.9881</td>
+<td style="text-align: right;">0.7828</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<h3 id="section-1"></h3>
+<ul>
+<li><p>The overall coverage can obscure important differences in predictive performance.</p></li>
+<li><p>To provide a clearer picture, we decompose the coverage into <strong>below</strong> and <strong>above</strong>.</p></li>
+<li><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> (i.e., the coverage for data greater than <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
+<li><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> (i.e., the coverage for data less than or equal to <span class="math inline">\(\epsilon\)</span>) becomes increasingly dominant.</p></li>
+</ul>
+</div></div>
+</section>
+<section id="prediction-1" class="slide level2">
+<h2>Prediction</h2>
+<div class="panel-tabset">
+<ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-44-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-45-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-6">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="part-iii-copula-based-markov-mtd-models-vs.-deep-learning-lstm-networks" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
 <h1>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</h1>
 
 </section>
-<section id="introduction-2" class="slide level2 smaller">
+<section id="introduction-2" class="slide level2">
 <h2>Introduction</h2>
+<p>Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture both short- and long-term dependencies.</p>
+<div class="fragment">
+<p>Beyond natural language processing (NLP), RNNs and LSTMs have also shown effective in time series forecasting and have been employed for applications including</p>
+<ul>
+<li><p>financial market prediction,</p></li>
+<li><p>energy forecasting,</p></li>
+<li><p>weather and climate modeling, and</p></li>
+<li><p>epidemiological trend analysis.</p></li>
+</ul>
+</div>
 </section>
-<section id="introduction-and-objectives-2" class="slide level2 smaller">
+<section id="introduction-and-objectives-2" class="slide level2">
 <h2>Introduction and Objectives</h2>
+<p>However,</p>
+<ul>
+<li><p>a prior study found comparable performance between the probabilistic MTD model and the deep learning long short-term memory (LSTM) network for predicting disease spread.</p></li>
+<li><p>Previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.</p></li>
+</ul>
+<div class="fragment">
+<blockquote>
+<p><strong>Objectives:</strong> Systemically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.</p>
+</blockquote>
+</div>
 </section>
-<section id="background-2" class="slide level2 smaller">
+<section id="background-2" class="slide level2">
 <h2>Background</h2>
 </section>
-<section id="network-configuration" class="slide level2 smaller">
+<section id="network-configuration" class="slide level2">
 <h2>Network Configuration</h2>
 </section>
-<section id="experimental-setup" class="slide level2 smaller">
+<section id="experimental-setup" class="slide level2">
 <h2>Experimental Setup</h2>
 </section>
-<section id="simulation-studies-3" class="slide level2 smaller">
+<section id="simulation-studies-3" class="slide level2">
 <h2>Simulation Studies</h2>
 </section>
-<section id="simulation-results-1" class="slide level2 smaller">
+<section id="simulation-results-2" class="slide level2">
 <h2>Simulation Results</h2>
 </section>
-<section id="data-application" class="slide level2 smaller">
+<section id="data-application" class="slide level2">
 <h2>Data Application</h2>
 </section>
 <section id="conclusion" class="slide level2">
@@ -854,11 +1470,22 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <section id="practical-implications" class="slide level2">
 <h2>Practical Implications</h2>
 </section></section>
+<section>
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank you!</h1>
 
+</section>
+<section id="acknowledgement" class="slide level2">
+<h2>Acknowledgement</h2>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+</section></section>
+<section id="supplement" class="title-slide slide level1 center">
+<h1>Supplement</h1>
+
 <div class="quarto-auto-generated-content">
-<p><img src="osu.png" class="slide-logo"></p>
+<p><img src="images/osu.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>
@@ -1040,9 +1667,9 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1600,
 
-        height: 700,
+        height: 900,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
