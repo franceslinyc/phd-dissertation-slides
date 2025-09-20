@@ -1,0 +1,275 @@
+[
+  {
+    "objectID": "index.html#motivation",
+    "href": "index.html#motivation",
+    "title": "",
+    "section": "Motivation",
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\nReal-world time series often show skewness and zero inflation, which can hinder prediction if ignored.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear dependence and long-range correlation.\n\nPrior work found comparable predictive performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for disease spread.\nClaims of LSTM superiority can be misleading when compared to inappropriate benchmarks."
+  },
+  {
+    "objectID": "index.html#objectives",
+    "href": "index.html#objectives",
+    "title": "",
+    "section": "Objectives",
+    "text": "Objectives\nPart I and II\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns.\n\n\nPart III\n\nEvaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness."
+  },
+  {
+    "objectID": "index.html#roadmap",
+    "href": "index.html#roadmap",
+    "title": "",
+    "section": "Roadmap",
+    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of Previous Work\nSensitivity Analysis (Skip)\nCoverage Assessment (Skip)\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nBackground\nProposed Method\nSimulation Studies\nPrediction"
+  },
+  {
+    "objectID": "index.html#roadmap-1",
+    "href": "index.html#roadmap-1",
+    "title": "",
+    "section": "Roadmap",
+    "text": "Roadmap\nPart III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nBackground\nHyperparameter Tuning, Training, and Metrics\nSimulation Studies\nData Application"
+  },
+  {
+    "objectID": "index.html#introduction",
+    "href": "index.html#introduction",
+    "title": "",
+    "section": "Introduction",
+    "text": "Introduction\nTime series model captures how past values contribute to current value and uses this information to predict future value.\n\nThe mixture transition distribution (MTD) models\n\nExtend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.\nModel each conditional distribution as a mixture of transition kernels, with random, stochastic weights."
+  },
+  {
+    "objectID": "index.html#introduction-and-objectives",
+    "href": "index.html#introduction-and-objectives",
+    "title": "",
+    "section": "Introduction and Objectives",
+    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation."
+  },
+  {
+    "objectID": "index.html#background",
+    "href": "index.html#background",
+    "title": "",
+    "section": "Background",
+    "text": "Background"
+  },
+  {
+    "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
+    "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
+    "title": "",
+    "section": "Model Framework: DAG; also known as Bayesian network",
+    "text": "Model Framework: DAG; also known as Bayesian network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags."
+  },
+  {
+    "objectID": "index.html#model-framework-transition-kernels-mixture-weights",
+    "href": "index.html#model-framework-transition-kernels-mixture-weights",
+    "title": "",
+    "section": "Model Framework: Transition kernels & mixture weights",
+    "text": "Model Framework: Transition kernels & mixture weights\nFor \\(t &gt; L\\), the MTD model specifies the conditional distribution of \\(X_t\\) given \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\) as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \\tag{2}\n\\label{eq:cond_distribution}\n\\end{equation}\\]\n\\(f_l (x_t | x_{t-l})\\) is the conditional pdf of \\(X_t\\) with respect to the \\(l\\)th transition kernel given that \\({X}_{t-l} = {x}_{t-l}\\). \\(w_l\\) are weight parameters, where \\(w_l \\geq 0\\) such that \\(\\sum_{l=1}^L w_l = 1\\).\n\nThere are two components in (2):\n\nTransition kernel, \\(f_l\\), captures the influence of the \\(l\\)th lag value on the current value.\nWeight parameter, \\(w_l\\), determines the relative contribution of that influence."
+  },
+  {
+    "objectID": "index.html#existing-method-to-proposed-method",
+    "href": "index.html#existing-method-to-proposed-method",
+    "title": "",
+    "section": "Existing Method to Proposed Method",
+    "text": "Existing Method to Proposed Method\nBased on Proposition 1 by Zheng et al. (2022), the bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nThis is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.\n\\[\n\\textbf{transition kernel} \\longrightarrow \\textbf{copula} \\times \\textbf{marginal}\n\\] \\[\n\\ f_l (x_t | x_{t-l}) \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ c_l (x_t, x_{t-l}) \\ \\ \\ \\ f_X (x_t)\n\\]"
+  },
+  {
+    "objectID": "index.html#copula",
+    "href": "index.html#copula",
+    "title": "",
+    "section": "Copula",
+    "text": "Copula\nCopula is widely used for dependence modeling.\n\nIs applied in quantitative finance, reliability engineering, hydrology, etc.\nConstitutes a substantial research area.\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(Unif(0, 1)\\).\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nIs rooted in Sklar’s theorem.\nConsists of families of copula."
+  },
+  {
+    "objectID": "index.html#proposed-method",
+    "href": "index.html#proposed-method",
+    "title": "",
+    "section": "Proposed Method",
+    "text": "Proposed Method\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
+  },
+  {
+    "objectID": "index.html#background-bayesian-implementation",
+    "href": "index.html#background-bayesian-implementation",
+    "title": "",
+    "section": "Background: Bayesian Implementation",
+    "text": "Background: Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model."
+  },
+  {
+    "objectID": "index.html#background-bayesian-implementation-1",
+    "href": "index.html#background-bayesian-implementation-1",
+    "title": "",
+    "section": "Background: Bayesian Implementation",
+    "text": "Background: Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel or component the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split}\n\\end{equation}\\]\n\\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms."
+  },
+  {
+    "objectID": "index.html#simulation-studies",
+    "href": "index.html#simulation-studies",
+    "title": "",
+    "section": "Simulation Studies",
+    "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\alpha\\), \\(\\beta\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\alpha\\), \\(\\beta\\))\n\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.3 and 1.4: Incompatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.5 and 1.6: Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\); Rarely observable patterns\nScenario 3-6: Usual case for gamma marginals\nScenario 7-9:Unusual case involving high skewness"
+  },
+  {
+    "objectID": "index.html#whats-new",
+    "href": "index.html#whats-new",
+    "title": "",
+    "section": "What’s New",
+    "text": "What’s New\nSince the Preliminary Exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\n\n\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\nMost parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values."
+  },
+  {
+    "objectID": "index.html#introduction-1",
+    "href": "index.html#introduction-1",
+    "title": "",
+    "section": "Introduction",
+    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
+  },
+  {
+    "objectID": "index.html#introduction-and-objectives-1",
+    "href": "index.html#introduction-and-objectives-1",
+    "title": "",
+    "section": "Introduction and Objectives",
+    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to account for zero-inflation."
+  },
+  {
+    "objectID": "index.html#background-1",
+    "href": "index.html#background-1",
+    "title": "",
+    "section": "Background",
+    "text": "Background"
+  },
+  {
+    "objectID": "index.html#proposed-method-1",
+    "href": "index.html#proposed-method-1",
+    "title": "",
+    "section": "Proposed Method",
+    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\nThe Gamma distribution is first reparametrized in terms of the mean, \\(\\mu\\), and the scale parameter, \\(\\beta\\).\nZero values are then replaced with non-zero values drawn from a uniform distribution.\n\n\nSpecifically,\n\\[\\begin{equation}\n0 \\leftarrow U_i, \\tag{4}\n\\end{equation}\\]\nwhere \\(U_i\\) follows a continuous uniform distribution on \\((0, \\epsilon)\\) with \\(\\epsilon\\) is a data-driven paramater representing the smallest observed non-zero values."
+  },
+  {
+    "objectID": "index.html#proposed-method-2",
+    "href": "index.html#proposed-method-2",
+    "title": "",
+    "section": "Proposed Method",
+    "text": "Proposed Method\nThe resulting distribution, denoted as \\(ZIGamma(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\nUnif(0, \\epsilon) & \\text{with probability } P \\\\\nShiftedGamma(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases}, \\tag{5}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (5), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution, \\(ShiftedGamma(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\)."
+  },
+  {
+    "objectID": "index.html#dzig",
+    "href": "index.html#dzig",
+    "title": "",
+    "section": "dzig",
+    "text": "dzig\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+  },
+  {
+    "objectID": "index.html#pzig",
+    "href": "index.html#pzig",
+    "title": "",
+    "section": "pzig",
+    "text": "pzig\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+  },
+  {
+    "objectID": "index.html#simulation-setting",
+    "href": "index.html#simulation-setting",
+    "title": "",
+    "section": "Simulation Setting",
+    "text": "Simulation Setting\nSimulated data:\n\nWith weight \\(\\boldsymbol{w}\\), dependence for Gaussian copula \\(\\boldsymbol{\\rho}\\), mean \\(\\mu\\), scale \\(\\beta\\), zero-inflated probability \\(P\\), and threshold parameter \\(\\epsilon\\), we generate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun four MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
+  },
+  {
+    "objectID": "index.html#simulation-studies-1",
+    "href": "index.html#simulation-studies-1",
+    "title": "",
+    "section": "Simulation Studies",
+    "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\mu\\), \\(\\beta\\), \\(P\\), \\(\\epsilon\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\mu\\), \\(\\beta\\), \\(P\\), \\(\\epsilon\\))\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 3-6: Usual case for zero-inflated gamma marginals\nScenario 7-9: Unusual case involving high skewness"
+  },
+  {
+    "objectID": "index.html#simulation-studies-2",
+    "href": "index.html#simulation-studies-2",
+    "title": "",
+    "section": "Simulation Studies",
+    "text": "Simulation Studies\nIn all scenarios, we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we will only show a few examples."
+  },
+  {
+    "objectID": "index.html#simulation-results",
+    "href": "index.html#simulation-results",
+    "title": "",
+    "section": "Simulation Results",
+    "text": "Simulation Results"
+  },
+  {
+    "objectID": "index.html#prediction",
+    "href": "index.html#prediction",
+    "title": "",
+    "section": "Prediction",
+    "text": "Prediction"
+  },
+  {
+    "objectID": "index.html#introduction-2",
+    "href": "index.html#introduction-2",
+    "title": "",
+    "section": "Introduction",
+    "text": "Introduction"
+  },
+  {
+    "objectID": "index.html#introduction-and-objectives-2",
+    "href": "index.html#introduction-and-objectives-2",
+    "title": "",
+    "section": "Introduction and Objectives",
+    "text": "Introduction and Objectives"
+  },
+  {
+    "objectID": "index.html#background-2",
+    "href": "index.html#background-2",
+    "title": "",
+    "section": "Background",
+    "text": "Background"
+  },
+  {
+    "objectID": "index.html#network-configuration",
+    "href": "index.html#network-configuration",
+    "title": "",
+    "section": "Network Configuration",
+    "text": "Network Configuration"
+  },
+  {
+    "objectID": "index.html#experimental-setup",
+    "href": "index.html#experimental-setup",
+    "title": "",
+    "section": "Experimental Setup",
+    "text": "Experimental Setup"
+  },
+  {
+    "objectID": "index.html#simulation-studies-3",
+    "href": "index.html#simulation-studies-3",
+    "title": "",
+    "section": "Simulation Studies",
+    "text": "Simulation Studies"
+  },
+  {
+    "objectID": "index.html#simulation-results-1",
+    "href": "index.html#simulation-results-1",
+    "title": "",
+    "section": "Simulation Results",
+    "text": "Simulation Results"
+  },
+  {
+    "objectID": "index.html#data-application",
+    "href": "index.html#data-application",
+    "title": "",
+    "section": "Data Application",
+    "text": "Data Application"
+  },
+  {
+    "objectID": "index.html#conclusion",
+    "href": "index.html#conclusion",
+    "title": "",
+    "section": "Conclusion",
+    "text": "Conclusion"
+  },
+  {
+    "objectID": "index.html#future-work",
+    "href": "index.html#future-work",
+    "title": "",
+    "section": "Future Work",
+    "text": "Future Work"
+  },
+  {
+    "objectID": "index.html#practical-implications",
+    "href": "index.html#practical-implications",
+    "title": "",
+    "section": "Practical Implications",
+    "text": "Practical Implications"
+  }
+]

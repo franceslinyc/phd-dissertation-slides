@@ -1,0 +1,13 @@
+Click Preview
+
+quarto render
+
+quarto render --to beav-pdf
+
+quarto preview index.qmd --to html
+
+conda deactivate
+
+git add .
+git commit -m ""            # git commit -m "Commit message here"
+git push origin main

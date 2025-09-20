@@ -1,0 +1,614 @@
+---
+format:
+  revealjs:
+    logo: osu.png
+    slide-number: true
+    scrollable: true
+---
+
+### Copula-Based Mixture Transition Distribution Models for Forecasting Skewed and Zero-Inflated Time Series: Methodology and Comparisons with Deep Learning LSTM Networks  
+
+Frances Lin
+
+Dissertation Defense
+
+Oregon State University
+
+November 5, 2025
+
+## Motivation {.smaller}
+
+Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation. 
+
+- Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored. 
+
+. . .    
+
+Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear dependence and long-range correlation. 
+
+- Prior work found comparable predictive performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for disease spread. 
+
+- Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
+
+## Objectives {.smaller}
+
+Part I and II
+
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns. 
+
+. . .
+
+Part III
+
+> Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness. 
+
+## Roadmap {.smaller}
+
+Part I Models for Forecasting Skewed Time Series 
+
+- Recap of Previous Work
+
+- Sensitivity Analysis (Skip)
+
+- Coverage Assessment (Skip)
+
+Part II Models for Forecasting Zero-Inflated Skewed Time Series
+
+- Introduction
+
+- Background
+
+- Proposed Method
+
+- Simulation Studies
+
+- Prediction
+
+## Roadmap {.smaller}
+
+Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
+
+- Introduction
+
+- Background
+
+- Hyperparameter Tuning, Training, and Metrics 
+
+- Simulation Studies 
+
+- Data Application
+
+# Part I Models for Forecasting Skewed Time Series {background-color="#D73F09" color="white"} 
+
+## Introduction {.smaller}
+
+Time series model captures how past values contribute to current value and uses this information to predict future value.
+
+. . .
+
+The mixture transition distribution (MTD) models 
+
+- Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.
+
+- Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.
+
+## Introduction and Objectives {.smaller}
+
+Our work builds upon the architecture of the MTD model introduced by Zheng et al. (2022). 
+
+- Includes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics. 
+
+. . .
+
+However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex. 
+
+. . .
+
+> **Objectives:** Propose to incorporate copulas into the transition kernels to address this limitation.
+
+## Background 
+
+## Model Framework: DAG; also known as Bayesian network {.smaller}
+
+Let $\{ X_t: t \in \mathbb{N} \}$ be a time series. Construct the model on a DAG, the joint distribution of $X_1$ to $X_t$ can be factorized into a product of conditional distributions as
+```{=latex}
+\begin{equation}
+f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
+\label{eq:joint_distribution}
+\end{equation}
+```
+\scriptsize $f(x_t | \textbf{x}^{t-1})$ is the conditional probability density function (pdf) of current value $X_t$ given all of its past values $\textbf{X}^{t-1} = \textbf{x}^{t-1}$, where $\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}$ and $\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}$.
+
+. . .
+
+Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
+
+## Model Framework: Transition kernels & mixture weights {.smaller}
+
+For $t > L$, the MTD model specifies the conditional distribution of $X_t$ given $\textbf{X}^{t-1} = \textbf{x}^{t-1}$ as 
+```{=latex}
+\begin{equation}
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
+\label{eq:cond_distribution}
+\end{equation}
+```
+\scriptsize $f_l (x_t | x_{t-l})$ is the conditional pdf of $X_t$ with respect to the $l$th transition kernel given that ${X}_{t-l} = {x}_{t-l}$. $w_l$ are weight parameters, where $w_l \geq 0$ such that $\sum_{l=1}^L w_l = 1$.
+
+. . .
+
+\normalsize
+
+There are two components in (2):
+
+  - Transition kernel, $f_l$, captures the influence of the $l$th lag value on the current value.  
+  
+  - Weight parameter, $w_l$, determines the relative contribution of that influence. 
+
+## Existing Method to Proposed Method {.smaller}
+
+Based on Proposition 1 by Zheng et al. (2022), the bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
+
+. . .
+
+This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure. 
+
+$$
+\textbf{transition kernel} \longrightarrow \textbf{copula} \times \textbf{marginal} 
+$$
+$$
+\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
+$$
+
+## Copula {.smaller}
+
+Copula is widely used for dependence modeling.
+
+  - Is applied in quantitative finance, reliability engineering, hydrology, etc.
+
+  - Constitutes a substantial research area.
+
+. . .
+
+Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $Unif(0, 1)$. 
+
+Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
+
+  - Is rooted in Sklar’s theorem. 
+  
+  - Consists of families of copula. 
+
+## Proposed Method {.smaller} 
+
+Replace $f_{U_l}$ and $f_{V_l}$ with a pre-specified stationary marginal density, $f_X$, for every $x_t$ and for all $l$. For $t > L$, the proposed copula-based MTD model specifies the conditional distribution as
+```{=latex}
+\begin{equation}
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3}
+\label{eq:cond_distribution_copula}
+\end{equation}
+```
+\scriptsize $c_l (x_t, x_{t-l})$ is the copula density evaluated at $x_t$ and $x_{t-l}$, and $f_X(x_t)$ is the stationary marginal density evaluated at $x_t$. 
+
+. . .
+
+\normalsize
+
+Compared to (2), the transition kernel, $f_l$, is now replaced by two components: 
+
+  - Copula density, $c_l$, captures and controls the strength of the dependence through a dependence parameter.
+  
+  - Stationary marginal density, $f_X$, describes the marginal behavior through distribution parameters.
+
+## Background: Bayesian Implementation {.smaller} 
+
+Earlier MTD models were built through frequentist approaches. 
+
+Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.
+
+  - Our proposed copula-based MTD model builds upon this model version. 
+  
+  - We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
+
+## Background: Bayesian Implementation {.smaller} 
+
+Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel or component the data belongs to. 
+
+The posterior distribution of the parameters, based on the conditional likelihood, is
+```{=latex} 
+\begin{equation}
+\begin{split}
+p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(\boldsymbol{w}) \prod_{l=1}^L \pi_l(\boldsymbol{\theta}_l) \\ 
+\prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
+\end{split}
+\end{equation}
+```
+\scriptsize $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.
+
+. . .
+
+\normalsize 
+
+With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
+
+## Simulation Studies {.smaller} 
+
+We have assessed accuracy and performance of the proposed model. 
+
+- Convergence Diagnostics ($\boldsymbol{w}$, $\boldsymbol{\rho}$, $\alpha$, $\beta$)
+
+- Weight and Dependence Parameters for Copula ($\boldsymbol{w}$, $\boldsymbol{\rho}$)
+
+- Parameters for Marginal Distribution ($\alpha$, $\beta$)
+
+. . .
+
+Simulation studies demonstrate promising results across various scenarios. 
+
+- Scenario 1 and 2: Default setup; Compatible $\boldsymbol{w}$ and $\boldsymbol{\rho}$
+
+- Scenario 1.3 and 1.4: Incompatible $\boldsymbol{w}$ and $\boldsymbol{\rho}$
+
+- Scenario 1.5 and 1.6: Compatible $\boldsymbol{w}$ and $\boldsymbol{\rho}$; Rarely observable patterns
+
+- Scenario 3-6: Usual case for gamma marginals
+
+- Scenario 7-9:Unusual case involving high skewness
+
+## What's New {.smaller} 
+
+Since the Preliminary Exam, we have also conducted:
+
+- Sensitivity Analysis
+
+- Coverage Assessment
+
+. . .
+
+Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
+
+Most parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values.
+
+# Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
+
+## Introduction {.smaller} 
+
+Zero-inflated data are characterized by an excess of zero values and  frequently appear in domains such as healthcare, insurance, environment, and transportation. 
+
+Examples include 
+
+- medical costs, 
+
+- insurance claims, 
+
+- precipitation amounts, and 
+
+- safety measures.
+
+If left unaddressed, zero-inflation undermines model robustness and weakens inference.
+
+## Introduction and Objectives {.smaller}
+
+In Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals. 
+
+However, 
+
+- it remains limited in handling excessive zeros commonly observed in real-world continuous data. 
+
+- Copula-based approaches face identifiability issues when modeling discrete or mixed marginals.
+
+. . .
+
+> **Objectives:** Propose reconstructing the marginal distribution to account for zero-inflation. 
+
+## Background
+
+## Proposed Method {.smaller} 
+
+To construct zero-inflated Gamma for the marginal distribution, 
+
+- The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. 
+
+- Zero values are then replaced with non-zero values drawn from a uniform distribution. 
+
+. . .
+
+Specifically,
+```{=latex} 
+\begin{equation}
+0 \leftarrow U_i, \tag{4}
+\end{equation}
+```
+where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values. 
+
+## Proposed Method {.smaller} 
+
+The resulting distribution, denoted as $ZIGamma(\mu, \beta, P, \epsilon)$, is expressed as:
+```{=latex} 
+\begin{equation}
+f(x) = 
+\begin{cases} 
+Unif(0, \epsilon) & \text{with probability } P \\
+ShiftedGamma(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
+\end{cases}, \tag{5}
+\end{equation}
+```
+where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter. 
+
+. . .
+
+In (5), there are two parts: 
+
+- We have already discussed the uniform distribution. 
+
+- The shifted Gamma distribution, $ShiftedGamma(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
+
+## dzig {.smaller} 
+
+::: {.panel-tabset}
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(gridExtra)
+```
+
+```{r}
+#| echo: false
+dsgamma <- function(x, mu, beta, eps, logd = FALSE) {
+  #(y>=epsilon)*dgamma(y-epsilon,shape=mu/beta,scale=beta)               # Nick's
+  ifelse(x >= eps,                                                       # ifelse because x is a vec.
+         dgamma(x - eps, shape = mu / beta, scale = beta, log = FALSE), 0)
+}
+
+dzig <- function(x, mu, beta, eps, Pi, logd = FALSE) {
+  #Pi*dunif(y,0,epsilon) + (1-Pi)*dsgamma(y,mu,beta,epsilon)             # Nick's
+  density <- Pi * dunif(x, 0, eps, log = FALSE) + (1-Pi) * dsgamma(x, mu, beta, eps, log = FALSE) 
+  if (logd){
+    return(log(density))
+  } else{
+    return(density)
+  }
+}
+```
+
+```{r}
+#| echo: false
+plot_dzig <- function(mu, beta, eps, Pi){
+  x <- seq(0, 25, length.out = 500)
+  y <- dzig(x, mu = mu, beta = beta, eps = eps, Pi = Pi)
+  df <- data.frame(
+    x = x, 
+    density = y
+  )
+  ggplot(df, aes(x = x, y = density)) +
+    geom_line(size = 1) + 
+    labs(x = bquote("dzig("~ 
+                mu == .(mu) * " " ~ 
+                beta == .(beta) * " " ~ 
+                P == .(Pi) * " " ~ 
+                epsilon == .(eps) *")"), 
+         caption = "") + 
+    theme_bw(base_size = 32) + 
+    theme(
+      plot.margin = unit(c(1, 1, 1, 1), "cm"),      
+      axis.title.x = element_text(size = 32), 
+      axis.title.y = element_text(size = 32), 
+      axis.text.x = element_text(size = 32), 
+      axis.text.y = element_text(size = 32), 
+      plot.caption = element_text(size = 32, hjust = 0) 
+    ) -> p
+  return (p)
+}
+```
+
+### $P = 0.1$ $\epsilon = 0.1$
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.1)
+```
+
+### $P = 0.1$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.4)
+```
+
+### $P = 0.5$ $\epsilon = 0.1$
+
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.1)
+```
+
+### $P = 0.5$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.4)
+```
+
+### $P = 0.7$ $\epsilon = 0.1$
+
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.1)
+```
+
+### $P = 0.7$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
+```
+
+:::
+
+## pzig {.smaller} 
+
+::: {.panel-tabset}
+
+```{r}
+#| echo: false
+psgamma <- function(x,mu,beta,eps) { 
+  (x>=eps)*pgamma(x-eps,shape=mu/beta,scale=beta) 
+}
+
+pzig <- function(x,mu,beta,eps,Pi) { 
+  Pi*punif(x,0,eps) + (1-Pi)*psgamma(x,mu,beta,eps) 
+}
+```
+
+```{r}
+#| echo: false
+plot_pzig <- function(mu, beta, eps, Pi){
+  x <- seq(0, 25, length.out = 500)
+  y <- pzig(x, mu = mu, beta = beta, eps = eps, Pi = Pi)
+  df <- data.frame(
+    x = x, 
+    probability = y
+  )
+  ggplot(df, aes(x = x, y = probability)) +
+    geom_line(size = 1) + 
+    labs(x = bquote("pzig("~ 
+                    mu == .(mu) * " " ~ 
+                    beta == .(beta) * " " ~ 
+                    P == .(Pi) * " " ~ 
+                    epsilon == .(eps) * ")"), 
+         caption = "") + 
+    theme_bw(base_size = 32) + 
+    theme(
+      plot.margin = unit(c(1, 1, 1, 1), "cm"),      
+      axis.title.x = element_text(size = 32), 
+      axis.title.y = element_text(size = 32), 
+      axis.text.x = element_text(size = 32), 
+      axis.text.y = element_text(size = 32)
+      #plot.caption = element_text(size = 18, hjust = 0) 
+    ) -> p
+  return (p)
+}
+```
+
+### $P = 0.1$ $\epsilon = 0.1$
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.1)
+```
+
+### $P = 0.1$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.4)
+```
+
+### $P = 0.5$ $\epsilon = 0.1$
+
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.1)
+```
+
+### $P = 0.5$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.4)
+```
+
+### $P = 0.7$ $\epsilon = 0.1$
+
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.1)
+```
+
+### $P = 0.7$ $\epsilon = 0.4$
+
+```{r}
+#| echo: false
+plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
+```
+
+:::
+
+## Simulation Setting {.smaller} 
+
+Simulated data: 
+
+- With weight $\boldsymbol{w}$, dependence for Gaussian copula $\boldsymbol{\rho}$, mean $\mu$, scale $\beta$, zero-inflated probability $P$, and threshold parameter $\epsilon$, we generate $n = 2000$ observations from the copula-based ZIGamma MTD model.
+
+Model fitting: 
+
+- Set the order $L = 5$ and consider the Gaussian copula with Gamma marginals.
+
+MCMC setting: 
+
+- Run the Gibbs sampler for $165, 000$ iterations, discard the first $5000$ iterations as burn-in, and collect samples every $20$ iterations.
+
+- Run four MCMC chains with $8000$ iterations each for all of the following scenarios. 
+
+## Simulation Studies {.smaller} 
+
+We have assessed accuracy and performance of the proposed model.
+
+- Convergence Diagnostics ($\boldsymbol{w}$, $\boldsymbol{\rho}$, $\mu$, $\beta$, $P$, $\epsilon$)
+
+- Weight and Dependence Parameters for Copula ($\boldsymbol{w}$, $\boldsymbol{\rho}$)
+
+- Parameters for Marginal Distribution ($\mu$, $\beta$, $P$, $\epsilon$)
+
+Simulation studies demonstrate promising results across various scenarios. 
+
+- Scenario 1 and 2: Default setup; Compatible $\boldsymbol{w}$ and $\boldsymbol{\rho}$
+
+- Scenario 3-6: Usual case for zero-inflated gamma marginals
+
+- Scenario 7-9: Unusual case involving high skewness
+
+## Simulation Studies {.smaller} 
+
+In all scenarios, we vary $P$ and $\epsilon$, resulting in six cases: 
+
+- $P = 0.1$, $\epsilon = 0.1$
+
+- $P = 0.1$, $\epsilon = 0.4$
+
+- $P = 0.5$, $\epsilon = 0.1$
+
+- $P = 0.5$, $\epsilon = 0.4$
+
+- $P = 0.7$, $\epsilon = 0.1$
+
+- $P = 0.7$, $\epsilon = 0.4$
+
+For brevity, we will only show a few examples.
+
+## Simulation Results {.smaller} 
+
+## Prediction {.smaller} 
+
+# Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
+
+## Introduction {.smaller} 
+
+## Introduction and Objectives {.smaller}
+
+## Background {.smaller} 
+
+## Network Configuration {.smaller} 
+
+## Experimental Setup {.smaller} 
+
+## Simulation Studies {.smaller} 
+
+## Simulation Results {.smaller} 
+
+## Data Application {.smaller} 
+
+## Conclusion 
+
+## Future Work
+
+## Practical Implications
+
+# Thank you!
