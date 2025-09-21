@@ -25,7 +25,7 @@
     "href": "index.html#roadmap",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of Previous Work\nSensitivity Analysis\nCoverage Assessment\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nBackground\nProposed Method\nSimulation Studies\nPrediction"
+    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of MTD Models\nSensitivity Analysis\nCoverage Assessment\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nBackground\nProposed Method\nSimulation Studies\nPrediction"
   },
   {
     "objectID": "index.html#roadmap-1",
@@ -81,7 +81,7 @@
     "href": "index.html#copula",
     "title": "",
     "section": "Copula",
-    "text": "Copula\nCopula is widely used for dependence modeling.\n\nIs applied in quantitative finance, reliability engineering, hydrology, etc.\nConstitutes a substantial research area.\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(Unif(0, 1)\\).\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nIs rooted in Sklar’s theorem.\nConsists of families of copula."
+    "text": "Copula\nCopula is widely used for dependence modeling.\n\nIs applied in quantitative finance, reliability engineering, hydrology, etc.\nConstitutes a substantial research area.\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(Unif(0, 1)\\).\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nIs rooted in Sklar’s theorem.\nConsists of families of copula."
   },
   {
     "objectID": "index.html#proposed-method",
@@ -203,11 +203,18 @@
     "text": "Simulation Results\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"
   },
   {
+    "objectID": "index.html#coverage-assessment",
+    "href": "index.html#coverage-assessment",
+    "title": "",
+    "section": "Coverage Assessment",
+    "text": "Coverage Assessment\nAll nine scenarios were analyzed using a single replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(10\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\n\n\n\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+  },
+  {
     "objectID": "index.html#prediction",
     "href": "index.html#prediction",
     "title": "",
     "section": "Prediction",
-    "text": "Prediction\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9544\n0.7014\n0.9741\n\n\nP01Eps04\n0.9138\n0.3927\n0.9780\n\n\nP05Eps01\n0.9268\n0.9886\n0.8584\n\n\nP05Eps04\n0.9489\n0.9671\n0.9305\n\n\nP07Eps01\n0.8662\n0.9928\n0.5710\n\n\nP07Eps04\n0.9293\n0.9881\n0.7828\n\n\n\n\n\n\n\n\nThe overall coverage can obscure important differences in predictive performance.\nTo provide a clearer picture, we decompose the coverage into below and above.\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant."
+    "text": "Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant."
   },
   {
     "objectID": "index.html#prediction-1",
@@ -238,13 +245,6 @@
     "text": "Background"
   },
   {
-    "objectID": "index.html#network-configuration",
-    "href": "index.html#network-configuration",
-    "title": "",
-    "section": "Network Configuration",
-    "text": "Network Configuration"
-  },
-  {
     "objectID": "index.html#experimental-setup",
     "href": "index.html#experimental-setup",
     "title": "",
@@ -259,11 +259,18 @@
     "text": "Simulation Studies"
   },
   {
-    "objectID": "index.html#simulation-results-2",
-    "href": "index.html#simulation-results-2",
+    "objectID": "index.html#simulation-results-for-gamma-scenarios",
+    "href": "index.html#simulation-results-for-gamma-scenarios",
     "title": "",
-    "section": "Simulation Results",
-    "text": "Simulation Results"
+    "section": "Simulation Results for Gamma Scenarios",
+    "text": "Simulation Results for Gamma Scenarios"
+  },
+  {
+    "objectID": "index.html#simulation-results-for-zigamma-scenarios",
+    "href": "index.html#simulation-results-for-zigamma-scenarios",
+    "title": "",
+    "section": "Simulation Results for ZIGamma Scenarios",
+    "text": "Simulation Results for ZIGamma Scenarios"
   },
   {
     "objectID": "index.html#data-application",

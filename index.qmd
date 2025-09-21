@@ -104,7 +104,7 @@ Part III
 
 Part I Models for Forecasting Skewed Time Series 
 
-- Recap of Previous Work
+- Recap of MTD Models 
 
 - Sensitivity Analysis 
 
@@ -228,6 +228,8 @@ Copula is widely used for dependence modeling.
 . . .
 
 Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $Unif(0, 1)$. 
+
+. . .
 
 Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
 
@@ -946,6 +948,23 @@ t6
 
 :::
 
+## Coverage Assessment
+
+All nine scenarios were analyzed using a single replicate. 
+
+- Recall that we have six cases per scenario.
+
+. . .
+
+Scenarios 1 and 2 were further evaluated with $10$ replicates to assess coverage and robustness. 
+
+- The overall coverage is the proportion of replicates for which the true value is contained within the interval.
+
+. . .
+
+Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values.
+
+
 ## Prediction   
 
 ::::: columns
@@ -955,13 +974,26 @@ t6
 ### 
 
 ```{r}
+library(kableExtra)
+```
+
+```{r}
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
 ```{r}
-table_combind <- readRDS(file.path(output_dir, "table_combind.rds"))
-table_combind <- table_combind |> kable(digits = 4)
-table_combind
+df <- readRDS(file.path(output_dir, "table_combind.rds"))
+```
+```{r}
+df <- round(df, 4)
+df[1,3] <- cell_spec(df[1,3], bold = TRUE)
+df[2,3] <- cell_spec(df[2,3], bold = TRUE)
+df[3,2] <- cell_spec(df[3,2], bold = TRUE)
+df[4,2] <- cell_spec(df[4,2], bold = TRUE)
+df[5,2] <- cell_spec(df[5,2], bold = TRUE)
+df[6,2] <- cell_spec(df[6,2], bold = TRUE)
+df <- df |> kable(digits = 4)
+df
 ```
 
 ::: 
@@ -969,10 +1001,6 @@ table_combind
 ::: column
 
 ### 
-
-- The overall coverage can obscure important differences in predictive performance.
-
-- To provide a clearer picture, we decompose the coverage into **below** and **above**. 
 
 - When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
 
@@ -1060,13 +1088,13 @@ However,
 
 ## Background   
 
-## Network Configuration   
-
 ## Experimental Setup   
 
 ## Simulation Studies   
 
-## Simulation Results   
+## Simulation Results for Gamma Scenarios
+
+## Simulation Results for ZIGamma Scenarios
 
 ## Data Application   
 

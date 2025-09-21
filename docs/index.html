@@ -406,7 +406,7 @@
 <h2>Roadmap</h2>
 <p>Part I Models for Forecasting Skewed Time Series</p>
 <ul>
-<li><p>Recap of Previous Work</p></li>
+<li><p>Recap of MTD Models</p></li>
 <li><p>Sensitivity Analysis</p></li>
 <li><p>Coverage Assessment</p></li>
 </ul>
@@ -513,6 +513,8 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 </ul>
 <div class="fragment">
 <p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(Unif(0, 1)\)</span>.</p>
+</div>
+<div class="fragment">
 <p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
 <ul>
 <li><p>Is rooted in Sklar’s theorem.</p></li>
@@ -1271,6 +1273,22 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </section>
+<section id="coverage-assessment" class="slide level2">
+<h2>Coverage Assessment</h2>
+<p>All nine scenarios were analyzed using a single replicate.</p>
+<ul>
+<li>Recall that we have six cases per scenario.</li>
+</ul>
+<div class="fragment">
+<p>Scenarios 1 and 2 were further evaluated with <span class="math inline">\(10\)</span> replicates to assess coverage and robustness.</p>
+<ul>
+<li>The overall coverage is the proportion of replicates for which the true value is contained within the interval.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Most parameters achieve full coverage, with a few slightly below <span class="math inline">\(1\)</span>, indicating that the posterior intervals reliably capture the true parameter values.</p>
+</div>
+</section>
 <section id="prediction" class="slide level2">
 <h2>Prediction</h2>
 <div class="columns">
@@ -1279,50 +1297,56 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 42%">
+<col style="width: 42%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: right;">Coverage</th>
-<th style="text-align: right;">Below</th>
-<th style="text-align: right;">Above</th>
+<th style="text-align: left;">Coverage</th>
+<th style="text-align: left;">Below</th>
+<th style="text-align: left;">Above</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">P01Eps01</td>
-<td style="text-align: right;">0.9544</td>
-<td style="text-align: right;">0.7014</td>
-<td style="text-align: right;">0.9741</td>
+<td style="text-align: left;">0.9549</td>
+<td style="text-align: left;">0.6944</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9751</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P01Eps04</td>
-<td style="text-align: right;">0.9138</td>
-<td style="text-align: right;">0.3927</td>
-<td style="text-align: right;">0.9780</td>
+<td style="text-align: left;">0.9148</td>
+<td style="text-align: left;">0.3973</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9786</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P05Eps01</td>
-<td style="text-align: right;">0.9268</td>
-<td style="text-align: right;">0.9886</td>
-<td style="text-align: right;">0.8584</td>
+<td style="text-align: left;">0.9278</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9876</span></td>
+<td style="text-align: left;">0.8615</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P05Eps04</td>
-<td style="text-align: right;">0.9489</td>
-<td style="text-align: right;">0.9671</td>
-<td style="text-align: right;">0.9305</td>
+<td style="text-align: left;">0.9484</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9681</span></td>
+<td style="text-align: left;">0.9285</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">P07Eps01</td>
-<td style="text-align: right;">0.8662</td>
-<td style="text-align: right;">0.9928</td>
-<td style="text-align: right;">0.5710</td>
+<td style="text-align: left;">0.8677</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9943</span></td>
+<td style="text-align: left;">0.5726</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">P07Eps04</td>
-<td style="text-align: right;">0.9293</td>
-<td style="text-align: right;">0.9881</td>
-<td style="text-align: right;">0.7828</td>
+<td style="text-align: left;">0.9298</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.9888</span></td>
+<td style="text-align: left;">0.7828</td>
 </tr>
 </tbody>
 </table>
@@ -1331,8 +1355,6 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div><div class="column">
 <h3 id="section-1"></h3>
 <ul>
-<li><p>The overall coverage can obscure important differences in predictive performance.</p></li>
-<li><p>To provide a clearer picture, we decompose the coverage into <strong>below</strong> and <strong>above</strong>.</p></li>
 <li><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> (i.e., the coverage for data greater than <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
 <li><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> (i.e., the coverage for data less than or equal to <span class="math inline">\(\epsilon\)</span>) becomes increasingly dominant.</p></li>
 </ul>
@@ -1348,7 +1370,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-44-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1359,7 +1381,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-45-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1370,7 +1392,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1381,7 +1403,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1392,7 +1414,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1403,7 +1425,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-51-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1446,17 +1468,17 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <section id="background-2" class="slide level2">
 <h2>Background</h2>
 </section>
-<section id="network-configuration" class="slide level2">
-<h2>Network Configuration</h2>
-</section>
 <section id="experimental-setup" class="slide level2">
 <h2>Experimental Setup</h2>
 </section>
 <section id="simulation-studies-3" class="slide level2">
 <h2>Simulation Studies</h2>
 </section>
-<section id="simulation-results-2" class="slide level2">
-<h2>Simulation Results</h2>
+<section id="simulation-results-for-gamma-scenarios" class="slide level2">
+<h2>Simulation Results for Gamma Scenarios</h2>
+</section>
+<section id="simulation-results-for-zigamma-scenarios" class="slide level2">
+<h2>Simulation Results for ZIGamma Scenarios</h2>
 </section>
 <section id="data-application" class="slide level2">
 <h2>Data Application</h2>
