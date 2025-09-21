@@ -326,26 +326,46 @@
     <div class="slides">
 
 
-<section class="slide level2">
-
-<h3 id="copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks">Copula-Based Mixture Transition Distribution Models for Forecasting Skewed and Zero-Inflated Time Series: Methodology and Comparisons with Deep Learning LSTM Networks</h3>
-<p>Frances Lin</p>
-<p>Dissertation Defense</p>
-<p>Oregon State University</p>
+<section id="copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks" class="slide level2">
+<h2>Copula-Based Mixture Transition Distribution Models for Forecasting Skewed and Zero-Inflated Time Series: Methodology and Comparisons with Deep Learning LSTM Networks</h2>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<div class="columns">
+<div class="column">
+<h3 id="frances-lin">Frances Lin</h3>
+<p>🛡 Dissertation Defense</p>
+<p>🦫 Oregon State University</p>
 <p>November 5, 2025</p>
+</div><div class="column">
+<h3 id="section"></h3>
+<p>Co-Advisors: Dr.&nbsp;Lisa Madsen, Dr.&nbsp;Charlotte Wickham</p>
+<p>Committee Members: Dr.&nbsp;James Molyneux, Dr.&nbsp;Claudio Fuentes, Dr.&nbsp;Prasad Tadepalli</p>
+</div></div>
 </section>
 <section id="motivation" class="slide level2">
 <h2>Motivation</h2>
 <p>Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.</p>
 <ul>
-<li>Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored.</li>
+<li>⚠️ Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored.</li>
 </ul>
 <div class="fragment">
-<p>Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear dependence and long-range correlation.</p>
+<p>Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.</p>
+</div>
+<div class="fragment">
 <ul>
-<li><p>Prior work found comparable predictive performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for disease spread.</p></li>
-<li><p>Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.</p></li>
+<li><p>⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread.</p></li>
+<li><p>⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.</p></li>
 </ul>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="images/nasa-1.jpg" class="absolute" style="top: 0px; left: 0px; width: 900px; height: 675px; "></p>
+<p><img data-src="images/nasa-2.jpg" class="absolute" style="top: 0px; left: 950px; width: 250px; height: 675px; "></p>
+<p><img data-src="images/nasa-3.jpg" class="absolute" style="top: 0px; left: 1250px; width: 250px; height: 675px; "></p>
+<div style="margin-top: 725px;">
+<p>©️ NASA Earth Data 📍 Limon Wind Energy Center, Colorado</p>
 </div>
 </section>
 <section id="nasa-merra-2-data" class="slide level2">
@@ -398,7 +418,7 @@
 <div class="fragment">
 <p>Part III</p>
 <blockquote>
-<p>Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness.</p>
+<p>Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness.</p>
 </blockquote>
 </div>
 </section>
@@ -450,7 +470,7 @@
 <h2>Introduction and Objectives</h2>
 <p>Our work builds upon the architecture of the MTD model introduced by Zheng et al.&nbsp;(2022).</p>
 <ul>
-<li>Includes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.</li>
+<li>Includes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.</li>
 </ul>
 <div class="fragment">
 <p>However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.</p>
@@ -458,6 +478,11 @@
 <div class="fragment">
 <blockquote>
 <p><strong>Objectives:</strong> Propose to incorporate copulas into the transition kernels to address this limitation.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Develop the Gamma MTD model, but the framework is generalizable.</p>
 </blockquote>
 </div>
 </section>
@@ -472,8 +497,27 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \label{eq:joint_distribution}
 \end{equation}\]</span>
 <p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
-<div class="fragment">
+</section>
+<section id="model-framework-dag-also-known-as-bayesian-network-1" class="slide level2">
+<h2>Model Framework: DAG; also known as Bayesian network</h2>
 <p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
+<div class="fragment">
+<p><span class="math display">\[
+X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6
+\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+X_2, X_3, X_4, X_5, X_6, \ \ \ \ \  \ \ \ \ \ X_7
+\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[
+\cdots
+\]</span></p>
+<p><span class="math display">\[
+X_{t-5}, X_{t-4}, X_{t-3}, X_{t-2}, X_{t-1},  \ \ \ \ \ \ \ \ \ \ X_t
+\]</span></p>
 </div>
 </section>
 <section id="model-framework-transition-kernels-mixture-weights" class="slide level2">
@@ -492,16 +536,11 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 </ul>
 </div>
 </section>
-<section id="existing-method-to-proposed-method" class="slide level2">
-<h2>Existing Method to Proposed Method</h2>
-<p>Based on Proposition 1 by Zheng et al.&nbsp;(2022), the bivariate distribution approach, for example, identifies a bivariate distribution of <span class="math inline">\((U_l, V_l)\)</span> such that the marginal densities, <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span>, are equal to a pre-specified stationary marginal density <span class="math inline">\(f_X\)</span> for all <span class="math inline">\(l\)</span> transition kernels.</p>
-<div class="fragment">
-<p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
-<p><span class="math display">\[
-\textbf{transition kernel} \longrightarrow \textbf{copula} \times \textbf{marginal}
-\]</span> <span class="math display">\[
-\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
-\]</span></p>
+<section class="slide level2">
+
+<p><img data-src="images/financial.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
+<div style="margin-top: 725px;">
+<p>©️ Yuvraj Deshmukh ⏭️ Copula</p>
 </div>
 </section>
 <section id="copula" class="slide level2">
@@ -509,7 +548,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <p>Copula is widely used for dependence modeling.</p>
 <ul>
 <li><p>Is applied in quantitative finance, reliability engineering, hydrology, etc.</p></li>
-<li><p>Constitutes a substantial research area.</p></li>
+<li><p>Consists of families of copula, constituting a substantial research area.</p></li>
 </ul>
 <div class="fragment">
 <p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(Unif(0, 1)\)</span>.</p>
@@ -517,9 +556,23 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <div class="fragment">
 <p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
 <ul>
-<li><p>Is rooted in Sklar’s theorem.</p></li>
-<li><p>Consists of families of copula.</p></li>
+<li>Rooted in Sklar’s theorem.</li>
 </ul>
+</div>
+</section>
+<section id="existing-method-to-proposed-method" class="slide level2">
+<h2>Existing Method to Proposed Method</h2>
+<p>The bivariate distribution approach, for example, identifies a bivariate distribution of <span class="math inline">\((U_l, V_l)\)</span> such that the marginal densities, <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span>, are equal to a pre-specified stationary marginal density <span class="math inline">\(f_X\)</span> for all <span class="math inline">\(l\)</span> transition kernels.</p>
+<ul>
+<li>Based on Proposition 1 of Zheng et al.&nbsp;(2022).</li>
+</ul>
+<div class="fragment">
+<p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
+<p><span class="math display">\[
+\textbf{transition kernel} \longleftarrow \textbf{copula} \times \textbf{marginal}
+\]</span> <span class="math display">\[
+\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
+\]</span></p>
 </div>
 </section>
 <section id="proposed-method" class="slide level2">
@@ -621,6 +674,11 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="fragment">
 <blockquote>
 <p><strong>Objectives:</strong> Propose reconstructing the marginal distribution to account for zero-inflation.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Develop the ZIGamma MTD model, but the framework is generalizable.</p>
 </blockquote>
 </div>
 </section>
@@ -842,7 +900,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="simulation-studies-2" class="slide level2">
 <h2>Simulation Studies</h2>
-<p>In all nine scenarios, we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases:</p>
+<p>In all nine scenarios, we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases per scenario:</p>
 <ul>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
@@ -851,7 +909,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p><span class="math inline">\(P = 0.7\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.7\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
 </ul>
-<p>For brevity, we will focus on Scenario 1.</p>
+<p>For brevity, we present Scenario 1 only.</p>
 </section>
 <section id="simulation-results" class="slide level2">
 <h2>Simulation Results</h2>
@@ -1293,7 +1351,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <h2>Prediction</h2>
 <div class="columns">
 <div class="column">
-<h3 id="section"></h3>
+<h3 id="section-1"></h3>
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -1353,7 +1411,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div><div class="column">
-<h3 id="section-1"></h3>
+<h3 id="section-2"></h3>
 <ul>
 <li><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> (i.e., the coverage for data greater than <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
 <li><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> (i.e., the coverage for data less than or equal to <span class="math inline">\(\epsilon\)</span>) becomes increasingly dominant.</p></li>
@@ -1456,12 +1514,17 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <h2>Introduction and Objectives</h2>
 <p>However,</p>
 <ul>
-<li><p>a prior study found comparable performance between the probabilistic MTD model and the deep learning long short-term memory (LSTM) network for predicting disease spread.</p></li>
+<li><p>a prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.</p></li>
 <li><p>Previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.</p></li>
 </ul>
 <div class="fragment">
 <blockquote>
-<p><strong>Objectives:</strong> Systemically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.</p>
+<p><strong>Objectives:</strong> Systematically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.</p>
+</blockquote>
+</div>
+<div class="fragment">
+<blockquote>
+<p>Demonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design.</p>
 </blockquote>
 </div>
 </section>
@@ -1482,6 +1545,50 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="data-application" class="slide level2">
 <h2>Data Application</h2>
+</section>
+<section id="data-application-1" class="slide level2">
+<h2>Data Application</h2>
+</section>
+<section id="data-application-2" class="slide level2">
+<h2>Data Application</h2>
+<div class="panel-tabset">
+<ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-7-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-7-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-53-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-54-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-7-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-55-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>

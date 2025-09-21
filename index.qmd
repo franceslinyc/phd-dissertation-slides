@@ -8,29 +8,68 @@ format:
     scrollable: true
 ---
 
-### Copula-Based Mixture Transition Distribution Models for Forecasting Skewed and Zero-Inflated Time Series: Methodology and Comparisons with Deep Learning LSTM Networks  
+## Copula-Based Mixture Transition Distribution Models for Forecasting Skewed and Zero-Inflated Time Series: Methodology and Comparisons with Deep Learning LSTM Networks  
 
-Frances Lin
+<br>
 
-Dissertation Defense
+<br>
 
-Oregon State University
+<br>
+
+::::: columns
+
+::: column
+
+### Frances Lin
+
+🛡 Dissertation Defense  
+
+🦫 Oregon State University  
 
 November 5, 2025
+
+::: 
+
+::: column
+
+###
+
+Co-Advisors: Dr. Lisa Madsen, Dr. Charlotte Wickham
+
+Committee Members: Dr. James Molyneux, Dr. Claudio Fuentes, Dr. Prasad Tadepalli
+
+::: 
+
+::::: 
 
 ## Motivation  
 
 Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation. 
 
-- Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored. 
+- ⚠️ Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored. 
 
 . . .    
 
-Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear dependence and long-range correlation. 
+Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence. 
 
-- Prior work found comparable predictive performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for disease spread. 
+. . .    
 
-- Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
+- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread. 
+
+- ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
+
+--- 
+
+![](images/nasa-1.jpg){.absolute top=0 left=0 width="900" height="675"}
+
+![](images/nasa-2.jpg){.absolute top=0 left=950 width="250" height="675"}
+
+![](images/nasa-3.jpg){.absolute top=0 left=1250 width="250" height="675"}
+
+<div style="margin-top: 725px;">
+©️ NASA Earth Data
+📍 Limon Wind Energy Center, Colorado  
+</div>
 
 ## NASA MERRA-2 Data
 
@@ -88,6 +127,8 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 ::: 
 
+
+
 ## Objectives 
 
 Part I and II
@@ -98,7 +139,7 @@ Part I and II
 
 Part III
 
-> Evaluate these models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, to assess predictive performance and robustness. 
+> Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness.
 
 ## Roadmap 
 
@@ -121,6 +162,7 @@ Part II Models for Forecasting Zero-Inflated Skewed Time Series
 - Simulation Studies
 
 - Prediction
+
 
 ## Roadmap 
 
@@ -154,7 +196,7 @@ The mixture transition distribution (MTD) models
 
 Our work builds upon the architecture of the MTD model introduced by Zheng et al. (2022). 
 
-- Includes various applications, such as the Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics. 
+- Includes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics. 
 
 . . .
 
@@ -163,6 +205,10 @@ However, for certain invariant marginal distributions, the transition kernel may
 . . .
 
 > **Objectives:** Propose to incorporate copulas into the transition kernels to address this limitation.
+
+. . .
+
+> Develop the Gamma MTD model, but the framework is generalizable.
 
 ## Background 
 
@@ -179,7 +225,32 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 . . .
 
+## Model Framework: DAG; also known as Bayesian network 
+
 Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
+
+. . .
+
+$$
+X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6 
+$$
+
+. . .
+
+$$
+X_2, X_3, X_4, X_5, X_6, \ \ \ \ \  \ \ \ \ \ X_7 
+$$
+
+. . .
+
+$$
+\cdots
+$$
+
+$$
+X_{t-5}, X_{t-4}, X_{t-3}, X_{t-2}, X_{t-1},  \ \ \ \ \ \ \ \ \ \ X_t 
+$$
+
 
 ## Model Framework: Transition kernels & mixture weights 
 
@@ -202,20 +273,14 @@ There are two components in (2):
   
   - Weight parameter, $w_l$, determines the relative contribution of that influence. 
 
-## Existing Method to Proposed Method 
+--- 
 
-Based on Proposition 1 by Zheng et al. (2022), the bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
+![](images/financial.jpg){.absolute top=0 left=0 width="1200" height="675"}
 
-. . .
-
-This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure. 
-
-$$
-\textbf{transition kernel} \longrightarrow \textbf{copula} \times \textbf{marginal} 
-$$
-$$
-\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
-$$
+<div style="margin-top: 725px;">
+©️ Yuvraj Deshmukh
+⏭️ Copula
+</div>
 
 ## Copula 
 
@@ -223,7 +288,7 @@ Copula is widely used for dependence modeling.
 
   - Is applied in quantitative finance, reliability engineering, hydrology, etc.
 
-  - Constitutes a substantial research area.
+  - Consists of families of copula, constituting a substantial research area.
 
 . . .
 
@@ -233,9 +298,25 @@ Copula is a multivariate cumulative distribution function (cdf) where its margin
 
 Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
 
-  - Is rooted in Sklar’s theorem. 
+- Rooted in Sklar’s theorem. 
   
-  - Consists of families of copula. 
+
+## Existing Method to Proposed Method 
+
+The bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
+
+- Based on Proposition 1 of Zheng et al. (2022).
+
+. . .
+
+This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure. 
+
+$$
+\textbf{transition kernel} \longleftarrow \textbf{copula} \times \textbf{marginal} 
+$$
+$$
+\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t) 
+$$
 
 ## Proposed Method  
 
@@ -358,6 +439,10 @@ However,
 . . .
 
 > **Objectives:** Propose reconstructing the marginal distribution to account for zero-inflation. 
+
+. . .
+
+> Develop the ZIGamma MTD model, but the framework is generalizable.
 
 ## Background
 
@@ -621,7 +706,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 ## Simulation Studies   
 
-In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases: 
+In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases per scenario: 
 
 - $P = 0.1$, $\epsilon = 0.1$
 
@@ -635,7 +720,7 @@ In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases:
 
 - $P = 0.7$, $\epsilon = 0.4$
 
-For brevity, we will focus on Scenario 1.
+For brevity, we present Scenario 1 only.
 
 ## Simulation Results   
 
@@ -1078,13 +1163,17 @@ Beyond natural language processing (NLP), RNNs and LSTMs have also shown effecti
 
 However, 
 
-- a prior study found comparable performance between the probabilistic MTD model and the deep learning long short-term memory (LSTM) network for predicting disease spread.
+- a prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.
 
 - Previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
 
 . . .
 
-> **Objectives:** Systemically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness. 
+> **Objectives:** Systematically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness. 
+
+. . .
+
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design. 
 
 ## Background   
 
@@ -1097,6 +1186,36 @@ However,
 ## Simulation Results for ZIGamma Scenarios
 
 ## Data Application   
+
+## Data Application 
+
+## Data Application 
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real.rds"))
+```
+
+::: 
 
 ## Conclusion 
 
