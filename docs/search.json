@@ -249,7 +249,7 @@
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\na prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\nPrevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\n\n\n\nObjectives: Systematically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design."
+    "text": "Introduction and Objectives\nHowever,\n\na prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\nPrevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design."
   },
   {
     "objectID": "index.html#background-2",

@@ -1180,7 +1180,7 @@ However,
 
 . . .
 
-> **Objectives:** Systematically evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness. 
+> **Objectives:** Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness. 
 
 . . .
 
@@ -1299,6 +1299,15 @@ grid.arrange(p_lstm_lr, p_lstm_2, p_lstm_l, p_lstm_cd, ncol = 2)
 ::: 
 
 ::::: 
+
+---
+
+![](images/zeros.jpg){.absolute top=0 left=0 width="1200" height="675"}
+
+<div style="margin-top: 725px;">
+©️ Akin Bostanci
+⏸️ ... Quick Visual Break
+</div>
 
 ## Simulation Results for ZIGamma Scenarios
 
