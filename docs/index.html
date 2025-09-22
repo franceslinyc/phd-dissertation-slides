@@ -365,7 +365,7 @@
 <p><img data-src="images/nasa-2.jpg" class="absolute" style="top: 0px; left: 950px; width: 250px; height: 675px; "></p>
 <p><img data-src="images/nasa-3.jpg" class="absolute" style="top: 0px; left: 1250px; width: 250px; height: 675px; "></p>
 <div style="margin-top: 725px;">
-<p>©️ NASA Earth Data 📍 Limon Wind Energy Center, Colorado</p>
+<p>©️ NASA GES DISC 📍 Limon Wind Energy Center, Colorado</p>
 </div>
 </section>
 <section id="nasa-merra-2-data" class="slide level2">
@@ -502,6 +502,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 <h2>Model Framework: DAG; also known as Bayesian network</h2>
 <p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
 <div class="fragment">
+<p>For MTD order <span class="math inline">\(L = 5\)</span>,</p>
 <p><span class="math display">\[
 X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6
 \]</span></p>
@@ -708,7 +709,7 @@ f(x) =
 \begin{cases}
 Unif(0, \epsilon) &amp; \text{with probability } P \\
 ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
-\end{cases}, \tag{5}
+\end{cases} \tag{5}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
 <div class="fragment">
@@ -865,6 +866,13 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img data-src="images/hpc.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
+<div style="margin-top: 725px;">
+<p>©️ ORNL 🙏 OSU Advanced Research Computing Services</p>
 </div>
 </section>
 <section id="simulation-setting" class="slide level2">
@@ -1539,6 +1547,125 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="simulation-results-for-gamma-scenarios" class="slide level2">
 <h2>Simulation Results for Gamma Scenarios</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 48%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">LSTM</th>
+<th style="text-align: left;">MTD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">s1</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.3326</span></td>
+<td style="text-align: left;">1.3569</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">s2</td>
+<td style="text-align: left;">2.3001</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.1988</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s3</td>
+<td style="text-align: left;">1.07</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.0446</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">s4</td>
+<td style="text-align: left;">1.6846</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.5282</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s5</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.0215</span></td>
+<td style="text-align: left;">1.1296</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">s6</td>
+<td style="text-align: left;">0.8263</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.7649</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s7</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.7452</span></td>
+<td style="text-align: left;">0.7617</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">s8</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.3675</span></td>
+<td style="text-align: left;">0.3808</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s9</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.1837</span></td>
+<td style="text-align: left;">0.1902</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li><p>RMSEs for MTD are lower in Scenarios 2, 3, 4, and 6, though the differences are minimal.</p></li>
+<li><p>RMSEs are the highest for both models in Scenario 2.</p></li>
+</ul>
+</div></div>
+</section>
+<section id="simulation-results-for-gamma-scenarios-1" class="slide level2">
+<h2>Simulation Results for Gamma Scenarios</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-56-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li>RMSE has a mean difference of <span class="math inline">\(0.128957\)</span> (<code>p-value = 0.005175</code>, <code>df = 9</code>), with MTD consistently yielding lower RMSEs.</li>
+</ul>
+</div></div>
+</section>
+<section id="simulation-results-for-gamma-scenarios-2" class="slide level2">
+<h2>Simulation Results for Gamma Scenarios</h2>
+<div class="columns">
+<div class="column">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-59-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li><p>Batch size is significant (<code>Pr(&gt;F) = 4.4e-06</code>, <code>df = 2, 24</code>); RMSEs differ only for <span class="math inline">\(64\)</span> vs.&nbsp;others, and <span class="math inline">\(128\)</span> vs.&nbsp;others.</p></li>
+<li><p>Cell dimensions too (<code>Pr(&gt;F) = 0.0113</code>, <code>df = 2, 24</code>); RMSE differs only between <span class="math inline">\(32\)</span> vs.&nbsp;<span class="math inline">\(64\)</span> and <span class="math inline">\(32\)</span> vs.&nbsp;<span class="math inline">\(128\)</span>.</p></li>
+<li><p>Adopt the default configuration for subsequent experiments:</p>
+<ul>
+<li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
+<li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
+<li><p>number of layers = <span class="math inline">\(1\)</span>, and</p></li>
+<li><p>cell dimension = <span class="math inline">\(64\)</span>.</p></li>
+</ul></li>
+</ul>
+</div></div>
 </section>
 <section id="simulation-results-for-zigamma-scenarios" class="slide level2">
 <h2>Simulation Results for ZIGamma Scenarios</h2>
@@ -1548,40 +1675,171 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="data-application-1" class="slide level2">
 <h2>Data Application</h2>
-</section>
-<section id="data-application-2" class="slide level2">
-<h2>Data Application</h2>
 <div class="panel-tabset">
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-7-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-7-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
 <div id="tabset-7-1">
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-53-1.png" width="960"></p>
-</figure>
-</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: right;">LSTM</th>
+<th style="text-align: left;">MTD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RMSE</td>
+<td style="text-align: right;">0.6359</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.3508</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAE</td>
+<td style="text-align: right;">0.6021</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.2692</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MAPE</td>
+<td style="text-align: right;">11.1103</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">4.255</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SMAPE</td>
+<td style="text-align: right;">9.9305</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">4.2051</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MASE</td>
+<td style="text-align: right;">0.6595</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.366</span></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="tabset-7-2">
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-54-1.png" width="960"></p>
-</figure>
-</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: right;">LSTM</th>
+<th style="text-align: left;">MTD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RMSE</td>
+<td style="text-align: right;">0.4607</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.2376</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAE</td>
+<td style="text-align: right;">0.3692</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.1614</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MAPE</td>
+<td style="text-align: right;">11.2891</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">4.0688</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SMAPE</td>
+<td style="text-align: right;">10.2499</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">3.9569</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MASE</td>
+<td style="text-align: right;">0.6194</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.2873</span></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="tabset-7-3">
 <div class="cell">
 <div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: right;">LSTM</th>
+<th style="text-align: left;">MTD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">RMSE</td>
+<td style="text-align: right;">0.4011</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.2215</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MAE</td>
+<td style="text-align: right;">0.2696</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.1543</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MAPE</td>
+<td style="text-align: right;">11.6386</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">6.5935</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SMAPE</td>
+<td style="text-align: right;">12.6050</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">6.2548</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MASE</td>
+<td style="text-align: right;">0.6660</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.3537</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-application-2" class="slide level2">
+<h2>Data Application</h2>
+<div class="panel-tabset">
+<ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-8-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-8-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1">
+<div class="cell">
+<div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-55-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-68-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-69-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-8-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-70-1.png" width="960"></p>
 </figure>
 </div>
 </div>

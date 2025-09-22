@@ -67,7 +67,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 ![](images/nasa-3.jpg){.absolute top=0 left=1250 width="250" height="675"}
 
 <div style="margin-top: 725px;">
-©️ NASA Earth Data
+©️ NASA GES DISC
 📍 Limon Wind Energy Center, Colorado  
 </div>
 
@@ -230,6 +230,8 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
 
 . . .
+
+For MTD order $L = 5$, 
 
 $$
 X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6 
@@ -473,7 +475,7 @@ f(x) =
 \begin{cases} 
 Unif(0, \epsilon) & \text{with probability } P \\
 ShiftedGamma(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
-\end{cases}, \tag{5}
+\end{cases} \tag{5}
 \end{equation}
 ```
 where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter. 
@@ -669,6 +671,15 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 ```
 
 :::
+
+--- 
+
+![](images/hpc.jpg){.absolute top=0 left=0 width="1200" height="675"}
+
+<div style="margin-top: 725px;">
+©️ ORNL
+🙏 OSU Advanced Research Computing Services
+</div>
 
 ## Simulation Setting   
 
@@ -1183,11 +1194,161 @@ However,
 
 ## Simulation Results for Gamma Scenarios
 
+::::: columns
+
+::: column
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+df <- readRDS(file.path(output_dir, "gamma.rds"))
+```
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$MTD[2] <- cell_spec(df$MTD[2], bold = TRUE)
+df$MTD[3] <- cell_spec(df$MTD[3], bold = TRUE)
+df$MTD[4] <- cell_spec(df$MTD[4], bold = TRUE)
+df$MTD[6] <- cell_spec(df$MTD[6], bold = TRUE)
+df$LSTM[1] <- cell_spec(df$LSTM[1], bold = TRUE)
+df$LSTM[5] <- cell_spec(df$LSTM[5], bold = TRUE)
+df$LSTM[7] <- cell_spec(df$LSTM[7], bold = TRUE)
+df$LSTM[8] <- cell_spec(df$LSTM[8], bold = TRUE)
+df$LSTM[9] <- cell_spec(df$LSTM[9], bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+:::
+
+::: column
+
+- RMSEs for MTD are lower in Scenarios 2, 3, 4, and 6, though the differences are minimal.
+
+- RMSEs are the highest for both models in Scenario 2. 
+
+::: 
+
+::::: 
+
+## Simulation Results for Gamma Scenarios
+
+::::: columns
+
+::: column
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r, fig.height=10}
+p <- readRDS(file.path(output_dir, "gamma_2.rds"))
+print(p)
+```
+
+:::
+
+::: column
+
+- RMSE has a mean difference of $0.128957$ (`p-value = 0.005175`, `df = 9`), with MTD consistently yielding lower RMSEs. 
+
+::: 
+
+::::: 
+
+## Simulation Results for Gamma Scenarios
+
+::::: columns
+
+::: column
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+p_lstm_lr <- readRDS(file.path(output_dir, "p_lstm_lr.rds"))
+p_lstm_2 <- readRDS(file.path(output_dir, "p_lstm_2.rds"))
+p_lstm_l <- readRDS(file.path(output_dir, "p_lstm_l.rds"))
+p_lstm_cd <- readRDS(file.path(output_dir, "p_lstm_cd.rds"))
+```
+
+```{r, fig.height=10}
+grid.arrange(p_lstm_lr, p_lstm_2, p_lstm_l, p_lstm_cd, ncol = 2)
+```
+
+:::
+
+::: column
+
+- Batch size is significant (`Pr(>F) = 4.4e-06`, `df = 2, 24`); RMSEs differ only for $64$ vs. others, and $128$ vs. others.
+
+- Cell dimensions too (`Pr(>F) = 0.0113`, `df = 2, 24`); RMSE differs only between $32$ vs. $64$ and $32$ vs. $128$.
+
+- Adopt the default configuration for subsequent experiments: 
+
+  - learning rate = $0.001$, 
+  
+  - batch size = $32$, 
+  
+  - number of layers = $1$, and 
+  
+  - cell dimension = $64$. 
+
+::: 
+
+::::: 
+
 ## Simulation Results for ZIGamma Scenarios
 
 ## Data Application   
 
 ## Data Application 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### windspeeds at 50m above ground
+
+```{r}
+df <- readRDS(file.path(output_dir, "real_50.rds"))
+```
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$MTD <- cell_spec(df$MTD, bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+df <- readRDS(file.path(output_dir, "real_10.rds"))
+```
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$MTD <- cell_spec(df$MTD, bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+df <- readRDS(file.path(output_dir, "real_2.rds"))
+```
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$MTD <- cell_spec(df$MTD, bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+::: 
 
 ## Data Application 
 
