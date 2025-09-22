@@ -1,0 +1,27 @@
+| Metric| Definition | Formula |
+|------|------|------|
+| RMSE    | Root Mean Squared Error    | $\sqrt{\frac{1}{T} \sum_{t=1}^{T} (y_t - \hat{y}_t)^2}$   |
+| MAE     | Mean Absolute Error     | $\frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t|$   |
+| MAPE    | Mean Absolute Percentage Error    | $\frac{100}{T} \sum_{t=1}^{T} \left| \frac{y_t - \hat{y}_t}{y_t} \right|$  |
+| SMAPE   | Symmetric MAPE    | $\frac{100}{T} \sum_{t=1}^{T} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}$   |
+| MASE    | Mean Absolute Scaled Error     | $\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }$  |
+
+
+```{=latex} 
+\begin{table}[ht]
+\centering
+\caption{Common metrics for evaluating forecasting models.}
+\label{tbl-metrics}
+\begin{tabular}{lll}
+\hline
+\textbf{Metric} & \textbf{Definition} & \textbf{Formula} \\
+\hline
+RMSE & Root Mean Squared Error & $\sqrt{\frac{1}{T} \sum_{t=1}^{T} (y_t - \hat{y}_t)^2}$ \\
+MAE & Mean Absolute Error & $\frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t|$ \\
+MAPE & Mean Absolute Percentage Error & $\frac{100}{T} \sum_{t=1}^{T} \left| \frac{y_t - \hat{y}_t}{y_t} \right|$ \\
+SMAPE & Symmetric MAPE & $\frac{100}{T} \sum_{t=1}^{T} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}$ \\
+MASE & Mean Absolute Scaled Error & $\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }$ \\
+\hline
+\end{tabular}
+\end{table}
+```

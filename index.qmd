@@ -1252,8 +1252,6 @@ However,
 
 - RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next. 
 
-- An RNN unit computes a weighted combination of input data, $x_t$, and the previous hidden state, $h_{t-1}$, applies an activation function, and updates the hidden state to $h_t$. 
-
 - RNN is prone to the well-documented vanishing gradient issue when processing long sequences. 
 
 ::: 
@@ -1280,15 +1278,33 @@ However,
 
 - The cell state carries long-term dependence, while the hidden state encodes short-term patterns. 
 
-- The gates regulate the flow of information by determining how much of the previous cell state should be forgotten, how much new information should be added, and how much of the updated cell state should be passed to the hidden state at each time step.
+- The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.
 
 ::: 
 
 ::::: 
 
+# Simulation Studies 
+
 ## Experimental Setup   
 
-## Simulation Studies   
+Experiment 1: 
+
+- We run both models on Gamma Scenario 1–9 to compare the predictive performance of the LSTM and MTD models under various conditions. 
+
+Experiment 2: 
+
+- We run both the LSTM and MTD models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance. 
+
+Experiment 3: 
+
+- We run the LSTM with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters. 
+
+## Experimental Setup   
+
+Experiment 4: 
+
+- For the zero-inflated Gamma settings, we focus exclusively on Scenario 1, since each scenario includes six cases defined by all combinations of $P = 0.1, 0.5, 0.7$, and $\epsilon = 0.1, 0.4$.
 
 ## Simulation Results for Gamma Scenarios 1-9
 
@@ -1488,9 +1504,66 @@ df
 
 ::::: 
 
-## Data Application   
+# Data Application 
 
-## Data Application
+## Experimental Setup   
+
+::::: columns
+
+::: column
+
+### MTD
+
+- For MTD, the hyperparameter settings are:
+
+  - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
+
+  - dependence parameter $\rho$: $Unif(\rho_l | -1, 1)$, and
+
+  - weight parameter $w$ [^w]: $CDP(w | \alpha_0 = 5, a_0 = 1, b_0 = 3)$; cdf-based Dirichlet process prior.
+
+[^alpha]: $u_{\alpha}$, $u_{\beta}$ derived from the training data: $u_{\beta}$ = mean/variance, $u_{\alpha}$ = mean $\times$ $u_{\beta}$.
+
+[^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$. 
+
+- MTD is implemented in `R` and executed on a high-performance computing (HPC) cluster. 
+
+::: 
+
+::: column
+
+### LSTM
+
+- For LSTM, we reuse the default configuration for subsequent experiments: 
+
+  - learning rate = $0.001$, 
+  
+  - batch size = $32$, 
+  
+  - number of layers = $1$, and 
+  
+  - cell dimension = $64$. 
+
+- LSTM is implemented in `PyTorch` and trained on a standard workstation.
+
+
+::: 
+
+::::: 
+
+## Evaluation Metrics
+
+| Metric| Definition | Formula |
+|------|------|------|
+| RMSE    | Root Mean Squared Error    | $\sqrt{\frac{1}{T} \sum_{t=1}^{T} (y_t - \hat{y}_t)^2}$   |
+| MAE     | Mean Absolute Error     | $\frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t|$   |
+| MAPE    | Mean Absolute Percentage Error    | $\frac{100}{T} \sum_{t=1}^{T} \left| \frac{y_t - \hat{y}_t}{y_t} \right|$  |
+| SMAPE   | Symmetric MAPE    | $\frac{100}{T} \sum_{t=1}^{T} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}$   |
+| MASE    | Mean Absolute Scaled Error     | $\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }$  |
+
+: {tbl-colwidths="[25,50, 50]"}
+
+# Data Application 
 
 ::: {.panel-tabset}
 

@@ -7,6 +7,13 @@
     "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
   },
   {
+    "objectID": "metric.html",
+    "href": "metric.html",
+    "title": "",
+    "section": "",
+    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
+  },
+  {
     "objectID": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "href": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "title": "",
@@ -291,28 +298,28 @@
     "href": "index.html#rnn-recurrent-neural-network",
     "title": "",
     "section": "RNN (Recurrent Neural Network)",
-    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\nRNN is prone to the well-documented vanishing gradient issue when processing long sequences."
+    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when processing long sequences."
   },
   {
     "objectID": "index.html#lstm-long-short-term-memory",
     "href": "index.html#lstm-long-short-term-memory",
     "title": "",
     "section": "LSTM (Long Short-Term Memory)",
-    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates regulate the flow of information by determining how much of the previous cell state should be forgotten, how much new information should be added, and how much of the updated cell state should be passed to the hidden state at each time step."
+    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step."
   },
   {
     "objectID": "index.html#experimental-setup",
     "href": "index.html#experimental-setup",
     "title": "",
     "section": "Experimental Setup",
-    "text": "Experimental Setup"
+    "text": "Experimental Setup\nExperiment 1:\n\nWe run both models on Gamma Scenario 1–9 to compare the predictive performance of the LSTM and MTD models under various conditions.\n\nExperiment 2:\n\nWe run both the LSTM and MTD models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance.\n\nExperiment 3:\n\nWe run the LSTM with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters."
   },
   {
-    "objectID": "index.html#simulation-studies-3",
-    "href": "index.html#simulation-studies-3",
+    "objectID": "index.html#experimental-setup-1",
+    "href": "index.html#experimental-setup-1",
     "title": "",
-    "section": "Simulation Studies",
-    "text": "Simulation Studies"
+    "section": "Experimental Setup",
+    "text": "Experimental Setup\nExperiment 4:\n\nFor the zero-inflated Gamma settings, we focus exclusively on Scenario 1, since each scenario includes six cases defined by all combinations of \\(P = 0.1, 0.5, 0.7\\), and \\(\\epsilon = 0.1, 0.4\\)."
   },
   {
     "objectID": "index.html#simulation-results-for-gamma-scenarios-1-9",
@@ -350,18 +357,18 @@
     "text": "Simulation Results for ZIGamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant.\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\))."
   },
   {
-    "objectID": "index.html#data-application",
-    "href": "index.html#data-application",
+    "objectID": "index.html#experimental-setup-2",
+    "href": "index.html#experimental-setup-2",
     "title": "",
-    "section": "Data Application",
-    "text": "Data Application"
+    "section": "Experimental Setup",
+    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings are:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nFor LSTM, we reuse the default configuration for subsequent experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
   },
   {
-    "objectID": "index.html#data-application-1",
-    "href": "index.html#data-application-1",
+    "objectID": "index.html#evaluation-metrics",
+    "href": "index.html#evaluation-metrics",
     "title": "",
-    "section": "Data Application",
-    "text": "Data Application\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
+    "section": "Evaluation Metrics",
+    "text": "Evaluation Metrics\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
   },
   {
     "objectID": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
