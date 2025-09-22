@@ -674,10 +674,10 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 --- 
 
-![](images/hpc.jpg){.absolute top=0 left=0 width="1200" height="675"}
+![](images/hpc-3.jpg){.absolute top=0 left=0 width="1200" height="675"}
 
 <div style="margin-top: 725px;">
-©️ ORNL
+©️ FSP Group
 🙏 OSU Advanced Research Computing Services
 </div>
 
@@ -1192,7 +1192,7 @@ However,
 
 ## Simulation Studies   
 
-## Simulation Results for Gamma Scenarios
+## Simulation Results for Gamma Scenarios 1-9
 
 ::::: columns
 
@@ -1232,7 +1232,7 @@ df
 
 ::::: 
 
-## Simulation Results for Gamma Scenarios
+## Simulation Results for Gamma Scenario 1, 10 replicates
 
 ::::: columns
 
@@ -1257,7 +1257,7 @@ print(p)
 
 ::::: 
 
-## Simulation Results for Gamma Scenarios
+## Simulation Results for Gamma Scenario 1, 10 replicates
 
 ::::: columns
 
@@ -1387,7 +1387,25 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ::: 
 
+---
+
+![](images/conclusion.jpg){.absolute top=0 left=0 width="1200" height="675"}
+
+<div style="margin-top: 725px;">
+©️ Asia Society
+⏯️ Conclusion
+</div>
+
 ## Conclusion 
+
+---
+
+![](images/future.jpg){.absolute top=0 left=0 width="1200" height="675"}
+
+<div style="margin-top: 725px;">
+©️ Shutterstock
+⏯️ Future Work
+</div>
 
 ## Future Work
 

@@ -273,25 +273,25 @@
     "text": "Simulation Studies"
   },
   {
-    "objectID": "index.html#simulation-results-for-gamma-scenarios",
-    "href": "index.html#simulation-results-for-gamma-scenarios",
+    "objectID": "index.html#simulation-results-for-gamma-scenarios-1-9",
+    "href": "index.html#simulation-results-for-gamma-scenarios-1-9",
     "title": "",
-    "section": "Simulation Results for Gamma Scenarios",
-    "text": "Simulation Results for Gamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\ns1\n1.3326\n1.3569\n\n\ns2\n2.3001\n2.1988\n\n\ns3\n1.07\n1.0446\n\n\ns4\n1.6846\n1.5282\n\n\ns5\n1.0215\n1.1296\n\n\ns6\n0.8263\n0.7649\n\n\ns7\n0.7452\n0.7617\n\n\ns8\n0.3675\n0.3808\n\n\ns9\n0.1837\n0.1902\n\n\n\n\n\n\n\nRMSEs for MTD are lower in Scenarios 2, 3, 4, and 6, though the differences are minimal.\nRMSEs are the highest for both models in Scenario 2."
+    "section": "Simulation Results for Gamma Scenarios 1-9",
+    "text": "Simulation Results for Gamma Scenarios 1-9\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\ns1\n1.3326\n1.3569\n\n\ns2\n2.3001\n2.1988\n\n\ns3\n1.07\n1.0446\n\n\ns4\n1.6846\n1.5282\n\n\ns5\n1.0215\n1.1296\n\n\ns6\n0.8263\n0.7649\n\n\ns7\n0.7452\n0.7617\n\n\ns8\n0.3675\n0.3808\n\n\ns9\n0.1837\n0.1902\n\n\n\n\n\n\n\nRMSEs for MTD are lower in Scenarios 2, 3, 4, and 6, though the differences are minimal.\nRMSEs are the highest for both models in Scenario 2."
   },
   {
-    "objectID": "index.html#simulation-results-for-gamma-scenarios-1",
-    "href": "index.html#simulation-results-for-gamma-scenarios-1",
+    "objectID": "index.html#simulation-results-for-gamma-scenario-1-10-replicates",
+    "href": "index.html#simulation-results-for-gamma-scenario-1-10-replicates",
     "title": "",
-    "section": "Simulation Results for Gamma Scenarios",
-    "text": "Simulation Results for Gamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\nRMSE has a mean difference of \\(0.128957\\) (p-value = 0.005175, df = 9), with MTD consistently yielding lower RMSEs."
+    "section": "Simulation Results for Gamma Scenario 1, 10 replicates",
+    "text": "Simulation Results for Gamma Scenario 1, 10 replicates\n\n\n\n\n\n\n\n\n\n\n\n\n\nRMSE has a mean difference of \\(0.128957\\) (p-value = 0.005175, df = 9), with MTD consistently yielding lower RMSEs."
   },
   {
-    "objectID": "index.html#simulation-results-for-gamma-scenarios-2",
-    "href": "index.html#simulation-results-for-gamma-scenarios-2",
+    "objectID": "index.html#simulation-results-for-gamma-scenario-1-10-replicates-1",
+    "href": "index.html#simulation-results-for-gamma-scenario-1-10-replicates-1",
     "title": "",
-    "section": "Simulation Results for Gamma Scenarios",
-    "text": "Simulation Results for Gamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\nBatch size is significant (Pr(&gt;F) = 4.4e-06, df = 2, 24); RMSEs differ only for \\(64\\) vs. others, and \\(128\\) vs. others.\nCell dimensions too (Pr(&gt;F) = 0.0113, df = 2, 24); RMSE differs only between \\(32\\) vs. \\(64\\) and \\(32\\) vs. \\(128\\).\nAdopt the default configuration for subsequent experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\)."
+    "section": "Simulation Results for Gamma Scenario 1, 10 replicates",
+    "text": "Simulation Results for Gamma Scenario 1, 10 replicates\n\n\n\n\n\n\n\n\n\n\n\n\n\nBatch size is significant (Pr(&gt;F) = 4.4e-06, df = 2, 24); RMSEs differ only for \\(64\\) vs. others, and \\(128\\) vs. others.\nCell dimensions too (Pr(&gt;F) = 0.0113, df = 2, 24); RMSE differs only between \\(32\\) vs. \\(64\\) and \\(32\\) vs. \\(128\\).\nAdopt the default configuration for subsequent experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\)."
   },
   {
     "objectID": "index.html#simulation-results-for-zigamma-scenarios",
