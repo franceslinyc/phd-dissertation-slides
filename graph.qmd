@@ -1,0 +1,59 @@
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=12];
+
+  // Define nodes
+  X1 [label="X₁"];
+  X2 [label="X₂"];
+  X3 [label="X₃"];
+  X4 [label="X₄"];
+  X5 [label="X₅"];
+  X6 [label="X₆"];
+
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
+
+  { rank=same; X5; X6; }
+}
+```
+
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=12];
+
+  // Define nodes
+  X1 [label="X₂"];
+  X2 [label="X₃"];
+  X3 [label="X₄"];
+  X4 [label="X₅"];
+  X5 [label="X₆"];
+  X6 [label="X₇"];
+
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
+
+  { rank=same; X5; X6; }
+}
+```
+
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=10, fixedsize=true, width=0.6, fontname="Times-Roman"];
+
+  // Define nodes
+  X1 [label=< <b>X</b><sub><b>t-5</b></sub> >];
+  X2 [label=< <b>X</b><sub><b>t-4</b></sub> >];
+  X3 [label=< <b>X</b><sub><b>t-3</b></sub> >];
+  X4 [label=< <b>X</b><sub><b>t-2</b></sub> >];
+  X5 [label=< <b>X</b><sub><b>t-1</b></sub> >];
+  X6 [label=< <b>X</b><sub><b>t</b></sub> >];
+
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
+
+  { rank=same; X5; X6; }
+}
+```

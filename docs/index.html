@@ -501,24 +501,245 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 <section id="model-framework-dag-also-known-as-bayesian-network-1" class="slide level2">
 <h2>Model Framework: DAG; also known as Bayesian network</h2>
 <p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
-<div class="fragment">
-<p>For MTD order <span class="math inline">\(L = 5\)</span>,</p>
-<p><span class="math display">\[
-X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6
-\]</span></p>
+</section>
+<section id="mtd-order-look-back-steps-l-5" class="slide level2">
+<h2>MTD order (look-back steps) <span class="math inline">\(L = 5\)</span></h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₁</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₆</text>
+</g>
+</g>
+</svg>
 </div>
-<div class="fragment">
-<p><span class="math display">\[
-X_2, X_3, X_4, X_5, X_6, \ \ \ \ \  \ \ \ \ \ X_7
-\]</span></p>
+<p></p></figure><p></p>
 </div>
-<div class="fragment">
-<p><span class="math display">\[
-\cdots
-\]</span></p>
-<p><span class="math display">\[
-X_{t-5}, X_{t-4}, X_{t-3}, X_{t-2}, X_{t-1},  \ \ \ \ \ \ \ \ \ \ X_t
-\]</span></p>
+</div>
+</div>
+</section>
+<section id="mtd-order-look-back-steps-l-5-1" class="slide level2">
+<h2>MTD order (look-back steps) <span class="math inline">\(L = 5\)</span></h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₆</text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₇</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="mtd-order-look-back-steps-l-5-2" class="slide level2">
+<h2>MTD order (look-back steps) <span class="math inline">\(L = 5\)</span></h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<svg width="960" height="480" viewbox="0.00 0.00 367.00 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363,-108 363,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="9.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="12.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="19.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-5</text>
+<text text-anchor="start" x="30.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="88.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="91.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="98.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-4</text>
+<text text-anchor="start" x="109.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.13,-21.5C54.18,-21.5 67.75,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="167.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="170.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="177.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-3</text>
+<text text-anchor="start" x="188.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.13,-21.5C133.18,-21.5 146.75,-21.5 157.81,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="246.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="249.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="256.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-2</text>
+<text text-anchor="start" x="267.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.13,-21.5C212.18,-21.5 225.75,-21.5 236.81,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="325.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="328.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="335.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-1</text>
+<text text-anchor="start" x="346.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.13,-21.5C291.18,-21.5 304.75,-21.5 315.81,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.5" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="329.72" y="-80.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="332.22" y="-80.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="339.45" y="-80.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t</text>
+<text text-anchor="start" x="342.78" y="-80.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
 </div>
 </section>
 <section id="model-framework-transition-kernels-mixture-weights" class="slide level2">
@@ -598,7 +819,10 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 <p>Estimation and prediction in the MTD model by Zheng et al.&nbsp;(2022) is constructed with Bayesian methodologies.</p>
 <ul>
 <li><p>Our proposed copula-based MTD model builds upon this model version.</p></li>
-<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.</p></li>
+<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.</p>
+<ul>
+<li>But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution.</li>
+</ul></li>
 </ul>
 </section>
 <section id="background-bayesian-implementation-1" class="slide level2">
@@ -609,7 +833,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 \begin{split}
 p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(\boldsymbol{w}) \prod_{l=1}^L \pi_l(\boldsymbol{\theta}_l) \\
 \prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
-\end{split}
+\end{split} \tag{4}
 \end{equation}\]</span>
 <p><span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</p>
 <div class="fragment">
@@ -690,13 +914,15 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <h2>Proposed Method</h2>
 <p>To construct zero-inflated Gamma for the marginal distribution,</p>
 <ul>
-<li><p>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>.</p></li>
-<li><p>Zero values are then replaced with non-zero values drawn from a uniform distribution.</p></li>
+<li>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>.</li>
 </ul>
 <div class="fragment">
+<ul>
+<li>Zero values are then replaced with non-zero values drawn from a uniform distribution.</li>
+</ul>
 <p>Specifically,</p>
 <span class="math display">\[\begin{equation}
-0 \leftarrow U_i, \tag{4}
+0 \leftarrow U_i, \tag{5}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
 </div>
@@ -709,11 +935,11 @@ f(x) =
 \begin{cases}
 Unif(0, \epsilon) &amp; \text{with probability } P \\
 ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
-\end{cases} \tag{5}
+\end{cases} \tag{6}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
 <div class="fragment">
-<p>In (5), there are two parts:</p>
+<p>In (6), there are two parts:</p>
 <ul>
 <li><p>We have already discussed the uniform distribution.</p></li>
 <li><p>The shifted Gamma distribution, <span class="math inline">\(ShiftedGamma(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
@@ -730,7 +956,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -741,7 +967,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -752,7 +978,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -763,7 +989,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -774,7 +1000,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-16-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -785,7 +1011,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -804,7 +1030,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -815,7 +1041,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-18-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -826,7 +1052,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -837,7 +1063,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -848,7 +1074,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -859,7 +1085,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1423,48 +1649,16 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <ul>
 <li><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> (i.e., the coverage for data greater than <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
 <li><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> (i.e., the coverage for data less than or equal to <span class="math inline">\(\epsilon\)</span>) becomes increasingly dominant.</p></li>
+<li><p>The model appropriately captures the predictive uncertainty across all cases.</p></li>
 </ul>
 </div></div>
 </section>
-<section id="prediction-1" class="slide level2">
-<h2>Prediction</h2>
+<section id="prediction-95-predictive-intervals-one-step-ahead" class="slide level2">
+<h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-step ahead</h2>
 <div class="panel-tabset">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-46-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-6-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-47-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-6-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-48-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-6-4">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1475,7 +1669,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<div id="tabset-6-5">
+<div id="tabset-6-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1486,12 +1680,45 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<div id="tabset-6-6">
+<div id="tabset-6-3">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-51-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-52-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-53-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-6">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-54-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1538,6 +1765,46 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="background-2" class="slide level2">
 <h2>Background</h2>
+</section>
+<section id="rnn-recurrent-neural-network" class="slide level2">
+<h2>RNN (Recurrent Neural Network)</h2>
+<div class="columns">
+<div class="column">
+<h3 id="section-3"></h3>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/rnn.png"></p>
+<figcaption>Architecture of an RNN unit, reproduced from Olah (2015). <span class="math inline">\(x_t\)</span> is the input, <span class="math inline">\(h_t\)</span> is the hidden state, and <span class="math inline">\(o_t\)</span> is the output. <span class="math inline">\(tanh\)</span> is the activation function, squashing values to <span class="math inline">\((-1, 1)\)</span> for stability and zero-centered output.</figcaption>
+</figure>
+</div>
+</div><div class="column">
+<h3 id="section-4"></h3>
+<ul>
+<li><p>RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.</p></li>
+<li><p>An RNN unit computes a weighted combination of input data, <span class="math inline">\(x_t\)</span>, and the previous hidden state, <span class="math inline">\(h_{t-1}\)</span>, applies an activation function, and updates the hidden state to <span class="math inline">\(h_t\)</span>.</p></li>
+<li><p>RNN is prone to the well-documented vanishing gradient issue when processing long sequences.</p></li>
+</ul>
+</div></div>
+</section>
+<section id="lstm-long-short-term-memory" class="slide level2">
+<h2>LSTM (Long Short-Term Memory)</h2>
+<div class="columns">
+<div class="column">
+<h3 id="section-5"></h3>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/lstm.png"></p>
+<figcaption>Architecture of an LSTM unit with a forget gate, reproduced from Olah (2015). <span class="math inline">\(x_t\)</span> is the input, <span class="math inline">\(h_t\)</span> the hidden state, and <span class="math inline">\(c_t\)</span> the cell state. <span class="math inline">\(f_t\)</span>, <span class="math inline">\(i_t\)</span>, and <span class="math inline">\(o_t\)</span> are the forget, input, and output gates, respectively. <span class="math inline">\(\sigma\)</span> is used to squash values to <span class="math inline">\((0, 1)\)</span> for gating, while <span class="math inline">\(tanh\)</span> squashes values to <span class="math inline">\((-1, 1)\)</span> for stability and zero-centered output.</figcaption>
+</figure>
+</div>
+</div><div class="column">
+<h3 id="section-6"></h3>
+<ul>
+<li><p>LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.</p></li>
+<li><p>The cell state carries long-term dependence, while the hidden state encodes short-term patterns.</p></li>
+<li><p>The gates regulate the flow of information by determining how much of the previous cell state should be forgotten, how much new information should be added, and how much of the updated cell state should be passed to the hidden state at each time step.</p></li>
+</ul>
+</div></div>
 </section>
 <section id="experimental-setup" class="slide level2">
 <h2>Experimental Setup</h2>
@@ -1629,7 +1896,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-56-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-59-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1648,7 +1915,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-59-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-62-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1657,7 +1924,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <ul>
 <li><p>Batch size is significant (<code>Pr(&gt;F) = 4.4e-06</code>, <code>df = 2, 24</code>); RMSEs differ only for <span class="math inline">\(64\)</span> vs.&nbsp;others, and <span class="math inline">\(128\)</span> vs.&nbsp;others.</p></li>
 <li><p>Cell dimensions too (<code>Pr(&gt;F) = 0.0113</code>, <code>df = 2, 24</code>); RMSE differs only between <span class="math inline">\(32\)</span> vs.&nbsp;<span class="math inline">\(64\)</span> and <span class="math inline">\(32\)</span> vs.&nbsp;<span class="math inline">\(128\)</span>.</p></li>
-<li><p>Adopt the default configuration for subsequent experiments:</p>
+<li><p>We adopt the default configuration for subsequent experiments:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
@@ -1676,6 +1943,146 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="simulation-results-for-zigamma-scenarios" class="slide level2">
 <h2>Simulation Results for ZIGamma Scenarios</h2>
+<div class="columns">
+<div class="column">
+<h3 id="section-7"></h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 76%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: left;">LSTM</th>
+<th style="text-align: right;">MTD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P01Eps01</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.7221</span></td>
+<td style="text-align: right;">1.7302</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P01Eps04</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.0843</span></td>
+<td style="text-align: right;">2.6386</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P05Eps01</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.1102</span></td>
+<td style="text-align: right;">2.8361</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P05Eps04</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.1788</span></td>
+<td style="text-align: right;">2.1922</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P07Eps01</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.2762</span></td>
+<td style="text-align: right;">3.0739</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P07Eps04</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">2.0916</span></td>
+<td style="text-align: right;">2.5798</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<h3 id="section-8"></h3>
+<ul>
+<li><p>LSTM generally achieves lower overall RMSEs compared to MTD.</p></li>
+<li><p>❗️But, patterns similar to those in Prediction of Part II reappear.</p></li>
+</ul>
+</div></div>
+</section>
+<section id="simulation-results-for-zigamma-scenarios-1" class="slide level2">
+<h2>Simulation Results for ZIGamma Scenarios</h2>
+<div class="columns">
+<div class="column">
+<h3 id="section-9"></h3>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 38%">
+<col style="width: 8%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">.</th>
+<th style="text-align: right;">LSTM Below</th>
+<th style="text-align: left;">MTD Below</th>
+<th style="text-align: right;">LSTM Above</th>
+<th style="text-align: left;">MTD Above</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P01Eps01</td>
+<td style="text-align: right;">3.6285</td>
+<td style="text-align: left;">4.2964</td>
+<td style="text-align: right;">1.4910</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.3668</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P01Eps04</td>
+<td style="text-align: right;">3.2122</td>
+<td style="text-align: left;">5.9082</td>
+<td style="text-align: right;">1.8826</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.7945</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P05Eps01</td>
+<td style="text-align: right;">2.0551</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.7752</span></td>
+<td style="text-align: right;">2.1655</td>
+<td style="text-align: left;">3.9641</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P05Eps04</td>
+<td style="text-align: right;">2.0495</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">1.6675</span></td>
+<td style="text-align: right;">2.3426</td>
+<td style="text-align: left;">2.7477</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P07Eps01</td>
+<td style="text-align: right;">1.2984</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.3677</span></td>
+<td style="text-align: right;">3.5798</td>
+<td style="text-align: left;">5.458</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P07Eps04</td>
+<td style="text-align: right;">1.2583</td>
+<td style="text-align: left;"><span style=" font-weight: bold;    ">0.5346</span></td>
+<td style="text-align: right;">3.3044</td>
+<td style="text-align: left;">4.6465</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column">
+<h3 id="section-10"></h3>
+<ul>
+<li><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the RMSE <strong>above</strong> (which reflects predictive accuracy for values exceeding <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
+<li><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), this relationship reverses, and the RMSE <strong>below</strong> becomes more relevant.</p></li>
+<li><p>MTD outperforms LSTM in RMSE <strong>above</strong> for <span class="math inline">\(P = 0.1\)</span> and again yields lower values for RMSE <strong>below</strong> than LSTM at higher levels of zero-inflation (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>).</p></li>
+</ul>
+</div></div>
 </section>
 <section id="data-application" class="slide level2">
 <h2>Data Application</h2>
@@ -1814,8 +2221,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </section>
-<section id="data-application-2" class="slide level2">
-<h2>Data Application</h2>
+<section id="data-application-predicted-means-one-step-ahead-test-size-n-1756-caption" class="slide level2 scrollable">
+<h2>Data Application, Predicted means, One-step ahead, Test size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-8-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-8-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -1824,7 +2231,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-68-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-77-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1835,7 +2242,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-69-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-78-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1846,7 +2253,89 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-70-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-79-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<section id="data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption" class="slide level2 scrollable">
+<h2>Data Application, Predicted means, One-step ahead, Zoom-in view <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
+<div class="panel-tabset">
+<ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-9-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-9-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-81-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-9-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-82-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-9-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-83-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<section id="data-application-95-predictive-intervals-one-step-ahead" class="slide level2">
+<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-step ahead</h2>
+<div class="panel-tabset">
+<ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-10-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-10-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-85-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-86-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-10-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-87-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1857,9 +2346,9 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section class="slide level2">
 
-<p><img data-src="images/conclusion.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
+<p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
 <div style="margin-top: 725px;">
-<p>©️ Asia Society ⏯️ Conclusion</p>
+<p>©️ Getty Images ⏯️ Conclusion</p>
 </div>
 </section>
 <section id="conclusion" class="slide level2">
@@ -1899,6 +2388,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </section>
+
+
     </div>
   </div>
 

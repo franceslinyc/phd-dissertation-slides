@@ -229,29 +229,71 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
 
-. . .
+## MTD order (look-back steps) $L = 5$
 
-For MTD order $L = 5$, 
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=12];
 
-$$
-X_1, X_2, X_3, X_4, X_5, \ \ \ \ \  \ \ \ \ \ X_6 
-$$
+  // Define nodes
+  X1 [label="X₁"];
+  X2 [label="X₂"];
+  X3 [label="X₃"];
+  X4 [label="X₄"];
+  X5 [label="X₅"];
+  X6 [label="X₆"];
 
-. . .
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
 
-$$
-X_2, X_3, X_4, X_5, X_6, \ \ \ \ \  \ \ \ \ \ X_7 
-$$
+  { rank=same; X5; X6; }
+}
+```
 
-. . .
+## MTD order (look-back steps) $L = 5$
 
-$$
-\cdots
-$$
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=12];
 
-$$
-X_{t-5}, X_{t-4}, X_{t-3}, X_{t-2}, X_{t-1},  \ \ \ \ \ \ \ \ \ \ X_t 
-$$
+  // Define nodes
+  X1 [label="X₂"];
+  X2 [label="X₃"];
+  X3 [label="X₄"];
+  X4 [label="X₅"];
+  X5 [label="X₆"];
+  X6 [label="X₇"];
+
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
+
+  { rank=same; X5; X6; }
+}
+```
+
+## MTD order (look-back steps) $L = 5$
+
+```{dot}
+graph {
+  rankdir=LR; // left-to-right layout
+  node [shape=circle, style=solid, fontsize=10, fixedsize=true, width=0.6, fontname="Times-Roman"];
+
+  // Define nodes
+  X1 [label=< <b>X</b><sub><b>t-5</b></sub> >];
+  X2 [label=< <b>X</b><sub><b>t-4</b></sub> >];
+  X3 [label=< <b>X</b><sub><b>t-3</b></sub> >];
+  X4 [label=< <b>X</b><sub><b>t-2</b></sub> >];
+  X5 [label=< <b>X</b><sub><b>t-1</b></sub> >];
+  X6 [label=< <b>X</b><sub><b>t</b></sub> >];
+
+  // Chain up to X5
+  X1 -- X2 -- X3 -- X4 -- X5;
+
+  { rank=same; X5; X6; }
+}
+```
 
 
 ## Model Framework: Transition kernels & mixture weights 
@@ -347,9 +389,11 @@ Earlier MTD models were built through frequentist approaches.
 
 Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.
 
-  - Our proposed copula-based MTD model builds upon this model version. 
+- Our proposed copula-based MTD model builds upon this model version. 
   
-  - We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
+- We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
+
+  - But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution.
 
 ## Background: Bayesian Implementation  
 
@@ -361,7 +405,7 @@ The posterior distribution of the parameters, based on the conditional likelihoo
 \begin{split}
 p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(\boldsymbol{w}) \prod_{l=1}^L \pi_l(\boldsymbol{\theta}_l) \\ 
 \prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
-\end{split}
+\end{split} \tag{4}
 \end{equation}
 ```
 \scriptsize $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.
@@ -454,14 +498,14 @@ To construct zero-inflated Gamma for the marginal distribution,
 
 - The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. 
 
-- Zero values are then replaced with non-zero values drawn from a uniform distribution. 
-
 . . .
+
+- Zero values are then replaced with non-zero values drawn from a uniform distribution. 
 
 Specifically,
 ```{=latex} 
 \begin{equation}
-0 \leftarrow U_i, \tag{4}
+0 \leftarrow U_i, \tag{5}
 \end{equation}
 ```
 where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values. 
@@ -475,14 +519,14 @@ f(x) =
 \begin{cases} 
 Unif(0, \epsilon) & \text{with probability } P \\
 ShiftedGamma(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
-\end{cases} \tag{5}
+\end{cases} \tag{6}
 \end{equation}
 ```
 where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter. 
 
 . . .
 
-In (5), there are two parts: 
+In (6), there are two parts: 
 
 - We have already discussed the uniform distribution. 
 
@@ -1060,8 +1104,7 @@ Scenarios 1 and 2 were further evaluated with $10$ replicates to assess coverage
 
 Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values.
 
-
-## Prediction   
+## Prediction
 
 ::::: columns
 
@@ -1102,11 +1145,14 @@ df
 
 - As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** (i.e., the coverage for data less than or equal to $\epsilon$) becomes increasingly dominant. 
 
+- The model appropriately captures the predictive uncertainty across all cases. 
+
 ::: 
 
 ::::: 
 
-## Prediction   
+
+## Prediction, $95\%$ Predictive Intervals, One-step ahead  
 
 ::: {.panel-tabset}
 
@@ -1187,6 +1233,58 @@ However,
 > Demonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design. 
 
 ## Background   
+
+## RNN (Recurrent Neural Network)
+
+::::: columns
+
+::: column
+
+### 
+
+![Architecture of an RNN unit, reproduced from Olah (2015). $x_t$ is the input, $h_t$ is the hidden state, and $o_t$ is the output. $tanh$ is the activation function, squashing values to $(-1, 1)$ for stability and zero-centered output.](images/rnn.png)
+
+::: 
+
+::: column
+
+### 
+
+- RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next. 
+
+- An RNN unit computes a weighted combination of input data, $x_t$, and the previous hidden state, $h_{t-1}$, applies an activation function, and updates the hidden state to $h_t$. 
+
+- RNN is prone to the well-documented vanishing gradient issue when processing long sequences. 
+
+::: 
+
+::::: 
+
+## LSTM (Long Short-Term Memory)
+
+::::: columns
+
+::: column
+
+### 
+
+![Architecture of an LSTM unit with a forget gate, reproduced from Olah (2015). $x_t$ is the input, $h_t$ the hidden state, and $c_t$ the cell state. $f_t$, $i_t$, and $o_t$ are the forget, input, and output gates, respectively. $\sigma$ is used to squash values to $(0, 1)$ for gating, while $tanh$ squashes values to $(-1, 1)$ for stability and zero-centered output.](images/lstm.png)
+
+::: 
+
+::: column
+
+### 
+
+- LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate. 
+
+- The cell state carries long-term dependence, while the hidden state encodes short-term patterns. 
+
+- The gates regulate the flow of information by determining how much of the previous cell state should be forgotten, how much new information should be added, and how much of the updated cell state should be passed to the hidden state at each time step.
+
+::: 
+
+::::: 
 
 ## Experimental Setup   
 
@@ -1286,7 +1384,7 @@ grid.arrange(p_lstm_lr, p_lstm_2, p_lstm_l, p_lstm_cd, ncol = 2)
 
 - Cell dimensions too (`Pr(>F) = 0.0113`, `df = 2, 24`); RMSE differs only between $32$ vs. $64$ and $32$ vs. $128$.
 
-- Adopt the default configuration for subsequent experiments: 
+- We adopt the default configuration for subsequent experiments: 
 
   - learning rate = $0.001$, 
   
@@ -1311,9 +1409,88 @@ grid.arrange(p_lstm_lr, p_lstm_2, p_lstm_l, p_lstm_cd, ncol = 2)
 
 ## Simulation Results for ZIGamma Scenarios
 
+::::: columns
+
+::: column
+
+### 
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+df <- readRDS(file.path(output_dir, "zigamma.rds"))
+```
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$LSTM <- cell_spec(df$LSTM, bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+::: 
+
+::: column
+
+### 
+
+- LSTM generally achieves lower overall RMSEs compared to MTD. 
+
+- ❗️But, patterns similar to those in Prediction of Part II reappear. 
+
+
+::: 
+
+::::: 
+
+## Simulation Results for ZIGamma Scenarios
+
+::::: columns
+
+::: column
+
+### 
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+df <- readRDS(file.path(output_dir, "zigamma_lu.rds"))
+```
+
+```{r}
+df <- df |> mutate(across(where(is.numeric), ~round(., 4)))
+df$`MTD Above`[1] <- cell_spec(df$`MTD Above`[1], bold = TRUE)
+df$`MTD Above`[2] <- cell_spec(df$`MTD Above`[2], bold = TRUE)
+df$`MTD Below`[3] <- cell_spec(df$`MTD Below`[3], bold = TRUE)
+df$`MTD Below`[4] <- cell_spec(df$`MTD Below`[4], bold = TRUE)
+df$`MTD Below`[5] <- cell_spec(df$`MTD Below`[5], bold = TRUE)
+df$`MTD Below`[6] <- cell_spec(df$`MTD Below`[6], bold = TRUE)
+df <- df |> kable(digits = 4)
+df
+```
+
+::: 
+
+::: column
+
+### 
+
+- When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** (which reflects predictive accuracy for values exceeding $\epsilon$) is a more informative metric for assessing predictive performance. 
+
+- As $P$ increases (e.g., $P = 0.5$, $0.7$), this relationship reverses, and the RMSE **below** becomes more relevant. 
+
+- MTD outperforms LSTM in RMSE **above** for $P = 0.1$ and again yields lower values for RMSE **below** than LSTM at higher levels of zero-inflation (e.g., $P = 0.5$, $0.7$).
+
+::: 
+
+::::: 
+
 ## Data Application   
 
-## Data Application 
+## Data Application
 
 ::: {.panel-tabset}
 
@@ -1359,7 +1536,67 @@ df
 
 ::: 
 
-## Data Application 
+## Data Application, Predicted means, One-step ahead, Test size $n = 1756$ [^caption]
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_ts_full.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_ts_full.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_ts_full.rds"))
+```
+
+::: 
+
+[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+
+## Data Application, Predicted means, One-step ahead, Zoom-in view $n = 200$ [^caption]
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_ts.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_ts.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_ts.rds"))
+```
+
+::: 
+
+[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+
+## Data Application, $95\%$ Predictive Intervals, One-step ahead 
 
 ::: {.panel-tabset}
 
@@ -1389,10 +1626,10 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ---
 
-![](images/conclusion.jpg){.absolute top=0 left=0 width="1200" height="675"}
+![](images/conclusion-3.jpg){.absolute top=0 left=0 width="1200" height="675"}
 
 <div style="margin-top: 725px;">
-©️ Asia Society
+©️ Getty Images
 ⏯️ Conclusion
 </div>
 
