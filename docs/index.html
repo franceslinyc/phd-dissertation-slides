@@ -2139,8 +2139,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 </div></div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn2"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
-<section id="evaluation-metrics-metrics" class="slide level2">
-<h2>Evaluation Metrics [^metrics]</h2>
+<section id="evaluation-metrics-metrics" class="slide level2 scrollable">
+<h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -2182,8 +2182,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </tr>
 </tbody>
 </table>
-<p>[metrics: ] MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p>
-</section></section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section></section>
 <section>
 <section id="data-application-1" class="title-slide slide level1 center">
 <h1>Data Application</h1>
@@ -2359,7 +2358,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption" class="slide level2 scrollable">
 <h2>Data Application, Predicted Means, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2400,7 +2399,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff" class="slide level2 scrollable">
 <h2>Data Application, Prediction Errors, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2441,7 +2440,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
 <section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
 <h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2482,7 +2481,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn6"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>

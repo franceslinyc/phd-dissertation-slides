@@ -1564,7 +1564,7 @@ df
 
 : {tbl-colwidths="[25,50, 50]"}
 
-[metrics: ] MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
+[^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
 # Data Application 
 
