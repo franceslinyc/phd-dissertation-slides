@@ -225,9 +225,8 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 . . .
 
-## Model Framework: DAG; also known as Bayesian network 
-
 Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
+
 
 ## MTD order (look-back steps) $L = 5$
 
@@ -1553,7 +1552,7 @@ df
 
 ::::: 
 
-## Evaluation Metrics
+## Evaluation Metrics [^metrics]
 
 | Metric| Definition | Formula |
 |------|------|------|
@@ -1564,6 +1563,8 @@ df
 | MASE    | Mean Absolute Scaled Error     | $\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }$  |
 
 : {tbl-colwidths="[25,50, 50]"}
+
+[metrics: ] MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
 # Data Application 
 
@@ -1670,6 +1671,36 @@ readRDS(file.path(output_dir, "p3_real_ts.rds"))
 ::: 
 
 [^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+
+## Data Application, Prediction Errors, One-Step Ahead; Zoom-In View $n = 200$ [^captiondiff]
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_diff.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_diff.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_diff.rds"))
+```
+
+::: 
+
+[^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
 
 ## Data Application, $95\%$ Predictive Intervals, One-Step Ahead; MTD Only [^captionmtd]
 

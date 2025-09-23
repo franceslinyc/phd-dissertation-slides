@@ -497,10 +497,9 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \label{eq:joint_distribution}
 \end{equation}\]</span>
 <p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
-</section>
-<section id="model-framework-dag-also-known-as-bayesian-network-1" class="slide level2">
-<h2>Model Framework: DAG; also known as Bayesian network</h2>
+<div class="fragment">
 <p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags.</p>
+</div>
 </section>
 <section id="mtd-order-look-back-steps-l-5" class="slide level2">
 <h2>MTD order (look-back steps) <span class="math inline">\(L = 5\)</span></h2>
@@ -2140,8 +2139,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 </div></div>
 <aside><ol class="aside-footnotes"><li id="fn1"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn2"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
-<section id="evaluation-metrics" class="slide level2">
-<h2>Evaluation Metrics</h2>
+<section id="evaluation-metrics-metrics" class="slide level2">
+<h2>Evaluation Metrics [^metrics]</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -2183,6 +2182,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </tr>
 </tbody>
 </table>
+<p>[metrics: ] MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p>
 </section></section>
 <section>
 <section id="data-application-1" class="title-slide slide level1 center">
@@ -2401,8 +2401,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
-<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
+<section id="data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff" class="slide level2 scrollable">
+<h2>Data Application, Prediction Errors, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-10-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-10-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2441,7 +2441,48 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
+<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
+<div class="panel-tabset">
+<ul id="tabset-11" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-11-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-11-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-11-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-89-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-11-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-90-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-11-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-91-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
