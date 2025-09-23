@@ -1581,8 +1581,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <p>Most parameters achieve full coverage, with a few slightly below <span class="math inline">\(1\)</span>, indicating that the posterior intervals reliably capture the true parameter values.</p>
 </div>
 </section>
-<section id="prediction" class="slide level2">
-<h2>Prediction</h2>
+<section id="prediction-95-predictive-intervals-one-step-ahead" class="slide level2">
+<h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="columns">
 <div class="column">
 <h3 id="section-1"></h3>
@@ -1653,8 +1653,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 </div></div>
 </section>
-<section id="prediction-95-predictive-intervals-one-step-ahead" class="slide level2">
-<h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-step ahead</h2>
+<section id="prediction-95-predictive-intervals-one-step-ahead-1" class="slide level2">
+<h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="panel-tabset">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-6-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-6-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -1780,6 +1780,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div><div class="column">
 <h3 id="section-4"></h3>
 <ul>
+<li><p>An RNN unit computes a weighted combination of input data, <span class="math inline">\(x_t\)</span>, and the previous hidden state, <span class="math inline">\(h_{t-1}\)</span>, applies an activation function, and updates the hidden state to <span class="math inline">\(h_t\)</span>.</p></li>
 <li><p>RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.</p></li>
 <li><p>RNN is prone to the well-documented vanishing gradient issue when processing long sequences.</p></li>
 </ul>
@@ -1818,18 +1819,18 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 <p>Experiment 2:</p>
 <ul>
-<li>We run both the LSTM and MTD models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance.</li>
+<li>We run both models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance.</li>
 </ul>
 <p>Experiment 3:</p>
 <ul>
-<li>We run the LSTM with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters.</li>
+<li>We run the LSTM model with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters.</li>
 </ul>
 </section>
 <section id="experimental-setup-1" class="slide level2">
 <h2>Experimental Setup</h2>
 <p>Experiment 4:</p>
 <ul>
-<li>For the zero-inflated Gamma settings, we focus exclusively on Scenario 1, since each scenario includes six cases defined by all combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span>, and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span>.</li>
+<li>For the zero-inflated Gamma settings, we run both models on Scenario 1 and 2, since each scenario includes six cases defined by all combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span>, and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span>.</li>
 </ul>
 </section>
 <section id="simulation-results-for-gamma-scenarios-1-9" class="slide level2">
@@ -1961,8 +1962,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <p>©️ Akin Bostanci ⏸️ … Quick Visual Break</p>
 </div>
 </section>
-<section id="simulation-results-for-zigamma-scenarios" class="slide level2">
-<h2>Simulation Results for ZIGamma Scenarios</h2>
+<section id="simulation-results-for-zigamma-scenario-1" class="slide level2">
+<h2>Simulation Results for ZIGamma Scenario 1</h2>
 <div class="columns">
 <div class="column">
 <h3 id="section-7"></h3>
@@ -2024,8 +2025,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 </div></div>
 </section>
-<section id="simulation-results-for-zigamma-scenarios-1" class="slide level2">
-<h2>Simulation Results for ZIGamma Scenarios</h2>
+<section id="simulation-results-for-zigamma-scenario-1-1" class="slide level2">
+<h2>Simulation Results for ZIGamma Scenario 1</h2>
 <div class="columns">
 <div class="column">
 <h3 id="section-9"></h3>
@@ -2319,7 +2320,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </section>
 <section id="data-application-predicted-means-one-step-ahead-test-size-n-1756-caption" class="slide level2 scrollable">
-<h2>Data Application, Predicted means, One-step ahead, Test size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
+<h2>Data Application, Predicted Means, One-Step ahead; Test Size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-8-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-8-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2360,7 +2361,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 <aside><ol class="aside-footnotes"><li id="fn3"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption" class="slide level2 scrollable">
-<h2>Data Application, Predicted means, One-step ahead, Zoom-in view <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
+<h2>Data Application, Predicted Means, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-9" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-9-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-9-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-9-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2400,8 +2401,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="data-application-95-predictive-intervals-one-step-ahead" class="slide level2">
-<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-step ahead</h2>
+<section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
+<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-10-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-10-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2440,7 +2441,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>

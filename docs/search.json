@@ -259,18 +259,18 @@
     "text": "Coverage Assessment\nAll nine scenarios were analyzed using a single replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(10\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\n\n\n\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
   },
   {
-    "objectID": "index.html#prediction",
-    "href": "index.html#prediction",
-    "title": "",
-    "section": "Prediction",
-    "text": "Prediction\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant.\nThe model appropriately captures the predictive uncertainty across all cases."
-  },
-  {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
     "href": "index.html#prediction-95-predictive-intervals-one-step-ahead",
     "title": "",
-    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-step ahead",
-    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-step ahead\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant.\nThe model appropriately captures the predictive uncertainty across all cases."
+  },
+  {
+    "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead-1",
+    "href": "index.html#prediction-95-predictive-intervals-one-step-ahead-1",
+    "title": "",
+    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
   },
   {
     "objectID": "index.html#introduction-2",
@@ -298,7 +298,7 @@
     "href": "index.html#rnn-recurrent-neural-network",
     "title": "",
     "section": "RNN (Recurrent Neural Network)",
-    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when processing long sequences."
+    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when processing long sequences."
   },
   {
     "objectID": "index.html#lstm-long-short-term-memory",
@@ -312,14 +312,14 @@
     "href": "index.html#experimental-setup",
     "title": "",
     "section": "Experimental Setup",
-    "text": "Experimental Setup\nExperiment 1:\n\nWe run both models on Gamma Scenario 1–9 to compare the predictive performance of the LSTM and MTD models under various conditions.\n\nExperiment 2:\n\nWe run both the LSTM and MTD models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance.\n\nExperiment 3:\n\nWe run the LSTM with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters."
+    "text": "Experimental Setup\nExperiment 1:\n\nWe run both models on Gamma Scenario 1–9 to compare the predictive performance of the LSTM and MTD models under various conditions.\n\nExperiment 2:\n\nWe run both models on 10 independently generated replicates of Gamma Scenario 1 to assess the stability and robustness of model performance.\n\nExperiment 3:\n\nWe run the LSTM model with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters."
   },
   {
     "objectID": "index.html#experimental-setup-1",
     "href": "index.html#experimental-setup-1",
     "title": "",
     "section": "Experimental Setup",
-    "text": "Experimental Setup\nExperiment 4:\n\nFor the zero-inflated Gamma settings, we focus exclusively on Scenario 1, since each scenario includes six cases defined by all combinations of \\(P = 0.1, 0.5, 0.7\\), and \\(\\epsilon = 0.1, 0.4\\)."
+    "text": "Experimental Setup\nExperiment 4:\n\nFor the zero-inflated Gamma settings, we run both models on Scenario 1 and 2, since each scenario includes six cases defined by all combinations of \\(P = 0.1, 0.5, 0.7\\), and \\(\\epsilon = 0.1, 0.4\\)."
   },
   {
     "objectID": "index.html#simulation-results-for-gamma-scenarios-1-9",
@@ -343,18 +343,18 @@
     "text": "Simulation Results for Gamma Scenario 1, 10 replicates\n\n\n\n\n\n\n\n\n\n\n\n\n\nBatch size is significant (Pr(&gt;F) = 4.4e-06, df = 2, 24); RMSEs differ only for \\(64\\) vs. others, and \\(128\\) vs. others.\nCell dimensions too (Pr(&gt;F) = 0.0113, df = 2, 24); RMSE differs only between \\(32\\) vs. \\(64\\) and \\(32\\) vs. \\(128\\).\nWe adopt the default configuration for subsequent experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\)."
   },
   {
-    "objectID": "index.html#simulation-results-for-zigamma-scenarios",
-    "href": "index.html#simulation-results-for-zigamma-scenarios",
+    "objectID": "index.html#simulation-results-for-zigamma-scenario-1",
+    "href": "index.html#simulation-results-for-zigamma-scenario-1",
     "title": "",
-    "section": "Simulation Results for ZIGamma Scenarios",
-    "text": "Simulation Results for ZIGamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nP01Eps01\n1.7221\n1.7302\n\n\nP01Eps04\n2.0843\n2.6386\n\n\nP05Eps01\n2.1102\n2.8361\n\n\nP05Eps04\n2.1788\n2.1922\n\n\nP07Eps01\n2.2762\n3.0739\n\n\nP07Eps04\n2.0916\n2.5798\n\n\n\n\n\n\n\n\nLSTM generally achieves lower overall RMSEs compared to MTD.\n❗️But, patterns similar to those in Prediction of Part II reappear."
+    "section": "Simulation Results for ZIGamma Scenario 1",
+    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nP01Eps01\n1.7221\n1.7302\n\n\nP01Eps04\n2.0843\n2.6386\n\n\nP05Eps01\n2.1102\n2.8361\n\n\nP05Eps04\n2.1788\n2.1922\n\n\nP07Eps01\n2.2762\n3.0739\n\n\nP07Eps04\n2.0916\n2.5798\n\n\n\n\n\n\n\n\nLSTM generally achieves lower overall RMSEs compared to MTD.\n❗️But, patterns similar to those in Prediction of Part II reappear."
   },
   {
-    "objectID": "index.html#simulation-results-for-zigamma-scenarios-1",
-    "href": "index.html#simulation-results-for-zigamma-scenarios-1",
+    "objectID": "index.html#simulation-results-for-zigamma-scenario-1-1",
+    "href": "index.html#simulation-results-for-zigamma-scenario-1-1",
     "title": "",
-    "section": "Simulation Results for ZIGamma Scenarios",
-    "text": "Simulation Results for ZIGamma Scenarios\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant.\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\))."
+    "section": "Simulation Results for ZIGamma Scenario 1",
+    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant.\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\))."
   },
   {
     "objectID": "index.html#experimental-setup-2",
@@ -374,22 +374,22 @@
     "objectID": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
     "href": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
     "title": "",
-    "section": "Data Application, Predicted means, One-step ahead, Test size \\(n = 1756\\) 1",
-    "text": "Data Application, Predicted means, One-step ahead, Test size \\(n = 1756\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "section": "Data Application, Predicted Means, One-Step ahead; Test Size \\(n = 1756\\) 1",
+    "text": "Data Application, Predicted Means, One-Step ahead; Test Size \\(n = 1756\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
     "objectID": "index.html#data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption",
     "href": "index.html#data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption",
     "title": "",
-    "section": "Data Application, Predicted means, One-step ahead, Zoom-in view \\(n = 200\\) 1",
-    "text": "Data Application, Predicted means, One-step ahead, Zoom-in view \\(n = 200\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "section": "Data Application, Predicted Means, One-Step Ahead; Zoom-In View \\(n = 200\\) 1",
+    "text": "Data Application, Predicted Means, One-Step Ahead; Zoom-In View \\(n = 200\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
-    "objectID": "index.html#data-application-95-predictive-intervals-one-step-ahead",
-    "href": "index.html#data-application-95-predictive-intervals-one-step-ahead",
+    "objectID": "index.html#data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd",
+    "href": "index.html#data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd",
     "title": "",
-    "section": "Data Application, \\(95\\%\\) Predictive Intervals, One-step ahead",
-    "text": "Data Application, \\(95\\%\\) Predictive Intervals, One-step ahead\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+    "section": "Data Application, \\(95\\%\\) Predictive Intervals, One-Step Ahead; MTD Only 1",
+    "text": "Data Application, \\(95\\%\\) Predictive Intervals, One-Step Ahead; MTD Only 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD."
   },
   {
     "objectID": "index.html#conclusion",
