@@ -154,6 +154,13 @@
     "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\alpha\\), \\(\\beta\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\alpha\\), \\(\\beta\\))\n\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.3 and 1.4: Incompatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.5 and 1.6: Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\); Rarely observable patterns\nScenario 3-6: Usual case for gamma marginals\nScenario 7-9:Unusual case involving high skewness"
   },
   {
+    "objectID": "index.html#marginal-distributions",
+    "href": "index.html#marginal-distributions",
+    "title": "",
+    "section": "Marginal Distributions",
+    "text": "Marginal Distributions\n\nUsual CasesUnusual Cases"
+  },
+  {
     "objectID": "index.html#whats-new",
     "href": "index.html#whats-new",
     "title": "",
@@ -240,6 +247,13 @@
   {
     "objectID": "index.html#simulation-results-1",
     "href": "index.html#simulation-results-1",
+    "title": "",
+    "section": "Simulation Results",
+    "text": "Simulation Results\n\n\\(w\\)\\(\\rho\\)"
+  },
+  {
+    "objectID": "index.html#simulation-results-2",
+    "href": "index.html#simulation-results-2",
     "title": "",
     "section": "Simulation Results",
     "text": "Simulation Results\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"

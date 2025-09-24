@@ -439,6 +439,27 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 7-9:Unusual case involving high skewness
 
+## Marginal Distributions
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### Usual Cases 
+```{r}
+readRDS(file.path(output_dir, "gamma_nonextreme.rds"))
+```
+
+### Unusual Cases
+
+```{r}
+readRDS(file.path(output_dir, "gamma_extreme.rds"))
+```
+
+::: 
+
 ## What's New  
 
 Since the Preliminary Exam, we have also conducted:
@@ -936,6 +957,28 @@ results_df_rho <- tibble(
 )
 results_df_rho <- results_df_rho |> kable(digits = 4)
 results_df_rho
+```
+
+::: 
+
+## Simulation Results   
+
+::: {.panel-tabset} 
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $w$ 
+
+```{r}
+readRDS(file.path(output_dir, "w_res.rds"))
+```
+
+### $\rho$ 
+
+```{r}
+readRDS(file.path(output_dir, "rho_res.rds"))
 ```
 
 ::: 
