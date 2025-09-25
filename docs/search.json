@@ -25,7 +25,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread.\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread."
   },
   {
     "objectID": "index.html#nasa-merra-2-data",
@@ -39,7 +39,7 @@
     "href": "index.html#objectives",
     "title": "",
     "section": "Objectives",
-    "text": "Objectives\nPart I and II\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns.\n\n\nPart III\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness."
+    "text": "Objectives\nPart I and II\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed features, and semicontinuous patterns.\n\n\nPart III\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness."
   },
   {
     "objectID": "index.html#roadmap",
@@ -67,21 +67,21 @@
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
+    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
   },
   {
     "objectID": "index.html#background",
     "href": "index.html#background",
     "title": "",
     "section": "Background",
-    "text": "Background"
+    "text": "Background\nThe MTD model is a state space model.\n\nThe MTD model was initially developed in 1985 to model high-order Markov chains,\n\nFollowed by several variant models over the years to capture non-Gaussian and nonlinear features, such as flat stretches, bursts, outliers, and change points.\nSee Berchtold and Raftery (2022) for a complete review.\n\n\n\nThe MTD model has primarily been used for modeling time series.\n\nHas also demonstrated success in modeling spatial data."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian network",
-    "text": "Model Framework: DAG; also known as Bayesian network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags."
+    "text": "Model Framework: DAG; also known as Bayesian network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of \\(L\\) (a given number) of lags."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
@@ -154,11 +154,18 @@
     "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\alpha\\), \\(\\beta\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\alpha\\), \\(\\beta\\))\n\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.3 and 1.4: Incompatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.5 and 1.6: Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\); Rarely observable patterns\nScenario 3-6: Usual case for gamma marginals\nScenario 7-9:Unusual case involving high skewness"
   },
   {
-    "objectID": "index.html#marginal-distributions",
-    "href": "index.html#marginal-distributions",
+    "objectID": "index.html#weight-and-dependence-parameters-for-copula",
+    "href": "index.html#weight-and-dependence-parameters-for-copula",
     "title": "",
-    "section": "Marginal Distributions",
-    "text": "Marginal Distributions\n\nUsual CasesUnusual Cases"
+    "section": "Weight and Dependence Parameters for Copula",
+    "text": "Weight and Dependence Parameters for Copula\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)"
+  },
+  {
+    "objectID": "index.html#marginal-distribution",
+    "href": "index.html#marginal-distribution",
+    "title": "",
+    "section": "Marginal Distribution",
+    "text": "Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
   },
   {
     "objectID": "index.html#whats-new",
@@ -179,14 +186,14 @@
     "href": "index.html#introduction-and-objectives-1",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to account for zero-inflation.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is generalizable."
+    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to account for zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is generalizable."
   },
   {
     "objectID": "index.html#background-1",
     "href": "index.html#background-1",
     "title": "",
     "section": "Background",
-    "text": "Background"
+    "text": "Background\nThere are two classes of models designed to handle data with excessive zeros: zero-inflated (ZI) models and hurdle models.\n\nIn ZI models, zeros can come from both binary and non-zero parts, whereas in hurdle models, zeros occur only in the binary part.\n\n\nOur approach is similar to hurdle models, but ours applies a soft threshold that replaces zeros with small non-zero values rather than generating exact zeros.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\n\n\n\nThe CE approach\n\nAssociates each discrete random variable (RV), \\(Y_i\\), with a continuous RV, \\(Y_i^*\\).\nHas only applied in discrete and spatial settings to date."
   },
   {
     "objectID": "index.html#proposed-method-1",
@@ -249,7 +256,7 @@
     "href": "index.html#simulation-results-1",
     "title": "",
     "section": "Simulation Results",
-    "text": "Simulation Results\n\n\\(w\\)\\(\\rho\\)"
+    "text": "Simulation Results\n\n\\(w\\) 1\\(\\rho\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (black) lines are true weights or dependence, dot-dashed (red) lines are prior means, solid (blue) lines are posterior means, and polygons are \\(95\\%\\) posterior credible intervals."
   },
   {
     "objectID": "index.html#simulation-results-2",
@@ -270,7 +277,7 @@
     "href": "index.html#prediction-95-predictive-intervals-one-step-ahead",
     "title": "",
     "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
-    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below (i.e., the coverage for data less than or equal to \\(\\epsilon\\)) becomes increasingly dominant.\nThe model appropriately captures the predictive uncertainty across all cases."
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes increasingly dominant.\nThe model appropriately captures the predictive uncertainty across all cases."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead-1",
@@ -291,7 +298,7 @@
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\na prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\nPrevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design."
   },
   {
     "objectID": "index.html#background-2",

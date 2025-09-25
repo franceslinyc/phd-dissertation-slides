@@ -7,30 +7,3 @@ conda deactivate
 git add .
 git commit -m ""            # git commit -m "Commit message here"
 git push origin main
-
-
-
-
-
-# Some templates 
-
-
-::::: columns
-
-::: column
-
-### 
-
-::: 
-
-::: column
-
-### 
-
-- 
-
-- 
-
-::: 
-
-::::: 

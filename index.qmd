@@ -54,9 +54,9 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 . . .    
 
-- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread. 
-
 - ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
+
+- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread. 
 
 --- 
 
@@ -133,7 +133,7 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 Part I and II
 
-> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed distributions, and semicontinuous patterns. 
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed features, and semicontinuous patterns.
 
 . . .
 
@@ -204,13 +204,31 @@ However, for certain invariant marginal distributions, the transition kernel may
 
 . . .
 
-> **Objectives:** Propose to incorporate copulas into the transition kernels to address this limitation.
+> **Objectives:** Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.
 
 . . .
 
 > Develop the Gamma MTD model, but the framework is generalizable.
 
 ## Background 
+
+The MTD model is a state space model. 
+
+. . .
+
+The MTD model was initially developed in 1985 to model high-order Markov chains, 
+  
+- Followed by several variant models over the years to capture non-Gaussian and nonlinear features, such as flat stretches, bursts, outliers, and change points.
+  
+- See Berchtold and Raftery (2022) for a complete review. 
+
+. . .
+
+
+The MTD model has primarily been used for modeling time series. 
+  
+- Has also demonstrated success in modeling spatial data. 
+
 
 ## Model Framework: DAG; also known as Bayesian network 
 
@@ -225,7 +243,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 . . .
 
-Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of a given number of lags. 
+Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of $L$ (a given number) of lags. 
 
 
 ## MTD order (look-back steps) $L = 5$
@@ -386,13 +404,13 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
 
 Earlier MTD models were built through frequentist approaches. 
 
-Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.
+Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies. 
 
 - Our proposed copula-based MTD model builds upon this model version. 
   
 - We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
 
-  - But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution.
+  - But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution. 
 
 ## Background: Bayesian Implementation  
 
@@ -439,7 +457,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 7-9:Unusual case involving high skewness
 
-## Marginal Distributions
+## Weight and Dependence Parameters for Copula
 
 ::: {.panel-tabset}
 
@@ -447,12 +465,38 @@ Simulation studies demonstrate promising results across various scenarios.
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
-### Usual Cases 
+### Exponentially decreasing weights (s1)
+
+```{r}
+w_raw = readRDS(file.path(output_dir, "gamma_w.rds"))
+rho_raw = readRDS(file.path(output_dir, "gamma_rho.rds"))
+grid.arrange(w_raw, rho_raw, nrow = 1)
+```
+
+### Uneven arrangement of the relevant lags (s2)
+
+```{r}
+w_raw = readRDS(file.path(output_dir, "gamma_w_s2.rds"))
+rho_raw = readRDS(file.path(output_dir, "gamma_rho_s2.rds"))
+grid.arrange(w_raw, rho_raw, nrow = 1)
+```
+
+:::
+
+## Marginal Distribution
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### Usual Cases (s3-6)
 ```{r}
 readRDS(file.path(output_dir, "gamma_nonextreme.rds"))
 ```
 
-### Unusual Cases
+### Unusual Cases (s7-9)
 
 ```{r}
 readRDS(file.path(output_dir, "gamma_extreme.rds"))
@@ -504,13 +548,31 @@ However,
 
 . . .
 
-> **Objectives:** Propose reconstructing the marginal distribution to account for zero-inflation. 
+> **Objectives:** Propose reconstructing the marginal distribution to account for zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.
 
 . . .
 
 > Develop the ZIGamma MTD model, but the framework is generalizable.
 
 ## Background
+
+There are two classes of models designed to handle data with excessive zeros: zero-inflated (ZI) models and hurdle models.
+
+- In ZI models, zeros can come from both binary and non-zero parts, whereas in hurdle models, zeros occur only in the binary part.
+
+. . .
+
+Our approach is similar to hurdle models, but ours applies a soft threshold that replaces zeros with small non-zero values rather than generating exact zeros.
+
+- Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
+
+. . .
+
+The CE approach
+
+- Associates each discrete random variable (RV), $Y_i$, with a continuous RV, $Y_i^*$. 
+
+- Has only applied in discrete and spatial settings to date.  
 
 ## Proposed Method  
 
@@ -969,17 +1031,52 @@ results_df_rho
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
-### $w$ 
+### $w$ [^res]
 
+::::: columns
+
+::: column
+
+### 
 ```{r}
 readRDS(file.path(output_dir, "w_res.rds"))
 ```
 
+:::
+
+::: column
+
+[^res]: Dashed (black) lines are true weights or dependence, dot-dashed (red) lines are prior means, solid (blue) lines are posterior means, and polygons are $95\%$ posterior credible intervals. 
+
+- 
+
+::: 
+
+::::: 
+
 ### $\rho$ 
+
+::::: columns
+
+::: column
+
+### 
 
 ```{r}
 readRDS(file.path(output_dir, "rho_res.rds"))
 ```
+
+:::
+
+::: column
+
+### 
+
+- 
+
+::: 
+
+::::: 
 
 ::: 
 
@@ -1183,11 +1280,15 @@ df
 
 ### 
 
+::: {.incremental}
+
 - When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
 
-- As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** (i.e., the coverage for data less than or equal to $\epsilon$) becomes increasingly dominant. 
+- As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** becomes increasingly dominant. 
 
 - The model appropriately captures the predictive uncertainty across all cases. 
+
+:::
 
 ::: 
 
@@ -1262,9 +1363,9 @@ Beyond natural language processing (NLP), RNNs and LSTMs have also shown effecti
 
 However, 
 
-- a prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.
+- previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
 
-- Previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
+- A prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.
 
 . . .
 
@@ -1272,9 +1373,11 @@ However,
 
 . . .
 
-> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, but at a higher computational cost and the need for careful design. 
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design. 
 
 ## Background   
+
+
 
 ## RNN (Recurrent Neural Network)
 
@@ -1538,11 +1641,15 @@ df
 
 ### 
 
+::: {.incremental}
+
 - When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** (which reflects predictive accuracy for values exceeding $\epsilon$) is a more informative metric for assessing predictive performance. 
 
 - As $P$ increases (e.g., $P = 0.5$, $0.7$), this relationship reverses, and the RMSE **below** becomes more relevant. 
 
 - MTD outperforms LSTM in RMSE **above** for $P = 0.1$ and again yields lower values for RMSE **below** than LSTM at higher levels of zero-inflation (e.g., $P = 0.5$, $0.7$).
+
+::: 
 
 ::: 
 
@@ -1806,3 +1913,11 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 ## References 
 
 # Supplement
+
+--- 
+
+![Asterisk (*) denotes modification of Zheng's (2010) algorithm.](images/alg-1.png){fig-align="left"}
+
+--- 
+
+![Asterisk (**) denotes modification of Algorithm 1.](images/alg-2.png){fig-align="left"}
