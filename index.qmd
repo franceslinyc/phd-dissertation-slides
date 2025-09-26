@@ -859,7 +859,7 @@ In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases per sc
 
 For brevity, we present Scenario 1 only.
 
-## Simulation Results   
+## Simulation Results [^res]  
 
 ```{r}
 library(coda)
@@ -901,7 +901,7 @@ weight_vec <- weight_vec %>% round(digits = 4)
 
 ::: {.panel-tabset}
 
-### $w$ 
+### $P = 0.1$ $\epsilon = 0.1$
 
 ```{r}
 chain_list <- list(chain1, chain2, chain3, chain4)
@@ -953,7 +953,7 @@ results_df_w <- results_df_w |> kable(digits = 4)
 results_df_w
 ```
 
-### $\rho$
+### $P = 0.1$ $\epsilon = 0.1$
 
 ```{r}
 mcmc_chains <- function(chain_list, parameter, index) {
@@ -1023,62 +1023,7 @@ results_df_rho
 
 ::: 
 
-## Simulation Results   
-
-::: {.panel-tabset} 
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $w$ [^res]
-
-::::: columns
-
-::: column
-
-### 
-```{r}
-readRDS(file.path(output_dir, "w_res.rds"))
-```
-
-:::
-
-::: column
-
-[^res]: Dashed (black) lines are true weights or dependence, dot-dashed (red) lines are prior means, solid (blue) lines are posterior means, and polygons are $95\%$ posterior credible intervals. 
-
-- 
-
-::: 
-
-::::: 
-
-### $\rho$ 
-
-::::: columns
-
-::: column
-
-### 
-
-```{r}
-readRDS(file.path(output_dir, "rho_res.rds"))
-```
-
-:::
-
-::: column
-
-### 
-
-- 
-
-::: 
-
-::::: 
-
-::: 
+[^res]: $\boldsymbol{w}$, $\boldsymbol{\rho}$ for all other combinations of $P = 0.1, 0.5, 0.7$ and $\epsilon = 0.1, 0.4$ are similar and therefore omitted.
 
 ## Simulation Results   
 
@@ -1426,6 +1371,8 @@ However,
 - The cell state carries long-term dependence, while the hidden state encodes short-term patterns. 
 
 - The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.
+
+- LSTM is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Adam.
 
 ::: 
 
