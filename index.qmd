@@ -1322,10 +1322,6 @@ However,
 
 > Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design. 
 
-## Background   
-
-
-
 ## RNN (Recurrent Neural Network)
 
 ::::: columns
@@ -1374,11 +1370,27 @@ However,
 
 - The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.
 
-- LSTM is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Adam.
-
 ::: 
 
 ::::: 
+
+## Hyperparameter Tuning and Training  
+
+Hyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:
+
+- batch size,
+
+- number of epochs,
+
+- learning rate
+
+- number of hidden units or cell dimension, 
+
+- number of hidden layers, etc.
+
+. . .
+
+The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam). 
 
 # Simulation Studies 
 
@@ -2083,3 +2095,11 @@ h_t &= o_t \cdot \tanh(c_t),
 \end{equation}
 ```
 where $\boldsymbol{W}$ denotes the weight matrices, $\boldsymbol{b}$ the bias vectors, $\sigma$ the logistic sigmoid function, and $tanh$ the hyperbolic tangent function. 
+
+## Training and Validation Loss Curves 
+
+![](images/p_loss_real_bs81632_v2.png)
+
+## Training and Validation Loss Curves 
+
+![](images/p_loss_real_bs64128256_v2.png)

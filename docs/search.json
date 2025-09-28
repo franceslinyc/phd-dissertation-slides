@@ -294,13 +294,6 @@
     "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design."
   },
   {
-    "objectID": "index.html#background-2",
-    "href": "index.html#background-2",
-    "title": "",
-    "section": "Background",
-    "text": "Background"
-  },
-  {
     "objectID": "index.html#rnn-recurrent-neural-network",
     "href": "index.html#rnn-recurrent-neural-network",
     "title": "",
@@ -312,7 +305,14 @@
     "href": "index.html#lstm-long-short-term-memory",
     "title": "",
     "section": "LSTM (Long Short-Term Memory)",
-    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.\nLSTM is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Adam."
+    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step."
+  },
+  {
+    "objectID": "index.html#hyperparameter-tuning-and-training",
+    "href": "index.html#hyperparameter-tuning-and-training",
+    "title": "",
+    "section": "Hyperparameter Tuning and Training",
+    "text": "Hyperparameter Tuning and Training\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc.\n\n\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam)."
   },
   {
     "objectID": "index.html#experimental-setup",
@@ -502,5 +502,19 @@
     "title": "",
     "section": "LSTM",
     "text": "LSTM\nLet \\(c_t\\) and \\(h_t\\) denote the cell and the hidden state vector. Let \\(f_t\\), \\(i_t\\), and \\(o_t\\) represent the forget, the input, and the output gate vector at time \\(t\\), respectively. Then, an LSTM unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:lstm}\nf_t &= \\sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\\\\ni_t &= \\sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\n\\tilde{c}_t &= \\tanh(W_{\\tilde{c} h} h_{t-1} + W_{\\tilde{c} x} x_t + b_{\\tilde{c}}), \\\\\nc_t &= f_t \\cdot c_{t-1} + i_t \\cdot \\tilde{c}_t, \\\\\no_t &= \\sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\\\\nh_t &= o_t \\cdot \\tanh(c_t),\n\\end{split}\n\\end{equation}\\]\nwhere \\(\\boldsymbol{W}\\) denotes the weight matrices, \\(\\boldsymbol{b}\\) the bias vectors, \\(\\sigma\\) the logistic sigmoid function, and \\(tanh\\) the hyperbolic tangent function."
+  },
+  {
+    "objectID": "index.html#training-and-validation-loss-curves",
+    "href": "index.html#training-and-validation-loss-curves",
+    "title": "",
+    "section": "Training and Validation Loss Curves",
+    "text": "Training and Validation Loss Curves"
+  },
+  {
+    "objectID": "index.html#training-and-validation-loss-curves-1",
+    "href": "index.html#training-and-validation-loss-curves-1",
+    "title": "",
+    "section": "Training and Validation Loss Curves",
+    "text": "Training and Validation Loss Curves"
   }
 ]

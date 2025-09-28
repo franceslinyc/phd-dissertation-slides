@@ -1659,9 +1659,6 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </blockquote>
 </div>
 </section>
-<section id="background-2" class="slide level2">
-<h2>Background</h2>
-</section>
 <section id="rnn-recurrent-neural-network" class="slide level2">
 <h2>RNN (Recurrent Neural Network)</h2>
 <div class="columns">
@@ -1699,9 +1696,22 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p>LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.</p></li>
 <li><p>The cell state carries long-term dependence, while the hidden state encodes short-term patterns.</p></li>
 <li><p>The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.</p></li>
-<li><p>LSTM is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Adam.</p></li>
 </ul>
 </div></div>
+</section>
+<section id="hyperparameter-tuning-and-training" class="slide level2">
+<h2>Hyperparameter Tuning and Training</h2>
+<p>Hyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:</p>
+<ul>
+<li><p>batch size,</p></li>
+<li><p>number of epochs,</p></li>
+<li><p>learning rate</p></li>
+<li><p>number of hidden units or cell dimension,</p></li>
+<li><p>number of hidden layers, etc.</p></li>
+</ul>
+<div class="fragment">
+<p>The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).</p>
+</div>
 </section></section>
 <section>
 <section id="simulation-studies-3" class="title-slide slide level1 center">
@@ -2670,9 +2680,17 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 \end{split}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\boldsymbol{W}\)</span> denotes the weight matrices, <span class="math inline">\(\boldsymbol{b}\)</span> the bias vectors, <span class="math inline">\(\sigma\)</span> the logistic sigmoid function, and <span class="math inline">\(tanh\)</span> the hyperbolic tangent function.</p>
+</section>
+<section id="training-and-validation-loss-curves" class="slide level2">
+<h2>Training and Validation Loss Curves</h2>
+
+<img data-src="images/p_loss_real_bs81632_v2.png" class="r-stretch"></section>
+<section id="training-and-validation-loss-curves-1" class="slide level2">
+<h2>Training and Validation Loss Curves</h2>
 
 
-</section></section>
+
+<img data-src="images/p_loss_real_bs64128256_v2.png" class="r-stretch"></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
