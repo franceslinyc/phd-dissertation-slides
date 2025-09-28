@@ -400,6 +400,7 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
   
   - Stationary marginal density, $f_X$, describes the marginal behavior through distribution parameters.
 
+
 ## Background: Bayesian Implementation  
 
 Earlier MTD models were built through frequentist approaches. 
@@ -504,9 +505,11 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 ::: 
 
-## What's New  
+# What's New  
 
-Since the Preliminary Exam, we have also conducted:
+## Sensitivity Analysis and Coverage Assessment
+
+Since the preliminary exam, we have also conducted:
 
 - Sensitivity Analysis
 
@@ -516,7 +519,7 @@ Since the Preliminary Exam, we have also conducted:
 
 Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
 
-Most parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values.
+Most parameters achieve full coverage, indicating that the credible intervals reliably capture the true parameter values.
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -1861,10 +1864,223 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 # Supplement
 
+## Copula CDF and PDF
+
+![](images/copula-2.png){.absolute top=150 left=250 width="780" height="360"}
+
+<div style="margin-top: 650px;">
+Wireframe plot of bivariate Gaussian distribution and density function, reproduced from Kenton (2024). Retrieved from https://www.investopedia.com/terms/c/copula.asp.
+</div>
+
+## Copula Families 
+
+![](images/copula_fam-2.png){.absolute top=100 left=0 width="1200" height="600"}
+
+<div style="margin-top: 650px;">
+Contour plot of different bivariate density function where marginals are $N(0, 1)$, reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/. 
+</div>
+
+## Copula: Sklar’s theorem
+
+::: {.proposition #prop-copula}
+For any $p$-dimensional multivariate cumulative distribution function (cdf) of a random vector $(X_1, ..., X_p)$, denoted as $F(x_1, ..., x_p)$, there exists a copula function $C: {[0,1]}^p \rightarrow [0, 1]$ for which $F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))$, where $F_j$ is the marginal cdf of $X_j, j = 1,..., p$. If $X_j$ is continuous for all $j$, then $C$ is unique and differentiable. The joint probability density function (pdf) of $X_j, j = 1,...,p$ is given by $f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)$, where $c = \partial^p{C} / \partial{F_j}$ is the copula density and $f_j$ is the density of $X_j$.
+::: 
+
+## Proposition 1: Zheng et al., (2022)'s invariant condition
+
+::: {.proposition #prop-1}
+Consider a set of bivariate random vectors $(U_l, V_l)$ that takes values in $S \times S \subset \mathbb{R}$. Consider a time series $\{ X_t: t \in \mathbb{N} \}$, where $X_t \in S$, generated from
+$$
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t > L, 
+$$
+and from 
+$$
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) + 
+\left( 1 - \sum_{k=1}^{t-2} w_k \right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \leq t \leq L.
+$$
+
+If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}(x) = f_{V_l}(x) = f_X(x)$, for all $x \in S$, and for all $l$, then this time time series is first-order strictly stationary with invariant marginal density $f_X$.
+::: 
+
 --- 
 
-![Asterisk (*) denotes modification of Zheng's (2010) algorithm.](images/alg-1.png){fig-align="left"}
+![Asterisk (*) denotes modification of Zheng's (2022) algorithm.](images/alg-1.png){fig-align="left"}
 
 --- 
 
 ![Asterisk (**) denotes modification of Algorithm 1.](images/alg-2.png){fig-align="left"}
+
+
+
+## Trace and Density Plot for Scenario 1’s $w$
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+plots = readRDS(file.path(output_dir, "p_w_diag.rds"))
+```
+
+### $w_1$
+
+```{r}
+grid.arrange(plots[[1]], plots[[2]], ncol = 2)
+```
+
+### $w_2$
+
+```{r}
+grid.arrange(plots[[3]], plots[[4]], ncol = 2)
+```
+
+### $w_3$
+
+```{r}
+grid.arrange(plots[[5]], plots[[6]], ncol = 2)
+```
+
+### $w_4$
+
+```{r}
+grid.arrange(plots[[7]], plots[[8]], ncol = 2)
+```
+
+### $w_5$
+
+```{r}
+grid.arrange(plots[[9]], plots[[10]], ncol = 2)
+```
+
+:::
+
+## Trace and Density Plot for Scenario 1’s $\rho$
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+plots = readRDS(file.path(output_dir, "p_rho_diag.rds"))
+```
+
+### $\rho_1$
+
+```{r}
+grid.arrange(plots[[1]], plots[[2]], ncol = 2)
+```
+
+### $\rho_2$
+
+```{r}
+grid.arrange(plots[[3]], plots[[4]], ncol = 2)
+```
+
+### $\rho_3$
+
+```{r}
+grid.arrange(plots[[5]], plots[[6]], ncol = 2)
+```
+
+### $\rho_4$
+
+```{r}
+grid.arrange(plots[[7]], plots[[8]], ncol = 2)
+```
+
+### $\rho_5$
+
+```{r}
+grid.arrange(plots[[9]], plots[[10]], ncol = 2)
+```
+
+:::
+
+## Trace and Density Plot for Scenario 1's $\mu, \beta, P, \epsilon$
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+p1 = readRDS(file.path(output_dir, "p1_diag.rds"))
+p2 = readRDS(file.path(output_dir, "p2_diag.rds"))
+p3 = readRDS(file.path(output_dir, "p3_diag.rds"))
+p4 = readRDS(file.path(output_dir, "p4_diag.rds"))
+p5 = readRDS(file.path(output_dir, "p5_diag.rds"))
+p6 = readRDS(file.path(output_dir, "p6_diag.rds"))
+p7 = readRDS(file.path(output_dir, "p7_diag.rds"))
+p8 = readRDS(file.path(output_dir, "p8_diag.rds"))
+```
+
+### $\mu$
+
+```{r}
+grid.arrange(p1, p2, ncol = 2)
+```
+
+### $\beta$
+
+```{r}
+grid.arrange(p3, p4, ncol = 2)
+```
+
+### $P$
+
+```{r}
+grid.arrange(p5, p6, ncol = 2)
+```
+
+### $\epsilon$
+
+```{r}
+grid.arrange(p7, p8, ncol = 2)
+```
+
+:::
+
+## RNN 
+
+Let $x_t$, $h_t$, and $o_t$ denote the input data, the hidden state, and the output at time $t$, respectively. Then, an RNN unit can be expressed as: 
+```{=latex} 
+\begin{equation}
+\begin{split}
+\label{eq:rnn}
+h_t &= f(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\
+o_t &= g(W_{oh} \cdot h_t + b_o), 
+\end{split}
+\end{equation}
+```
+where  $W_{ix}$, $W_{ih}$ and $W_{oh}$ denote the weight matrices, and $b_i$ and $b_o$ the bias vectors. 
+
+The subscripts $i$ and $o$ indicate their steps in RNN: $i$ refer to the input/hidden step, and $o$ to the output step. 
+
+$f$ and $g$ denote the activation functions for the hidden layer and output layer, respectively. 
+
+- $f$ is typically set to the logistic sigmoid function, denoted as $\sigma$, which outputs values in range $(0, 1)$ to act as a gate that controls how much information passes through. 
+
+- $g$ is the hyperbolic tangent function, denoted as $tanh$, which outputs values in range $(-1, 1)$ to generate output in a stable, zero-centered range. 
+
+## LSTM
+
+Let $c_t$ and $h_t$ denote the cell and the hidden state vector. Let $f_t$, $i_t$, and $o_t$ represent the forget, the input, and the output gate vector at time $t$, respectively. Then, an LSTM unit can be expressed as: 
+```{=latex} 
+\begin{equation}
+\begin{split}
+\label{eq:lstm}
+f_t &= \sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\
+i_t &= \sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\
+\tilde{c}_t &= \tanh(W_{\tilde{c} h} h_{t-1} + W_{\tilde{c} x} x_t + b_{\tilde{c}}), \\
+c_t &= f_t \cdot c_{t-1} + i_t \cdot \tilde{c}_t, \\
+o_t &= \sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\
+h_t &= o_t \cdot \tanh(c_t), 
+\end{split}
+\end{equation}
+```
+where $\boldsymbol{W}$ denotes the weight matrices, $\boldsymbol{b}$ the bias vectors, $\sigma$ the logistic sigmoid function, and $tanh$ the hyperbolic tangent function. 

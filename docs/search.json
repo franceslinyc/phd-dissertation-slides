@@ -168,11 +168,11 @@
     "text": "Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
   },
   {
-    "objectID": "index.html#whats-new",
-    "href": "index.html#whats-new",
+    "objectID": "index.html#sensitivity-analysis-and-coverage-assessment",
+    "href": "index.html#sensitivity-analysis-and-coverage-assessment",
     "title": "",
-    "section": "What’s New",
-    "text": "What’s New\nSince the Preliminary Exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\n\n\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\nMost parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values."
+    "section": "Sensitivity Analysis and Coverage Assessment",
+    "text": "Sensitivity Analysis and Coverage Assessment\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\n\n\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\nMost parameters achieve full coverage, indicating that the credible intervals reliably capture the true parameter values."
   },
   {
     "objectID": "index.html#introduction-1",
@@ -439,5 +439,68 @@
     "title": "",
     "section": "References",
     "text": "References"
+  },
+  {
+    "objectID": "index.html#copula-cdf-and-pdf",
+    "href": "index.html#copula-cdf-and-pdf",
+    "title": "",
+    "section": "Copula CDF and PDF",
+    "text": "Copula CDF and PDF\n\n\nWireframe plot of bivariate Gaussian distribution and density function, reproduced from Kenton (2024). Retrieved from https://www.investopedia.com/terms/c/copula.asp."
+  },
+  {
+    "objectID": "index.html#copula-families",
+    "href": "index.html#copula-families",
+    "title": "",
+    "section": "Copula Families",
+    "text": "Copula Families\n\n\nContour plot of different bivariate density function where marginals are \\(N(0, 1)\\), reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/."
+  },
+  {
+    "objectID": "index.html#copula-sklars-theorem",
+    "href": "index.html#copula-sklars-theorem",
+    "title": "",
+    "section": "Copula: Sklar’s theorem",
+    "text": "Copula: Sklar’s theorem\n\nFor any \\(p\\)-dimensional multivariate cumulative distribution function (cdf) of a random vector \\((X_1, ..., X_p)\\), denoted as \\(F(x_1, ..., x_p)\\), there exists a copula function \\(C: {[0,1]}^p \\rightarrow [0, 1]\\) for which \\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\\), where \\(F_j\\) is the marginal cdf of \\(X_j, j = 1,..., p\\). If \\(X_j\\) is continuous for all \\(j\\), then \\(C\\) is unique and differentiable. The joint probability density function (pdf) of \\(X_j, j = 1,...,p\\) is given by \\(f(x_j) = c(x_j) \\prod_{j=1}^p f_j(x_j)\\), where \\(c = \\partial^p{C} / \\partial{F_j}\\) is the copula density and \\(f_j\\) is the density of \\(X_j\\)."
+  },
+  {
+    "objectID": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
+    "href": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
+    "title": "",
+    "section": "Proposition 1: Zheng et al., (2022)’s invariant condition",
+    "text": "Proposition 1: Zheng et al., (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-w",
+    "href": "index.html#trace-and-density-plot-for-scenario-1s-w",
+    "title": "",
+    "section": "Trace and Density Plot for Scenario 1’s \\(w\\)",
+    "text": "Trace and Density Plot for Scenario 1’s \\(w\\)\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-rho",
+    "href": "index.html#trace-and-density-plot-for-scenario-1s-rho",
+    "title": "",
+    "section": "Trace and Density Plot for Scenario 1’s \\(\\rho\\)",
+    "text": "Trace and Density Plot for Scenario 1’s \\(\\rho\\)\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon",
+    "href": "index.html#trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon",
+    "title": "",
+    "section": "Trace and Density Plot for Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)",
+    "text": "Trace and Density Plot for Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)\n\n\\(\\mu\\)\\(\\beta\\)\\(P\\)\\(\\epsilon\\)"
+  },
+  {
+    "objectID": "index.html#rnn",
+    "href": "index.html#rnn",
+    "title": "",
+    "section": "RNN",
+    "text": "RNN\nLet \\(x_t\\), \\(h_t\\), and \\(o_t\\) denote the input data, the hidden state, and the output at time \\(t\\), respectively. Then, an RNN unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:rnn}\nh_t &= f(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\no_t &= g(W_{oh} \\cdot h_t + b_o),\n\\end{split}\n\\end{equation}\\]\nwhere \\(W_{ix}\\), \\(W_{ih}\\) and \\(W_{oh}\\) denote the weight matrices, and \\(b_i\\) and \\(b_o\\) the bias vectors.\nThe subscripts \\(i\\) and \\(o\\) indicate their steps in RNN: \\(i\\) refer to the input/hidden step, and \\(o\\) to the output step.\n\\(f\\) and \\(g\\) denote the activation functions for the hidden layer and output layer, respectively.\n\n\\(f\\) is typically set to the logistic sigmoid function, denoted as \\(\\sigma\\), which outputs values in range \\((0, 1)\\) to act as a gate that controls how much information passes through.\n\\(g\\) is the hyperbolic tangent function, denoted as \\(tanh\\), which outputs values in range \\((-1, 1)\\) to generate output in a stable, zero-centered range."
+  },
+  {
+    "objectID": "index.html#lstm-1",
+    "href": "index.html#lstm-1",
+    "title": "",
+    "section": "LSTM",
+    "text": "LSTM\nLet \\(c_t\\) and \\(h_t\\) denote the cell and the hidden state vector. Let \\(f_t\\), \\(i_t\\), and \\(o_t\\) represent the forget, the input, and the output gate vector at time \\(t\\), respectively. Then, an LSTM unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:lstm}\nf_t &= \\sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\\\\ni_t &= \\sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\n\\tilde{c}_t &= \\tanh(W_{\\tilde{c} h} h_{t-1} + W_{\\tilde{c} x} x_t + b_{\\tilde{c}}), \\\\\nc_t &= f_t \\cdot c_{t-1} + i_t \\cdot \\tilde{c}_t, \\\\\no_t &= \\sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\\\\nh_t &= o_t \\cdot \\tanh(c_t),\n\\end{split}\n\\end{equation}\\]\nwhere \\(\\boldsymbol{W}\\) denotes the weight matrices, \\(\\boldsymbol{b}\\) the bias vectors, \\(\\sigma\\) the logistic sigmoid function, and \\(tanh\\) the hyperbolic tangent function."
   }
 ]

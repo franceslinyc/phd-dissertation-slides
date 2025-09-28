@@ -732,17 +732,22 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 </div>
+</section></section>
+<section>
+<section id="whats-new" class="title-slide slide level1 center">
+<h1>What’s New</h1>
+
 </section>
-<section id="whats-new" class="slide level2">
-<h2>What’s New</h2>
-<p>Since the Preliminary Exam, we have also conducted:</p>
+<section id="sensitivity-analysis-and-coverage-assessment" class="slide level2">
+<h2>Sensitivity Analysis and Coverage Assessment</h2>
+<p>Since the preliminary exam, we have also conducted:</p>
 <ul>
 <li><p>Sensitivity Analysis</p></li>
 <li><p>Coverage Assessment</p></li>
 </ul>
 <div class="fragment">
 <p>Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.</p>
-<p>Most parameters achieve full coverage, indicating that the posterior intervals reliably capture the true parameter values.</p>
+<p>Most parameters achieve full coverage, indicating that the credible intervals reliably capture the true parameter values.</p>
 </div>
 </section></section>
 <section>
@@ -2414,16 +2419,260 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <h1>Supplement</h1>
 
 </section>
+<section id="copula-cdf-and-pdf" class="slide level2">
+<h2>Copula CDF and PDF</h2>
+<p><img data-src="images/copula-2.png" class="absolute" style="top: 150px; left: 250px; width: 780px; height: 360px; "></p>
+<div style="margin-top: 650px;">
+<p>Wireframe plot of bivariate Gaussian distribution and density function, reproduced from Kenton (2024). Retrieved from https://www.investopedia.com/terms/c/copula.asp.</p>
+</div>
+</section>
+<section id="copula-families" class="slide level2">
+<h2>Copula Families</h2>
+<p><img data-src="images/copula_fam-2.png" class="absolute" style="top: 100px; left: 0px; width: 1200px; height: 600px; "></p>
+<div style="margin-top: 650px;">
+<p>Contour plot of different bivariate density function where marginals are <span class="math inline">\(N(0, 1)\)</span>, reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/.</p>
+</div>
+</section>
+<section id="copula-sklars-theorem" class="slide level2">
+<h2>Copula: Sklar’s theorem</h2>
+<div id="prop-copula" class="proposition">
+<p>For any <span class="math inline">\(p\)</span>-dimensional multivariate cumulative distribution function (cdf) of a random vector <span class="math inline">\((X_1, ..., X_p)\)</span>, denoted as <span class="math inline">\(F(x_1, ..., x_p)\)</span>, there exists a copula function <span class="math inline">\(C: {[0,1]}^p \rightarrow [0, 1]\)</span> for which <span class="math inline">\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\)</span>, where <span class="math inline">\(F_j\)</span> is the marginal cdf of <span class="math inline">\(X_j, j = 1,..., p\)</span>. If <span class="math inline">\(X_j\)</span> is continuous for all <span class="math inline">\(j\)</span>, then <span class="math inline">\(C\)</span> is unique and differentiable. The joint probability density function (pdf) of <span class="math inline">\(X_j, j = 1,...,p\)</span> is given by <span class="math inline">\(f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)\)</span>, where <span class="math inline">\(c = \partial^p{C} / \partial{F_j}\)</span> is the copula density and <span class="math inline">\(f_j\)</span> is the density of <span class="math inline">\(X_j\)</span>.</p>
+</div>
+</section>
+<section id="proposition-1-zheng-et-al.-2022s-invariant-condition" class="slide level2">
+<h2>Proposition 1: Zheng et al., (2022)’s invariant condition</h2>
+<div id="prop-1" class="proposition">
+<p>Consider a set of bivariate random vectors <span class="math inline">\((U_l, V_l)\)</span> that takes values in <span class="math inline">\(S \times S \subset \mathbb{R}\)</span>. Consider a time series <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span>, where <span class="math inline">\(X_t \in S\)</span>, generated from <span class="math display">\[
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,
+\]</span> and from <span class="math display">\[
+f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
+\left( 1 - \sum_{k=1}^{t-2} w_k \right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \leq t \leq L.
+\]</span></p>
+<p>If a time series satisfies the invariant condition: <span class="math inline">\(X_1 \sim f_X\)</span>, and <span class="math inline">\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\)</span>, for all <span class="math inline">\(x \in S\)</span>, and for all <span class="math inline">\(l\)</span>, then this time time series is first-order strictly stationary with invariant marginal density <span class="math inline">\(f_X\)</span>.</p>
+</div>
+</section>
 <section class="slide level2">
 
 
-<img data-src="images/alg-1.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (*) denotes modification of Zheng’s (2010) algorithm.</p></section>
+<img data-src="images/alg-1.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (*) denotes modification of Zheng’s (2022) algorithm.</p></section>
 <section class="slide level2">
 
 
+<img data-src="images/alg-2.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (**) denotes modification of Algorithm 1.</p></section>
+<section id="trace-and-density-plot-for-scenario-1s-w" class="slide level2">
+<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(w\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-14-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-14-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-14-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-14-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-14-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-101-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-14-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-14-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-14-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-104-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="trace-and-density-plot-for-scenario-1s-rho" class="slide level2">
+<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(\rho\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-15-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-15-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-15-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-15-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-107-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-15-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-111-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon" class="slide level2">
+<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(\mu, \beta, P, \epsilon\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-16-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-16-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-16-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-16-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-114-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-115-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="rnn" class="slide level2">
+<h2>RNN</h2>
+<p>Let <span class="math inline">\(x_t\)</span>, <span class="math inline">\(h_t\)</span>, and <span class="math inline">\(o_t\)</span> denote the input data, the hidden state, and the output at time <span class="math inline">\(t\)</span>, respectively. Then, an RNN unit can be expressed as:</p>
+<span class="math display">\[\begin{equation}
+\begin{split}
+\label{eq:rnn}
+h_t &amp;= f(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\
+o_t &amp;= g(W_{oh} \cdot h_t + b_o),
+\end{split}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(W_{ix}\)</span>, <span class="math inline">\(W_{ih}\)</span> and <span class="math inline">\(W_{oh}\)</span> denote the weight matrices, and <span class="math inline">\(b_i\)</span> and <span class="math inline">\(b_o\)</span> the bias vectors.</p>
+<p>The subscripts <span class="math inline">\(i\)</span> and <span class="math inline">\(o\)</span> indicate their steps in RNN: <span class="math inline">\(i\)</span> refer to the input/hidden step, and <span class="math inline">\(o\)</span> to the output step.</p>
+<p><span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span> denote the activation functions for the hidden layer and output layer, respectively.</p>
+<ul>
+<li><p><span class="math inline">\(f\)</span> is typically set to the logistic sigmoid function, denoted as <span class="math inline">\(\sigma\)</span>, which outputs values in range <span class="math inline">\((0, 1)\)</span> to act as a gate that controls how much information passes through.</p></li>
+<li><p><span class="math inline">\(g\)</span> is the hyperbolic tangent function, denoted as <span class="math inline">\(tanh\)</span>, which outputs values in range <span class="math inline">\((-1, 1)\)</span> to generate output in a stable, zero-centered range.</p></li>
+</ul>
+</section>
+<section id="lstm-1" class="slide level2">
+<h2>LSTM</h2>
+<p>Let <span class="math inline">\(c_t\)</span> and <span class="math inline">\(h_t\)</span> denote the cell and the hidden state vector. Let <span class="math inline">\(f_t\)</span>, <span class="math inline">\(i_t\)</span>, and <span class="math inline">\(o_t\)</span> represent the forget, the input, and the output gate vector at time <span class="math inline">\(t\)</span>, respectively. Then, an LSTM unit can be expressed as:</p>
+<span class="math display">\[\begin{equation}
+\begin{split}
+\label{eq:lstm}
+f_t &amp;= \sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\
+i_t &amp;= \sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\
+\tilde{c}_t &amp;= \tanh(W_{\tilde{c} h} h_{t-1} + W_{\tilde{c} x} x_t + b_{\tilde{c}}), \\
+c_t &amp;= f_t \cdot c_{t-1} + i_t \cdot \tilde{c}_t, \\
+o_t &amp;= \sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\
+h_t &amp;= o_t \cdot \tanh(c_t),
+\end{split}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\boldsymbol{W}\)</span> denotes the weight matrices, <span class="math inline">\(\boldsymbol{b}\)</span> the bias vectors, <span class="math inline">\(\sigma\)</span> the logistic sigmoid function, and <span class="math inline">\(tanh\)</span> the hyperbolic tangent function.</p>
 
 
-<img data-src="images/alg-2.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (**) denotes modification of Algorithm 1.</p></section></section>
+</section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
