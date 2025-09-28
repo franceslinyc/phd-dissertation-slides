@@ -127,8 +127,6 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 ::: 
 
-
-
 ## Objectives 
 
 Part I and II
@@ -227,7 +225,7 @@ The MTD model was initially developed in 1985 to model high-order Markov chains,
 
 The MTD model has primarily been used for modeling time series. 
   
-- Has also demonstrated success in modeling spatial data. 
+- Its generalizations has also demonstrated success in modeling spatial data. 
 
 
 ## Model Framework: DAG; also known as Bayesian network 
@@ -642,7 +640,7 @@ dzig <- function(x, mu, beta, eps, Pi, logd = FALSE) {
 
 ```{r}
 #| echo: false
-plot_dzig <- function(mu, beta, eps, Pi){
+plot_dzig <- function(mu, beta, eps, Pi, y_lim){
   x <- seq(0, 25, length.out = 500)
   y <- dzig(x, mu = mu, beta = beta, eps = eps, Pi = Pi)
   df <- data.frame(
@@ -657,6 +655,7 @@ plot_dzig <- function(mu, beta, eps, Pi){
                 P == .(Pi) * " " ~ 
                 epsilon == .(eps) *")"), 
          caption = "") + 
+    ylim(0, y_lim) + 
     theme_bw(base_size = 32) + 
     theme(
       plot.margin = unit(c(1, 1, 1, 1), "cm"),      
@@ -673,42 +672,42 @@ plot_dzig <- function(mu, beta, eps, Pi){
 ### $P = 0.1$ $\epsilon = 0.1$
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.1)
+plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.1, y_lim = 1)
 ```
 
 ### $P = 0.1$ $\epsilon = 0.4$
 
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.4)
+plot_dzig(mu = 7, beta = 1, Pi = 0.1, eps = 0.4, y_lim = 1)
 ```
 
 ### $P = 0.5$ $\epsilon = 0.1$
 
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.1)
+plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.1, y_lim = 5)
 ```
 
 ### $P = 0.5$ $\epsilon = 0.4$
 
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.4)
+plot_dzig(mu = 7, beta = 1, Pi = 0.5, eps = 0.4, y_lim = 5)
 ```
 
 ### $P = 0.7$ $\epsilon = 0.1$
 
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.1)
+plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.1, y_lim = 7)
 ```
 
 ### $P = 0.7$ $\epsilon = 0.4$
 
 ```{r}
 #| echo: false
-plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
+plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4, y_lim = 7)
 ```
 
 :::

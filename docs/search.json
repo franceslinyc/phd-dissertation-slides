@@ -74,7 +74,7 @@
     "href": "index.html#background",
     "title": "",
     "section": "Background",
-    "text": "Background\nThe MTD model is a state space model.\n\nThe MTD model was initially developed in 1985 to model high-order Markov chains,\n\nFollowed by several variant models over the years to capture non-Gaussian and nonlinear features, such as flat stretches, bursts, outliers, and change points.\nSee Berchtold and Raftery (2022) for a complete review.\n\n\n\nThe MTD model has primarily been used for modeling time series.\n\nHas also demonstrated success in modeling spatial data."
+    "text": "Background\nThe MTD model is a state space model.\n\nThe MTD model was initially developed in 1985 to model high-order Markov chains,\n\nFollowed by several variant models over the years to capture non-Gaussian and nonlinear features, such as flat stretches, bursts, outliers, and change points.\nSee Berchtold and Raftery (2022) for a complete review.\n\n\n\nThe MTD model has primarily been used for modeling time series.\n\nIts generalizations has also demonstrated success in modeling spatial data."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
