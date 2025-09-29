@@ -454,7 +454,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 3-6: Usual case for gamma marginals
 
-- Scenario 7-9:Unusual case involving high skewness
+- Scenario 7-9: Unusual case involving high skewness
 
 ## Weight and Dependence Parameters for Copula
 
@@ -615,7 +615,7 @@ In (6), there are two parts:
 
 - The shifted Gamma distribution, $ShiftedGamma(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
 
-## dzig   
+## dzig (pdf of zigamma)  
 
 ::: {.panel-tabset}
 
@@ -712,7 +712,7 @@ plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4, y_lim = 7)
 
 :::
 
-## pzig   
+## pzig (cdf of zigamma)  
 
 ::: {.panel-tabset}
 
@@ -1852,7 +1852,31 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 ⏯️ Conclusion
 </div>
 
-## Conclusion 
+## Conclusion
+
+Part I and II 
+
+We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation 
+
+- Enables a choice of copula families that effectively capture dependence.
+
+- Allows the marginal distribution to take any continuous form, providing flexibility in marginal selection.
+
+We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
+
+- This extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma.
+
+## Conclusion
+
+Part III
+
+Through simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series. 
+
+- MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design. 
+
+- LSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.
+
+Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
 
 ---
 
@@ -1865,7 +1889,19 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ## Future Work
 
-## Practical Implications
+Part I and II
+
+- Both Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance. 
+
+- Although the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns.
+
+## Future Work
+
+Part III
+
+- Given the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.  
+
+- It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.
 
 # Thank you!
 
@@ -1913,17 +1949,66 @@ $$
 If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}(x) = f_{V_l}(x) = f_X(x)$, for all $x \in S$, and for all $l$, then this time time series is first-order strictly stationary with invariant marginal density $f_X$.
 ::: 
 
+## Algorithm 1: Implementaion Details 
+
+- The full Bayesian model is complete by priors specification for the parameters $\boldsymbol{\theta} = \{\alpha, \beta, \boldsymbol{\rho}\}$ and $\boldsymbol{w}$.
+
+- The posterior full conditional distributions:
+
+  - For the marginal parameters $\alpha$ and $\beta$ are proportional to $Gamma(\alpha | u_{\alpha}, v_{\alpha}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$ and $Gamma(\beta | u_{\beta}, v_{\beta}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$, respectively. $f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)$. 
+  
+  - For each of the dependence parameters $\boldsymbol{\rho}$ is proportional to $Unif(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})$. 
+  
+  - For each $z_t$ of the latent variables ${\{z_t\}}_{t=L+1}^n$, where the probability of $z_t = l$, denoted by $q_l$, is proportional to $w_l c_l (x_t, x_{t-l})$, for $l = 1,..., L$. 
+
+  - For weight parameters $\boldsymbol{w}$, under the cdf-based prior, is $Dirichlet (\boldsymbol{\alpha})$, where $\boldsymbol{\alpha} = (\alpha_0 a_1 + M_1, ..., \alpha_0 a_L + M_L)$. $a_l = G_0(l/L) - G_0((l - 1)/L)$, $M_l = |\{ t: z_t = l \}|$. 
+
 --- 
 
 ![Asterisk (*) denotes modification of Zheng's (2022) algorithm.](images/alg-1.png){fig-align="left"}
+
+## Algorithm 2: Implementaion Details 
+
+- The full Bayesian model is complete by priors specification for the parameters $\boldsymbol{\theta} = \{\alpha, \beta, P, \epsilon, \boldsymbol{\rho}\}$ and $\boldsymbol{w}$.
+
+- The posterior full conditional distributions:
+
+  - (Same as Gamma MTD)
+
+  - For the zero-inflated probability $P$, is proportional to $Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
+
+  - For the threshold parameter $\epsilon$, is proportional to $ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
+
+
+
 
 --- 
 
 ![Asterisk (**) denotes modification of Algorithm 1.](images/alg-2.png){fig-align="left"}
 
+## Prior Analysis for Gamma Scenario 1
 
+::: {.panel-tabset}
 
-## Trace and Density Plot for Scenario 1’s $w$
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\alpha$
+
+```{r}
+readRDS(file.path(output_dir, "p1_prior.rds"))
+```
+
+### $\beta$
+
+```{r}
+readRDS(file.path(output_dir, "p2_prior.rds"))
+```
+
+::: 
+
+## Trace and Density Plot for ZIGamma Scenario 1’s $w$
 
 ::: {.panel-tabset}
 
@@ -1967,7 +2052,7 @@ grid.arrange(plots[[9]], plots[[10]], ncol = 2)
 
 :::
 
-## Trace and Density Plot for Scenario 1’s $\rho$
+## Trace and Density Plot for ZIGamma Scenario 1’s $\rho$
 
 ::: {.panel-tabset}
 
@@ -2011,7 +2096,7 @@ grid.arrange(plots[[9]], plots[[10]], ncol = 2)
 
 :::
 
-## Trace and Density Plot for Scenario 1's $\mu, \beta, P, \epsilon$
+## Trace and Density Plot for ZIGamma Scenario 1's $\mu, \beta, P, \epsilon$
 
 ::: {.panel-tabset}
 
@@ -2096,10 +2181,10 @@ h_t &= o_t \cdot \tanh(c_t),
 ```
 where $\boldsymbol{W}$ denotes the weight matrices, $\boldsymbol{b}$ the bias vectors, $\sigma$ the logistic sigmoid function, and $tanh$ the hyperbolic tangent function. 
 
-## Training and Validation Loss Curves 
+## Training and Validation Loss Curves for LSTM
 
 ![](images/p_loss_real_bs81632_v2.png)
 
-## Training and Validation Loss Curves 
+## Training and Validation Loss Curves for LSTM
 
 ![](images/p_loss_real_bs64128256_v2.png)

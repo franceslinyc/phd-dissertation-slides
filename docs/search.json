@@ -151,7 +151,7 @@
     "href": "index.html#simulation-studies",
     "title": "",
     "section": "Simulation Studies",
-    "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\alpha\\), \\(\\beta\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\alpha\\), \\(\\beta\\))\n\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.3 and 1.4: Incompatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.5 and 1.6: Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\); Rarely observable patterns\nScenario 3-6: Usual case for gamma marginals\nScenario 7-9:Unusual case involving high skewness"
+    "text": "Simulation Studies\nWe have assessed accuracy and performance of the proposed model.\n\nConvergence Diagnostics (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\), \\(\\alpha\\), \\(\\beta\\))\nWeight and Dependence Parameters for Copula (\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\))\nParameters for Marginal Distribution (\\(\\alpha\\), \\(\\beta\\))\n\n\nSimulation studies demonstrate promising results across various scenarios.\n\nScenario 1 and 2: Default setup; Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.3 and 1.4: Incompatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\)\nScenario 1.5 and 1.6: Compatible \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\); Rarely observable patterns\nScenario 3-6: Usual case for gamma marginals\nScenario 7-9: Unusual case involving high skewness"
   },
   {
     "objectID": "index.html#weight-and-dependence-parameters-for-copula",
@@ -210,18 +210,18 @@
     "text": "Proposed Method\nThe resulting distribution, denoted as \\(ZIGamma(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\nUnif(0, \\epsilon) & \\text{with probability } P \\\\\nShiftedGamma(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution, \\(ShiftedGamma(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\)."
   },
   {
-    "objectID": "index.html#dzig",
-    "href": "index.html#dzig",
+    "objectID": "index.html#dzig-pdf-of-zigamma",
+    "href": "index.html#dzig-pdf-of-zigamma",
     "title": "",
-    "section": "dzig",
-    "text": "dzig\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "dzig (pdf of zigamma)",
+    "text": "dzig (pdf of zigamma)\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
   },
   {
-    "objectID": "index.html#pzig",
-    "href": "index.html#pzig",
+    "objectID": "index.html#pzig-cdf-of-zigamma",
+    "href": "index.html#pzig-cdf-of-zigamma",
     "title": "",
-    "section": "pzig",
-    "text": "pzig\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "pzig (cdf of zigamma)",
+    "text": "pzig (cdf of zigamma)\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
   },
   {
     "objectID": "index.html#simulation-setting",
@@ -410,21 +410,28 @@
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion"
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nAllows the marginal distribution to take any continuous form, providing flexibility in marginal selection.\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma."
+  },
+  {
+    "objectID": "index.html#conclusion-1",
+    "href": "index.html#conclusion-1",
+    "title": "",
+    "section": "Conclusion",
+    "text": "Conclusion\nPart III\nThrough simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work"
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance.\nAlthough the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns."
   },
   {
-    "objectID": "index.html#practical-implications",
-    "href": "index.html#practical-implications",
+    "objectID": "index.html#future-work-1",
+    "href": "index.html#future-work-1",
     "title": "",
-    "section": "Practical Implications",
-    "text": "Practical Implications"
+    "section": "Future Work",
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics."
   },
   {
     "objectID": "index.html#acknowledgement",
@@ -469,25 +476,46 @@
     "text": "Proposition 1: Zheng et al., (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
   },
   {
-    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-w",
-    "href": "index.html#trace-and-density-plot-for-scenario-1s-w",
+    "objectID": "index.html#algorithm-1-implementaion-details",
+    "href": "index.html#algorithm-1-implementaion-details",
     "title": "",
-    "section": "Trace and Density Plot for Scenario 1’s \\(w\\)",
-    "text": "Trace and Density Plot for Scenario 1’s \\(w\\)\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+    "section": "Algorithm 1: Implementaion Details",
+    "text": "Algorithm 1: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\nFor the marginal parameters \\(\\alpha\\) and \\(\\beta\\) are proportional to \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\) and \\(Gamma(\\beta | u_{\\beta}, v_{\\beta}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\), respectively. \\(f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)\\).\nFor each of the dependence parameters \\(\\boldsymbol{\\rho}\\) is proportional to \\(Unif(\\rho_l |-1, 1) \\prod_{t:z_t = l} c_l (x_t, x_{t-l})\\).\nFor each \\(z_t\\) of the latent variables \\({\\{z_t\\}}_{t=L+1}^n\\), where the probability of \\(z_t = l\\), denoted by \\(q_l\\), is proportional to \\(w_l c_l (x_t, x_{t-l})\\), for \\(l = 1,..., L\\).\nFor weight parameters \\(\\boldsymbol{w}\\), under the cdf-based prior, is \\(Dirichlet (\\boldsymbol{\\alpha})\\), where \\(\\boldsymbol{\\alpha} = (\\alpha_0 a_1 + M_1, ..., \\alpha_0 a_L + M_L)\\). \\(a_l = G_0(l/L) - G_0((l - 1)/L)\\), \\(M_l = |\\{ t: z_t = l \\}|\\)."
   },
   {
-    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-rho",
-    "href": "index.html#trace-and-density-plot-for-scenario-1s-rho",
+    "objectID": "index.html#algorithm-2-implementaion-details",
+    "href": "index.html#algorithm-2-implementaion-details",
     "title": "",
-    "section": "Trace and Density Plot for Scenario 1’s \\(\\rho\\)",
-    "text": "Trace and Density Plot for Scenario 1’s \\(\\rho\\)\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
+    "section": "Algorithm 2: Implementaion Details",
+    "text": "Algorithm 2: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, P, \\epsilon, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\n(Same as Gamma MTD)\nFor the zero-inflated probability \\(P\\), is proportional to \\(Unif(P | 0, 1) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\).\nFor the threshold parameter \\(\\epsilon\\), is proportional to \\(ScaledBeta(5, 5; 0, 2\\epsilon_0) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\)."
   },
   {
-    "objectID": "index.html#trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon",
-    "href": "index.html#trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon",
+    "objectID": "index.html#prior-analysis-for-gamma-scenario-1",
+    "href": "index.html#prior-analysis-for-gamma-scenario-1",
     "title": "",
-    "section": "Trace and Density Plot for Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)",
-    "text": "Trace and Density Plot for Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)\n\n\\(\\mu\\)\\(\\beta\\)\\(P\\)\\(\\epsilon\\)"
+    "section": "Prior Analysis for Gamma Scenario 1",
+    "text": "Prior Analysis for Gamma Scenario 1\n\n\\(\\alpha\\)\\(\\beta\\)"
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-w",
+    "href": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-w",
+    "title": "",
+    "section": "Trace and Density Plot for ZIGamma Scenario 1’s \\(w\\)",
+    "text": "Trace and Density Plot for ZIGamma Scenario 1’s \\(w\\)\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-rho",
+    "href": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-rho",
+    "title": "",
+    "section": "Trace and Density Plot for ZIGamma Scenario 1’s \\(\\rho\\)",
+    "text": "Trace and Density Plot for ZIGamma Scenario 1’s \\(\\rho\\)\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
+  },
+  {
+    "objectID": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-mu-beta-p-epsilon",
+    "href": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-mu-beta-p-epsilon",
+    "title": "",
+    "section": "Trace and Density Plot for ZIGamma Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)",
+    "text": "Trace and Density Plot for ZIGamma Scenario 1’s \\(\\mu, \\beta, P, \\epsilon\\)\n\n\\(\\mu\\)\\(\\beta\\)\\(P\\)\\(\\epsilon\\)"
   },
   {
     "objectID": "index.html#rnn",
@@ -504,17 +532,17 @@
     "text": "LSTM\nLet \\(c_t\\) and \\(h_t\\) denote the cell and the hidden state vector. Let \\(f_t\\), \\(i_t\\), and \\(o_t\\) represent the forget, the input, and the output gate vector at time \\(t\\), respectively. Then, an LSTM unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:lstm}\nf_t &= \\sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\\\\ni_t &= \\sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\n\\tilde{c}_t &= \\tanh(W_{\\tilde{c} h} h_{t-1} + W_{\\tilde{c} x} x_t + b_{\\tilde{c}}), \\\\\nc_t &= f_t \\cdot c_{t-1} + i_t \\cdot \\tilde{c}_t, \\\\\no_t &= \\sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\\\\nh_t &= o_t \\cdot \\tanh(c_t),\n\\end{split}\n\\end{equation}\\]\nwhere \\(\\boldsymbol{W}\\) denotes the weight matrices, \\(\\boldsymbol{b}\\) the bias vectors, \\(\\sigma\\) the logistic sigmoid function, and \\(tanh\\) the hyperbolic tangent function."
   },
   {
-    "objectID": "index.html#training-and-validation-loss-curves",
-    "href": "index.html#training-and-validation-loss-curves",
+    "objectID": "index.html#training-and-validation-loss-curves-for-lstm",
+    "href": "index.html#training-and-validation-loss-curves-for-lstm",
     "title": "",
-    "section": "Training and Validation Loss Curves",
-    "text": "Training and Validation Loss Curves"
+    "section": "Training and Validation Loss Curves for LSTM",
+    "text": "Training and Validation Loss Curves for LSTM"
   },
   {
-    "objectID": "index.html#training-and-validation-loss-curves-1",
-    "href": "index.html#training-and-validation-loss-curves-1",
+    "objectID": "index.html#training-and-validation-loss-curves-for-lstm-1",
+    "href": "index.html#training-and-validation-loss-curves-for-lstm-1",
     "title": "",
-    "section": "Training and Validation Loss Curves",
-    "text": "Training and Validation Loss Curves"
+    "section": "Training and Validation Loss Curves for LSTM",
+    "text": "Training and Validation Loss Curves for LSTM"
   }
 ]

@@ -669,7 +669,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <li><p>Scenario 1.3 and 1.4: Incompatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span></p></li>
 <li><p>Scenario 1.5 and 1.6: Compatible <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span>; Rarely observable patterns</p></li>
 <li><p>Scenario 3-6: Usual case for gamma marginals</p></li>
-<li><p>Scenario 7-9:Unusual case involving high skewness</p></li>
+<li><p>Scenario 7-9: Unusual case involving high skewness</p></li>
 </ul>
 </div>
 </section>
@@ -842,8 +842,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 </div>
 </section>
-<section id="dzig" class="slide level2">
-<h2>dzig</h2>
+<section id="dzig-pdf-of-zigamma" class="slide level2">
+<h2>dzig (pdf of zigamma)</h2>
 <div class="panel-tabset">
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-4-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-4-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-4-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-4-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-4-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -916,8 +916,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </section>
-<section id="pzig" class="slide level2">
-<h2>pzig</h2>
+<section id="pzig-cdf-of-zigamma" class="slide level2">
+<h2>pzig (cdf of zigamma)</h2>
 <div class="panel-tabset">
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-5-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-5-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-5-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -2399,6 +2399,26 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
+<p>Part I and II</p>
+<p>We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation</p>
+<ul>
+<li><p>Enables a choice of copula families that effectively capture dependence.</p></li>
+<li><p>Allows the marginal distribution to take any continuous form, providing flexibility in marginal selection.</p></li>
+</ul>
+<p>We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.</p>
+<ul>
+<li>This extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma.</li>
+</ul>
+</section>
+<section id="conclusion-1" class="slide level2">
+<h2>Conclusion</h2>
+<p>Part III</p>
+<p>Through simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.</p>
+<ul>
+<li><p>MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.</p></li>
+<li><p>LSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
+</ul>
+<p>Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
 </section>
 <section class="slide level2">
 
@@ -2409,9 +2429,19 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="future-work" class="slide level2">
 <h2>Future Work</h2>
+<p>Part I and II</p>
+<ul>
+<li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance.</p></li>
+<li><p>Although the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns.</p></li>
+</ul>
 </section>
-<section id="practical-implications" class="slide level2">
-<h2>Practical Implications</h2>
+<section id="future-work-1" class="slide level2">
+<h2>Future Work</h2>
+<p>Part III</p>
+<ul>
+<li><p>Given the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.</p></li>
+<li><p>It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.</p></li>
+</ul>
 </section></section>
 <section>
 <section id="thank-you" class="title-slide slide level1 center">
@@ -2461,25 +2491,50 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <p>If a time series satisfies the invariant condition: <span class="math inline">\(X_1 \sim f_X\)</span>, and <span class="math inline">\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\)</span>, for all <span class="math inline">\(x \in S\)</span>, and for all <span class="math inline">\(l\)</span>, then this time time series is first-order strictly stationary with invariant marginal density <span class="math inline">\(f_X\)</span>.</p>
 </div>
 </section>
+<section id="algorithm-1-implementaion-details" class="slide level2">
+<h2>Algorithm 1: Implementaion Details</h2>
+<ul>
+<li><p>The full Bayesian model is complete by priors specification for the parameters <span class="math inline">\(\boldsymbol{\theta} = \{\alpha, \beta, \boldsymbol{\rho}\}\)</span> and <span class="math inline">\(\boldsymbol{w}\)</span>.</p></li>
+<li><p>The posterior full conditional distributions:</p>
+<ul>
+<li><p>For the marginal parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are proportional to <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span> and <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>, respectively. <span class="math inline">\(f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)\)</span>.</p></li>
+<li><p>For each of the dependence parameters <span class="math inline">\(\boldsymbol{\rho}\)</span> is proportional to <span class="math inline">\(Unif(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})\)</span>.</p></li>
+<li><p>For each <span class="math inline">\(z_t\)</span> of the latent variables <span class="math inline">\({\{z_t\}}_{t=L+1}^n\)</span>, where the probability of <span class="math inline">\(z_t = l\)</span>, denoted by <span class="math inline">\(q_l\)</span>, is proportional to <span class="math inline">\(w_l c_l (x_t, x_{t-l})\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p></li>
+<li><p>For weight parameters <span class="math inline">\(\boldsymbol{w}\)</span>, under the cdf-based prior, is <span class="math inline">\(Dirichlet (\boldsymbol{\alpha})\)</span>, where <span class="math inline">\(\boldsymbol{\alpha} = (\alpha_0 a_1 + M_1, ..., \alpha_0 a_L + M_L)\)</span>. <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, <span class="math inline">\(M_l = |\{ t: z_t = l \}|\)</span>.</p></li>
+</ul></li>
+</ul>
+</section>
 <section class="slide level2">
 
 
 <img data-src="images/alg-1.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (*) denotes modification of Zheng’s (2022) algorithm.</p></section>
+<section id="algorithm-2-implementaion-details" class="slide level2">
+<h2>Algorithm 2: Implementaion Details</h2>
+<ul>
+<li><p>The full Bayesian model is complete by priors specification for the parameters <span class="math inline">\(\boldsymbol{\theta} = \{\alpha, \beta, P, \epsilon, \boldsymbol{\rho}\}\)</span> and <span class="math inline">\(\boldsymbol{w}\)</span>.</p></li>
+<li><p>The posterior full conditional distributions:</p>
+<ul>
+<li><p>(Same as Gamma MTD)</p></li>
+<li><p>For the zero-inflated probability <span class="math inline">\(P\)</span>, is proportional to <span class="math inline">\(Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
+<li><p>For the threshold parameter <span class="math inline">\(\epsilon\)</span>, is proportional to <span class="math inline">\(ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
+</ul></li>
+</ul>
+</section>
 <section class="slide level2">
 
 
 <img data-src="images/alg-2.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (**) denotes modification of Algorithm 1.</p></section>
-<section id="trace-and-density-plot-for-scenario-1s-w" class="slide level2">
-<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(w\)</span></h2>
+<section id="prior-analysis-for-gamma-scenario-1" class="slide level2">
+<h2>Prior Analysis for Gamma Scenario 1</h2>
 <div class="panel-tabset">
-<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-14-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-14-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-14-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-14-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-14-2"><span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-99-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2490,24 +2545,21 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-101-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-14-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
-</figure>
 </div>
 </div>
-</div>
-</div>
-<div id="tabset-14-4">
+</section>
+<section id="trace-and-density-plot-for-zigamma-scenario-1s-w" class="slide level2">
+<h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(w\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-15-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-15-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-15-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-15-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-15-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2518,7 +2570,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 </div>
 </div>
 </div>
-<div id="tabset-14-5">
+<div id="tabset-15-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -2529,42 +2581,12 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 </div>
 </div>
 </div>
-</div>
-</div>
-</section>
-<section id="trace-and-density-plot-for-scenario-1s-rho" class="slide level2">
-<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(\rho\)</span></h2>
-<div class="panel-tabset">
-<ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-15-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-15-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-15-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-15-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
-<div class="tab-content">
-<div id="tabset-15-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-107-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-15-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
 <div id="tabset-15-3">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-105-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2575,7 +2597,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-106-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2586,7 +2608,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-111-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-107-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2595,17 +2617,17 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 </div>
 </div>
 </section>
-<section id="trace-and-density-plot-for-scenario-1s-mu-beta-p-epsilon" class="slide level2">
-<h2>Trace and Density Plot for Scenario 1’s <span class="math inline">\(\mu, \beta, P, \epsilon\)</span></h2>
+<section id="trace-and-density-plot-for-zigamma-scenario-1s-rho" class="slide level2">
+<h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\rho\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-16-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-16-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-16-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
+<ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-16-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-16-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-16-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-16-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
 <div class="tab-content">
 <div id="tabset-16-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-114-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2616,7 +2638,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-115-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-111-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2627,7 +2649,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-112-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2638,7 +2660,70 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-113-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-16-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-114-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="trace-and-density-plot-for-zigamma-scenario-1s-mu-beta-p-epsilon" class="slide level2">
+<h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\mu, \beta, P, \epsilon\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-17-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-17-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-17-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
+<div class="tab-content">
+<div id="tabset-17-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-17-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-17-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-17-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2681,12 +2766,12 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\boldsymbol{W}\)</span> denotes the weight matrices, <span class="math inline">\(\boldsymbol{b}\)</span> the bias vectors, <span class="math inline">\(\sigma\)</span> the logistic sigmoid function, and <span class="math inline">\(tanh\)</span> the hyperbolic tangent function.</p>
 </section>
-<section id="training-and-validation-loss-curves" class="slide level2">
-<h2>Training and Validation Loss Curves</h2>
+<section id="training-and-validation-loss-curves-for-lstm" class="slide level2">
+<h2>Training and Validation Loss Curves for LSTM</h2>
 
 <img data-src="images/p_loss_real_bs81632_v2.png" class="r-stretch"></section>
-<section id="training-and-validation-loss-curves-1" class="slide level2">
-<h2>Training and Validation Loss Curves</h2>
+<section id="training-and-validation-loss-curves-for-lstm-1" class="slide level2">
+<h2>Training and Validation Loss Curves for LSTM</h2>
 
 
 
