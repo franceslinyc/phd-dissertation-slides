@@ -164,7 +164,7 @@ Part II Models for Forecasting Zero-Inflated Skewed Time Series
 
 ## Roadmap 
 
-Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
+Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
 - Introduction
 
@@ -241,7 +241,13 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 . . .
 
-Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of $L$ (a given number) of lags. 
+As $t$ increases, the size of the conditioning set of $X_t$ can be large. 
+
+- Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the $L$ (a given number) lagged values.
+
+. . .
+
+Each conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the $L$ lagged values.
 
 
 ## MTD order (look-back steps) $L = 5$
@@ -1288,7 +1294,7 @@ readRDS(file.path(output_dir, "p6.rds"))
 
 ::: 
 
-# Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
+# Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
 
 ## Introduction   
 
@@ -1860,11 +1866,11 @@ We develop a novel copula-based MTD model that separates the dependence structur
 
 - Enables a choice of copula families that effectively capture dependence.
 
-- Allows the marginal distribution to take any continuous form, providing flexibility in marginal selection.
+- Provides flexibility in marginal selection.
 
 We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
-- This extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma.
+- This extension again demonstrates the framework’s generalizability beyond the Gamma marginals.
 
 ## Conclusion
 
@@ -1874,7 +1880,7 @@ Through simulation studies and real-world applications, we illustrate how MTD an
 
 - MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design. 
 
-- LSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.
+- LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.
 
 Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
 
@@ -1891,15 +1897,15 @@ Overall, the proposed MTD framework provides a flexible, robust, and interpretab
 
 Part I and II
 
-- Both Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance. 
+- Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.
 
-- Although the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns.
+- Although the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to non-stationary time series and models with covariates/features, further enhancing flexibility and realism in modeling complex temporal patterns.
 
 ## Future Work
 
 Part III
 
-- Given the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.  
+- Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.  
 
 - It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.
 
@@ -1933,7 +1939,7 @@ Contour plot of different bivariate density function where marginals are $N(0, 1
 For any $p$-dimensional multivariate cumulative distribution function (cdf) of a random vector $(X_1, ..., X_p)$, denoted as $F(x_1, ..., x_p)$, there exists a copula function $C: {[0,1]}^p \rightarrow [0, 1]$ for which $F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))$, where $F_j$ is the marginal cdf of $X_j, j = 1,..., p$. If $X_j$ is continuous for all $j$, then $C$ is unique and differentiable. The joint probability density function (pdf) of $X_j, j = 1,...,p$ is given by $f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)$, where $c = \partial^p{C} / \partial{F_j}$ is the copula density and $f_j$ is the density of $X_j$.
 ::: 
 
-## Proposition 1: Zheng et al., (2022)'s invariant condition
+## Proposition 1: Zheng et al. (2022)'s invariant condition
 
 ::: {.proposition #prop-1}
 Consider a set of bivariate random vectors $(U_l, V_l)$ that takes values in $S \times S \subset \mathbb{R}$. Consider a time series $\{ X_t: t \in \mathbb{N} \}$, where $X_t \in S$, generated from

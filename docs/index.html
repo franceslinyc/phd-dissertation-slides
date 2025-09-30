@@ -242,7 +242,7 @@
 </section>
 <section id="roadmap-1" class="slide level2">
 <h2>Roadmap</h2>
-<p>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
+<p>Part III Copula-Based Probabilistic MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
 <ul>
 <li><p>Introduction</p></li>
 <li><p>Background</p></li>
@@ -313,7 +313,13 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \end{equation}\]</span>
 <p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
 <div class="fragment">
-<p>Each conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of <span class="math inline">\(L\)</span> (a given number) of lags.</p>
+<p>As <span class="math inline">\(t\)</span> increases, the size of the conditioning set of <span class="math inline">\(X_t\)</span> can be large.</p>
+<ul>
+<li>Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the <span class="math inline">\(L\)</span> (a given number) lagged values.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Each conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the <span class="math inline">\(L\)</span> lagged values.</p>
 </div>
 </section>
 <section id="mtd-order-look-back-steps-l-5" class="slide level2">
@@ -1624,8 +1630,8 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </section></section>
 <section>
-<section id="part-iii-copula-based-markov-mtd-models-vs.-deep-learning-lstm-networks" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
-<h1>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</h1>
+<section id="part-iii-copula-based-probabilistic-mtd-models-vs.-deep-learning-lstm-networks" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
+<h1>Part III Copula-Based Probabilistic MTD Models vs.&nbsp;Deep Learning LSTM Networks</h1>
 
 </section>
 <section id="introduction-2" class="slide level2">
@@ -2403,11 +2409,11 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <p>We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation</p>
 <ul>
 <li><p>Enables a choice of copula families that effectively capture dependence.</p></li>
-<li><p>Allows the marginal distribution to take any continuous form, providing flexibility in marginal selection.</p></li>
+<li><p>Provides flexibility in marginal selection.</p></li>
 </ul>
 <p>We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.</p>
 <ul>
-<li>This extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma.</li>
+<li>This extension again demonstrates the framework’s generalizability beyond the Gamma marginals.</li>
 </ul>
 </section>
 <section id="conclusion-1" class="slide level2">
@@ -2416,7 +2422,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <p>Through simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.</p>
 <ul>
 <li><p>MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.</p></li>
-<li><p>LSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
+<li><p>LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
 </ul>
 <p>Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
 </section>
@@ -2431,15 +2437,15 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <h2>Future Work</h2>
 <p>Part I and II</p>
 <ul>
-<li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance.</p></li>
-<li><p>Although the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns.</p></li>
+<li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.</p></li>
+<li><p>Although the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to non-stationary time series and models with covariates/features, further enhancing flexibility and realism in modeling complex temporal patterns.</p></li>
 </ul>
 </section>
 <section id="future-work-1" class="slide level2">
 <h2>Future Work</h2>
 <p>Part III</p>
 <ul>
-<li><p>Given the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.</p></li>
+<li><p>Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.</p></li>
 <li><p>It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.</p></li>
 </ul>
 </section></section>
@@ -2480,7 +2486,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </section>
 <section id="proposition-1-zheng-et-al.-2022s-invariant-condition" class="slide level2">
-<h2>Proposition 1: Zheng et al., (2022)’s invariant condition</h2>
+<h2>Proposition 1: Zheng et al.&nbsp;(2022)’s invariant condition</h2>
 <div id="prop-1" class="proposition">
 <p>Consider a set of bivariate random vectors <span class="math inline">\((U_l, V_l)\)</span> that takes values in <span class="math inline">\(S \times S \subset \mathbb{R}\)</span>. Consider a time series <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span>, where <span class="math inline">\(X_t \in S\)</span>, generated from <span class="math display">\[
 f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,

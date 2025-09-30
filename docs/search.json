@@ -53,7 +53,7 @@
     "href": "index.html#roadmap-1",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nBackground\nHyperparameter Tuning, Training, and Metrics\nSimulation Studies\nData Application"
+    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nBackground\nHyperparameter Tuning, Training, and Metrics\nSimulation Studies\nData Application"
   },
   {
     "objectID": "index.html#introduction",
@@ -81,7 +81,7 @@
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian network",
-    "text": "Model Framework: DAG; also known as Bayesian network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with mixture weights, for each one of \\(L\\) (a given number) of lags."
+    "text": "Model Framework: DAG; also known as Bayesian network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set of \\(X_t\\) can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
@@ -410,28 +410,28 @@
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nAllows the marginal distribution to take any continuous form, providing flexibility in marginal selection.\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability to alternative marginal distributions beyond the Gamma."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond the Gamma marginals."
   },
   {
     "objectID": "index.html#conclusion-1",
     "href": "index.html#conclusion-1",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling, computational efficiency, and simpler model design, their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to capture dependence. Future work should explore alternative copula families such as Clayton and Gumbel for tail dependence and asymmetry, and investigate the impact of alternative copula choices on model performance.\nAlthough the current framework assumes stationarity and does not incorporate predictors, extensions to non-stationary time series and predictor-dependent models could further enhance flexibility and realism in modeling complex temporal patterns."
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to non-stationary time series and models with covariates/features, further enhancing flexibility and realism in modeling complex temporal patterns."
   },
   {
     "objectID": "index.html#future-work-1",
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, future research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics."
   },
   {
     "objectID": "index.html#acknowledgement",
@@ -472,8 +472,8 @@
     "objectID": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
     "href": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
     "title": "",
-    "section": "Proposition 1: Zheng et al., (2022)’s invariant condition",
-    "text": "Proposition 1: Zheng et al., (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
+    "section": "Proposition 1: Zheng et al. (2022)’s invariant condition",
+    "text": "Proposition 1: Zheng et al. (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
   },
   {
     "objectID": "index.html#algorithm-1-implementaion-details",
