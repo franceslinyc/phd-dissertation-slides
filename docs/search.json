@@ -424,7 +424,7 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to non-stationary time series and models with covariates/features, further enhancing flexibility and realism in modeling complex temporal patterns."
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to enhance flexibility and realism in modeling complex temporal patterns."
   },
   {
     "objectID": "index.html#future-work-1",
