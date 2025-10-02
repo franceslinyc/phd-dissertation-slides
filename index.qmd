@@ -519,7 +519,7 @@ Since the preliminary exam, we have also conducted:
 
 - Sensitivity Analysis 
 
-- Coverage Assessment. 
+- Coverage Assessment
 
 . . .
 
@@ -539,7 +539,7 @@ Coverage Assessment
 
 - Most parameters achieve full coverage, with a few slightly below $1$, indicating that the credible intervals reliably capture the true parameter values. 
 
-## Coverage Assessment for Scenario 1 and 2, 40 Replicates [^coveragerate]
+## Coverage Assessment for Scenario 1 and 2, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -569,7 +569,107 @@ df
 
 ::: 
 
-[^coveragerate]: See Supplement for more. 
+## Coverage Assessment for Gamma Scenario 1's $\alpha$ and $\beta$, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\alpha$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_alpha.rds"))
+```
+
+### $\beta$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_beta.rds"))
+```
+
+::: 
+
+## Coverage Assessment for Gamma Scenario 1’s $w$, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $w_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w1.rds"))
+```
+
+### $w_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w2.rds"))
+```
+
+### $w_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w3.rds"))
+```
+
+### $w_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w4.rds"))
+```
+
+### $w_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w5.rds"))
+```
+
+:::
+
+## Coverage Assessment for Gamma Scenario 1’s $\rho$, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\rho_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho1.rds"))
+```
+
+### $\rho_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho2.rds"))
+```
+
+### $\rho_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho3.rds"))
+```
+
+### $\rho_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho4.rds"))
+```
+
+### $\rho_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho5.rds"))
+```
+
+:::
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -2070,108 +2170,6 @@ readRDS(file.path(output_dir, "p2_prior.rds"))
 ```
 
 ::: 
-
-## Coverage Assessment for Gamma Scenario 1
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $\alpha$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_alpha.rds"))
-```
-
-### $\beta$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_beta.rds"))
-```
-
-::: 
-
-## Coverage Assessment for Gamma Scenario 1’s $w$
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $w_1$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w1.rds"))
-```
-
-### $w_2$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w2.rds"))
-```
-
-### $w_3$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w3.rds"))
-```
-
-### $w_4$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w4.rds"))
-```
-
-### $w_5$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w5.rds"))
-```
-
-:::
-
-## Coverage Assessment for Gamma Scenario 1’s $\rho$
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $\rho_1$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho1.rds"))
-```
-
-### $\rho_2$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho2.rds"))
-```
-
-### $\rho_3$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho3.rds"))
-```
-
-### $\rho_4$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho4.rds"))
-```
-
-### $\rho_5$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho5.rds"))
-```
-
-:::
 
 ## Trace and Density Plot for ZIGamma Scenario 1’s $w$
 
