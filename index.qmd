@@ -46,7 +46,7 @@ Committee Members: Dr. James Molyneux, Dr. Claudio Fuentes, Dr. Prasad Tadepalli
 
 Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation. 
 
-- ⚠️ Real-world time series often show skewness and zero inflation, which can hinder prediction if ignored. 
+- ⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed. 
 
 . . .    
 
@@ -131,7 +131,7 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 Part I and II
 
-> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed features, and semicontinuous patterns.
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed behavior, and semicontinuous patterns.
 
 . . .
 
@@ -149,32 +149,32 @@ Part I Models for Forecasting Skewed Time Series
 
 - Coverage Assessment 
 
-Part II Models for Forecasting Zero-Inflated Skewed Time Series
+Part II Models for Forecasting Zero-Inflated Skewed Time Series 
 
-- Introduction
+- Introduction 
 
-- Background
+- Background 
 
-- Proposed Method
+- Proposed Method 
 
-- Simulation Studies
+- Simulation Studies 
 
-- Prediction
+- Prediction 
 
 
 ## Roadmap 
 
 Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
-- Introduction
+- Introduction 
 
-- Background
+- Background 
 
 - Hyperparameter Tuning, Training, and Metrics 
 
 - Simulation Studies 
 
-- Data Application
+- Data Application 
 
 # Part I Models for Forecasting Skewed Time Series {background-color="#D73F09" color="white"} 
 
@@ -186,9 +186,9 @@ Time series model captures how past values contribute to current value and uses 
 
 The mixture transition distribution (MTD) models 
 
-- Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.
+- Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series. 
 
-- Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.
+- Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights. 
 
 ## Introduction and Objectives 
 
@@ -228,7 +228,7 @@ The MTD model has primarily been used for modeling time series.
 - Its generalizations has also demonstrated success in modeling spatial data. 
 
 
-## Model Framework: DAG; also known as Bayesian network 
+## Model Framework: DAG; also known as Bayesian Network
 
 Let $\{ X_t: t \in \mathbb{N} \}$ be a time series. Construct the model on a DAG, the joint distribution of $X_1$ to $X_t$ can be factorized into a product of conditional distributions as
 ```{=latex}
@@ -250,7 +250,7 @@ As $t$ increases, the size of the conditioning set of $X_t$ can be large.
 Each conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the $L$ lagged values.
 
 
-## MTD order (look-back steps) $L = 5$
+## MTD Order (Look-Back Steps) $L = 5$
 
 ```{dot}
 graph {
@@ -272,7 +272,7 @@ graph {
 }
 ```
 
-## MTD order (look-back steps) $L = 5$
+## MTD Order (Look-Back Steps) $L = 5$
 
 ```{dot}
 graph {
@@ -294,7 +294,7 @@ graph {
 }
 ```
 
-## MTD order (look-back steps) $L = 5$
+## MTD Order (Look-Back Steps) $L = 5$
 
 ```{dot}
 graph {
@@ -317,7 +317,7 @@ graph {
 ```
 
 
-## Model Framework: Transition kernels & mixture weights 
+## Model Framework: Transition Kernels and Mixture Weights 
 
 For $t > L$, the MTD model specifies the conditional distribution of $X_t$ given $\textbf{X}^{t-1} = \textbf{x}^{t-1}$ as 
 ```{=latex}
@@ -419,7 +419,7 @@ Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed
 
 ## Background: Bayesian Implementation  
 
-Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel or component the data belongs to. 
+Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel the data belongs to. 
 
 The posterior distribution of the parameters, based on the conditional likelihood, is
 ```{=latex} 
@@ -430,7 +430,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \end{split} \tag{4}
 \end{equation}
 ```
-\scriptsize $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.
+\scriptsize $\boldsymbol{w}$ is the mixture weights. $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.
 
 . . .
 
@@ -462,7 +462,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 - Scenario 7-9: Unusual case involving high skewness
 
-## Weight and Dependence Parameters for Copula
+## Weight and Dependence Parameters for Copula [^wrho]
 
 ::: {.panel-tabset}
 
@@ -488,6 +488,8 @@ grid.arrange(w_raw, rho_raw, nrow = 1)
 
 :::
 
+[^wrho]: Four other $\boldsymbol{w}$ and $\boldsymbol{\rho}$ patterns (s1.3-1.6) are omitted here. 
+
 ## Marginal Distribution
 
 ::: {.panel-tabset}
@@ -511,19 +513,63 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 # What's New  
 
-## Sensitivity Analysis and Coverage Assessment
+## Sensitivity Analysis [^sensitivity] 
 
-Since the preliminary exam, we have also conducted:
+Since the preliminary exam, we have also conducted: 
 
-- Sensitivity Analysis
+- Sensitivity Analysis 
 
-- Coverage Assessment
+- Coverage Assessment. 
 
 . . .
 
-Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
+Sensitivity Analysis
 
-Most parameters achieve full coverage, indicating that the credible intervals reliably capture the true parameter values.
+- Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) and check for convergence. 
+
+- Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
+
+[^sensitivity]: See Supplement for more. 
+
+## Coverage Assessment 
+
+Coverage Assessment
+
+- Simulate $40$ replicates, combine $4$ chains of $8,000$ samples, calculate $95\%$ CI, and record whether the true parameter value falls within this interval. 
+
+- Most parameters achieve full coverage, with a few slightly below $1$, indicating that the credible intervals reliably capture the true parameter values. 
+
+## Coverage Assessment for Scenario 1 and 2, 40 Replicates [^coveragerate]
+
+::: {.panel-tabset}
+
+```{r}
+library(knitr)
+```
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### Exponentially decreasing weights (s1)
+
+```{r}
+df <- readRDS(file.path(output_dir, "coverage_df_s1.rds"))
+df <- df |> kable(digits = 4)
+df 
+```
+
+### Uneven arrangement of the relevant lags (s2)
+
+```{r}
+df <- readRDS(file.path(output_dir, "coverage_df_s2.rds"))
+df <- df |> kable(digits = 4)
+df 
+```
+
+::: 
+
+[^coveragerate]: See Supplement for more. 
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -555,11 +601,11 @@ However,
 
 . . .
 
-> **Objectives:** Propose reconstructing the marginal distribution to account for zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.
+> **Objectives:** Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.
 
 . . .
 
-> Develop the ZIGamma MTD model, but the framework is generalizable.
+> Develop the ZIGamma MTD model, but the framework is again generalizable.
 
 ## Background
 
@@ -871,7 +917,6 @@ For brevity, we present Scenario 1 only.
 
 ```{r}
 library(coda)
-library(knitr)
 ```
 
 ```{r}
@@ -1294,7 +1339,7 @@ readRDS(file.path(output_dir, "p6.rds"))
 
 ::: 
 
-# Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
+# Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
 
 ## Introduction   
 
@@ -1412,7 +1457,7 @@ Experiment 2:
 
 Experiment 3: 
 
-- We run the LSTM model with a variety of configurations on Gamma Scenario 1 with 10 independently generated replicates for each configuration to investigate the impact of hyperparameters. 
+- We run the LSTM model on 10 independently generated replicates of Gamma Scenario 1 for a variety of configurations (e.g., batch size, learning rate, cell dimention, hidden layer) to investigate the impact of hyperparameters. 
 
 ## Experimental Setup   
 
@@ -1679,7 +1724,7 @@ df
 | SMAPE   | Symmetric MAPE    | $\frac{100}{T} \sum_{t=1}^{T} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}$   |
 | MASE    | Mean Absolute Scaled Error     | $\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }$  |
 
-: {tbl-colwidths="[25,50, 50]"}
+: {tbl-colwidths="[25, 50, 50]"}
 
 [^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
@@ -1992,7 +2037,19 @@ If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}
 
 ![Asterisk (**) denotes modification of Algorithm 1.](images/alg-2.png){fig-align="left"}
 
-## Prior Analysis for Gamma Scenario 1
+## Sensitivity Analysis for Gamma Scenario 1
+
+| Prior for $\alpha$ | Prior for $\beta$ | Description |
+|------|------|------|
+| $Gamma(49, 7)$    | $Gamma(1, 1)$    | Informative prior for both $\alpha$ and $\beta$. |
+| $Gamma(4.9, 0.7)$ | $Gamma(1, 1)$    |Diffuse prior for $\alpha$. Informative prior for $\beta$. |
+| $Gamma(49, 7)$  | $Gamma(0.1, 0.1)$ | Informative prior for $\alpha$. Diffuse prior for $\beta$. |
+| $Gamma(10, 1)$ | $Gamma(1, 1)$ | Shifted prior for $\alpha$. Informative prior for $\beta$. |
+| $Gamma(49, 7)$ | $Gamma(4, 1)$  | Informative prior for $\alpha$. Shifted prior for $\beta$. |
+
+: {tbl-colwidths="[25, 25, 50]"}
+
+## Sensitivity Analysis for Gamma Scenario 1
 
 ::: {.panel-tabset}
 
@@ -2013,6 +2070,108 @@ readRDS(file.path(output_dir, "p2_prior.rds"))
 ```
 
 ::: 
+
+## Coverage Assessment for Gamma Scenario 1
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\alpha$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_alpha.rds"))
+```
+
+### $\beta$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_beta.rds"))
+```
+
+::: 
+
+## Coverage Assessment for Gamma Scenario 1’s $w$
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $w_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w1.rds"))
+```
+
+### $w_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w2.rds"))
+```
+
+### $w_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w3.rds"))
+```
+
+### $w_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w4.rds"))
+```
+
+### $w_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w5.rds"))
+```
+
+:::
+
+## Coverage Assessment for Gamma Scenario 1’s $\rho$
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\rho_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho1.rds"))
+```
+
+### $\rho_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho2.rds"))
+```
+
+### $\rho_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho3.rds"))
+```
+
+### $\rho_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho4.rds"))
+```
+
+### $\rho_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho5.rds"))
+```
+
+:::
 
 ## Trace and Density Plot for ZIGamma Scenario 1’s $w$
 
