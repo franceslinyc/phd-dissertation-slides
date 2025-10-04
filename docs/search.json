@@ -7,6 +7,13 @@
     "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
   },
   {
+    "objectID": "shiftedgamma.html",
+    "href": "shiftedgamma.html",
+    "title": "",
+    "section": "",
+    "text": "\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(x - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{x - \\epsilon} {\\beta})  & x \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]"
+  },
+  {
     "objectID": "metric.html",
     "href": "metric.html",
     "title": "",
@@ -81,7 +88,7 @@
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian Network",
-    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set of \\(X_t\\) can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
+    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
@@ -172,7 +179,7 @@
     "href": "index.html#sensitivity-analysis",
     "title": "",
     "section": "Sensitivity Analysis",
-    "text": "Sensitivity Analysis\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis (s1)\nCoverage Assessment (s1, s2)\n\n\nSensitivity Analysis\n\nUse five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) 1 and check for convergence.\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\n\n\nSee Supplement for more."
+    "text": "Sensitivity Analysis\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis (s1)\nCoverage Assessment (s1, s2)\n\n\nSensitivity Analysis\n\nUse five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) 1 and check for convergence.\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#coverage-assessment",
@@ -242,7 +249,7 @@
     "href": "index.html#proposed-method-2",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\)."
+    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -277,7 +284,7 @@
     "href": "index.html#simulation-studies-2",
     "title": "",
     "section": "Simulation Studies",
-    "text": "Simulation Studies\nIn all nine scenarios, we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases per scenario:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we present Scenario 1 only."
+    "text": "Simulation Studies\nIn all nine scenarios (s1-9), we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases per scenario:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we present Scenario 1 only."
   },
   {
     "objectID": "index.html#simulation-results-res",
@@ -298,7 +305,14 @@
     "href": "index.html#coverage-assessment-1",
     "title": "",
     "section": "Coverage Assessment",
-    "text": "Coverage Assessment\nAll nine scenarios (s1-s9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+    "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+  },
+  {
+    "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma",
+    "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma",
+    "title": "",
+    "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1",
+    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\)."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
@@ -413,39 +427,39 @@
     "text": "Evaluation Metrics 1\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)\n\n\n\nMAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units."
   },
   {
-    "objectID": "index.html#data-application-evaluation-results",
-    "href": "index.html#data-application-evaluation-results",
+    "objectID": "index.html#evaluation-results",
+    "href": "index.html#evaluation-results",
     "title": "",
-    "section": "Data Application, Evaluation Results",
-    "text": "Data Application, Evaluation Results\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
+    "section": "Evaluation Results",
+    "text": "Evaluation Results\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
   },
   {
-    "objectID": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
-    "href": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
+    "objectID": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
+    "href": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
     "title": "",
-    "section": "Data Application, Predicted Means, One-Step Ahead; Test Size \\(n = 1756\\) 1",
-    "text": "Data Application, Predicted Means, One-Step Ahead; Test Size \\(n = 1756\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "section": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
+    "text": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
-    "objectID": "index.html#data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption",
-    "href": "index.html#data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption",
+    "objectID": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
+    "href": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
     "title": "",
-    "section": "Data Application, Predicted Means, One-Step Ahead; Zoom-In View \\(n = 200\\) 1",
-    "text": "Data Application, Predicted Means, One-Step Ahead; Zoom-In View \\(n = 200\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
+    "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
-    "objectID": "index.html#data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff",
-    "href": "index.html#data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff",
+    "objectID": "index.html#prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200",
+    "href": "index.html#prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200",
     "title": "",
-    "section": "Data Application, Prediction Errors, One-Step Ahead; Zoom-In View \\(n = 200\\) 1",
-    "text": "Data Application, Prediction Errors, One-Step Ahead; Zoom-In View \\(n = 200\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
+    "section": "Prediction Errors 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
+    "text": "Prediction Errors 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
   },
   {
-    "objectID": "index.html#data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd",
-    "href": "index.html#data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd",
+    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd",
+    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd",
     "title": "",
-    "section": "Data Application, \\(95\\%\\) Predictive Intervals, One-Step Ahead; MTD Only 1",
-    "text": "Data Application, \\(95\\%\\) Predictive Intervals, One-Step Ahead; MTD Only 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD."
+    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only 1",
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD."
   },
   {
     "objectID": "index.html#conclusion",
@@ -459,14 +473,14 @@
     "href": "index.html#conclusion-1",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to enhance flexibility and realism in modeling complex temporal patterns."
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns."
   },
   {
     "objectID": "index.html#future-work-1",
@@ -504,11 +518,11 @@
     "text": "Copula Families\n\n\nContour plot of different bivariate density function where marginals are \\(N(0, 1)\\), reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/."
   },
   {
-    "objectID": "index.html#copula-sklars-theorem",
-    "href": "index.html#copula-sklars-theorem",
+    "objectID": "index.html#sklars-theorem",
+    "href": "index.html#sklars-theorem",
     "title": "",
-    "section": "Copula: Sklar’s theorem",
-    "text": "Copula: Sklar’s theorem\n\nFor any \\(p\\)-dimensional multivariate cumulative distribution function (cdf) of a random vector \\((X_1, ..., X_p)\\), denoted as \\(F(x_1, ..., x_p)\\), there exists a copula function \\(C: {[0,1]}^p \\rightarrow [0, 1]\\) for which \\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\\), where \\(F_j\\) is the marginal cdf of \\(X_j, j = 1,..., p\\). If \\(X_j\\) is continuous for all \\(j\\), then \\(C\\) is unique and differentiable. The joint probability density function (pdf) of \\(X_j, j = 1,...,p\\) is given by \\(f(x_j) = c(x_j) \\prod_{j=1}^p f_j(x_j)\\), where \\(c = \\partial^p{C} / \\partial{F_j}\\) is the copula density and \\(f_j\\) is the density of \\(X_j\\)."
+    "section": "Sklar’s theorem",
+    "text": "Sklar’s theorem\n\nFor any \\(p\\)-dimensional multivariate cumulative distribution function (cdf) of a random vector \\((X_1, ..., X_p)\\), denoted as \\(F(x_1, ..., x_p)\\), there exists a copula function \\(C: {[0,1]}^p \\rightarrow [0, 1]\\) for which \\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\\), where \\(F_j\\) is the marginal cdf of \\(X_j, j = 1,..., p\\). If \\(X_j\\) is continuous for all \\(j\\), then \\(C\\) is unique and differentiable. The joint probability density function (pdf) of \\(X_j, j = 1,...,p\\) is given by \\(f(x_j) = c(x_j) \\prod_{j=1}^p f_j(x_j)\\), where \\(c = \\partial^p{C} / \\partial{F_j}\\) is the copula density and \\(f_j\\) is the density of \\(X_j\\)."
   },
   {
     "objectID": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
@@ -516,6 +530,13 @@
     "title": "",
     "section": "Proposition 1: Zheng et al. (2022)’s invariant condition",
     "text": "Proposition 1: Zheng et al. (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
+  },
+  {
+    "objectID": "index.html#shifted-gamma-distribution",
+    "href": "index.html#shifted-gamma-distribution",
+    "title": "",
+    "section": "Shifted Gamma Distribution",
+    "text": "Shifted Gamma Distribution\nThe shifted Gamma distribution, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & y &lt; \\epsilon,\n\\end{cases}\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape, \\(\\beta &gt; 0\\) the scale parameter, and \\(\\epsilon &gt; 0\\) the threshold parameter."
   },
   {
     "objectID": "index.html#algorithm-1-implementaion-details",
@@ -529,7 +550,7 @@
     "href": "index.html#algorithm-2-implementaion-details",
     "title": "",
     "section": "Algorithm 2: Implementaion Details",
-    "text": "Algorithm 2: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, P, \\epsilon, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\n(Same as Gamma MTD)\nFor the zero-inflated probability \\(P\\), is proportional to \\(Unif(P | 0, 1) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\).\nFor the threshold parameter \\(\\epsilon\\), is proportional to \\(ScaledBeta(5, 5; 0, 2\\epsilon_0) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\)."
+    "text": "Algorithm 2: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, P, \\epsilon, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\n(Same as Gamma MTD)\nFor the zero-inflated probability \\(P\\) is proportional to \\(Unif(P | 0, 1) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\).\nFor the threshold parameter \\(\\epsilon\\) is proportional to \\(ScaledBeta(5, 5; 0, 2\\epsilon_0) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\)."
   },
   {
     "objectID": "index.html#sensitivity-analysis-for-gamma-scenario-1",

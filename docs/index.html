@@ -313,7 +313,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \end{equation}\]</span>
 <p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
 <div class="fragment">
-<p>As <span class="math inline">\(t\)</span> increases, the size of the conditioning set of <span class="math inline">\(X_t\)</span> can be large.</p>
+<p>As <span class="math inline">\(t\)</span> increases, the size of the conditioning set, <span class="math inline">\(\textbf{X}^{t-1}\)</span>, can be large.</p>
 <ul>
 <li>Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the <span class="math inline">\(L\)</span> (a given number) lagged values.</li>
 </ul>
@@ -758,7 +758,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <li><p>Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.</p></li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn5"><p>See Supplement for more.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>See Supplement.</p></li></ol></aside></section>
 <section id="coverage-assessment" class="slide level2">
 <h2>Coverage Assessment</h2>
 <p>Coverage Assessment</p>
@@ -1112,7 +1112,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
 </div>
 </section>
-<section id="proposed-method-2" class="slide level2">
+<section id="proposed-method-2" class="slide level2 scrollable">
 <h2>Proposed Method</h2>
 <p>The resulting distribution, denoted as <span class="math inline">\(\text{ZIGamma}(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
 <span class="math display">\[\begin{equation}
@@ -1127,10 +1127,10 @@ f(x) =
 <p>In (6), there are two parts:</p>
 <ul>
 <li><p>We have already discussed the uniform distribution.</p></li>
-<li><p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
+<li><p>The shifted Gamma distribution <sup>1</sup>, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
 </ul>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn6"><p>See Supplement.</p></li></ol></aside></section>
 <section id="dzig-pdf-of-zigamma" class="slide level2">
 <h2>dzig (pdf of zigamma)</h2>
 <div class="panel-tabset">
@@ -1319,7 +1319,7 @@ f(x) =
 </section>
 <section id="simulation-studies-2" class="slide level2">
 <h2>Simulation Studies</h2>
-<p>In all nine scenarios, we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases per scenario:</p>
+<p>In all nine scenarios (s1-9), we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases per scenario:</p>
 <ul>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
@@ -1459,7 +1459,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn6"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
 <section id="simulation-results" class="slide level2">
 <h2>Simulation Results</h2>
 <div class="panel-tabset">
@@ -1752,7 +1752,7 @@ f(x) =
 </section>
 <section id="coverage-assessment-1" class="slide level2">
 <h2>Coverage Assessment</h2>
-<p>All nine scenarios (s1-s9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
+<p>All nine scenarios (s1-9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
 <ul>
 <li>Recall that we have six cases per scenario.</li>
 </ul>
@@ -1764,6 +1764,165 @@ f(x) =
 </ul>
 </div>
 </section>
+<section id="coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma" class="slide level2 scrollable">
+<h2>Coverage Assessment for Scenario 1 and 2, 40 Replicates <sup>1</sup></h2>
+<div class="panel-tabset">
+<ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1">Exponentially decreasing weights (s1)</a></li><li><a href="#tabset-12-2">Uneven arrangement of the relevant lags (s2)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;"><span class="math inline">\(\mu\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\beta\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(P\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\epsilon\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_5\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P01eps01</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P01eps04</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P05eps01</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P05eps04</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P07eps01</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P07eps04</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-12-2">
+
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>Each row label indicates the combination of <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value) used in the simulation. For example, P01eps01 reads as <span class="math inline">\(P = 0.1\)</span> and <span class="math inline">\(\epsilon = 0.1\)</span>.</p></li></ol></aside></section>
 <section id="prediction-95-predictive-intervals-one-step-ahead" class="slide level2">
 <h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="columns">
@@ -1839,53 +1998,9 @@ f(x) =
 <section id="prediction-95-predictive-intervals-one-step-ahead-1" class="slide level2">
 <h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="panel-tabset">
-<ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-12-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-12-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-12-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-12-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-12-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
+<ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-13-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-13-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-13-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-13-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-13-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-12-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-74-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-75-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-76-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-77-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-5">
+<div id="tabset-13-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1896,12 +2011,56 @@ f(x) =
 </div>
 </div>
 </div>
-<div id="tabset-12-6">
+<div id="tabset-13-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-79-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-80-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-81-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-82-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-13-6">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-83-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2111,7 +2270,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-84-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-88-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2130,7 +2289,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-87-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-91-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2333,7 +2492,7 @@ f(x) =
 <li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn7"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn8"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn9"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn10"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
@@ -2377,13 +2536,13 @@ f(x) =
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
-<section id="data-application-evaluation-results" class="slide level2">
-<h2>Data Application, Evaluation Results</h2>
+<aside><ol class="aside-footnotes"><li id="fn11"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
+<section id="evaluation-results" class="slide level2">
+<h2>Evaluation Results</h2>
 <div class="panel-tabset">
-<ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-13-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-13-3">windspeeds at 2m above ground</a></li></ul>
+<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-14-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-14-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
-<div id="tabset-13-1">
+<div id="tabset-14-1">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -2425,7 +2584,7 @@ f(x) =
 </div>
 </div>
 </div>
-<div id="tabset-13-2">
+<div id="tabset-14-2">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -2467,7 +2626,7 @@ f(x) =
 </div>
 </div>
 </div>
-<div id="tabset-13-3">
+<div id="tabset-14-3">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -2512,49 +2671,8 @@ f(x) =
 </div>
 </div>
 </section>
-<section id="data-application-predicted-means-one-step-ahead-test-size-n-1756-caption" class="slide level2 scrollable">
-<h2>Data Application, Predicted Means, One-Step Ahead; Test Size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
-<div class="panel-tabset">
-<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-14-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-14-3">windspeeds at 2m above ground</a></li></ul>
-<div class="tab-content">
-<div id="tabset-14-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-14-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-14-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-104-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn10"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption" class="slide level2 scrollable">
-<h2>Data Application, Predicted Means, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
+<section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-15-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-15-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2593,9 +2711,9 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn11"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff" class="slide level2 scrollable">
-<h2>Data Application, Prediction Errors, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-16-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-16-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2634,9 +2752,9 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn12"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
-<section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
-<h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<section id="prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
+<h2>Prediction Errors <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-17-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-17-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2675,7 +2793,48 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn13"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn14"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<section id="predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd" class="slide level2 scrollable">
+<h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only <sup>1</sup></h2>
+<div class="panel-tabset">
+<ul id="tabset-18" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-18-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-18-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-18-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-18-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn15"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
@@ -2704,7 +2863,7 @@ f(x) =
 <li><p>MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.</p></li>
 <li><p>LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
 </ul>
-<p>Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
+<p>Overall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
 </section>
 <section class="slide level2">
 
@@ -2718,7 +2877,7 @@ f(x) =
 <p>Part I and II</p>
 <ul>
 <li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.</p></li>
-<li><p>Although the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to enhance flexibility and realism in modeling complex temporal patterns.</p></li>
+<li><p>Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.</p></li>
 </ul>
 </section>
 <section id="future-work-1" class="slide level2">
@@ -2759,8 +2918,8 @@ f(x) =
 <p>Contour plot of different bivariate density function where marginals are <span class="math inline">\(N(0, 1)\)</span>, reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/.</p>
 </div>
 </section>
-<section id="copula-sklars-theorem" class="slide level2">
-<h2>Copula: Sklar’s theorem</h2>
+<section id="sklars-theorem" class="slide level2">
+<h2>Sklar’s theorem</h2>
 <div id="prop-copula" class="proposition">
 <p>For any <span class="math inline">\(p\)</span>-dimensional multivariate cumulative distribution function (cdf) of a random vector <span class="math inline">\((X_1, ..., X_p)\)</span>, denoted as <span class="math inline">\(F(x_1, ..., x_p)\)</span>, there exists a copula function <span class="math inline">\(C: {[0,1]}^p \rightarrow [0, 1]\)</span> for which <span class="math inline">\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\)</span>, where <span class="math inline">\(F_j\)</span> is the marginal cdf of <span class="math inline">\(X_j, j = 1,..., p\)</span>. If <span class="math inline">\(X_j\)</span> is continuous for all <span class="math inline">\(j\)</span>, then <span class="math inline">\(C\)</span> is unique and differentiable. The joint probability density function (pdf) of <span class="math inline">\(X_j, j = 1,...,p\)</span> is given by <span class="math inline">\(f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)\)</span>, where <span class="math inline">\(c = \partial^p{C} / \partial{F_j}\)</span> is the copula density and <span class="math inline">\(f_j\)</span> is the density of <span class="math inline">\(X_j\)</span>.</p>
 </div>
@@ -2776,6 +2935,18 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 \]</span></p>
 <p>If a time series satisfies the invariant condition: <span class="math inline">\(X_1 \sim f_X\)</span>, and <span class="math inline">\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\)</span>, for all <span class="math inline">\(x \in S\)</span>, and for all <span class="math inline">\(l\)</span>, then this time time series is first-order strictly stationary with invariant marginal density <span class="math inline">\(f_X\)</span>.</p>
 </div>
+</section>
+<section id="shifted-gamma-distribution" class="slide level2">
+<h2>Shifted Gamma Distribution</h2>
+<p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
+<span class="math display">\[\begin{equation}
+f(y) =
+\begin{cases}
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta})  &amp; y \geq \epsilon \\
+0  &amp; y &lt; \epsilon,
+\end{cases}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\frac{\mu}{\beta} &gt; 0\)</span> denotes the shape, <span class="math inline">\(\beta &gt; 0\)</span> the scale parameter, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
 </section>
 <section id="algorithm-1-implementaion-details" class="slide level2">
 <h2>Algorithm 1: Implementaion Details</h2>
@@ -2793,7 +2964,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <section class="slide level2">
 
 
-<img data-src="images/alg-1.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (*) denotes modification of Zheng’s (2022) algorithm.</p></section>
+<img data-src="images/alg-1.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (*) denotes steps that differ from Zheng’s (2022) algorithm.</p></section>
 <section id="algorithm-2-implementaion-details" class="slide level2">
 <h2>Algorithm 2: Implementaion Details</h2>
 <ul>
@@ -2801,15 +2972,15 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <li><p>The posterior full conditional distributions:</p>
 <ul>
 <li><p>(Same as Gamma MTD)</p></li>
-<li><p>For the zero-inflated probability <span class="math inline">\(P\)</span>, is proportional to <span class="math inline">\(Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
-<li><p>For the threshold parameter <span class="math inline">\(\epsilon\)</span>, is proportional to <span class="math inline">\(ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
+<li><p>For the zero-inflated probability <span class="math inline">\(P\)</span> is proportional to <span class="math inline">\(Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
+<li><p>For the threshold parameter <span class="math inline">\(\epsilon\)</span> is proportional to <span class="math inline">\(ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>.</p></li>
 </ul></li>
 </ul>
 </section>
 <section class="slide level2">
 
 
-<img data-src="images/alg-2.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (**) denotes modification of Algorithm 1.</p></section>
+<img data-src="images/alg-2.png" class="r-stretch quarto-figure-left"><p class="caption">Asterisk (**) denotes denotes steps that differ from Algorithm 1.</p></section>
 <section id="sensitivity-analysis-for-gamma-scenario-1" class="slide level2">
 <h2>Sensitivity Analysis for Gamma Scenario 1</h2>
 <table class="caption-top">
@@ -2857,25 +3028,25 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <section id="sensitivity-analysis-for-gamma-scenario-1-1" class="slide level2">
 <h2>Sensitivity Analysis for Gamma Scenario 1</h2>
 <div class="panel-tabset">
-<ul id="tabset-18" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-18-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-18-2"><span class="math inline">\(\beta\)</span></a></li></ul>
+<ul id="tabset-19" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-19-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-19-2"><span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-18-1">
+<div id="tabset-19-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-18-2">
+<div id="tabset-19-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-123-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2936,58 +3107,58 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-w" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(w\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-19" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-19-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-19-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-19-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-19-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-19-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<ul id="tabset-20" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-20-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-20-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-20-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-20-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-20-5"><span class="math inline">\(w_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-19-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-5">
+<div id="tabset-20-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-129-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-130-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-132-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2999,58 +3170,58 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-rho" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\rho\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-20" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-20-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-20-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-20-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-20-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-20-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
+<ul id="tabset-21" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-21-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-21-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-21-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-21-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-21-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-20-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-132-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-5">
+<div id="tabset-21-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-136-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3062,47 +3233,47 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-mu-beta-p-epsilon" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\mu, \beta, P, \epsilon\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-21" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-21-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-21-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-21-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-21-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
+<ul id="tabset-22" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-22-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-22-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-22-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-22-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-21-1">
+<div id="tabset-22-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-2">
+<div id="tabset-22-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-143-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-3">
+<div id="tabset-22-3">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-4">
+<div id="tabset-22-4">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-145-1.png" width="960"></p>
 </figure>
 </div>
 </div>

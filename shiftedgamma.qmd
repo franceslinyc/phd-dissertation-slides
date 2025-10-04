@@ -1,0 +1,9 @@
+```{=latex} 
+\begin{equation}
+f(x) = 
+\begin{cases} 
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(x - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{x - \epsilon} {\beta})  & x \geq \epsilon \\
+0  & x < \epsilon 
+\end{cases}
+\end{equation}
+```

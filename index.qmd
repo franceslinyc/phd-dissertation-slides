@@ -71,7 +71,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 📍 Limon Wind Energy Center, Colorado  
 </div>
 
-## NASA MERRA-2 Data
+## NASA MERRA-2 Data 
 
 ::: {.panel-tabset}
 
@@ -241,7 +241,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 
 . . .
 
-As $t$ increases, the size of the conditioning set of $X_t$ can be large. 
+As $t$ increases, the size of the conditioning set, $\textbf{X}^{t-1}$, can be large. 
 
 - Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the $L$ (a given number) lagged values.
 
@@ -535,7 +535,7 @@ Sensitivity Analysis
 
 - Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
 
-[^sensitivity]: See Supplement for more. 
+[^sensitivity]: See Supplement. 
 
 ## Coverage Assessment 
 
@@ -771,7 +771,9 @@ In (6), there are two parts:
 
 - We have already discussed the uniform distribution. 
 
-- The shifted Gamma distribution, $\text{ShiftedGamma}(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
+- The shifted Gamma distribution [^shiftedgamma], $\text{ShiftedGamma}(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
+
+[^shiftedgamma]: See Supplement. 
 
 ## dzig (pdf of zigamma)  
 
@@ -1003,7 +1005,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 ## Simulation Studies   
 
-In all nine scenarios, we vary $P$ and $\epsilon$, resulting in six cases per scenario: 
+In all nine scenarios (s1-9), we vary $P$ and $\epsilon$, resulting in six cases per scenario: 
 
 - $P = 0.1$, $\epsilon = 0.1$
 
@@ -1333,7 +1335,7 @@ t6
 
 ## Coverage Assessment
 
-All nine scenarios (s1-s9) were analyzed using $4$ chains with only one replicate. 
+All nine scenarios (s1-9) were analyzed using $4$ chains with only one replicate. 
 
 - Recall that we have six cases per scenario.
 
@@ -1344,6 +1346,39 @@ Scenarios 1 and 2 were further evaluated with $40$ replicates to assess coverage
 - The overall coverage is the proportion of replicates for which the true value is contained within the interval. 
 
 - Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values.
+
+## Coverage Assessment for Scenario 1 and 2, 40 Replicates [^coveragezigamma]
+
+::: {.panel-tabset}
+
+```{r}
+library(knitr)
+```
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### Exponentially decreasing weights (s1)
+
+```{r}
+df <- readRDS(file.path(output_dir, "coverage_df_zigamma_s1.rds"))
+df <- df |> kable(digits = 4)
+df 
+```
+
+[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value) used in the simulation. For example, P01eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
+
+### Uneven arrangement of the relevant lags (s2)
+
+```{r}
+# df <- readRDS(file.path(output_dir, "coverage_df_s2.rds"))
+# df <- df |> kable(digits = 4)
+# df 
+```
+
+::: 
+
 
 ## Prediction, $95\%$ Predictive Intervals, One-Step Ahead  
 
@@ -1832,7 +1867,7 @@ df
 
 [^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
-## Data Application, Evaluation Results
+## Evaluation Results 
 
 ::: {.panel-tabset}
 
@@ -1878,7 +1913,7 @@ df
 
 ::: 
 
-## Data Application, Predicted Means, One-Step Ahead; Test Size $n = 1756$ [^caption]
+## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$ 
 
 ::: {.panel-tabset}
 
@@ -1908,7 +1943,7 @@ readRDS(file.path(output_dir, "p3_real_ts_full.rds"))
 
 [^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
 
-## Data Application, Predicted Means, One-Step Ahead; Zoom-In View $n = 200$ [^caption]
+## Predicted Means [^caption], One-Step Ahead; Zoom-In View $n = 200$ 
 
 ::: {.panel-tabset}
 
@@ -1938,7 +1973,7 @@ readRDS(file.path(output_dir, "p3_real_ts.rds"))
 
 [^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
 
-## Data Application, Prediction Errors, One-Step Ahead; Zoom-In View $n = 200$ [^captiondiff]
+## Prediction Errors [^captiondiff], One-Step Ahead; Zoom-In View $n = 200$ 
 
 ::: {.panel-tabset}
 
@@ -1968,7 +2003,7 @@ readRDS(file.path(output_dir, "p3_real_diff.rds"))
 
 [^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
 
-## Data Application, $95\%$ Predictive Intervals, One-Step Ahead; MTD Only [^captionmtd]
+## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only [^captionmtd]
 
 ::: {.panel-tabset}
 
@@ -2031,7 +2066,7 @@ Through simulation studies and data application, we illustrate how MTD and LSTM 
 
 - LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.
 
-Overall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
+Overall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
 
 ---
 
@@ -2048,7 +2083,7 @@ Part I and II
 
 - Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.
 
-- Although the current framework assumes stationarity and does not incorporate covariates/features, it can be easily extended to enhance flexibility and realism in modeling complex temporal patterns.
+- Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.
 
 ## Future Work
 
@@ -2082,7 +2117,7 @@ Wireframe plot of bivariate Gaussian distribution and density function, reproduc
 Contour plot of different bivariate density function where marginals are $N(0, 1)$, reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/. 
 </div>
 
-## Copula: Sklar’s theorem
+## Sklar’s theorem
 
 ::: {.proposition #prop-copula}
 For any $p$-dimensional multivariate cumulative distribution function (cdf) of a random vector $(X_1, ..., X_p)$, denoted as $F(x_1, ..., x_p)$, there exists a copula function $C: {[0,1]}^p \rightarrow [0, 1]$ for which $F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))$, where $F_j$ is the marginal cdf of $X_j, j = 1,..., p$. If $X_j$ is continuous for all $j$, then $C$ is unique and differentiable. The joint probability density function (pdf) of $X_j, j = 1,...,p$ is given by $f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)$, where $c = \partial^p{C} / \partial{F_j}$ is the copula density and $f_j$ is the density of $X_j$.
@@ -2104,6 +2139,20 @@ $$
 If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}(x) = f_{V_l}(x) = f_X(x)$, for all $x \in S$, and for all $l$, then this time time series is first-order strictly stationary with invariant marginal density $f_X$.
 ::: 
 
+## Shifted Gamma Distribution 
+
+The shifted Gamma distribution, $\text{ShiftedGamma}(\mu, \beta; \epsilon)$, is expressed as: 
+```{=latex} 
+\begin{equation}
+f(y) = 
+\begin{cases} 
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta})  & y \geq \epsilon \\
+0  & y < \epsilon, 
+\end{cases}
+\end{equation}
+```
+where $\frac{\mu}{\beta} > 0$ denotes the shape, $\beta > 0$ the scale parameter, and $\epsilon > 0$ the threshold parameter.
+
 ## Algorithm 1: Implementaion Details 
 
 - The full Bayesian model is complete by priors specification for the parameters $\boldsymbol{\theta} = \{\alpha, \beta, \boldsymbol{\rho}\}$ and $\boldsymbol{w}$.
@@ -2120,7 +2169,7 @@ If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}
 
 --- 
 
-![Asterisk (*) denotes modification of Zheng's (2022) algorithm.](images/alg-1.png){fig-align="left"}
+![Asterisk (*) denotes steps that differ from Zheng's (2022) algorithm.](images/alg-1.png){fig-align="left"}
 
 ## Algorithm 2: Implementaion Details 
 
@@ -2130,16 +2179,16 @@ If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}
 
   - (Same as Gamma MTD)
 
-  - For the zero-inflated probability $P$, is proportional to $Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
+  - For the zero-inflated probability $P$ is proportional to $Unif(P | 0, 1) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
 
-  - For the threshold parameter $\epsilon$, is proportional to $ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
+  - For the threshold parameter $\epsilon$ is proportional to $ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
 
 
 
 
 --- 
 
-![Asterisk (**) denotes modification of Algorithm 1.](images/alg-2.png){fig-align="left"}
+![Asterisk (**) denotes denotes steps that differ from Algorithm 1.](images/alg-2.png){fig-align="left"}
 
 ## Sensitivity Analysis for Gamma Scenario 1
 
