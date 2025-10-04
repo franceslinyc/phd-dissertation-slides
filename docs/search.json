@@ -116,14 +116,14 @@
     "href": "index.html#copula",
     "title": "",
     "section": "Copula",
-    "text": "Copula\nCopula is widely used for dependence modeling.\n\nIs applied in quantitative finance, reliability engineering, hydrology, etc.\nConsists of families of copula, constituting a substantial research area.\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(Unif(0, 1)\\).\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem."
+    "text": "Copula\nCopula is widely used for dependence modeling.\n\nIs applied in quantitative finance, reliability engineering, hydrology, etc.\nConsists of families of copula, constituting a substantial research area.\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(\\text{Unif}(0, 1)\\).\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem. 1\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method",
     "href": "index.html#existing-method-to-proposed-method",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 of Zheng et al. (2022).\n\n\nThis is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.\n\\[\n\\textbf{transition kernel} \\longleftarrow \\textbf{copula} \\times \\textbf{marginal}\n\\] \\[\n\\ f_l (x_t | x_{t-l}) \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ c_l (x_t, x_{t-l}) \\ \\ \\ \\ f_X (x_t)\n\\]"
+    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThis is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.\n\\[\n\\textbf{transition kernel} \\longleftarrow \\textbf{copula} \\times \\textbf{marginal}\n\\] \\[\n\\ f_l (x_t | x_{t-l}) \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ \\ c_l (x_t, x_{t-l}) \\ \\ \\ \\ f_X (x_t)\n\\]\n\nSee Supplement."
   },
   {
     "objectID": "index.html#proposed-method",
@@ -144,7 +144,7 @@
     "href": "index.html#background-bayesian-implementation-1",
     "title": "",
     "section": "Background: Bayesian Implementation",
-    "text": "Background: Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms."
+    "text": "Background: Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.\n\nSee Supplment."
   },
   {
     "objectID": "index.html#simulation-studies",
@@ -168,11 +168,11 @@
     "text": "Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
   },
   {
-    "objectID": "index.html#sensitivity-analysis-sensitivity",
-    "href": "index.html#sensitivity-analysis-sensitivity",
+    "objectID": "index.html#sensitivity-analysis",
+    "href": "index.html#sensitivity-analysis",
     "title": "",
-    "section": "Sensitivity Analysis 1",
-    "text": "Sensitivity Analysis 1\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\n\n\nSensitivity Analysis\n\nUse five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) and check for convergence.\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\n\n\nSee Supplement for more."
+    "section": "Sensitivity Analysis",
+    "text": "Sensitivity Analysis\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis (s1)\nCoverage Assessment (s1, s2)\n\n\nSensitivity Analysis\n\nUse five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) 1 and check for convergence.\nResults appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.\n\n\nSee Supplement for more."
   },
   {
     "objectID": "index.html#coverage-assessment",
@@ -189,25 +189,25 @@
     "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n0.975\n0.975\n1\n1\n1\n0.9\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n1\n1\n0.975\n0.975\n0.95\n1\n0.975\n0.95\n1\n0.95"
   },
   {
-    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1s-alpha-and-beta-40-replicates",
-    "href": "index.html#coverage-assessment-for-gamma-scenario-1s-alpha-and-beta-40-replicates",
+    "objectID": "index.html#coverage-assessment-for-scenario-1-40-replicates",
+    "href": "index.html#coverage-assessment-for-scenario-1-40-replicates",
     "title": "",
-    "section": "Coverage Assessment for Gamma Scenario 1’s \\(\\alpha\\) and \\(\\beta\\), 40 Replicates",
-    "text": "Coverage Assessment for Gamma Scenario 1’s \\(\\alpha\\) and \\(\\beta\\), 40 Replicates\n\n\\(\\alpha\\)\\(\\beta\\)"
+    "section": "Coverage Assessment for Scenario 1, 40 Replicates",
+    "text": "Coverage Assessment for Scenario 1, 40 Replicates\n\n\\(\\alpha\\)\\(\\beta\\)"
   },
   {
-    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1s-w-40-replicates",
-    "href": "index.html#coverage-assessment-for-gamma-scenario-1s-w-40-replicates",
+    "objectID": "index.html#coverage-assessment-for-scenario-1-40-replicates-1",
+    "href": "index.html#coverage-assessment-for-scenario-1-40-replicates-1",
     "title": "",
-    "section": "Coverage Assessment for Gamma Scenario 1’s \\(w\\), 40 Replicates",
-    "text": "Coverage Assessment for Gamma Scenario 1’s \\(w\\), 40 Replicates\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+    "section": "Coverage Assessment for Scenario 1, 40 Replicates",
+    "text": "Coverage Assessment for Scenario 1, 40 Replicates\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
   },
   {
-    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1s-rho-40-replicates",
-    "href": "index.html#coverage-assessment-for-gamma-scenario-1s-rho-40-replicates",
+    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates",
+    "href": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates",
     "title": "",
-    "section": "Coverage Assessment for Gamma Scenario 1’s \\(\\rho\\), 40 Replicates",
-    "text": "Coverage Assessment for Gamma Scenario 1’s \\(\\rho\\), 40 Replicates\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
+    "section": "Coverage Assessment for Gamma Scenario 1, 40 Replicates",
+    "text": "Coverage Assessment for Gamma Scenario 1, 40 Replicates\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
   },
   {
     "objectID": "index.html#introduction-1",
@@ -242,7 +242,7 @@
     "href": "index.html#proposed-method-2",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nThe resulting distribution, denoted as \\(ZIGamma(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\nUnif(0, \\epsilon) & \\text{with probability } P \\\\\nShiftedGamma(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution, \\(ShiftedGamma(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\)."
+    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\)."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -263,7 +263,7 @@
     "href": "index.html#simulation-setting",
     "title": "",
     "section": "Simulation Setting",
-    "text": "Simulation Setting\nSimulated data:\n\nWith weight \\(\\boldsymbol{w}\\), dependence for Gaussian copula \\(\\boldsymbol{\\rho}\\), mean \\(\\mu\\), scale \\(\\beta\\), zero-inflated probability \\(P\\), and threshold parameter \\(\\epsilon\\), we generate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun four MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
+    "text": "Simulation Setting\nSimulated data:\n\nWith weight \\(\\boldsymbol{w}\\), dependence for Gaussian copula \\(\\boldsymbol{\\rho}\\), mean \\(\\mu\\), scale \\(\\beta\\), zero-inflated probability \\(P\\), and threshold parameter \\(\\epsilon\\), we generate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun \\(4\\) MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
   },
   {
     "objectID": "index.html#simulation-studies-1",
@@ -298,7 +298,7 @@
     "href": "index.html#coverage-assessment-1",
     "title": "",
     "section": "Coverage Assessment",
-    "text": "Coverage Assessment\nAll nine scenarios were analyzed using a single replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(10\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\n\n\n\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+    "text": "Coverage Assessment\nAll nine scenarios (s1-s9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
@@ -326,7 +326,7 @@
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design."
   },
   {
     "objectID": "index.html#rnn-recurrent-neural-network",
@@ -413,11 +413,18 @@
     "text": "Evaluation Metrics 1\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)\n\n\n\nMAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units."
   },
   {
+    "objectID": "index.html#data-application-evaluation-results",
+    "href": "index.html#data-application-evaluation-results",
+    "title": "",
+    "section": "Data Application, Evaluation Results",
+    "text": "Data Application, Evaluation Results\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
+  },
+  {
     "objectID": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
     "href": "index.html#data-application-predicted-means-one-step-ahead-test-size-n-1756-caption",
     "title": "",
-    "section": "Data Application, Predicted Means, One-Step ahead; Test Size \\(n = 1756\\) 1",
-    "text": "Data Application, Predicted Means, One-Step ahead; Test Size \\(n = 1756\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "section": "Data Application, Predicted Means, One-Step Ahead; Test Size \\(n = 1756\\) 1",
+    "text": "Data Application, Predicted Means, One-Step Ahead; Test Size \\(n = 1756\\) 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
     "objectID": "index.html#data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption",
@@ -452,7 +459,7 @@
     "href": "index.html#conclusion-1",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, the proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
@@ -515,7 +522,7 @@
     "href": "index.html#algorithm-1-implementaion-details",
     "title": "",
     "section": "Algorithm 1: Implementaion Details",
-    "text": "Algorithm 1: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\nFor the marginal parameters \\(\\alpha\\) and \\(\\beta\\) are proportional to \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\) and \\(Gamma(\\beta | u_{\\beta}, v_{\\beta}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\), respectively. \\(f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)\\).\nFor each of the dependence parameters \\(\\boldsymbol{\\rho}\\) is proportional to \\(Unif(\\rho_l |-1, 1) \\prod_{t:z_t = l} c_l (x_t, x_{t-l})\\).\nFor each \\(z_t\\) of the latent variables \\({\\{z_t\\}}_{t=L+1}^n\\), where the probability of \\(z_t = l\\), denoted by \\(q_l\\), is proportional to \\(w_l c_l (x_t, x_{t-l})\\), for \\(l = 1,..., L\\).\nFor weight parameters \\(\\boldsymbol{w}\\), under the cdf-based prior, is \\(Dirichlet (\\boldsymbol{\\alpha})\\), where \\(\\boldsymbol{\\alpha} = (\\alpha_0 a_1 + M_1, ..., \\alpha_0 a_L + M_L)\\). \\(a_l = G_0(l/L) - G_0((l - 1)/L)\\), \\(M_l = |\\{ t: z_t = l \\}|\\)."
+    "text": "Algorithm 1: Implementaion Details\n\nThe full Bayesian model is complete by priors specification for the parameters \\(\\boldsymbol{\\theta} = \\{\\alpha, \\beta, \\boldsymbol{\\rho}\\}\\) and \\(\\boldsymbol{w}\\).\nThe posterior full conditional distributions:\n\nFor the marginal parameters \\(\\alpha\\) and \\(\\beta\\) are proportional to \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\) and \\(Gamma(\\beta | u_{\\beta}, v_{\\beta}) \\prod_{t=L+1}^n f_l (x_t | x_{t-l})\\), respectively. \\(f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)\\).\nFor each of the dependence parameters \\(\\boldsymbol{\\rho}\\) is proportional to \\(\\text{Unif}(\\rho_l |-1, 1) \\prod_{t:z_t = l} c_l (x_t, x_{t-l})\\).\nFor each \\(z_t\\) of the latent variables \\({\\{z_t\\}}_{t=L+1}^n\\), where the probability of \\(z_t = l\\), denoted by \\(q_l\\), is proportional to \\(w_l c_l (x_t, x_{t-l})\\), for \\(l = 1,..., L\\).\nFor weight parameters \\(\\boldsymbol{w}\\), under the cdf-based prior, is \\(Dirichlet (\\boldsymbol{\\alpha})\\), where \\(\\boldsymbol{\\alpha} = (\\alpha_0 a_1 + M_1, ..., \\alpha_0 a_L + M_L)\\). \\(a_l = G_0(l/L) - G_0((l - 1)/L)\\), \\(M_l = |\\{ t: z_t = l \\}|\\)."
   },
   {
     "objectID": "index.html#algorithm-2-implementaion-details",
@@ -537,6 +544,13 @@
     "title": "",
     "section": "Sensitivity Analysis for Gamma Scenario 1",
     "text": "Sensitivity Analysis for Gamma Scenario 1\n\n\\(\\alpha\\)\\(\\beta\\)"
+  },
+  {
+    "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead-for-gamma-scenario-1-9",
+    "href": "index.html#prediction-95-predictive-intervals-one-step-ahead-for-gamma-scenario-1-9",
+    "title": "",
+    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead for Gamma Scenario 1-9",
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead for Gamma Scenario 1-9\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ns1\ns2\ns3\ns4\ns5\ns6\ns7\ns8\ns9\n\n\n\n\nCoverage\n0.9544\n0.9519\n0.9534\n0.9459\n0.9544\n0.9474\n0.9524\n0.9444\n0.9544"
   },
   {
     "objectID": "index.html#trace-and-density-plot-for-zigamma-scenario-1s-w",

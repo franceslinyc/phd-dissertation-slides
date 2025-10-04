@@ -585,7 +585,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <p>©️ Yuvraj Deshmukh ⏭️ Copula</p>
 </div>
 </section>
-<section id="copula" class="slide level2">
+<section id="copula" class="slide level2 scrollable">
 <h2>Copula</h2>
 <p>Copula is widely used for dependence modeling.</p>
 <ul>
@@ -593,20 +593,20 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <li><p>Consists of families of copula, constituting a substantial research area.</p></li>
 </ul>
 <div class="fragment">
-<p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(Unif(0, 1)\)</span>.</p>
+<p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(\text{Unif}(0, 1)\)</span>.</p>
 </div>
 <div class="fragment">
 <p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
 <ul>
-<li>Rooted in Sklar’s theorem.</li>
+<li>Rooted in Sklar’s theorem. <sup>1</sup></li>
 </ul>
 </div>
-</section>
-<section id="existing-method-to-proposed-method" class="slide level2">
+<aside><ol class="aside-footnotes"><li id="fn1"><p>See Supplement.</p></li></ol></aside></section>
+<section id="existing-method-to-proposed-method" class="slide level2 scrollable">
 <h2>Existing Method to Proposed Method</h2>
 <p>The bivariate distribution approach, for example, identifies a bivariate distribution of <span class="math inline">\((U_l, V_l)\)</span> such that the marginal densities, <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span>, are equal to a pre-specified stationary marginal density <span class="math inline">\(f_X\)</span> for all <span class="math inline">\(l\)</span> transition kernels.</p>
 <ul>
-<li>Based on Proposition 1 of Zheng et al.&nbsp;(2022).</li>
+<li>Based on Proposition 1 <sup>1</sup> of Zheng et al.&nbsp;(2022).</li>
 </ul>
 <div class="fragment">
 <p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
@@ -616,7 +616,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 \ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t)
 \]</span></p>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>See Supplement.</p></li></ol></aside></section>
 <section id="proposed-method" class="slide level2">
 <h2>Proposed Method</h2>
 <p>Replace <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span> with a pre-specified stationary marginal density, <span class="math inline">\(f_X\)</span>, for every <span class="math inline">\(x_t\)</span> and for all <span class="math inline">\(l\)</span>. For <span class="math inline">\(t &gt; L\)</span>, the proposed copula-based MTD model specifies the conditional distribution as</p>
@@ -645,7 +645,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 </ul></li>
 </ul>
 </section>
-<section id="background-bayesian-implementation-1" class="slide level2">
+<section id="background-bayesian-implementation-1" class="slide level2 scrollable">
 <h2>Background: Bayesian Implementation</h2>
 <p>Inference is facilitated through a set of latent variables <span class="math inline">\({\{Z_t\}}_{t=L+1}^n\)</span>. <span class="math inline">\(Z_t = l\)</span> indicates which <span class="math inline">\(l\)</span>th kernel the data belongs to.</p>
 <p>The posterior distribution of the parameters, based on the conditional likelihood, is</p>
@@ -657,9 +657,9 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \end{equation}\]</span>
 <p><span class="math inline">\(\boldsymbol{w}\)</span> is the mixture weights. <span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</p>
 <div class="fragment">
-<p>With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
+<p>With priors specifications <sup>1</sup>, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn3"><p>See Supplment.</p></li></ol></aside></section>
 <section id="simulation-studies" class="slide level2">
 <h2>Simulation Studies</h2>
 <p>We have assessed accuracy and performance of the proposed model.</p>
@@ -708,7 +708,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Four other <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span> patterns (s1.3-1.6) are omitted here.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn4"><p>Four other <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span> patterns (s1.3-1.6) are omitted here.</p></li></ol></aside></section>
 <section id="marginal-distribution" class="slide level2">
 <h2>Marginal Distribution</h2>
 <div class="panel-tabset">
@@ -744,21 +744,21 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <h1>What’s New</h1>
 
 </section>
-<section id="sensitivity-analysis-sensitivity" class="slide level2 scrollable">
-<h2>Sensitivity Analysis <sup>1</sup></h2>
+<section id="sensitivity-analysis" class="slide level2 scrollable">
+<h2>Sensitivity Analysis</h2>
 <p>Since the preliminary exam, we have also conducted:</p>
 <ul>
-<li><p>Sensitivity Analysis</p></li>
-<li><p>Coverage Assessment</p></li>
+<li><p>Sensitivity Analysis (s1)</p></li>
+<li><p>Coverage Assessment (s1, s2)</p></li>
 </ul>
 <div class="fragment">
 <p>Sensitivity Analysis</p>
 <ul>
-<li><p>Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) and check for convergence.</p></li>
+<li><p>Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) <sup>1</sup> and check for convergence.</p></li>
 <li><p>Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior.</p></li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>See Supplement for more.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn5"><p>See Supplement for more.</p></li></ol></aside></section>
 <section id="coverage-assessment" class="slide level2">
 <h2>Coverage Assessment</h2>
 <p>Coverage Assessment</p>
@@ -883,8 +883,8 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 </section>
-<section id="coverage-assessment-for-gamma-scenario-1s-alpha-and-beta-40-replicates" class="slide level2">
-<h2>Coverage Assessment for Gamma Scenario 1’s <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, 40 Replicates</h2>
+<section id="coverage-assessment-for-scenario-1-40-replicates" class="slide level2">
+<h2>Coverage Assessment for Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-5-2"><span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
@@ -913,8 +913,8 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 </section>
-<section id="coverage-assessment-for-gamma-scenario-1s-w-40-replicates" class="slide level2">
-<h2>Coverage Assessment for Gamma Scenario 1’s <span class="math inline">\(w\)</span>, 40 Replicates</h2>
+<section id="coverage-assessment-for-scenario-1-40-replicates-1" class="slide level2">
+<h2>Coverage Assessment for Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-6-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-6-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-6-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-6-5"><span class="math inline">\(w_5\)</span></a></li></ul>
 <div class="tab-content">
@@ -976,8 +976,8 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 </section>
-<section id="coverage-assessment-for-gamma-scenario-1s-rho-40-replicates" class="slide level2">
-<h2>Coverage Assessment for Gamma Scenario 1’s <span class="math inline">\(\rho\)</span>, 40 Replicates</h2>
+<section id="coverage-assessment-for-gamma-scenario-1-40-replicates" class="slide level2">
+<h2>Coverage Assessment for Gamma Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-7-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-7-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-7-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-7-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
 <div class="tab-content">
@@ -1114,12 +1114,12 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </section>
 <section id="proposed-method-2" class="slide level2">
 <h2>Proposed Method</h2>
-<p>The resulting distribution, denoted as <span class="math inline">\(ZIGamma(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
+<p>The resulting distribution, denoted as <span class="math inline">\(\text{ZIGamma}(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
 <span class="math display">\[\begin{equation}
 f(x) =
 \begin{cases}
-Unif(0, \epsilon) &amp; \text{with probability } P \\
-ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
+\text{Unif}(0, \epsilon) &amp; \text{with probability } P \\
+\text{ShiftedGamma}(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 \end{cases} \tag{6}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
@@ -1127,7 +1127,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <p>In (6), there are two parts:</p>
 <ul>
 <li><p>We have already discussed the uniform distribution.</p></li>
-<li><p>The shifted Gamma distribution, <span class="math inline">\(ShiftedGamma(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
+<li><p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
 </ul>
 </div>
 </section>
@@ -1294,12 +1294,12 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </ul>
 <p>Model fitting:</p>
 <ul>
-<li>Set the order <span class="math inline">\(L = 5\)</span> and consider the Gaussian copula with Gamma marginals.</li>
+<li>Set the order <span class="math inline">\(L = 5\)</span> and consider the Gaussian copula with zero-inflated Gamma marginals.</li>
 </ul>
 <p>MCMC setting:</p>
 <ul>
 <li><p>Run the Gibbs sampler for <span class="math inline">\(165, 000\)</span> iterations, discard the first <span class="math inline">\(5000\)</span> iterations as burn-in, and collect samples every <span class="math inline">\(20\)</span> iterations.</p></li>
-<li><p>Run four MCMC chains with <span class="math inline">\(8000\)</span> iterations each for all of the following scenarios.</p></li>
+<li><p>Run <span class="math inline">\(4\)</span> MCMC chains with <span class="math inline">\(8000\)</span> iterations each for all of the following scenarios.</p></li>
 </ul>
 </section>
 <section id="simulation-studies-1" class="slide level2">
@@ -1459,7 +1459,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn3"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn6"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
 <section id="simulation-results" class="slide level2">
 <h2>Simulation Results</h2>
 <div class="panel-tabset">
@@ -1752,18 +1752,16 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </section>
 <section id="coverage-assessment-1" class="slide level2">
 <h2>Coverage Assessment</h2>
-<p>All nine scenarios were analyzed using a single replicate.</p>
+<p>All nine scenarios (s1-s9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
 <ul>
 <li>Recall that we have six cases per scenario.</li>
 </ul>
 <div class="fragment">
-<p>Scenarios 1 and 2 were further evaluated with <span class="math inline">\(10\)</span> replicates to assess coverage and robustness.</p>
+<p>Scenarios 1 and 2 were further evaluated with <span class="math inline">\(40\)</span> replicates to assess coverage and robustness.</p>
 <ul>
-<li>The overall coverage is the proportion of replicates for which the true value is contained within the interval.</li>
+<li><p>The overall coverage is the proportion of replicates for which the true value is contained within the interval.</p></li>
+<li><p>Most parameters achieve full coverage, with a few slightly below <span class="math inline">\(1\)</span>, indicating that the posterior intervals reliably capture the true parameter values.</p></li>
 </ul>
-</div>
-<div class="fragment">
-<p>Most parameters achieve full coverage, with a few slightly below <span class="math inline">\(1\)</span>, indicating that the posterior intervals reliably capture the true parameter values.</p>
 </div>
 </section>
 <section id="prediction-95-predictive-intervals-one-step-ahead" class="slide level2">
@@ -1944,7 +1942,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 <div class="fragment">
 <blockquote>
-<p>Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design.</p>
+<p>Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design.</p>
 </blockquote>
 </div>
 </section>
@@ -2335,7 +2333,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn4"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn5"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn7"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn8"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
@@ -2379,10 +2377,9 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn6"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section></section>
-<section>
-<section id="data-application-1" class="title-slide slide level1 center">
-<h1>Data Application</h1>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
+<section id="data-application-evaluation-results" class="slide level2">
+<h2>Data Application, Evaluation Results</h2>
 <div class="panel-tabset">
 <ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-13-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-13-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2516,7 +2513,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </section>
 <section id="data-application-predicted-means-one-step-ahead-test-size-n-1756-caption" class="slide level2 scrollable">
-<h2>Data Application, Predicted Means, One-Step ahead; Test Size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
+<h2>Data Application, Predicted Means, One-Step Ahead; Test Size <span class="math inline">\(n = 1756\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-14-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-14-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2555,7 +2552,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn7"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn10"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="data-application-predicted-means-one-step-ahead-zoom-in-view-n-200-caption" class="slide level2 scrollable">
 <h2>Data Application, Predicted Means, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2596,7 +2593,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn11"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="data-application-prediction-errors-one-step-ahead-zoom-in-view-n-200-captiondiff" class="slide level2 scrollable">
 <h2>Data Application, Prediction Errors, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2637,7 +2634,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn9"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn12"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
 <section id="data-application-95-predictive-intervals-one-step-ahead-mtd-only-captionmtd" class="slide level2 scrollable">
 <h2>Data Application, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; MTD Only <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2678,7 +2675,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn10"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
@@ -2702,7 +2699,7 @@ ShiftedGamma(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 <section id="conclusion-1" class="slide level2">
 <h2>Conclusion</h2>
 <p>Part III</p>
-<p>Through simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.</p>
+<p>Through simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.</p>
 <ul>
 <li><p>MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.</p></li>
 <li><p>LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
@@ -2787,7 +2784,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <li><p>The posterior full conditional distributions:</p>
 <ul>
 <li><p>For the marginal parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are proportional to <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span> and <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})\)</span>, respectively. <span class="math inline">\(f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)\)</span>.</p></li>
-<li><p>For each of the dependence parameters <span class="math inline">\(\boldsymbol{\rho}\)</span> is proportional to <span class="math inline">\(Unif(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})\)</span>.</p></li>
+<li><p>For each of the dependence parameters <span class="math inline">\(\boldsymbol{\rho}\)</span> is proportional to <span class="math inline">\(\text{Unif}(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})\)</span>.</p></li>
 <li><p>For each <span class="math inline">\(z_t\)</span> of the latent variables <span class="math inline">\({\{z_t\}}_{t=L+1}^n\)</span>, where the probability of <span class="math inline">\(z_t = l\)</span>, denoted by <span class="math inline">\(q_l\)</span>, is proportional to <span class="math inline">\(w_l c_l (x_t, x_{t-l})\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p></li>
 <li><p>For weight parameters <span class="math inline">\(\boldsymbol{w}\)</span>, under the cdf-based prior, is <span class="math inline">\(Dirichlet (\boldsymbol{\alpha})\)</span>, where <span class="math inline">\(\boldsymbol{\alpha} = (\alpha_0 a_1 + M_1, ..., \alpha_0 a_L + M_L)\)</span>. <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, <span class="math inline">\(M_l = |\{ t: z_t = l \}|\)</span>.</p></li>
 </ul></li>
@@ -2887,6 +2884,55 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 </div>
 </div>
 </section>
+<section id="prediction-95-predictive-intervals-one-step-ahead-for-gamma-scenario-1-9" class="slide level2">
+<h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead for Gamma Scenario 1-9</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">s1</th>
+<th style="text-align: right;">s2</th>
+<th style="text-align: right;">s3</th>
+<th style="text-align: right;">s4</th>
+<th style="text-align: right;">s5</th>
+<th style="text-align: right;">s6</th>
+<th style="text-align: right;">s7</th>
+<th style="text-align: right;">s8</th>
+<th style="text-align: right;">s9</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Coverage</td>
+<td style="text-align: right;">0.9544</td>
+<td style="text-align: right;">0.9519</td>
+<td style="text-align: right;">0.9534</td>
+<td style="text-align: right;">0.9459</td>
+<td style="text-align: right;">0.9544</td>
+<td style="text-align: right;">0.9474</td>
+<td style="text-align: right;">0.9524</td>
+<td style="text-align: right;">0.9444</td>
+<td style="text-align: right;">0.9544</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-w" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(w\)</span></h2>
 <div class="panel-tabset">
@@ -2897,7 +2943,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2908,7 +2954,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-123-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2919,7 +2965,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2930,7 +2976,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2941,7 +2987,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2960,7 +3006,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-129-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2971,7 +3017,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-130-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-132-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2982,7 +3028,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2993,7 +3039,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-132-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3004,7 +3050,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3023,7 +3069,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-136-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3034,7 +3080,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3045,7 +3091,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3056,7 +3102,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960"></p>
 </figure>
 </div>
 </div>

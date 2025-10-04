@@ -357,20 +357,22 @@ Copula is widely used for dependence modeling.
 
 . . .
 
-Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $Unif(0, 1)$. 
+Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $\text{Unif}(0, 1)$. 
 
 . . .
 
 Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
 
-- Rooted in Sklar’s theorem. 
+- Rooted in Sklar’s theorem. [^sklar]
+
+[^sklar]: See Supplement. 
   
 
 ## Existing Method to Proposed Method 
 
 The bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
 
-- Based on Proposition 1 of Zheng et al. (2022).
+- Based on Proposition 1 [^prop1] of Zheng et al. (2022).
 
 . . .
 
@@ -382,6 +384,8 @@ $$
 $$
 \ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t) 
 $$
+
+[^prop1]: See Supplement. 
 
 ## Proposed Method  
 
@@ -436,7 +440,9 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 
 \normalsize 
 
-With priors specifications, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
+With priors specifications [^prior], the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
+
+[^prior]: See Supplment. 
 
 ## Simulation Studies  
 
@@ -513,19 +519,19 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 # What's New  
 
-## Sensitivity Analysis [^sensitivity] 
+## Sensitivity Analysis 
 
 Since the preliminary exam, we have also conducted: 
 
-- Sensitivity Analysis 
+- Sensitivity Analysis (s1)
 
-- Coverage Assessment
+- Coverage Assessment (s1, s2)
 
 . . .
 
 Sensitivity Analysis
 
-- Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) and check for convergence. 
+- Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) [^sensitivity] and check for convergence. 
 
 - Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
 
@@ -569,7 +575,7 @@ df
 
 ::: 
 
-## Coverage Assessment for Gamma Scenario 1's $\alpha$ and $\beta$, 40 Replicates 
+## Coverage Assessment for Scenario 1, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -591,7 +597,7 @@ readRDS(file.path(output_dir, "p_ci_beta.rds"))
 
 ::: 
 
-## Coverage Assessment for Gamma Scenario 1’s $w$, 40 Replicates 
+## Coverage Assessment for Scenario 1, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -631,7 +637,7 @@ readRDS(file.path(output_dir, "p_ci_w5.rds"))
 
 :::
 
-## Coverage Assessment for Gamma Scenario 1’s $\rho$, 40 Replicates 
+## Coverage Assessment for Gamma Scenario 1, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -747,13 +753,13 @@ where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\
 
 ## Proposed Method  
 
-The resulting distribution, denoted as $ZIGamma(\mu, \beta, P, \epsilon)$, is expressed as:
+The resulting distribution, denoted as $\text{ZIGamma}(\mu, \beta, P, \epsilon)$, is expressed as:
 ```{=latex} 
 \begin{equation}
 f(x) = 
 \begin{cases} 
-Unif(0, \epsilon) & \text{with probability } P \\
-ShiftedGamma(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
+\text{Unif}(0, \epsilon) & \text{with probability } P \\
+\text{ShiftedGamma}(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
 \end{cases} \tag{6}
 \end{equation}
 ```
@@ -765,7 +771,7 @@ In (6), there are two parts:
 
 - We have already discussed the uniform distribution. 
 
-- The shifted Gamma distribution, $ShiftedGamma(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
+- The shifted Gamma distribution, $\text{ShiftedGamma}(\mu, \beta; \epsilon)$, is a standard Gamma distribution with mean $\mu$ and scale $\beta$ that is shifted to the right by $\epsilon$, with the support $[\epsilon, \infty)$. 
 
 ## dzig (pdf of zigamma)  
 
@@ -969,13 +975,13 @@ Simulated data:
 
 Model fitting: 
 
-- Set the order $L = 5$ and consider the Gaussian copula with Gamma marginals.
+- Set the order $L = 5$ and consider the Gaussian copula with zero-inflated Gamma marginals.
 
 MCMC setting: 
 
 - Run the Gibbs sampler for $165, 000$ iterations, discard the first $5000$ iterations as burn-in, and collect samples every $20$ iterations.
 
-- Run four MCMC chains with $8000$ iterations each for all of the following scenarios. 
+- Run $4$ MCMC chains with $8000$ iterations each for all of the following scenarios. 
 
 ## Simulation Studies   
 
@@ -1327,19 +1333,17 @@ t6
 
 ## Coverage Assessment
 
-All nine scenarios were analyzed using a single replicate. 
+All nine scenarios (s1-s9) were analyzed using $4$ chains with only one replicate. 
 
 - Recall that we have six cases per scenario.
 
 . . .
 
-Scenarios 1 and 2 were further evaluated with $10$ replicates to assess coverage and robustness. 
+Scenarios 1 and 2 were further evaluated with $40$ replicates to assess coverage and robustness. 
 
-- The overall coverage is the proportion of replicates for which the true value is contained within the interval.
+- The overall coverage is the proportion of replicates for which the true value is contained within the interval. 
 
-. . .
-
-Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values.
+- Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values.
 
 ## Prediction, $95\%$ Predictive Intervals, One-Step Ahead  
 
@@ -1471,7 +1475,7 @@ However,
 
 . . .
 
-> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for careful design. 
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design. 
 
 ## RNN (Recurrent Neural Network)
 
@@ -1828,7 +1832,7 @@ df
 
 [^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
-# Data Application 
+## Data Application, Evaluation Results
 
 ::: {.panel-tabset}
 
@@ -1874,7 +1878,7 @@ df
 
 ::: 
 
-## Data Application, Predicted Means, One-Step ahead; Test Size $n = 1756$ [^caption]
+## Data Application, Predicted Means, One-Step Ahead; Test Size $n = 1756$ [^caption]
 
 ::: {.panel-tabset}
 
@@ -2021,7 +2025,7 @@ We also develop a copula-based zero-inflated MTD model, which preserves the adva
 
 Part III
 
-Through simulation studies and real-world applications, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series. 
+Through simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series. 
 
 - MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design. 
 
@@ -2108,7 +2112,7 @@ If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}
 
   - For the marginal parameters $\alpha$ and $\beta$ are proportional to $Gamma(\alpha | u_{\alpha}, v_{\alpha}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$ and $Gamma(\beta | u_{\beta}, v_{\beta}) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$, respectively. $f_l (x_t | x_{t-l}) = c_l (x_t, x_{t-l}) f_X(x_t)$. 
   
-  - For each of the dependence parameters $\boldsymbol{\rho}$ is proportional to $Unif(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})$. 
+  - For each of the dependence parameters $\boldsymbol{\rho}$ is proportional to $\text{Unif}(\rho_l |-1, 1) \prod_{t:z_t = l} c_l (x_t, x_{t-l})$. 
   
   - For each $z_t$ of the latent variables ${\{z_t\}}_{t=L+1}^n$, where the probability of $z_t = l$, denoted by $q_l$, is proportional to $w_l c_l (x_t, x_{t-l})$, for $l = 1,..., L$. 
 
@@ -2170,6 +2174,19 @@ readRDS(file.path(output_dir, "p2_prior.rds"))
 ```
 
 ::: 
+
+## Prediction, $95\%$ Predictive Intervals, One-Step Ahead for Gamma Scenario 1-9
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+df <- readRDS(file.path(output_dir, "table_combind_gamma.rds"))
+rownames(df) <- "Coverage"
+df <- df |> kable(digits = 4)
+df
+```
 
 ## Trace and Density Plot for ZIGamma Scenario 1’s $w$
 
