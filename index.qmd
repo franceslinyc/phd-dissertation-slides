@@ -496,7 +496,7 @@ grid.arrange(w_raw, rho_raw, nrow = 1)
 
 [^wrho]: Four other $\boldsymbol{w}$ and $\boldsymbol{\rho}$ patterns (s1.3-1.6) are omitted here. 
 
-## Marginal Distribution
+## Parameters for Marginal Distribution
 
 ::: {.panel-tabset}
 
@@ -739,14 +739,23 @@ To construct zero-inflated Gamma for the marginal distribution,
 
 - The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. 
 
-. . .
+Specifically,
+```{=latex} 
+\begin{equation}
+f(y; \mu, \beta) = 
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {y}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y} {\beta}) \quad y \geq 0, \tag{5}
+\end{equation}
+```
+where $\frac{\mu}{\beta} > 0$ denotes the shape and $\beta > 0$ the scale parameter.
+
+## Proposed Method  
 
 - Zero values are then replaced with non-zero values drawn from a uniform distribution. 
 
 Specifically,
 ```{=latex} 
 \begin{equation}
-0 \leftarrow U_i, \tag{5}
+0 \leftarrow U_i, \tag{6}
 \end{equation}
 ```
 where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values. 
@@ -760,7 +769,7 @@ f(x) =
 \begin{cases} 
 \text{Unif}(0, \epsilon) & \text{with probability } P \\
 \text{ShiftedGamma}(\mu, \beta; \epsilon) & \text{with probability } 1-P, 
-\end{cases} \tag{6}
+\end{cases} \tag{7}
 \end{equation}
 ```
 where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter. 
@@ -1372,9 +1381,9 @@ df
 ### Uneven arrangement of the relevant lags (s2)
 
 ```{r}
-# df <- readRDS(file.path(output_dir, "coverage_df_s2.rds"))
-# df <- df |> kable(digits = 4)
-# df 
+df <- readRDS(file.path(output_dir, "coverage_df_zigamma_s2.rds"))
+df <- df |> kable(digits = 4)
+df 
 ```
 
 ::: 
@@ -2085,19 +2094,35 @@ Part I and II
 
 - Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.
 
+- We use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.
+
 ## Future Work
 
 Part III
 
-- Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.  
+- Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
 
-- It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.
+- It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 
 # Thank you!
 
 ## Acknowledgement
 
 ## References 
+
+Berchtold, A., & Raftery, A. (2002). "The mixture transition distribution model for high-order Markov chains and non-Gaussian time series". *Statistical Science*, Vol. 17 No. 3, pp. 328–356.
+
+Sklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, *Annales de l’ISUP*. 420 Vol. 8. No. 3, pp. 229–231.
+
+## References 
+
+Zheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, *Journal of Computational and Graphical Statistics*, Vol. 31 No. 1, pp. 283–293.
+
+-- (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, *Environmetrics*, Vol. 425 34 No. 7, e2805. 
+
+-- (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, *Bayesian Analysis*, Vol. 18 No. 4, pp. 1191–1222.
+
+...
 
 # Supplement
 
@@ -2144,14 +2169,11 @@ If a time series satisfies the invariant condition: $X_1 \sim f_X$, and $f_{U_l}
 The shifted Gamma distribution, $\text{ShiftedGamma}(\mu, \beta; \epsilon)$, is expressed as: 
 ```{=latex} 
 \begin{equation}
-f(y) = 
-\begin{cases} 
-\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta})  & y \geq \epsilon \\
-0  & y < \epsilon, 
-\end{cases}
+f(y; \mu, \beta, \epsilon) = 
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta}) \quad y \geq \epsilon, 
 \end{equation}
 ```
-where $\frac{\mu}{\beta} > 0$ denotes the shape, $\beta > 0$ the scale parameter, and $\epsilon > 0$ the threshold parameter.
+where $\frac{\mu}{\beta} > 0$ denotes the shape, $\beta > 0$ the scale, and $\epsilon > 0$ the threshold parameter.
 
 ## Algorithm 1: Implementaion Details 
 

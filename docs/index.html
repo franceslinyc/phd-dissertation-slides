@@ -709,8 +709,8 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn4"><p>Four other <span class="math inline">\(\boldsymbol{w}\)</span> and <span class="math inline">\(\boldsymbol{\rho}\)</span> patterns (s1.3-1.6) are omitted here.</p></li></ol></aside></section>
-<section id="marginal-distribution" class="slide level2">
-<h2>Marginal Distribution</h2>
+<section id="parameters-for-marginal-distribution" class="slide level2">
+<h2>Parameters for Marginal Distribution</h2>
 <div class="panel-tabset">
 <ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Usual Cases (s3-6)</a></li><li><a href="#tabset-3-2">Unusual Cases (s7-9)</a></li></ul>
 <div class="tab-content">
@@ -1101,18 +1101,25 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <ul>
 <li>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>.</li>
 </ul>
-<div class="fragment">
+<p>Specifically,</p>
+<span class="math display">\[\begin{equation}
+f(y; \mu, \beta) =
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {y}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y} {\beta}) \quad y \geq 0, \tag{5}
+\end{equation}\]</span>
+<p>where <span class="math inline">\(\frac{\mu}{\beta} &gt; 0\)</span> denotes the shape and <span class="math inline">\(\beta &gt; 0\)</span> the scale parameter.</p>
+</section>
+<section id="proposed-method-2" class="slide level2">
+<h2>Proposed Method</h2>
 <ul>
 <li>Zero values are then replaced with non-zero values drawn from a uniform distribution.</li>
 </ul>
 <p>Specifically,</p>
 <span class="math display">\[\begin{equation}
-0 \leftarrow U_i, \tag{5}
+0 \leftarrow U_i, \tag{6}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
-</div>
 </section>
-<section id="proposed-method-2" class="slide level2 scrollable">
+<section id="proposed-method-3" class="slide level2 scrollable">
 <h2>Proposed Method</h2>
 <p>The resulting distribution, denoted as <span class="math inline">\(\text{ZIGamma}(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
 <span class="math display">\[\begin{equation}
@@ -1120,7 +1127,7 @@ f(x) =
 \begin{cases}
 \text{Unif}(0, \epsilon) &amp; \text{with probability } P \\
 \text{ShiftedGamma}(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
-\end{cases} \tag{6}
+\end{cases} \tag{7}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
 <div class="fragment">
@@ -1918,7 +1925,152 @@ f(x) =
 </div>
 </div>
 <div id="tabset-12-2">
-
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;"><span class="math inline">\(\mu\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\beta\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(P\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\epsilon\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(w_5\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_1\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_2\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_3\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_4\)</span></th>
+<th style="text-align: right;"><span class="math inline">\(\rho_5\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">P01eps01</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.900</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P01eps04</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P05eps01</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P05eps04</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.925</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P07eps01</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.900</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.875</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.900</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">P07eps04</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.950</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1.000</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">0.975</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2878,6 +3030,7 @@ f(x) =
 <ul>
 <li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.</p></li>
 <li><p>Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.</p></li>
+<li><p>We use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.</p></li>
 </ul>
 </section>
 <section id="future-work-1" class="slide level2">
@@ -2898,6 +3051,15 @@ f(x) =
 </section>
 <section id="references" class="slide level2">
 <h2>References</h2>
+<p>Berchtold, A., &amp; Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. <em>Statistical Science</em>, Vol. 17 No.&nbsp;3, pp.&nbsp;328–356.</p>
+<p>Sklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, <em>Annales de l’ISUP</em>. 420 Vol. 8. No.&nbsp;3, pp.&nbsp;229–231.</p>
+</section>
+<section id="references-1" class="slide level2">
+<h2>References</h2>
+<p>Zheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, <em>Journal of Computational and Graphical Statistics</em>, Vol. 31 No.&nbsp;1, pp.&nbsp;283–293.</p>
+<p>– (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, <em>Environmetrics</em>, Vol. 425 34 No.&nbsp;7, e2805.</p>
+<p>– (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, <em>Bayesian Analysis</em>, Vol. 18 No.&nbsp;4, pp.&nbsp;1191–1222.</p>
+<p>…</p>
 </section></section>
 <section>
 <section id="supplement" class="title-slide slide level1 center">
@@ -2940,13 +3102,10 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +
 <h2>Shifted Gamma Distribution</h2>
 <p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
 <span class="math display">\[\begin{equation}
-f(y) =
-\begin{cases}
-\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta})  &amp; y \geq \epsilon \\
-0  &amp; y &lt; \epsilon,
-\end{cases}
+f(y; \mu, \beta, \epsilon) =
+\frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {(y - \epsilon)}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y - \epsilon} {\beta}) \quad y \geq \epsilon,
 \end{equation}\]</span>
-<p>where <span class="math inline">\(\frac{\mu}{\beta} &gt; 0\)</span> denotes the shape, <span class="math inline">\(\beta &gt; 0\)</span> the scale parameter, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
+<p>where <span class="math inline">\(\frac{\mu}{\beta} &gt; 0\)</span> denotes the shape, <span class="math inline">\(\beta &gt; 0\)</span> the scale, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
 </section>
 <section id="algorithm-1-implementaion-details" class="slide level2">
 <h2>Algorithm 1: Implementaion Details</h2>

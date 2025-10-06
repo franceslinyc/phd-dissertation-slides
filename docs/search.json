@@ -11,7 +11,7 @@
     "href": "shiftedgamma.html",
     "title": "",
     "section": "",
-    "text": "\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(x - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{x - \\epsilon} {\\beta})  & x \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]"
+    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
   },
   {
     "objectID": "metric.html",
@@ -168,11 +168,11 @@
     "text": "Weight and Dependence Parameters for Copula 1\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFour other \\(\\boldsymbol{w}\\) and \\(\\boldsymbol{\\rho}\\) patterns (s1.3-1.6) are omitted here."
   },
   {
-    "objectID": "index.html#marginal-distribution",
-    "href": "index.html#marginal-distribution",
+    "objectID": "index.html#parameters-for-marginal-distribution",
+    "href": "index.html#parameters-for-marginal-distribution",
     "title": "",
-    "section": "Marginal Distribution",
-    "text": "Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
+    "section": "Parameters for Marginal Distribution",
+    "text": "Parameters for Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
   },
   {
     "objectID": "index.html#sensitivity-analysis",
@@ -242,14 +242,21 @@
     "href": "index.html#proposed-method-1",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\nThe Gamma distribution is first reparametrized in terms of the mean, \\(\\mu\\), and the scale parameter, \\(\\beta\\).\n\n\n\nZero values are then replaced with non-zero values drawn from a uniform distribution.\n\nSpecifically,\n\\[\\begin{equation}\n0 \\leftarrow U_i, \\tag{5}\n\\end{equation}\\]\nwhere \\(U_i\\) follows a continuous uniform distribution on \\((0, \\epsilon)\\) with \\(\\epsilon\\) is a data-driven paramater representing the smallest observed non-zero values."
+    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\nThe Gamma distribution is first reparametrized in terms of the mean, \\(\\mu\\), and the scale parameter, \\(\\beta\\).\n\nSpecifically,\n\\[\\begin{equation}\nf(y; \\mu, \\beta) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {y}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y} {\\beta}) \\quad y \\geq 0, \\tag{5}\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape and \\(\\beta &gt; 0\\) the scale parameter."
   },
   {
     "objectID": "index.html#proposed-method-2",
     "href": "index.html#proposed-method-2",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{6}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
+    "text": "Proposed Method\n\nZero values are then replaced with non-zero values drawn from a uniform distribution.\n\nSpecifically,\n\\[\\begin{equation}\n0 \\leftarrow U_i, \\tag{6}\n\\end{equation}\\]\nwhere \\(U_i\\) follows a continuous uniform distribution on \\((0, \\epsilon)\\) with \\(\\epsilon\\) is a data-driven paramater representing the smallest observed non-zero values."
+  },
+  {
+    "objectID": "index.html#proposed-method-3",
+    "href": "index.html#proposed-method-3",
+    "title": "",
+    "section": "Proposed Method",
+    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -312,7 +319,7 @@
     "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma",
     "title": "",
     "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1",
-    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\)."
+    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\)."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
@@ -480,7 +487,7 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns."
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
@@ -501,7 +508,14 @@
     "href": "index.html#references",
     "title": "",
     "section": "References",
-    "text": "References"
+    "text": "References\nBerchtold, A., & Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. Statistical Science, Vol. 17 No. 3, pp. 328–356.\nSklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, Annales de l’ISUP. 420 Vol. 8. No. 3, pp. 229–231."
+  },
+  {
+    "objectID": "index.html#references-1",
+    "href": "index.html#references-1",
+    "title": "",
+    "section": "References",
+    "text": "References\nZheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, Journal of Computational and Graphical Statistics, Vol. 31 No. 1, pp. 283–293.\n– (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, Environmetrics, Vol. 425 34 No. 7, e2805.\n– (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, Bayesian Analysis, Vol. 18 No. 4, pp. 1191–1222.\n…"
   },
   {
     "objectID": "index.html#copula-cdf-and-pdf",
@@ -536,7 +550,7 @@
     "href": "index.html#shifted-gamma-distribution",
     "title": "",
     "section": "Shifted Gamma Distribution",
-    "text": "Shifted Gamma Distribution\nThe shifted Gamma distribution, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & y &lt; \\epsilon,\n\\end{cases}\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape, \\(\\beta &gt; 0\\) the scale parameter, and \\(\\epsilon &gt; 0\\) the threshold parameter."
+    "text": "Shifted Gamma Distribution\nThe shifted Gamma distribution, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape, \\(\\beta &gt; 0\\) the scale, and \\(\\epsilon &gt; 0\\) the threshold parameter."
   },
   {
     "objectID": "index.html#algorithm-1-implementaion-details",
