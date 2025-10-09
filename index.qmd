@@ -129,13 +129,13 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 ## Objectives 
 
-Part I and II
+Part I and II of the dissertation
 
 > Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed behavior, and semicontinuous patterns.
 
 . . .
 
-Part III
+Part III of the dissertation
 
 > Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness.
 
@@ -145,15 +145,13 @@ Part I Models for Forecasting Skewed Time Series
 
 - Recap of MTD Models 
 
-- Sensitivity Analysis 
+- What's New 
 
-- Coverage Assessment 
+  - Data Application 
 
 Part II Models for Forecasting Zero-Inflated Skewed Time Series 
 
 - Introduction 
-
-- Background 
 
 - Proposed Method 
 
@@ -161,14 +159,11 @@ Part II Models for Forecasting Zero-Inflated Skewed Time Series
 
 - Prediction 
 
-
 ## Roadmap 
 
 Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
 - Introduction 
-
-- Background 
 
 - Hyperparameter Tuning, Training, and Metrics 
 
@@ -207,26 +202,6 @@ However, for certain invariant marginal distributions, the transition kernel may
 . . .
 
 > Develop the Gamma MTD model, but the framework is generalizable.
-
-## Background 
-
-The MTD model is a state space model. 
-
-. . .
-
-The MTD model was initially developed in 1985 to model high-order Markov chains, 
-  
-- Followed by several variant models over the years to capture non-Gaussian and nonlinear features, such as flat stretches, bursts, outliers, and change points.
-  
-- See Berchtold and Raftery (2022) for a complete review. 
-
-. . .
-
-
-The MTD model has primarily been used for modeling time series. 
-  
-- Its generalizations has also demonstrated success in modeling spatial data. 
-
 
 ## Model Framework: DAG; also known as Bayesian Network
 
@@ -378,13 +353,6 @@ The bivariate distribution approach, for example, identifies a bivariate distrib
 
 This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure. 
 
-$$
-\textbf{transition kernel} \longleftarrow \textbf{copula} \times \textbf{marginal} 
-$$
-$$
-\ f_l (x_t | x_{t-l}) \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c_l (x_t, x_{t-l}) \ \ \ \ f_X (x_t) 
-$$
-
 [^prop1]: See Supplement. 
 
 ## Proposed Method  
@@ -519,163 +487,49 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 # What's New  
 
-## Sensitivity Analysis 
+## What's New  
 
 Since the preliminary exam, we have also conducted: 
 
-- Sensitivity Analysis (s1)
+- Sensitivity Analysis 
 
-- Coverage Assessment (s1, s2)
+- Coverage Assessment 
 
-. . .
+- Data Application 
 
-Sensitivity Analysis
+For brevity, we present data application only. 
 
-- Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) [^sensitivity] and check for convergence. 
+# Data Application 
 
-- Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
+## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$ 
 
-[^sensitivity]: See Supplement. 
-
-## Coverage Assessment 
-
-Coverage Assessment
-
-- Simulate $40$ replicates, combine $4$ chains of $8,000$ samples, calculate $95\%$ CI, and record whether the true parameter value falls within this interval. 
-
-- Most parameters achieve full coverage, with a few slightly below $1$, indicating that the credible intervals reliably capture the true parameter values. 
-
-## Coverage Assessment for Scenario 1 and 2, 40 Replicates 
+## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$ 
 
 ::: {.panel-tabset}
 
-```{r}
-library(knitr)
-```
+### windspeeds at 50m above ground
 
 ```{r}
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
-### Exponentially decreasing weights (s1)
-
 ```{r}
-df <- readRDS(file.path(output_dir, "coverage_df_s1.rds"))
-df <- df |> kable(digits = 4)
-df 
+readRDS(file.path(output_dir, "p1_real.rds"))
 ```
 
-### Uneven arrangement of the relevant lags (s2)
+### windspeeds at 10m above ground
 
 ```{r}
-df <- readRDS(file.path(output_dir, "coverage_df_s2.rds"))
-df <- df |> kable(digits = 4)
-df 
+readRDS(file.path(output_dir, "p2_real.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real.rds"))
 ```
 
 ::: 
-
-## Coverage Assessment for Scenario 1, 40 Replicates 
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $\alpha$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_alpha.rds"))
-```
-
-### $\beta$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_beta.rds"))
-```
-
-::: 
-
-## Coverage Assessment for Scenario 1, 40 Replicates 
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $w_1$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w1.rds"))
-```
-
-### $w_2$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w2.rds"))
-```
-
-### $w_3$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w3.rds"))
-```
-
-### $w_4$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w4.rds"))
-```
-
-### $w_5$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_w5.rds"))
-```
-
-:::
-
-## Coverage Assessment for Gamma Scenario 1, 40 Replicates 
-
-::: {.panel-tabset}
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-### $\rho_1$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho1.rds"))
-```
-
-### $\rho_2$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho2.rds"))
-```
-
-### $\rho_3$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho3.rds"))
-```
-
-### $\rho_4$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho4.rds"))
-```
-
-### $\rho_5$
-
-```{r}
-readRDS(file.path(output_dir, "p_ci_rho5.rds"))
-```
-
-:::
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -691,7 +545,7 @@ Examples include
 
 - precipitation amounts, and 
 
-- safety measures.
+- transportation safety measures.
 
 If left unaddressed, zero-inflation undermines model robustness and weakens inference.
 
@@ -713,33 +567,21 @@ However,
 
 > Develop the ZIGamma MTD model, but the framework is again generalizable.
 
-## Background
+## Existing Method to Proposed Method  
 
-There are two classes of models designed to handle data with excessive zeros: zero-inflated (ZI) models and hurdle models.
+Our approach is similar to hurdle models, where zeros occur only in the binary part. 
 
-- In ZI models, zeros can come from both binary and non-zero parts, whereas in hurdle models, zeros occur only in the binary part.
-
-. . .
-
-Our approach is similar to hurdle models, but ours applies a soft threshold that replaces zeros with small non-zero values rather than generating exact zeros.
+Instead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.
 
 - Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
 
-. . .
-
-The CE approach
-
-- Associates each discrete random variable (RV), $Y_i$, with a continuous RV, $Y_i^*$. 
-
-- Has only applied in discrete and spatial settings to date.  
+- Has only been applied in discrete and spatial settings, not in our setting. 
 
 ## Proposed Method  
 
 To construct zero-inflated Gamma for the marginal distribution, 
 
-- The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. 
-
-Specifically,
+- The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. Specifically,
 ```{=latex} 
 \begin{equation}
 f(y; \mu, \beta) = 
@@ -750,9 +592,7 @@ where $\frac{\mu}{\beta} > 0$ denotes the shape and $\beta > 0$ the scale parame
 
 ## Proposed Method  
 
-- Zero values are then replaced with non-zero values drawn from a uniform distribution. 
-
-Specifically,
+- Zero values are then replaced with non-zero values drawn from a uniform distribution. Specifically,
 ```{=latex} 
 \begin{equation}
 0 \leftarrow U_i, \tag{6}
@@ -1034,6 +874,7 @@ For brevity, we present Scenario 1 only.
 
 ```{r}
 library(coda)
+library(kableExtra)
 ```
 
 ```{r}
@@ -1388,18 +1229,13 @@ df
 
 ::: 
 
-
-## Prediction, $95\%$ Predictive Intervals, One-Step Ahead  
+## Prediction, $95\%$ Predictive Intervals, One-Step Ahead {#sec-ch2-prediction}
 
 ::::: columns
 
 ::: column
 
 ### 
-
-```{r}
-library(kableExtra)
-```
 
 ```{r}
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
@@ -1520,6 +1356,8 @@ However,
 . . .
 
 > Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design. 
+
+# Jump to Data Application (@sec-data-application)
 
 ## RNN (Recurrent Neural Network)
 
@@ -1760,7 +1598,7 @@ df
 
 - LSTM generally achieves lower overall RMSEs compared to MTD. 
 
-- ❗️But, patterns similar to those in Prediction of Part II reappear. 
+- ❗️But, patterns similar to those in Prediction of Part II (@sec-ch2-prediction) reappear. 
 
 
 ::: 
@@ -1815,7 +1653,7 @@ df
 
 ::::: 
 
-# Data Application 
+# Data Application {#sec-data-application}
 
 ## Experimental Setup   
 
@@ -2051,7 +1889,7 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 ⏯️ Conclusion
 </div>
 
-## Conclusion
+## Conclusion {#sec-conclusion}
 
 Part I and II 
 
@@ -2206,11 +2044,17 @@ where $\frac{\mu}{\beta} > 0$ denotes the shape, $\beta > 0$ the scale, and $\ep
   - For the threshold parameter $\epsilon$ is proportional to $ScaledBeta(5, 5; 0, 2\epsilon_0) \prod_{t=L+1}^n f_l (x_t | x_{t-l})$.
 
 
-
-
 --- 
 
 ![Asterisk (**) denotes denotes steps that differ from Algorithm 1.](images/alg-2.png){fig-align="left"}
+
+## Sensitivity Analysis 
+
+Sensitivity Analysis
+
+- Use five different sets of priors (i.e., fix one parameter, and vary the other with informative, diffuse or shifted prior) and check for convergence. 
+
+- Results appear reasonable, and the estimates are consistent with the true values, indicating that the model is robust to the choice of prior. 
 
 ## Sensitivity Analysis for Gamma Scenario 1
 
@@ -2245,6 +2089,146 @@ readRDS(file.path(output_dir, "p2_prior.rds"))
 ```
 
 ::: 
+
+## Coverage Assessment 
+
+Coverage Assessment
+
+- Simulate $40$ replicates, combine $4$ chains of $8,000$ samples, calculate $95\%$ CI, and record whether the true parameter value falls within this interval. 
+
+- Most parameters achieve full coverage, with a few slightly below $1$, indicating that the credible intervals reliably capture the true parameter values. 
+
+## Coverage Assessment for Scenario 1 and 2, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+library(knitr)
+```
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### Exponentially decreasing weights (s1)
+
+```{r}
+df <- readRDS(file.path(output_dir, "coverage_df_s1.rds"))
+df <- df |> kable(digits = 4)
+df 
+```
+
+### Uneven arrangement of the relevant lags (s2)
+
+```{r}
+df <- readRDS(file.path(output_dir, "coverage_df_s2.rds"))
+df <- df |> kable(digits = 4)
+df 
+```
+
+::: 
+
+## Coverage Assessment for Scenario 1, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\alpha$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_alpha.rds"))
+```
+
+### $\beta$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_beta.rds"))
+```
+
+::: 
+
+## Coverage Assessment for Scenario 1, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $w_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w1.rds"))
+```
+
+### $w_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w2.rds"))
+```
+
+### $w_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w3.rds"))
+```
+
+### $w_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w4.rds"))
+```
+
+### $w_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_w5.rds"))
+```
+
+:::
+
+## Coverage Assessment for Gamma Scenario 1, 40 Replicates 
+
+::: {.panel-tabset}
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+### $\rho_1$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho1.rds"))
+```
+
+### $\rho_2$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho2.rds"))
+```
+
+### $\rho_3$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho3.rds"))
+```
+
+### $\rho_4$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho4.rds"))
+```
+
+### $\rho_5$
+
+```{r}
+readRDS(file.path(output_dir, "p_ci_rho5.rds"))
+```
+
+:::
 
 ## Prediction, $95\%$ Predictive Intervals, One-Step Ahead for Gamma Scenario 1-9
 
