@@ -207,7 +207,7 @@
     "href": "index.html#existing-method-to-proposed-method-1",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, where zeros occur only in the binary part.\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas only been applied in discrete and spatial settings, not in our setting."
+    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas only been applied in discrete and spatial settings, not in our setting."
   },
   {
     "objectID": "index.html#proposed-method-1",
