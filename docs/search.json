@@ -21,6 +21,13 @@
     "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
   },
   {
+    "objectID": "acknowledgement.html#acknowledgement",
+    "href": "acknowledgement.html#acknowledgement",
+    "title": "",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement"
+  },
+  {
     "objectID": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "href": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "title": "",
@@ -53,14 +60,14 @@
     "href": "index.html#roadmap",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of MTD Models\nWhat’s New\n\nData Application\n\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nProposed Method\nSimulation Studies\nPrediction"
+    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of MTD Models\nWhat’s New\n\nSensitivity Analysis (Skip)\nCoverage Assessment (Skip)\nData Application\n\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nProposed Method\nSimulation Studies\nPrediction"
   },
   {
     "objectID": "index.html#roadmap-1",
     "href": "index.html#roadmap-1",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nHyperparameter Tuning, Training, and Metrics\nSimulation Studies\nData Application"
+    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nHyperparameter Tuning, Training, and Metrics\nSimulation Studies (Skip)\nData Application"
   },
   {
     "objectID": "index.html#introduction",
@@ -179,7 +186,7 @@
     "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756",
     "title": "",
     "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)"
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
   },
   {
     "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-1",
@@ -266,18 +273,18 @@
     "text": "Simulation Studies\nIn all nine scenarios (s1-9), we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases per scenario:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we present Scenario 1 only."
   },
   {
+    "objectID": "index.html#simulation-results-res-res2",
+    "href": "index.html#simulation-results-res-res2",
+    "title": "",
+    "section": "Simulation Results 1 2",
+    "text": "Simulation Results 1 2\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(w_1 = 0.636\\)\n0.6395 (0.0425)\n1 (1)\n2e-04\n0.0003\n\n\n\\(w_2 = 0.234\\)\n0.1905 (0.0636)\n1.01 (1.01)\n4e-04\n0.0013\n\n\n\\(w_3 = 0.086\\)\n0.1315 (0.0739)\n1 (1)\n4e-04\n0.0021\n\n\n\\(w_4 = 0.032\\)\n0.0346 (0.0529)\n1.01 (1.03)\n3e-04\n0.0017\n\n\n\\(w_5 = 0.012\\)\n0.0039 (0.0171)\n1 (1)\n1e-04\n0.0004\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\rho_1 = 0.700\\)\n0.6847 (0.0274)\n1 (1)\n0.0002\n0.0002\n\n\n\\(\\rho_2 = 0.500\\)\n0.606 (0.1426)\n1.01 (1.01)\n0.0008\n0.0027\n\n\n\\(\\rho_3 = 0.300\\)\n0.1168 (0.2389)\n1 (1)\n0.0013\n0.0018\n\n\n\\(\\rho_4 = 0.100\\)\n0.0147 (0.4675)\n1 (1)\n0.0026\n0.0027\n\n\n\\(\\rho_5 = 0.100\\)\n-0.0046 (0.5659)\n1 (1)\n0.0032\n0.0032\n\n\n\n\n\n\n\n\nThere is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic \\(R\\) and its upper CI \\(\\leq\\) \\(1.1\\)).\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\) for all other combinations of \\(P = 0.1, 0.5, 0.7\\) and \\(\\epsilon = 0.1, 0.4\\) are similar and therefore omitted."
+  },
+  {
     "objectID": "index.html#simulation-results-res",
     "href": "index.html#simulation-results-res",
     "title": "",
-    "section": "Simulation Results 1",
-    "text": "Simulation Results 1\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(w_1 = 0.636\\)\n0.6395 (0.0425)\n1 (1)\n2e-04\n0.0003\n\n\n\\(w_2 = 0.234\\)\n0.1905 (0.0636)\n1.01 (1.01)\n4e-04\n0.0013\n\n\n\\(w_3 = 0.086\\)\n0.1315 (0.0739)\n1 (1)\n4e-04\n0.0021\n\n\n\\(w_4 = 0.032\\)\n0.0346 (0.0529)\n1.01 (1.03)\n3e-04\n0.0017\n\n\n\\(w_5 = 0.012\\)\n0.0039 (0.0171)\n1 (1)\n1e-04\n0.0004\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\rho_1 = 0.700\\)\n0.6847 (0.0274)\n1 (1)\n0.0002\n0.0002\n\n\n\\(\\rho_2 = 0.500\\)\n0.606 (0.1426)\n1.01 (1.01)\n0.0008\n0.0027\n\n\n\\(\\rho_3 = 0.300\\)\n0.1168 (0.2389)\n1 (1)\n0.0013\n0.0018\n\n\n\\(\\rho_4 = 0.100\\)\n0.0147 (0.4675)\n1 (1)\n0.0026\n0.0027\n\n\n\\(\\rho_5 = 0.100\\)\n-0.0046 (0.5659)\n1 (1)\n0.0032\n0.0032\n\n\n\n\n\n\n\n\n\\(\\boldsymbol{w}\\), \\(\\boldsymbol{\\rho}\\) for all other combinations of \\(P = 0.1, 0.5, 0.7\\) and \\(\\epsilon = 0.1, 0.4\\) are similar and therefore omitted."
-  },
-  {
-    "objectID": "index.html#simulation-results",
-    "href": "index.html#simulation-results",
-    "title": "",
-    "section": "Simulation Results",
-    "text": "Simulation Results\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"
+    "section": "Simulation Results [res]",
+    "text": "Simulation Results [res]\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"
   },
   {
     "objectID": "index.html#coverage-assessment",
@@ -287,11 +294,11 @@
     "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
   },
   {
-    "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma",
-    "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma",
+    "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
+    "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
     "title": "",
-    "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1",
-    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\)."
+    "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2",
+    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\).Each row involves \\(40\\) replicates, consisting of \\(4\\) chains with \\(8,000\\) samples per chain."
   },
   {
     "objectID": "index.html#sec-ch2-prediction",
@@ -471,6 +478,13 @@
   {
     "objectID": "index.html#acknowledgement",
     "href": "index.html#acknowledgement",
+    "title": "",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement\nThank you to Lisa Madsen and Charlotte Wickham, for your dedication, support, and constant inspiration throughout the process.\nThank you to my committee memebers, James Molyneux, Claudio Fuentes, and Prasad Tadepalli, for the time you dedicated and valuable feedback.\nThank you to Xiaotian Zheng for being incredibly generous with your time and advices.\n\nThank you to my family, my mom, dad, and brother, for your financial support and for patience and understanding througout the journey.\nThank you to my friends, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.\nSpecial thanks to my partner, Joseph, for your timely distractions and annoyances."
+  },
+  {
+    "objectID": "index.html#acknowledgement-1",
+    "href": "index.html#acknowledgement-1",
     "title": "",
     "section": "Acknowledgement",
     "text": "Acknowledgement"

@@ -1,0 +1,42 @@
+---
+format:
+  revealjs:
+    height: 900
+    width: 1600
+    logo: "images/osu.png"
+    slide-number: true
+    scrollable: true
+---
+
+## Acknowledgement
+
+::: {.r-stack}
+
+![](images/a-1.jpg){.fragment width="480" height="640" style="position: relative; top: 20px; left: -60px; z-index: 1;"}
+
+![](images/a-2.jpg){.fragment width="480" height="640" style="position: relative; top: -30px; left: 40px; z-index: 2;"}
+
+![](images/a-3.jpg){.fragment width="480" height="640" style="position: relative; top: -60px; left: -30px; z-index: 3;"}
+
+![](images/a-4.jpg){.fragment width="480" height="640" style="position: relative; top: 30px; left: 60px; z-index: 4;"}
+
+![](images/a-5.jpg){.fragment width="480" height="640" style="position: relative; top: -50px; left: -80px; z-index: 5;"}
+
+![](images/a-6.jpg){.fragment width="480" height="640" style="position: relative; top: 60px; left: 20px; z-index: 6;"}
+
+![](images/a-7.jpg){.fragment width="480" height="640" style="position: relative; top: -80px; left: 10px; z-index: 7;"}
+
+![](images/a-8.jpg){.fragment width="640" height="480" style="position: relative; top: -40px; left: 50px; z-index: 8;"}
+
+![](images/a-9.jpg){.fragment width="480" height="640" style="position: relative; top: 30px; left: -50px; z-index: 9;"}
+
+![](images/a-10.jpg){.fragment width="480" height="640" style="position: relative; top: -20px; left: 60px; z-index: 10;"}
+
+![](images/a-11.jpg){.fragment width="480" height="640" style="position: relative; top: -40px; left: -40px; z-index: 11;"}
+
+![](images/a-12.jpg){.fragment width="480" height="640" style="position: relative; top: 40px; left: 50px; z-index: 12;"}
+
+![](images/a-13.jpg){.fragment width="480" height="640" style="position: relative; top: 20px; left: 60px; z-index: 13;"}
+
+:::
+
