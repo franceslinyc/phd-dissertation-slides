@@ -1806,7 +1806,7 @@ df
 
 ::: 
 
-## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$ 
+## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$  
 
 ::: {.panel-tabset}
 
@@ -1998,7 +1998,7 @@ Thank you to my committee memebers, `James Molyneux`, `Claudio Fuentes`, and `Pr
 
 Thank you to `Xiaotian Zheng` for being incredibly generous with your time and advices. 
 
-. . .
+<br>
 
 Thank you to `my family`, my mom, dad, and brother, for your financial support and for patience and understanding througout the journey.
 
