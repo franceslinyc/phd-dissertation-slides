@@ -147,9 +147,9 @@ Part I Models for Forecasting Skewed Time Series
 
 - What's New 
 
-  - Sensitivity Analysis (Skip)
+  - (Skip) Sensitivity Analysis 
 
-  - Coverage Assessment (Skip)
+  - (Skip) Coverage Assessment 
 
   - Data Application 
 
@@ -171,7 +171,7 @@ Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
 - Hyperparameter Tuning, Training, and Metrics 
 
-- Simulation Studies (Skip)
+- (Skip) Simulation Studies 
 
 - Data Application 
 
@@ -1548,7 +1548,7 @@ output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
 ```{r, fig.height=10}
-p <- readRDS(file.path(output_dir, "gamma_2.rds"))
+p <- readRDS(file.path(output_dir, "gamma_2_v2.rds"))
 print(p)
 ```
 
@@ -1556,7 +1556,7 @@ print(p)
 
 ::: column
 
-- RMSE has a mean difference of $0.128957$ (`p-value = 0.005175`, `df = 9`), with MTD consistently yielding lower RMSEs. 
+- RMSE has a mean difference of $0.1290$ (`p-value = 0.005175`, `df = 9`), with MTD consistently yielding lower RMSEs. 
 
 ::: 
 
@@ -1998,13 +1998,15 @@ Thank you to my committee memebers, `James Molyneux`, `Claudio Fuentes`, and `Pr
 
 Thank you to `Xiaotian Zheng` for being incredibly generous with your time and advices. 
 
-<br>
+. . .    
 
-Thank you to `my family`, my mom, dad, and brother, for your financial support and for patience and understanding througout the journey.
+Thank you to `my family`, my mom, dad, and brother, for your occational financial support and for your patience and understanding througout the journey.
 
 Thank you to `my friends`, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.
 
 Special thanks to `my partner`, Joseph, for your timely distractions and annoyances. 
+
+Thank you to many others. 
 
 ## Acknowledgement
 
