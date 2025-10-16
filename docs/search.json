@@ -39,7 +39,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread."
   },
   {
     "objectID": "index.html#nasa-merra-2-data",
@@ -53,7 +53,7 @@
     "href": "index.html#objectives",
     "title": "",
     "section": "Objectives",
-    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness."
+    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness."
   },
   {
     "objectID": "index.html#roadmap",
@@ -67,35 +67,35 @@
     "href": "index.html#roadmap-1",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nHyperparameter Tuning, Training, and Metrics\n(Skip) Simulation Studies\nData Application"
+    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nTraining, Hyperparameter Tuning, and Metrics\n(Skip) Simulation Studies\nData Application"
   },
   {
     "objectID": "index.html#introduction",
     "href": "index.html#introduction",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nTime series model captures how past values contribute to current value and uses this information to predict future value.\n\nThe mixture transition distribution (MTD) models\n\nExtend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.\nModel each conditional distribution as a mixture of transition kernels, with random, stochastic weights."
+    "text": "Introduction\nTime series model captures how past values contribute to current value and uses this information to predict future value.\n\nThe mixture transition distribution (MTD) models\n\nExtend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features.\nModel high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights.\nSee Berchtold and Raftery (2022) for a complete review."
   },
   {
     "objectID": "index.html#introduction-and-objectives",
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
+    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian Network",
-    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
+    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\) (all of its past values), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
     "href": "index.html#mtd-order-look-back-steps-l-5",
     "title": "",
     "section": "MTD Order (Look-Back Steps) \\(L = 5\\)",
-    "text": "MTD Order (Look-Back Steps) \\(L = 5\\)\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆"
+    "text": "MTD Order (Look-Back Steps) \\(L = 5\\)\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5-1",
@@ -130,7 +130,7 @@
     "href": "index.html#existing-method-to-proposed-method",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThis is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.\n\nSee Supplement."
+    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThis is facilitated by the use of a copula,\n\nwhich separates the marginal behavior of the random variables from their dependence structure.\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#proposed-method",
@@ -144,7 +144,7 @@
     "href": "index.html#background-bayesian-implementation",
     "title": "",
     "section": "Background: Bayesian Implementation",
-    "text": "Background: Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.\n\nBut the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution."
+    "text": "Background: Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
   },
   {
     "objectID": "index.html#background-bayesian-implementation-1",
@@ -200,7 +200,7 @@
     "href": "index.html#introduction-1",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\ntransportation safety measures.\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
+    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
   },
   {
     "objectID": "index.html#introduction-and-objectives-1",
@@ -235,7 +235,7 @@
     "href": "index.html#proposed-method-3",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (6), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
+    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (7), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -270,7 +270,7 @@
     "href": "index.html#simulation-studies-2",
     "title": "",
     "section": "Simulation Studies",
-    "text": "Simulation Studies\nIn all nine scenarios (s1-9), we vary \\(P\\) and \\(\\epsilon\\), resulting in six cases per scenario:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we present Scenario 1 only."
+    "text": "Simulation Studies\nIn all nine scenarios (s1-9), we vary \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value), resulting in six cases per scenario:\n\n\\(P = 0.1\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.1\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.5\\), \\(\\epsilon = 0.4\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.1\\)\n\\(P = 0.7\\), \\(\\epsilon = 0.4\\)\n\nFor brevity, we present Scenario 1 only."
   },
   {
     "objectID": "index.html#simulation-results-res-res2",
@@ -283,8 +283,8 @@
     "objectID": "index.html#simulation-results-res",
     "href": "index.html#simulation-results-res",
     "title": "",
-    "section": "Simulation Results [res]",
-    "text": "Simulation Results [res]\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00"
+    "section": "Simulation Results 1",
+    "text": "Simulation Results 1\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.35 (0.1132)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0082 (0.0433)\n1 (1)\n2e-04\n2e-04\n\n\n\\(P\\)\n0.0769 (0.0085)\n1 (1)\n0e+00\n0e+00\n\n\n\\(\\epsilon\\)\n0.1 (7e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n7.1454 (0.12)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0994 (0.0472)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.1091 (0.0103)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4017 (0.0019)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.9447 (0.1207)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n1.0659 (0.0542)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5248 (0.0172)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.1001 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8454 (0.1154)\n1 (1)\n6e-04\n6e-04\n\n\n\\(\\beta\\)\n1.0086 (0.0512)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.5064 (0.0173)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4 (4e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.988 (0.1303)\n1 (1)\n7e-04\n7e-04\n\n\n\\(\\beta\\)\n0.9593 (0.0594)\n1 (1)\n3e-04\n3e-04\n\n\n\\(P\\)\n0.6879 (0.016)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.0999 (1e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\n\n\n\n\n.\nMean (SD)\nR (Upper CI)\nNaive SE\nTime-series SE\n\n\n\n\n\\(\\mu\\)\n6.8482 (0.1373)\n1 (1)\n8e-04\n8e-04\n\n\n\\(\\beta\\)\n1.0506 (0.0665)\n1 (1)\n4e-04\n4e-04\n\n\n\\(P\\)\n0.7048 (0.0154)\n1 (1)\n1e-04\n1e-04\n\n\n\\(\\epsilon\\)\n0.4002 (3e-04)\n1 (1)\n0e+00\n0e+00\n\n\n\n\n\n\n\n\nThere is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic \\(R\\) and its upper CI \\(\\leq\\) \\(1.1\\))."
   },
   {
     "objectID": "index.html#coverage-assessment",
@@ -298,7 +298,7 @@
     "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
     "title": "",
     "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2",
-    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value) used in the simulation. For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\).Each row involves \\(40\\) replicates, consisting of \\(4\\) chains with \\(8,000\\) samples per chain."
+    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value). For example, P01eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\).Each row involves \\(40\\) replicates, consisting of \\(4\\) chains with \\(8,000\\) samples per chain."
   },
   {
     "objectID": "index.html#sec-ch2-prediction",
@@ -333,7 +333,7 @@
     "href": "index.html#rnn-recurrent-neural-network",
     "title": "",
     "section": "RNN (Recurrent Neural Network)",
-    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when processing long sequences."
+    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when training on long sequences."
   },
   {
     "objectID": "index.html#lstm-long-short-term-memory",
@@ -452,21 +452,21 @@
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond the Gamma marginals."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.\n\nMTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.\nLSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\nOverall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOverall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.\nAlthough the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
@@ -480,7 +480,7 @@
     "href": "index.html#acknowledgement",
     "title": "",
     "section": "Acknowledgement",
-    "text": "Acknowledgement\nThank you to Lisa Madsen and Charlotte Wickham, for your dedication, support, and constant inspiration throughout the process.\nThank you to my committee memebers, James Molyneux, Claudio Fuentes, and Prasad Tadepalli, for the time you dedicated and valuable feedback.\nThank you to Xiaotian Zheng for being incredibly generous with your time and advices.\n\nThank you to my family, my mom, dad, and brother, for your occational financial support and for your patience and understanding througout the journey.\nThank you to my friends, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.\nSpecial thanks to my partner, Joseph, for your timely distractions and annoyances.\nThank you to many others."
+    "text": "Acknowledgement\nThank you to Lisa Madsen and Charlotte Wickham, for your dedication, support, and inspiration throughout the process.\nThank you to my committee memebers, James Molyneux, Claudio Fuentes, and Prasad Tadepalli, for the time you dedicated and valuable feedback.\nThank you to Xiaotian Zheng for being incredibly generous with your time and advices.\n\nThank you to my family, my mom, dad, and brother, for your occational financial support and for your patience and understanding througout the journey.\nThank you to my friends, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.\nSpecial thanks to my partner, Joseph, for your timely distractions and annoyances.\nThank you to many others."
   },
   {
     "objectID": "index.html#acknowledgement-1",
@@ -494,7 +494,7 @@
     "href": "index.html#references",
     "title": "",
     "section": "References",
-    "text": "References\nBerchtold, A., & Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. Statistical Science, Vol. 17 No. 3, pp. 328–356.\nSklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, Annales de l’ISUP. 420 Vol. 8. No. 3, pp. 229–231."
+    "text": "References\nBerchtold, A., & Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. Statistical Science, Vol. 17 No. 3, pp. 328–356.\nDenuit, Michel, and Lambert, Philippe. 2005. “Constraints on Concordance Measures in Bivariate Discrete Data.” Journal of Multivariate Analysis 93 (1): 40–57.\nSklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, Annales de l’ISUP. 420 Vol. 8. No. 3, pp. 229–231.\nZheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, Journal of Computational and Graphical Statistics, Vol. 31 No. 1, pp. 283–293.\n…"
   },
   {
     "objectID": "index.html#references-1",
@@ -521,15 +521,15 @@
     "objectID": "index.html#sklars-theorem",
     "href": "index.html#sklars-theorem",
     "title": "",
-    "section": "Sklar’s theorem",
-    "text": "Sklar’s theorem\n\nFor any \\(p\\)-dimensional multivariate cumulative distribution function (cdf) of a random vector \\((X_1, ..., X_p)\\), denoted as \\(F(x_1, ..., x_p)\\), there exists a copula function \\(C: {[0,1]}^p \\rightarrow [0, 1]\\) for which \\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\\), where \\(F_j\\) is the marginal cdf of \\(X_j, j = 1,..., p\\). If \\(X_j\\) is continuous for all \\(j\\), then \\(C\\) is unique and differentiable. The joint probability density function (pdf) of \\(X_j, j = 1,...,p\\) is given by \\(f(x_j) = c(x_j) \\prod_{j=1}^p f_j(x_j)\\), where \\(c = \\partial^p{C} / \\partial{F_j}\\) is the copula density and \\(f_j\\) is the density of \\(X_j\\)."
+    "section": "Sklar’s Theorem",
+    "text": "Sklar’s Theorem\n\nFor any \\(p\\)-dimensional multivariate cumulative distribution function (cdf) of a random vector \\((X_1, ..., X_p)\\), denoted as \\(F(x_1, ..., x_p)\\), there exists a copula function \\(C: {[0,1]}^p \\rightarrow [0, 1]\\) for which \\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\\), where \\(F_j\\) is the marginal cdf of \\(X_j, j = 1,..., p\\). If \\(X_j\\) is continuous for all \\(j\\), then \\(C\\) is unique and differentiable. The joint probability density function (pdf) of \\(X_j, j = 1,...,p\\) is given by \\(f(x_j) = c(x_j) \\prod_{j=1}^p f_j(x_j)\\), where \\(c = \\partial^p{C} / \\partial{F_j}\\) is the copula density and \\(f_j\\) is the density of \\(X_j\\)."
   },
   {
     "objectID": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
     "href": "index.html#proposition-1-zheng-et-al.-2022s-invariant-condition",
     "title": "",
-    "section": "Proposition 1: Zheng et al. (2022)’s invariant condition",
-    "text": "Proposition 1: Zheng et al. (2022)’s invariant condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
+    "section": "Proposition 1: Zheng et al. (2022)’s Invariant Condition",
+    "text": "Proposition 1: Zheng et al. (2022)’s Invariant Condition\n\nConsider a set of bivariate random vectors \\((U_l, V_l)\\) that takes values in \\(S \\times S \\subset \\mathbb{R}\\). Consider a time series \\(\\{ X_t: t \\in \\mathbb{N} \\}\\), where \\(X_t \\in S\\), generated from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,\n\\] and from \\[\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^{t-2} w_l f_{U_l|V_l} (x_t | x_{t-l}) +\n\\left( 1 - \\sum_{k=1}^{t-2} w_k \\right) f_{U_{t-1} | V_{t-1}} (x_t|x_1), 2 \\leq t \\leq L.\n\\]\nIf a time series satisfies the invariant condition: \\(X_1 \\sim f_X\\), and \\(f_{U_l}(x) = f_{V_l}(x) = f_X(x)\\), for all \\(x \\in S\\), and for all \\(l\\), then this time time series is first-order strictly stationary with invariant marginal density \\(f_X\\)."
   },
   {
     "objectID": "index.html#shifted-gamma-distribution",
@@ -663,5 +663,40 @@
     "title": "",
     "section": "Training and Validation Loss Curves for LSTM",
     "text": "Training and Validation Loss Curves for LSTM"
+  },
+  {
+    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds",
+    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds",
+    "title": "",
+    "section": "NASA MERRA-2 Data Hourly Wind Speeds",
+    "text": "NASA MERRA-2 Data Hourly Wind Speeds\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+  },
+  {
+    "objectID": "index.html#training-and-hyperparameter-tuning",
+    "href": "index.html#training-and-hyperparameter-tuning",
+    "title": "",
+    "section": "Training and Hyperparameter Tuning",
+    "text": "Training and Hyperparameter Tuning\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).\n\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc."
+  },
+  {
+    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
+    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
+    "title": "",
+    "section": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting",
+    "text": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+  },
+  {
+    "objectID": "index.html#bayesian-implementation",
+    "href": "index.html#bayesian-implementation",
+    "title": "",
+    "section": "Bayesian Implementation",
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
+  },
+  {
+    "objectID": "index.html#bayesian-implementation-1",
+    "href": "index.html#bayesian-implementation-1",
+    "title": "",
+    "section": "Bayesian Implementation",
+    "text": "Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.\n\nSee Supplment."
   }
 ]

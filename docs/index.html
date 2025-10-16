@@ -152,8 +152,6 @@
 </ul>
 <div class="fragment">
 <p>Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.</p>
-</div>
-<div class="fragment">
 <ul>
 <li><p>⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.</p></li>
 <li><p>⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread.</p></li>
@@ -169,8 +167,8 @@
 <p>©️ NASA GES DISC 📍 Limon Wind Energy Center, Colorado</p>
 </div>
 </section>
-<section id="nasa-merra-2-data" class="slide level2">
-<h2>NASA MERRA-2 Data</h2>
+<section id="nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting" class="slide level2">
+<h2>NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting</h2>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-1-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-1-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -214,7 +212,7 @@
 <h2>Objectives</h2>
 <p>Part I and II of the dissertation</p>
 <blockquote>
-<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed behavior, and semicontinuous patterns.</p>
+<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.</p>
 </blockquote>
 <div class="fragment">
 <p>Part III of the dissertation</p>
@@ -248,7 +246,7 @@
 <p>Part III Copula-Based Probabilistic MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
 <ul>
 <li><p>Introduction</p></li>
-<li><p>Hyperparameter Tuning, Training, and Metrics</p></li>
+<li><p>Training, Hyperparameter Tuning, and Metrics</p></li>
 <li><p>(Skip) Simulation Studies</p></li>
 <li><p>Data Application</p></li>
 </ul>
@@ -264,8 +262,9 @@
 <div class="fragment">
 <p>The mixture transition distribution (MTD) models</p>
 <ul>
-<li><p>Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series.</p></li>
-<li><p>Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights.</p></li>
+<li><p>Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features.</p></li>
+<li><p>Model high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights.</p></li>
+<li><p>See Berchtold and Raftery (2022) for a complete review.</p></li>
 </ul>
 </div>
 </section>
@@ -275,9 +274,7 @@
 <ul>
 <li>Includes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.</li>
 </ul>
-<div class="fragment">
 <p>However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.</p>
-</div>
 <div class="fragment">
 <blockquote>
 <p><strong>Objectives:</strong> Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.</p>
@@ -296,9 +293,9 @@
 f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \label{eq:joint_distribution}
 \end{equation}\]</span>
-<p><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</p>
+<p><span style="font-size: 80%"><span class="math inline">\(f(x_t | \textbf{x}^{t-1})\)</span> is the conditional probability density function (pdf) of current value <span class="math inline">\(X_t\)</span> given all of its past values <span class="math inline">\(\textbf{X}^{t-1} = \textbf{x}^{t-1}\)</span>, where <span class="math inline">\(\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}\)</span> and <span class="math inline">\(\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}\)</span>.</span></p>
 <div class="fragment">
-<p>As <span class="math inline">\(t\)</span> increases, the size of the conditioning set, <span class="math inline">\(\textbf{X}^{t-1}\)</span>, can be large.</p>
+<p>As <span class="math inline">\(t\)</span> increases, the size of the conditioning set, <span class="math inline">\(\textbf{X}^{t-1}\)</span> (all of its past values), can be large.</p>
 <ul>
 <li>Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the <span class="math inline">\(L\)</span> (a given number) lagged values.</li>
 </ul>
@@ -308,154 +305,6 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 </div>
 </section>
 <section id="mtd-order-look-back-steps-l-5" class="slide level2">
-<h2>MTD Order (Look-Back Steps) <span class="math inline">\(L = 5\)</span></h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<svg width="960" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
-<!-- X1 -->
-<g id="node1" class="node">
-<title>X1</title>
-<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₁</text>
-</g>
-<!-- X2 -->
-<g id="node2" class="node">
-<title>X2</title>
-<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
-</g>
-<!-- X1&#45;&#45;X2 -->
-<g id="edge1" class="edge">
-<title>X1--X2</title>
-<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
-</g>
-<!-- X3 -->
-<g id="node3" class="node">
-<title>X3</title>
-<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
-</g>
-<!-- X2&#45;&#45;X3 -->
-<g id="edge2" class="edge">
-<title>X2--X3</title>
-<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
-</g>
-<!-- X4 -->
-<g id="node4" class="node">
-<title>X4</title>
-<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
-</g>
-<!-- X3&#45;&#45;X4 -->
-<g id="edge3" class="edge">
-<title>X3--X4</title>
-<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
-</g>
-<!-- X5 -->
-<g id="node5" class="node">
-<title>X5</title>
-<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
-</g>
-<!-- X4&#45;&#45;X5 -->
-<g id="edge4" class="edge">
-<title>X4--X5</title>
-<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
-</g>
-<!-- X6 -->
-<g id="node6" class="node">
-<title>X6</title>
-<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₆</text>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="mtd-order-look-back-steps-l-5-1" class="slide level2">
-<h2>MTD Order (Look-Back Steps) <span class="math inline">\(L = 5\)</span></h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<svg width="960" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none; display: block; margin: auto auto auto auto">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
-<!-- X1 -->
-<g id="node1" class="node">
-<title>X1</title>
-<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
-</g>
-<!-- X2 -->
-<g id="node2" class="node">
-<title>X2</title>
-<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
-</g>
-<!-- X1&#45;&#45;X2 -->
-<g id="edge1" class="edge">
-<title>X1--X2</title>
-<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
-</g>
-<!-- X3 -->
-<g id="node3" class="node">
-<title>X3</title>
-<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
-</g>
-<!-- X2&#45;&#45;X3 -->
-<g id="edge2" class="edge">
-<title>X2--X3</title>
-<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
-</g>
-<!-- X4 -->
-<g id="node4" class="node">
-<title>X4</title>
-<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
-</g>
-<!-- X3&#45;&#45;X4 -->
-<g id="edge3" class="edge">
-<title>X3--X4</title>
-<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
-</g>
-<!-- X5 -->
-<g id="node5" class="node">
-<title>X5</title>
-<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₆</text>
-</g>
-<!-- X4&#45;&#45;X5 -->
-<g id="edge4" class="edge">
-<title>X4--X5</title>
-<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
-</g>
-<!-- X6 -->
-<g id="node6" class="node">
-<title>X6</title>
-<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
-<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₇</text>
-</g>
-</g>
-</svg>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-</section>
-<section id="mtd-order-look-back-steps-l-5-2" class="slide level2">
 <h2>MTD Order (Look-Back Steps) <span class="math inline">\(L = 5\)</span></h2>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
@@ -554,7 +403,7 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 \label{eq:cond_distribution}
 \end{equation}\]</span>
-<p><span class="math inline">\(f_l (x_t | x_{t-l})\)</span> is the conditional pdf of <span class="math inline">\(X_t\)</span> with respect to the <span class="math inline">\(l\)</span>th transition kernel given that <span class="math inline">\({X}_{t-l} = {x}_{t-l}\)</span>. <span class="math inline">\(w_l\)</span> are weight parameters, where <span class="math inline">\(w_l \geq 0\)</span> such that <span class="math inline">\(\sum_{l=1}^L w_l = 1\)</span>.</p>
+<p><span style="font-size: 80%"><span class="math inline">\(f_l (x_t | x_{t-l})\)</span> is the conditional pdf of <span class="math inline">\(X_t\)</span> with respect to the <span class="math inline">\(l\)</span>th transition kernel given that <span class="math inline">\({X}_{t-l} = {x}_{t-l}\)</span>. <span class="math inline">\(w_l\)</span> are weight parameters, where <span class="math inline">\(w_l \geq 0\)</span> such that <span class="math inline">\(\sum_{l=1}^L w_l = 1\)</span>.</span></p>
 <div class="fragment">
 <p>There are two components in (2):</p>
 <ul>
@@ -594,7 +443,10 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <li>Based on Proposition 1 <sup>1</sup> of Zheng et al.&nbsp;(2022).</li>
 </ul>
 <div class="fragment">
-<p>This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure.</p>
+<p>This is facilitated by the use of a copula,</p>
+<ul>
+<li>which separates the marginal behavior of the random variables from their dependence structure.</li>
+</ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn2"><p>See Supplement.</p></li></ol></aside></section>
 <section id="proposed-method" class="slide level2">
@@ -604,7 +456,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3}
 \label{eq:cond_distribution_copula}
 \end{equation}\]</span>
-<p><span class="math inline">\(c_l (x_t, x_{t-l})\)</span> is the copula density evaluated at <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-l}\)</span>, and <span class="math inline">\(f_X(x_t)\)</span> is the stationary marginal density evaluated at <span class="math inline">\(x_t\)</span>.</p>
+<p><span style="font-size: 80%"><span class="math inline">\(c_l (x_t, x_{t-l})\)</span> is the copula density evaluated at <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t-l}\)</span>, and <span class="math inline">\(f_X(x_t)\)</span> is the stationary marginal density evaluated at <span class="math inline">\(x_t\)</span>.</span></p>
 <div class="fragment">
 <p>Compared to (2), the transition kernel, <span class="math inline">\(f_l\)</span>, is now replaced by two components:</p>
 <ul>
@@ -613,20 +465,21 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 </ul>
 </div>
 </section>
-<section id="background-bayesian-implementation" class="slide level2">
-<h2>Background: Bayesian Implementation</h2>
+<section id="bayesian-implementation" class="slide level2">
+<h2>Bayesian Implementation</h2>
 <p>Earlier MTD models were built through frequentist approaches.</p>
 <p>Estimation and prediction in the MTD model by Zheng et al.&nbsp;(2022) is constructed with Bayesian methodologies.</p>
 <ul>
 <li><p>Our proposed copula-based MTD model builds upon this model version.</p></li>
-<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model.</p>
+<li><p>We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,</p>
 <ul>
-<li>But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution.</li>
+<li><p>Lognormal MTD model or for any continuous distribution.</p></li>
+<li><p>Clayton copula or any other copula-based MTD model.</p></li>
 </ul></li>
 </ul>
 </section>
-<section id="background-bayesian-implementation-1" class="slide level2 scrollable">
-<h2>Background: Bayesian Implementation</h2>
+<section id="bayesian-implementation-1" class="slide level2 scrollable">
+<h2>Bayesian Implementation</h2>
 <p>Inference is facilitated through a set of latent variables <span class="math inline">\({\{Z_t\}}_{t=L+1}^n\)</span>. <span class="math inline">\(Z_t = l\)</span> indicates which <span class="math inline">\(l\)</span>th kernel the data belongs to.</p>
 <p>The posterior distribution of the parameters, based on the conditional likelihood, is</p>
 <span class="math display">\[\begin{equation}
@@ -635,7 +488,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \prod_{t=L+1}^n \Biggl\{ f_{z_t} (x_t | x_{t-z_t}, \boldsymbol{\theta}_{z_t}) \sum_{l=1}^L w_l \delta_l(z_t) \Biggl\}.
 \end{split} \tag{4}
 \end{equation}\]</span>
-<p><span class="math inline">\(\boldsymbol{w}\)</span> is the mixture weights. <span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</p>
+<p><span style="font-size: 80%"><span class="math inline">\(\boldsymbol{w}\)</span> is the mixture weights. <span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</span></p>
 <div class="fragment">
 <p>With priors specifications <sup>1</sup>, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
 </div>
@@ -669,7 +522,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -680,7 +533,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -699,7 +552,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-14-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-12-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -710,7 +563,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -787,7 +640,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -798,7 +651,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -809,7 +662,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -831,7 +684,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <li><p>medical costs,</p></li>
 <li><p>insurance claims,</p></li>
 <li><p>precipitation amounts, and</p></li>
-<li><p>transportation safety measures.</p></li>
+<li><p>safety measures.</p></li>
 </ul>
 <p>If left unaddressed, zero-inflation undermines model robustness and weakens inference.</p>
 </section>
@@ -897,9 +750,9 @@ f(x) =
 \text{ShiftedGamma}(\mu, \beta; \epsilon) &amp; \text{with probability } 1-P,
 \end{cases} \tag{7}
 \end{equation}\]</span>
-<p>where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</p>
+<p><span style="font-size: 80%">where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</span></p>
 <div class="fragment">
-<p>In (6), there are two parts:</p>
+<p>In (7), there are two parts:</p>
 <ul>
 <li><p>We have already discussed the uniform distribution.</p></li>
 <li><p>The shifted Gamma distribution <sup>1</sup>, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is a standard Gamma distribution with mean <span class="math inline">\(\mu\)</span> and scale <span class="math inline">\(\beta\)</span> that is shifted to the right by <span class="math inline">\(\epsilon\)</span>, with the support <span class="math inline">\([\epsilon, \infty)\)</span>.</p></li>
@@ -916,7 +769,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-24-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -927,7 +780,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -938,7 +791,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-26-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -949,7 +802,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -960,7 +813,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -971,7 +824,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -990,7 +843,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-32-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1001,7 +854,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1012,7 +865,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-34-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1023,7 +876,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1034,7 +887,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1045,7 +898,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-39-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1094,7 +947,7 @@ f(x) =
 </section>
 <section id="simulation-studies-2" class="slide level2">
 <h2>Simulation Studies</h2>
-<p>In all nine scenarios (s1-9), we vary <span class="math inline">\(P\)</span> and <span class="math inline">\(\epsilon\)</span>, resulting in six cases per scenario:</p>
+<p>In all nine scenarios (s1-9), we vary <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value), resulting in six cases per scenario:</p>
 <ul>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.1\)</span></p></li>
 <li><p><span class="math inline">\(P = 0.1\)</span>, <span class="math inline">\(\epsilon = 0.4\)</span></p></li>
@@ -1235,8 +1088,8 @@ f(x) =
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn6"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li><li id="fn7"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
-<section id="simulation-results-res" class="slide level2">
-<h2>Simulation Results [res]</h2>
+<section id="simulation-results-res" class="slide level2 scrollable">
+<h2>Simulation Results <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-8" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-8-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-8-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-8-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-8-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-8-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-8-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -1524,7 +1377,7 @@ f(x) =
 </div>
 </div>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn8"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li></ol></aside></section>
 <section id="coverage-assessment" class="slide level2">
 <h2>Coverage Assessment</h2>
 <p>All nine scenarios (s1-9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
@@ -1842,7 +1695,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn8"><p>Each row label indicates the combination of <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value) used in the simulation. For example, P01eps01 reads as <span class="math inline">\(P = 0.1\)</span> and <span class="math inline">\(\epsilon = 0.1\)</span>.</p></li><li id="fn9"><p>Each row involves <span class="math inline">\(40\)</span> replicates, consisting of <span class="math inline">\(4\)</span> chains with <span class="math inline">\(8,000\)</span> samples per chain.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn9"><p>Each row label indicates the combination of <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value). For example, P01eps01 reads as <span class="math inline">\(P = 0.1\)</span> and <span class="math inline">\(\epsilon = 0.1\)</span>.</p></li><li id="fn10"><p>Each row involves <span class="math inline">\(40\)</span> replicates, consisting of <span class="math inline">\(4\)</span> chains with <span class="math inline">\(8,000\)</span> samples per chain.</p></li></ol></aside></section>
 <section id="sec-ch2-prediction" class="slide level2">
 <h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="columns">
@@ -1925,7 +1778,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-66-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-64-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1936,7 +1789,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-67-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-65-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1947,7 +1800,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-68-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-66-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1958,7 +1811,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-69-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-67-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1969,7 +1822,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-70-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-68-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1980,7 +1833,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-71-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-69-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2046,7 +1899,7 @@ f(x) =
 <ul>
 <li><p>An RNN unit computes a weighted combination of input data, <span class="math inline">\(x_t\)</span>, and the previous hidden state, <span class="math inline">\(h_{t-1}\)</span>, applies an activation function, and updates the hidden state to <span class="math inline">\(h_t\)</span>.</p></li>
 <li><p>RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.</p></li>
-<li><p>RNN is prone to the well-documented vanishing gradient issue when processing long sequences.</p></li>
+<li><p>RNN is prone to the well-documented vanishing gradient issue when training on long sequences.</p></li>
 </ul>
 </div></div>
 </section>
@@ -2070,8 +1923,10 @@ f(x) =
 </ul>
 </div></div>
 </section>
-<section id="hyperparameter-tuning-and-training" class="slide level2">
-<h2>Hyperparameter Tuning and Training</h2>
+<section id="training-and-hyperparameter-tuning" class="slide level2">
+<h2>Training and Hyperparameter Tuning</h2>
+<p>The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).</p>
+<div class="fragment">
 <p>Hyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:</p>
 <ul>
 <li><p>batch size,</p></li>
@@ -2080,8 +1935,6 @@ f(x) =
 <li><p>number of hidden units or cell dimension,</p></li>
 <li><p>number of hidden layers, etc.</p></li>
 </ul>
-<div class="fragment">
-<p>The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).</p>
 </div>
 </section></section>
 <section>
@@ -2195,7 +2048,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-76-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-74-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2214,7 +2067,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-79-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-77-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2417,7 +2270,7 @@ f(x) =
 <li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn10"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn11"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn11"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn12"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
@@ -2461,7 +2314,7 @@ f(x) =
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn12"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn13"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
 <section id="evaluation-results" class="slide level2">
 <h2>Evaluation Results</h2>
 <div class="panel-tabset">
@@ -2606,7 +2459,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-94-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-92-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2617,7 +2470,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-95-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-93-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2628,7 +2481,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-96-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-94-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2636,7 +2489,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn13"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn14"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
 <h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
@@ -2647,7 +2500,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-98-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-96-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2658,7 +2511,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-99-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-97-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2669,7 +2522,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-98-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2677,7 +2530,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn14"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn15"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
 <h2>Prediction Errors <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
@@ -2688,7 +2541,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2699,7 +2552,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-101-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2710,7 +2563,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-104-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2718,7 +2571,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn15"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn16"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd" class="slide level2 scrollable">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only <sup>1</sup></h2>
 <div class="panel-tabset">
@@ -2729,7 +2582,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-106-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-104-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2740,7 +2593,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-107-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-105-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2751,7 +2604,7 @@ f(x) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-106-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -2759,7 +2612,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn16"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn17"><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
@@ -2775,20 +2628,24 @@ f(x) =
 <li><p>Enables a choice of copula families that effectively capture dependence.</p></li>
 <li><p>Provides flexibility in marginal selection.</p></li>
 </ul>
+<div class="fragment">
 <p>We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.</p>
 <ul>
-<li>This extension again demonstrates the framework’s generalizability beyond the Gamma marginals.</li>
+<li>This extension again demonstrates the framework’s generalizability beyond Gamma marginals.</li>
 </ul>
+</div>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
 <p>Part III</p>
-<p>Through simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series.</p>
+<p>Through simulation studies and data application,</p>
 <ul>
-<li><p>MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design.</p></li>
-<li><p>LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
+<li><p>MTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.</p></li>
+<li><p>LSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
 </ul>
-<p>Overall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
+<div class="fragment">
+<p>Overall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered.</p>
+</div>
 </section>
 <section class="slide level2">
 
@@ -2801,9 +2658,9 @@ f(x) =
 <h2>Future Work</h2>
 <p>Part I and II</p>
 <ul>
-<li><p>Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.</p></li>
-<li><p>Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.</p></li>
-<li><p>We use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.</p></li>
+<li><p>Both Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</p></li>
+<li><p>Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.</p></li>
+<li><p>We use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.</p></li>
 </ul>
 </section>
 <section id="future-work-1" class="slide level2">
@@ -2821,7 +2678,7 @@ f(x) =
 </section>
 <section id="acknowledgement" class="slide level2">
 <h2>Acknowledgement</h2>
-<p>Thank you to <code>Lisa Madsen</code> and <code>Charlotte Wickham</code>, for your dedication, support, and constant inspiration throughout the process.</p>
+<p>Thank you to <code>Lisa Madsen</code> and <code>Charlotte Wickham</code>, for your dedication, support, and inspiration throughout the process.</p>
 <p>Thank you to my committee memebers, <code>James Molyneux</code>, <code>Claudio Fuentes</code>, and <code>Prasad Tadepalli</code>, for the time you dedicated and valuable feedback.</p>
 <p>Thank you to <code>Xiaotian Zheng</code> for being incredibly generous with your time and advices.</p>
 <div class="fragment">
@@ -2853,13 +2710,9 @@ f(x) =
 <section id="references" class="slide level2">
 <h2>References</h2>
 <p>Berchtold, A., &amp; Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. <em>Statistical Science</em>, Vol. 17 No.&nbsp;3, pp.&nbsp;328–356.</p>
+<p>Denuit, Michel, and Lambert, Philippe. 2005. “Constraints on Concordance Measures in Bivariate Discrete Data.” Journal of Multivariate Analysis 93 (1): 40–57.</p>
 <p>Sklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, <em>Annales de l’ISUP</em>. 420 Vol. 8. No.&nbsp;3, pp.&nbsp;229–231.</p>
-</section>
-<section id="references-1" class="slide level2">
-<h2>References</h2>
 <p>Zheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, <em>Journal of Computational and Graphical Statistics</em>, Vol. 31 No.&nbsp;1, pp.&nbsp;283–293.</p>
-<p>– (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, <em>Environmetrics</em>, Vol. 425 34 No.&nbsp;7, e2805.</p>
-<p>– (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, <em>Bayesian Analysis</em>, Vol. 18 No.&nbsp;4, pp.&nbsp;1191–1222.</p>
 <p>…</p>
 </section></section>
 <section>
@@ -2882,13 +2735,13 @@ f(x) =
 </div>
 </section>
 <section id="sklars-theorem" class="slide level2">
-<h2>Sklar’s theorem</h2>
+<h2>Sklar’s Theorem</h2>
 <div id="prop-copula" class="proposition">
 <p>For any <span class="math inline">\(p\)</span>-dimensional multivariate cumulative distribution function (cdf) of a random vector <span class="math inline">\((X_1, ..., X_p)\)</span>, denoted as <span class="math inline">\(F(x_1, ..., x_p)\)</span>, there exists a copula function <span class="math inline">\(C: {[0,1]}^p \rightarrow [0, 1]\)</span> for which <span class="math inline">\(F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))\)</span>, where <span class="math inline">\(F_j\)</span> is the marginal cdf of <span class="math inline">\(X_j, j = 1,..., p\)</span>. If <span class="math inline">\(X_j\)</span> is continuous for all <span class="math inline">\(j\)</span>, then <span class="math inline">\(C\)</span> is unique and differentiable. The joint probability density function (pdf) of <span class="math inline">\(X_j, j = 1,...,p\)</span> is given by <span class="math inline">\(f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)\)</span>, where <span class="math inline">\(c = \partial^p{C} / \partial{F_j}\)</span> is the copula density and <span class="math inline">\(f_j\)</span> is the density of <span class="math inline">\(X_j\)</span>.</p>
 </div>
 </section>
 <section id="proposition-1-zheng-et-al.-2022s-invariant-condition" class="slide level2">
-<h2>Proposition 1: Zheng et al.&nbsp;(2022)’s invariant condition</h2>
+<h2>Proposition 1: Zheng et al.&nbsp;(2022)’s Invariant Condition</h2>
 <div id="prop-1" class="proposition">
 <p>Consider a set of bivariate random vectors <span class="math inline">\((U_l, V_l)\)</span> that takes values in <span class="math inline">\(S \times S \subset \mathbb{R}\)</span>. Consider a time series <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span>, where <span class="math inline">\(X_t \in S\)</span>, generated from <span class="math display">\[
 f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_{U_l|V_l} (x_t | x_{t-l}), t &gt; L,
@@ -3003,7 +2856,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3014,7 +2867,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-111-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3157,7 +3010,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-115-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3168,7 +3021,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3187,7 +3040,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3198,7 +3051,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-121-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3209,7 +3062,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3220,7 +3073,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-123-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-121-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3231,7 +3084,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3250,7 +3103,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3261,7 +3114,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3272,7 +3125,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3283,7 +3136,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-129-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3294,7 +3147,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-130-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3362,7 +3215,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3373,7 +3226,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-136-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3384,7 +3237,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3395,7 +3248,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-136-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3406,7 +3259,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3425,7 +3278,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3436,7 +3289,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-143-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3447,7 +3300,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3458,7 +3311,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-145-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-143-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3469,7 +3322,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-146-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3488,7 +3341,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-149-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-147-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3499,7 +3352,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-150-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-148-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3510,7 +3363,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-151-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-149-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3521,7 +3374,7 @@ f(y; \mu, \beta, \epsilon) =
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-152-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-150-1.png" width="960"></p>
 </figure>
 </div>
 </div>

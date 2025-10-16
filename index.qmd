@@ -52,8 +52,6 @@ Modeling complex patterns in sequence data is a central task across domains such
 
 Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence. 
 
-. . .    
-
 - ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
 
 - ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread. 
@@ -71,7 +69,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 📍 Limon Wind Energy Center, Colorado  
 </div>
 
-## NASA MERRA-2 Data 
+## NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting 
 
 ::: {.panel-tabset}
 
@@ -131,7 +129,7 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 Part I and II of the dissertation
 
-> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture nonlinear dependence, skewed behavior, and semicontinuous patterns.
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.
 
 . . .
 
@@ -169,7 +167,7 @@ Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
 - Introduction 
 
-- Hyperparameter Tuning, Training, and Metrics 
+- Training, Hyperparameter Tuning, and Metrics 
 
 - (Skip) Simulation Studies 
 
@@ -181,21 +179,21 @@ Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
 
 Time series model captures how past values contribute to current value and uses this information to predict future value.
 
-. . .
+. . .    
 
 The mixture transition distribution (MTD) models 
 
-- Extend the autoregressive (AR) models to accommodate discrete, continuous, and mixed time series. 
+- Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features. 
 
-- Model each conditional distribution as a mixture of transition kernels, with random, stochastic weights. 
+- Model high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights. 
+
+- See Berchtold and Raftery (2022) for a complete review. 
 
 ## Introduction and Objectives 
 
 Our work builds upon the architecture of the MTD model introduced by Zheng et al. (2022). 
 
 - Includes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics. 
-
-. . .
 
 However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex. 
 
@@ -216,62 +214,17 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 \label{eq:joint_distribution}
 \end{equation}
 ```
-\scriptsize $f(x_t | \textbf{x}^{t-1})$ is the conditional probability density function (pdf) of current value $X_t$ given all of its past values $\textbf{X}^{t-1} = \textbf{x}^{t-1}$, where $\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}$ and $\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}$.
+[$f(x_t | \textbf{x}^{t-1})$ is the conditional probability density function (pdf) of current value $X_t$ given all of its past values $\textbf{X}^{t-1} = \textbf{x}^{t-1}$, where $\textbf{X}^{t-1} = \{X_i: i \leq t - 1 \}$ and $\textbf{x}^{t-1} = \{x_i: i \leq t - 1 \}$.]{style="font-size: 80%"}
 
 . . .
 
-As $t$ increases, the size of the conditioning set, $\textbf{X}^{t-1}$, can be large. 
+As $t$ increases, the size of the conditioning set, $\textbf{X}^{t-1}$ (all of its past values), can be large. 
 
 - Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the $L$ (a given number) lagged values.
 
 . . .
 
 Each conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the $L$ lagged values.
-
-
-## MTD Order (Look-Back Steps) $L = 5$
-
-```{dot}
-graph {
-  rankdir=LR; // left-to-right layout
-  node [shape=circle, style=solid, fontsize=12];
-
-  // Define nodes
-  X1 [label="X₁"];
-  X2 [label="X₂"];
-  X3 [label="X₃"];
-  X4 [label="X₄"];
-  X5 [label="X₅"];
-  X6 [label="X₆"];
-
-  // Chain up to X5
-  X1 -- X2 -- X3 -- X4 -- X5;
-
-  { rank=same; X5; X6; }
-}
-```
-
-## MTD Order (Look-Back Steps) $L = 5$
-
-```{dot}
-graph {
-  rankdir=LR; // left-to-right layout
-  node [shape=circle, style=solid, fontsize=12];
-
-  // Define nodes
-  X1 [label="X₂"];
-  X2 [label="X₃"];
-  X3 [label="X₄"];
-  X4 [label="X₅"];
-  X5 [label="X₆"];
-  X6 [label="X₇"];
-
-  // Chain up to X5
-  X1 -- X2 -- X3 -- X4 -- X5;
-
-  { rank=same; X5; X6; }
-}
-```
 
 ## MTD Order (Look-Back Steps) $L = 5$
 
@@ -305,11 +258,9 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 \label{eq:cond_distribution}
 \end{equation}
 ```
-\scriptsize $f_l (x_t | x_{t-l})$ is the conditional pdf of $X_t$ with respect to the $l$th transition kernel given that ${X}_{t-l} = {x}_{t-l}$. $w_l$ are weight parameters, where $w_l \geq 0$ such that $\sum_{l=1}^L w_l = 1$.
+[$f_l (x_t | x_{t-l})$ is the conditional pdf of $X_t$ with respect to the $l$th transition kernel given that ${X}_{t-l} = {x}_{t-l}$. $w_l$ are weight parameters, where $w_l \geq 0$ such that $\sum_{l=1}^L w_l = 1$.]{style="font-size: 80%"}
 
 . . .
-
-\normalsize
 
 There are two components in (2):
 
@@ -355,7 +306,9 @@ The bivariate distribution approach, for example, identifies a bivariate distrib
 
 . . .
 
-This is facilitated by the use of a copula, which separates the marginal behavior of the random variables from their dependence structure. 
+This is facilitated by the use of a copula,  
+
+- which separates the marginal behavior of the random variables from their dependence structure. 
 
 [^prop1]: See Supplement. 
 
@@ -368,11 +321,9 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 \label{eq:cond_distribution_copula}
 \end{equation}
 ```
-\scriptsize $c_l (x_t, x_{t-l})$ is the copula density evaluated at $x_t$ and $x_{t-l}$, and $f_X(x_t)$ is the stationary marginal density evaluated at $x_t$. 
+[$c_l (x_t, x_{t-l})$ is the copula density evaluated at $x_t$ and $x_{t-l}$, and $f_X(x_t)$ is the stationary marginal density evaluated at $x_t$.]{style="font-size: 80%"}
 
 . . .
-
-\normalsize
 
 Compared to (2), the transition kernel, $f_l$, is now replaced by two components: 
 
@@ -381,7 +332,7 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
   - Stationary marginal density, $f_X$, describes the marginal behavior through distribution parameters.
 
 
-## Background: Bayesian Implementation  
+## Bayesian Implementation  
 
 Earlier MTD models were built through frequentist approaches. 
 
@@ -389,11 +340,13 @@ Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed
 
 - Our proposed copula-based MTD model builds upon this model version. 
   
-- We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model. 
+- We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g., 
 
-  - But the framework is generalizable, e.g., Lognormal MTD model or for any continuous distribution. 
+  - Lognormal MTD model or for any continuous distribution. 
 
-## Background: Bayesian Implementation  
+  - Clayton copula or any other copula-based MTD model. 
+
+## Bayesian Implementation  
 
 Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel the data belongs to. 
 
@@ -406,11 +359,9 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \end{split} \tag{4}
 \end{equation}
 ```
-\scriptsize $\boldsymbol{w}$ is the mixture weights. $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.
+[$\boldsymbol{w}$ is the mixture weights. $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.]{style="font-size: 80%"}
 
 . . .
-
-\normalsize 
 
 With priors specifications [^prior], the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
 
@@ -584,7 +535,7 @@ Examples include
 
 - precipitation amounts, and 
 
-- transportation safety measures.
+- safety measures.
 
 If left unaddressed, zero-inflation undermines model robustness and weakens inference.
 
@@ -639,7 +590,7 @@ where $\frac{\mu}{\beta} > 0$ denotes the shape and $\beta > 0$ the scale parame
 0 \leftarrow U_i, \tag{6}
 \end{equation}
 ```
-where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values. 
+where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values.
 
 ## Proposed Method  
 
@@ -653,11 +604,11 @@ f(x) =
 \end{cases} \tag{7}
 \end{equation}
 ```
-where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter. 
+[where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter.]{style="font-size: 80%"} 
 
 . . .
 
-In (6), there are two parts: 
+In (7), there are two parts: 
 
 - We have already discussed the uniform distribution. 
 
@@ -895,7 +846,7 @@ Simulation studies demonstrate promising results across various scenarios.
 
 ## Simulation Studies   
 
-In all nine scenarios (s1-9), we vary $P$ and $\epsilon$, resulting in six cases per scenario: 
+In all nine scenarios (s1-9), we vary $P$ (zero-inflated probability) and $\epsilon$ (threshold value), resulting in six cases per scenario: 
 
 - $P = 0.1$, $\epsilon = 0.1$
 
@@ -1078,7 +1029,7 @@ results_df_rho
 
 [^res2]: $\boldsymbol{w}$, $\boldsymbol{\rho}$ for all other combinations of $P = 0.1, 0.5, 0.7$ and $\epsilon = 0.1, 0.4$ are similar and therefore omitted.
 
-## Simulation Results [res]  
+## Simulation Results [^res]  
 
 ```{r}
 make_table_mar <- function(chain1, chain2, chain3, chain4) {
@@ -1261,7 +1212,7 @@ df <- df |> kable(digits = 4)
 df 
 ```
 
-[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value) used in the simulation. For example, P01eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
+[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
 
 [^coveragezigamma2]: Each row involves $40$ replicates, consisting of $4$ chains with $8,000$ samples per chain.
 
@@ -1425,7 +1376,7 @@ However,
 
 - RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next. 
 
-- RNN is prone to the well-documented vanishing gradient issue when processing long sequences. 
+- RNN is prone to the well-documented vanishing gradient issue when training on long sequences. 
 
 ::: 
 
@@ -1457,7 +1408,11 @@ However,
 
 ::::: 
 
-## Hyperparameter Tuning and Training  
+## Training and Hyperparameter Tuning 
+
+The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam). 
+
+. . .
 
 Hyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:
 
@@ -1470,10 +1425,6 @@ Hyperparameter tuning plays a crucial role in improving model performance. Key h
 - number of hidden units or cell dimension, 
 
 - number of hidden layers, etc.
-
-. . .
-
-The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam). 
 
 # Simulation Studies 
 
@@ -1945,21 +1896,25 @@ We develop a novel copula-based MTD model that separates the dependence structur
 
 - Provides flexibility in marginal selection.
 
+. . .    
+
 We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
-- This extension again demonstrates the framework’s generalizability beyond the Gamma marginals.
+- This extension again demonstrates the framework’s generalizability beyond Gamma marginals.
 
 ## Conclusion
 
 Part III
 
-Through simulation studies and data application, we illustrate how MTD and LSTM serve as complementary approaches for modeling complex, skewed, and zero-inflated time series. 
+Through simulation studies and data application,
 
-- MTD models provide more robust and explainable temporal modeling but come at the cost of increased computational complexity and more involved model design. 
+- MTD models are more robust and explainable but come at the cost of increased computational time and more involved model design. 
 
-- LSTMs offer general-purpose modeling and computational efficiency, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.
+- LSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy. 
 
-Overall, our proposed MTD framework provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
+. . .    
+
+Overall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
 
 ---
 
@@ -1974,11 +1929,11 @@ Overall, our proposed MTD framework provides a flexible, robust, and interpretab
 
 Part I and II
 
-- Both Gamma MTD and ZIGamma MTD models use Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry, and assess their impact on model performance.
+- Both Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
 
-- Although the current framework assumes stationarity and does not incorporate covariates/features, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.
+- Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns. 
 
-- We use MCMC as our primary sampling method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.
+- We use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
 
 ## Future Work
 
@@ -1992,7 +1947,7 @@ Part III
 
 ## Acknowledgement
 
-Thank you to `Lisa Madsen` and `Charlotte Wickham`, for your dedication, support, and constant inspiration throughout the process. 
+Thank you to `Lisa Madsen` and `Charlotte Wickham`, for your dedication, support, and inspiration throughout the process. 
 
 Thank you to my committee memebers, `James Molyneux`, `Claudio Fuentes`, and `Prasad Tadepalli`, for the time you dedicated and valuable feedback. 
 
@@ -2042,19 +1997,15 @@ Thank you to many others.
 
 :::
 
-## References 
+## References
 
 Berchtold, A., & Raftery, A. (2002). "The mixture transition distribution model for high-order Markov chains and non-Gaussian time series". *Statistical Science*, Vol. 17 No. 3, pp. 328–356.
 
+Denuit, Michel, and Lambert, Philippe. 2005. “Constraints on Concordance Measures in Bivariate Discrete Data.” Journal of Multivariate Analysis 93 (1): 40–57.
+
 Sklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, *Annales de l’ISUP*. 420 Vol. 8. No. 3, pp. 229–231.
 
-## References 
-
 Zheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, *Journal of Computational and Graphical Statistics*, Vol. 31 No. 1, pp. 283–293.
-
--- (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, *Environmetrics*, Vol. 425 34 No. 7, e2805. 
-
--- (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, *Bayesian Analysis*, Vol. 18 No. 4, pp. 1191–1222.
 
 ...
 
@@ -2076,13 +2027,13 @@ Wireframe plot of bivariate Gaussian distribution and density function, reproduc
 Contour plot of different bivariate density function where marginals are $N(0, 1)$, reproduced from Chang (2019). Retrieved from https://bochang.me/blog/posts/copula/. 
 </div>
 
-## Sklar’s theorem
+## Sklar’s Theorem
 
 ::: {.proposition #prop-copula}
 For any $p$-dimensional multivariate cumulative distribution function (cdf) of a random vector $(X_1, ..., X_p)$, denoted as $F(x_1, ..., x_p)$, there exists a copula function $C: {[0,1]}^p \rightarrow [0, 1]$ for which $F(x_1, ..., x_p) = C(F_1(x_1), ..., F_p(x_p))$, where $F_j$ is the marginal cdf of $X_j, j = 1,..., p$. If $X_j$ is continuous for all $j$, then $C$ is unique and differentiable. The joint probability density function (pdf) of $X_j, j = 1,...,p$ is given by $f(x_j) = c(x_j) \prod_{j=1}^p f_j(x_j)$, where $c = \partial^p{C} / \partial{F_j}$ is the copula density and $f_j$ is the density of $X_j$.
 ::: 
 
-## Proposition 1: Zheng et al. (2022)'s invariant condition
+## Proposition 1: Zheng et al. (2022)'s Invariant Condition
 
 ::: {.proposition #prop-1}
 Consider a set of bivariate random vectors $(U_l, V_l)$ that takes values in $S \times S \subset \mathbb{R}$. Consider a time series $\{ X_t: t \in \mathbb{N} \}$, where $X_t \in S$, generated from
