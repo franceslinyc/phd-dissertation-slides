@@ -39,28 +39,28 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting, e.g., disease spread."
   },
   {
-    "objectID": "index.html#nasa-merra-2-data",
-    "href": "index.html#nasa-merra-2-data",
+    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
+    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
     "title": "",
-    "section": "NASA MERRA-2 Data",
-    "text": "NASA MERRA-2 Data\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+    "section": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting",
+    "text": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
   },
   {
     "objectID": "index.html#objectives",
     "href": "index.html#objectives",
     "title": "",
     "section": "Objectives",
-    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness."
+    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness."
   },
   {
     "objectID": "index.html#roadmap",
     "href": "index.html#roadmap",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of MTD Models\nWhat’s New\n\n(Skip) Sensitivity Analysis\n(Skip) Coverage Assessment\nData Application\n\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nProposed Method\nSimulation Studies\nPrediction"
+    "text": "Roadmap\nPart I Models for Forecasting Skewed Time Series\n\nRecap of MTD Models\nWhat’s New\n\nPart II Models for Forecasting Zero-Inflated Skewed Time Series\n\nIntroduction\nProposed Method\nSimulation Studies\nPrediction"
   },
   {
     "objectID": "index.html#roadmap-1",
@@ -81,7 +81,7 @@
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
+    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is general."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
@@ -93,20 +93,6 @@
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
     "href": "index.html#mtd-order-look-back-steps-l-5",
-    "title": "",
-    "section": "MTD Order (Look-Back Steps) \\(L = 5\\)",
-    "text": "MTD Order (Look-Back Steps) \\(L = 5\\)\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
-  },
-  {
-    "objectID": "index.html#mtd-order-look-back-steps-l-5-1",
-    "href": "index.html#mtd-order-look-back-steps-l-5-1",
-    "title": "",
-    "section": "MTD Order (Look-Back Steps) \\(L = 5\\)",
-    "text": "MTD Order (Look-Back Steps) \\(L = 5\\)\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇"
-  },
-  {
-    "objectID": "index.html#mtd-order-look-back-steps-l-5-2",
-    "href": "index.html#mtd-order-look-back-steps-l-5-2",
     "title": "",
     "section": "MTD Order (Look-Back Steps) \\(L = 5\\)",
     "text": "MTD Order (Look-Back Steps) \\(L = 5\\)\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
@@ -140,18 +126,18 @@
     "text": "Proposed Method\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
   },
   {
-    "objectID": "index.html#background-bayesian-implementation",
-    "href": "index.html#background-bayesian-implementation",
+    "objectID": "index.html#bayesian-implementation",
+    "href": "index.html#bayesian-implementation",
     "title": "",
-    "section": "Background: Bayesian Implementation",
-    "text": "Background: Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
+    "section": "Bayesian Implementation",
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
   },
   {
-    "objectID": "index.html#background-bayesian-implementation-1",
-    "href": "index.html#background-bayesian-implementation-1",
+    "objectID": "index.html#bayesian-implementation-1",
+    "href": "index.html#bayesian-implementation-1",
     "title": "",
-    "section": "Background: Bayesian Implementation",
-    "text": "Background: Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.\n\nSee Supplment."
+    "section": "Bayesian Implementation",
+    "text": "Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.\n\nSee Supplment."
   },
   {
     "objectID": "index.html#simulation-studies",
@@ -175,25 +161,11 @@
     "text": "Parameters for Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
   },
   {
-    "objectID": "index.html#whats-new-1",
-    "href": "index.html#whats-new-1",
+    "objectID": "index.html#whats-new",
+    "href": "index.html#whats-new",
     "title": "",
     "section": "What’s New",
-    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nData Application\n\nFor brevity, we present data application only."
-  },
-  {
-    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756",
-    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756",
-    "title": "",
-    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
-  },
-  {
-    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-1",
-    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-1",
-    "title": "",
-    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nPrediction\n\nWe are not gonna discuss them here."
   },
   {
     "objectID": "index.html#introduction-1",
@@ -207,7 +179,7 @@
     "href": "index.html#introduction-and-objectives-1",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again generalizable."
+    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again general."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method-1",
@@ -343,11 +315,11 @@
     "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step."
   },
   {
-    "objectID": "index.html#hyperparameter-tuning-and-training",
-    "href": "index.html#hyperparameter-tuning-and-training",
+    "objectID": "index.html#training-and-hyperparameter-tuning",
+    "href": "index.html#training-and-hyperparameter-tuning",
     "title": "",
-    "section": "Hyperparameter Tuning and Training",
-    "text": "Hyperparameter Tuning and Training\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc.\n\n\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam)."
+    "section": "Training and Hyperparameter Tuning",
+    "text": "Training and Hyperparameter Tuning\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).\n\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc."
   },
   {
     "objectID": "index.html#experimental-setup",
@@ -389,7 +361,7 @@
     "href": "index.html#simulation-results-for-zigamma-scenario-1",
     "title": "",
     "section": "Simulation Results for ZIGamma Scenario 1",
-    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nP01Eps01\n1.7221\n1.7302\n\n\nP01Eps04\n2.0843\n2.6386\n\n\nP05Eps01\n2.1102\n2.8361\n\n\nP05Eps04\n2.1788\n2.1922\n\n\nP07Eps01\n2.2762\n3.0739\n\n\nP07Eps04\n2.0916\n2.5798\n\n\n\n\n\n\n\n\nLSTM generally achieves lower overall RMSEs compared to MTD.\n❗️But, patterns similar to those in Prediction of Part II (Section 4.16) reappear."
+    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nP01Eps01\n1.7221\n1.7302\n\n\nP01Eps04\n2.0843\n2.6386\n\n\nP05Eps01\n2.1102\n2.8361\n\n\nP05Eps04\n2.1788\n2.1922\n\n\nP07Eps01\n2.2762\n3.0739\n\n\nP07Eps04\n2.0916\n2.5798\n\n\n\n\n\n\n\n\nLSTM generally achieves lower overall RMSEs compared to MTD.\n❗️But, patterns similar to those in Prediction of Part II (Section 2.16) reappear."
   },
   {
     "objectID": "index.html#simulation-results-for-zigamma-scenario-1-1",
@@ -403,7 +375,7 @@
     "href": "index.html#experimental-setup-2",
     "title": "",
     "section": "Experimental Setup",
-    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings are:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nFor LSTM, we reuse the default configuration for subsequent experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
+    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings are:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nFor LSTM, we reuse the default configuration for these hyperparameters:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics",
@@ -441,32 +413,39 @@
     "text": "Prediction Errors 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
   },
   {
-    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd",
-    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-captionmtd",
+    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
+    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
     "title": "",
-    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only 1",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only 1\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD."
+    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
+  },
+  {
+    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",
+    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",
+    "title": "",
+    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
   },
   {
     "objectID": "index.html#sec-conclusion",
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta ."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOverall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOverall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating better performance compared to LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
@@ -495,13 +474,6 @@
     "title": "",
     "section": "References",
     "text": "References\nBerchtold, A., & Raftery, A. (2002). “The mixture transition distribution model for high-order Markov chains and non-Gaussian time series”. Statistical Science, Vol. 17 No. 3, pp. 328–356.\nDenuit, Michel, and Lambert, Philippe. 2005. “Constraints on Concordance Measures in Bivariate Discrete Data.” Journal of Multivariate Analysis 93 (1): 40–57.\nSklar, M (1959). “Fonctions de repartition a n dimensions et leurs marges”, Annales de l’ISUP. 420 Vol. 8. No. 3, pp. 229–231.\nZheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, Journal of Computational and Graphical Statistics, Vol. 31 No. 1, pp. 283–293.\n…"
-  },
-  {
-    "objectID": "index.html#references-1",
-    "href": "index.html#references-1",
-    "title": "",
-    "section": "References",
-    "text": "References\nZheng, Xiaotian, Kottas, Athanasios, and Sanso, Bruno (2022). “On construction and estimation of stationary mixture transition distribution models”, Journal of Computational and Graphical Statistics, Vol. 31 No. 1, pp. 283–293.\n– (2023a). “Bayesian geostatistical modeling for discrete-valued processes”, Environmetrics, Vol. 425 34 No. 7, e2805.\n– (2023b). “Nearest-neighbor mixture models for non-Gaussian spatial processes”, Bayesian Analysis, Vol. 18 No. 4, pp. 1191–1222.\n…"
   },
   {
     "objectID": "index.html#copula-cdf-and-pdf",
@@ -663,40 +635,5 @@
     "title": "",
     "section": "Training and Validation Loss Curves for LSTM",
     "text": "Training and Validation Loss Curves for LSTM"
-  },
-  {
-    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds",
-    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds",
-    "title": "",
-    "section": "NASA MERRA-2 Data Hourly Wind Speeds",
-    "text": "NASA MERRA-2 Data Hourly Wind Speeds\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
-  },
-  {
-    "objectID": "index.html#training-and-hyperparameter-tuning",
-    "href": "index.html#training-and-hyperparameter-tuning",
-    "title": "",
-    "section": "Training and Hyperparameter Tuning",
-    "text": "Training and Hyperparameter Tuning\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).\n\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc."
-  },
-  {
-    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
-    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
-    "title": "",
-    "section": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting",
-    "text": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
-  },
-  {
-    "objectID": "index.html#bayesian-implementation",
-    "href": "index.html#bayesian-implementation",
-    "title": "",
-    "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
-  },
-  {
-    "objectID": "index.html#bayesian-implementation-1",
-    "href": "index.html#bayesian-implementation-1",
-    "title": "",
-    "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.\n\nSee Supplment."
   }
 ]

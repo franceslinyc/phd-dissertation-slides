@@ -54,7 +54,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 - ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
 
-- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting disease spread. 
+- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting, e.g., disease spread. 
 
 --- 
 
@@ -85,7 +85,7 @@ plot_variable_by_year <- function(data, variable, m, plot) {
     ggplot(aes(x = Date, y = .data[[variable]])) + 
     geom_line() + 
     theme_minimal(base_size = 16) +
-    labs(x = "time", y = paste0("windspeedat",m,"mms")) + 
+    labs(x = "time", y = "windspeed (m/s)") + 
     #ylim(0, 22) +  # Adjust ylim a bit
     theme(
       axis.title.x = element_text(size = 18), 
@@ -135,7 +135,7 @@ Part I and II of the dissertation
 
 Part III of the dissertation
 
-> Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating superior predictive performance and robustness.
+> Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness.
 
 ## Roadmap 
 
@@ -144,12 +144,6 @@ Part I Models for Forecasting Skewed Time Series
 - Recap of MTD Models 
 
 - What's New 
-
-  - (Skip) Sensitivity Analysis 
-
-  - (Skip) Coverage Assessment 
-
-  - Data Application 
 
 Part II Models for Forecasting Zero-Inflated Skewed Time Series 
 
@@ -203,7 +197,7 @@ However, for certain invariant marginal distributions, the transition kernel may
 
 . . .
 
-> Develop the Gamma MTD model, but the framework is generalizable.
+> Develop the Gamma MTD model, but the framework is general.
 
 ## Model Framework: DAG; also known as Bayesian Network
 
@@ -440,8 +434,6 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 ::: 
 
-# What's New  
-
 ## What's New  
 
 Since the preliminary exam, we have also conducted: 
@@ -450,76 +442,9 @@ Since the preliminary exam, we have also conducted:
 
 - Coverage Assessment 
 
-- Data Application 
+- Prediction 
 
-For brevity, we present data application only. 
-
-# Data Application 
-
-## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$ 
-
-::::: columns
-
-::: column
-
-### 
-
-```{r}
-library(kableExtra)
-```
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-```{r}
-df <- readRDS(file.path(output_dir, "table_combind_real.rds"))
-```
-
-```{r}
-df <- df |> kable(digits = 4)
-df
-```
-
-::: 
-
-::: column
-
-### 
-
-- The model appropriately captures the predictive uncertainty across wind speeds at all heights.
-
-::: 
-
-::::: 
-
-## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$ 
-
-::: {.panel-tabset}
-
-### windspeeds at 50m above ground
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-```{r}
-readRDS(file.path(output_dir, "p1_real.rds"))
-```
-
-### windspeeds at 10m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p2_real.rds"))
-```
-
-### windspeeds at 2m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p3_real.rds"))
-```
-
-::: 
+We are not gonna discuss them here.
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -555,7 +480,7 @@ However,
 
 . . .
 
-> Develop the ZIGamma MTD model, but the framework is again generalizable.
+> Develop the ZIGamma MTD model, but the framework is again general.
 
 ## Existing Method to Proposed Method  
 
@@ -865,6 +790,7 @@ For brevity, we present Scenario 1 only.
 ## Simulation Results [^res] [^res2] 
 
 ```{r}
+library(kableExtra)
 library(coda)
 ```
 
@@ -1680,7 +1606,7 @@ df
 
 ### LSTM
 
-- For LSTM, we reuse the default configuration for subsequent experiments: 
+- For LSTM, we reuse the default configuration for these hyperparameters: 
 
   - learning rate = $0.001$, 
   
@@ -1847,7 +1773,42 @@ readRDS(file.path(output_dir, "p3_real_diff.rds"))
 
 [^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
 
-## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only [^captionmtd]
+## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only
+
+::::: columns
+
+::: column
+
+### 
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+df <- readRDS(file.path(output_dir, "table_combind_real.rds"))
+```
+
+```{r}
+df <- df |> kable(digits = 4)
+df
+```
+
+::: 
+
+::: column
+
+### 
+
+- Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.
+
+- The model appropriately captures the predictive uncertainty across wind speeds at all heights.
+
+::: 
+
+::::: 
+
+## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only 
 
 ::: {.panel-tabset}
 
@@ -1875,8 +1836,6 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ::: 
 
-[^captionmtd]: Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.
-
 ---
 
 ![](images/conclusion-3.jpg){.absolute top=0 left=0 width="1200" height="675"}
@@ -1900,7 +1859,7 @@ We develop a novel copula-based MTD model that separates the dependence structur
 
 We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
-- This extension again demonstrates the framework’s generalizability beyond Gamma marginals.
+- This extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta .
 
 ## Conclusion
 
@@ -1914,7 +1873,7 @@ Through simulation studies and data application,
 
 . . .    
 
-Overall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating superior performance compared to LSTM in the settings considered. 
+Overall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating better performance compared to LSTM in the settings considered. 
 
 ---
 
@@ -1929,9 +1888,9 @@ Overall, our proposed MTD models provides a flexible, robust, and interpretable 
 
 Part I and II
 
-- Both Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
+- Both the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
 
-- Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended to enhance flexibility and realism in modeling complex temporal patterns. 
+- Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns. 
 
 - We use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
 
