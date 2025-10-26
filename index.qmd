@@ -69,7 +69,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 📍 Limon Wind Energy Center, Colorado  
 </div>
 
-## NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting 
+## Hourly Wind Speeds, Key Proxy for Energy Forecasting; NASA MERRA-2 Data  
 
 ::: {.panel-tabset}
 
@@ -330,15 +330,17 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
 
 Earlier MTD models were built through frequentist approaches. 
 
-Estimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies. 
+The MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies. 
+
+. . .    
 
 - Our proposed copula-based MTD model builds upon this model version. 
   
 - We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g., 
 
-  - Lognormal MTD model or for any continuous distribution. 
+  - Lognormal or any continuous distribution. 
 
-  - Clayton copula or any other copula-based MTD model. 
+  - Clayton or any other copula. 
 
 ## Bayesian Implementation  
 
@@ -421,12 +423,12 @@ grid.arrange(w_raw, rho_raw, nrow = 1)
 output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 ```
 
-### Usual Cases (s3-6)
+### Usual cases (s3-6)
 ```{r}
 readRDS(file.path(output_dir, "gamma_nonextreme.rds"))
 ```
 
-### Unusual Cases (s7-9)
+### Unusual cases involving high skewness (s7-9)
 
 ```{r}
 readRDS(file.path(output_dir, "gamma_extreme.rds"))
@@ -541,7 +543,7 @@ In (7), there are two parts:
 
 [^shiftedgamma]: See Supplement. 
 
-## dzig (pdf of zigamma)  
+## dzig (PDF of zigamma)  
 
 ::: {.panel-tabset}
 
@@ -638,7 +640,7 @@ plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4, y_lim = 7)
 
 :::
 
-## pzig (cdf of zigamma)  
+## pzig (CDF of zigamma) [^pzig]
 
 ::: {.panel-tabset}
 
@@ -726,6 +728,8 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 :::
 
+[^pzig]: The CDF is continuous and no longer exhibits a point mass at zero. 
+
 --- 
 
 ![](images/hpc-3.jpg){.absolute top=0 left=0 width="1200" height="675"}
@@ -739,7 +743,7 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 Simulated data: 
 
-- With weight $\boldsymbol{w}$, dependence for Gaussian copula $\boldsymbol{\rho}$, mean $\mu$, scale $\beta$, zero-inflated probability $P$, and threshold parameter $\epsilon$, we generate $n = 2000$ observations from the copula-based ZIGamma MTD model.
+- Generate $n = 2000$ observations from the copula-based ZIGamma MTD model.
 
 Model fitting: 
 
@@ -751,7 +755,7 @@ MCMC setting:
 
 - Run $4$ MCMC chains with $8000$ iterations each for all of the following scenarios. 
 
-## Simulation Studies   
+## Simulation Studies
 
 We have assessed accuracy and performance of the proposed model.
 
@@ -1187,11 +1191,11 @@ df
 
 ::: {.incremental}
 
-- When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
-
-- As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** becomes increasingly dominant. 
-
 - The model appropriately captures the predictive uncertainty across all cases. 
+
+  - When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
+
+  - As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** becomes increasingly dominant. 
 
 :::
 
@@ -1564,11 +1568,11 @@ df
 
 ::: {.incremental}
 
-- When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** (which reflects predictive accuracy for values exceeding $\epsilon$) is a more informative metric for assessing predictive performance. 
-
-- As $P$ increases (e.g., $P = 0.5$, $0.7$), this relationship reverses, and the RMSE **below** becomes more relevant. 
-
 - MTD outperforms LSTM in RMSE **above** for $P = 0.1$ and again yields lower values for RMSE **below** than LSTM at higher levels of zero-inflation (e.g., $P = 0.5$, $0.7$).
+
+  - When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** (which reflects predictive accuracy for values exceeding $\epsilon$) is a more informative metric for assessing predictive performance. 
+
+  - As $P$ increases (e.g., $P = 0.5$, $0.7$), this relationship reverses, and the RMSE **below** becomes more relevant. 
 
 ::: 
 
@@ -1683,67 +1687,7 @@ df
 
 ::: 
 
-## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$  
-
-::: {.panel-tabset}
-
-### windspeeds at 50m above ground
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-```{r}
-readRDS(file.path(output_dir, "p1_real_ts_full.rds"))
-```
-
-### windspeeds at 10m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p2_real_ts_full.rds"))
-```
-
-### windspeeds at 2m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p3_real_ts_full.rds"))
-```
-
-::: 
-
-[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
-
-## Predicted Means [^caption], One-Step Ahead; Zoom-In View $n = 200$ 
-
-::: {.panel-tabset}
-
-### windspeeds at 50m above ground
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-```{r}
-readRDS(file.path(output_dir, "p1_real_ts.rds"))
-```
-
-### windspeeds at 10m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p2_real_ts.rds"))
-```
-
-### windspeeds at 2m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p3_real_ts.rds"))
-```
-
-::: 
-
-[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
-
-## Prediction Errors [^captiondiff], One-Step Ahead; Zoom-In View $n = 200$ 
+## Prediction Errors [^captiondiff] [^captiondiff2], One-Step Ahead; Zoom-In View $n = 200$ of Full Test Size $n = 1756$  
 
 ::: {.panel-tabset}
 
@@ -1772,6 +1716,8 @@ readRDS(file.path(output_dir, "p3_real_diff.rds"))
 ::: 
 
 [^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
+
+[^captiondiff2]: See Supplement for additional plots. 
 
 ## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only
 
@@ -1859,7 +1805,7 @@ We develop a novel copula-based MTD model that separates the dependence structur
 
 We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
-- This extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta .
+- This extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta.
 
 ## Conclusion
 
@@ -1890,7 +1836,11 @@ Part I and II
 
 - Both the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
 
+. . .  
+
 - Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns. 
+
+. . .  
 
 - We use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
 
@@ -1901,6 +1851,10 @@ Part III
 - Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
 
 - It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
+
+. . .  
+
+- Future work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks. 
 
 # Thank you!
 
@@ -2429,3 +2383,63 @@ where $\boldsymbol{W}$ denotes the weight matrices, $\boldsymbol{b}$ the bias ve
 ## Training and Validation Loss Curves for LSTM
 
 ![](images/p_loss_real_bs64128256_v2.png)
+
+## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$  
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_ts_full.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_ts_full.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_ts_full.rds"))
+```
+
+::: 
+
+[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+
+## Predicted Means [^caption], One-Step Ahead; Zoom-In View $n = 200$ 
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_ts.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_ts.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_ts.rds"))
+```
+
+::: 
+
+[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.

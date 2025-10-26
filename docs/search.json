@@ -42,11 +42,11 @@
     "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting, e.g., disease spread."
   },
   {
-    "objectID": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
-    "href": "index.html#nasa-merra-2-data-hourly-wind-speeds-key-proxy-for-energy-forecasting",
+    "objectID": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
+    "href": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
     "title": "",
-    "section": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting",
-    "text": "NASA MERRA-2 Data Hourly Wind Speeds, Key Proxy for Energy Forecasting\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+    "section": "Hourly Wind Speeds, Key Proxy for Energy Forecasting; NASA MERRA-2 Data",
+    "text": "Hourly Wind Speeds, Key Proxy for Energy Forecasting; NASA MERRA-2 Data\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
   },
   {
     "objectID": "index.html#objectives",
@@ -130,7 +130,7 @@
     "href": "index.html#bayesian-implementation",
     "title": "",
     "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nEstimation and prediction in the MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal MTD model or for any continuous distribution.\nClayton copula or any other copula-based MTD model."
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nThe MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal or any continuous distribution.\nClayton or any other copula."
   },
   {
     "objectID": "index.html#bayesian-implementation-1",
@@ -158,7 +158,7 @@
     "href": "index.html#parameters-for-marginal-distribution",
     "title": "",
     "section": "Parameters for Marginal Distribution",
-    "text": "Parameters for Marginal Distribution\n\nUsual Cases (s3-6)Unusual Cases (s7-9)"
+    "text": "Parameters for Marginal Distribution\n\nUsual cases (s3-6)Unusual cases involving high skewness (s7-9)"
   },
   {
     "objectID": "index.html#whats-new",
@@ -213,22 +213,22 @@
     "objectID": "index.html#dzig-pdf-of-zigamma",
     "href": "index.html#dzig-pdf-of-zigamma",
     "title": "",
-    "section": "dzig (pdf of zigamma)",
-    "text": "dzig (pdf of zigamma)\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "dzig (PDF of zigamma)",
+    "text": "dzig (PDF of zigamma)\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
   },
   {
-    "objectID": "index.html#pzig-cdf-of-zigamma",
-    "href": "index.html#pzig-cdf-of-zigamma",
+    "objectID": "index.html#pzig-cdf-of-zigamma-pzig",
+    "href": "index.html#pzig-cdf-of-zigamma-pzig",
     "title": "",
-    "section": "pzig (cdf of zigamma)",
-    "text": "pzig (cdf of zigamma)\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "pzig (CDF of zigamma) 1",
+    "text": "pzig (CDF of zigamma) 1\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe CDF is continuous and no longer exhibits a point mass at zero."
   },
   {
     "objectID": "index.html#simulation-setting",
     "href": "index.html#simulation-setting",
     "title": "",
     "section": "Simulation Setting",
-    "text": "Simulation Setting\nSimulated data:\n\nWith weight \\(\\boldsymbol{w}\\), dependence for Gaussian copula \\(\\boldsymbol{\\rho}\\), mean \\(\\mu\\), scale \\(\\beta\\), zero-inflated probability \\(P\\), and threshold parameter \\(\\epsilon\\), we generate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun \\(4\\) MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
+    "text": "Simulation Setting\nSimulated data:\n\nGenerate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun \\(4\\) MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
   },
   {
     "objectID": "index.html#simulation-studies-1",
@@ -277,7 +277,7 @@
     "href": "index.html#sec-ch2-prediction",
     "title": "",
     "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
-    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes increasingly dominant.\nThe model appropriately captures the predictive uncertainty across all cases."
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across all cases.\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes increasingly dominant."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
@@ -368,7 +368,7 @@
     "href": "index.html#simulation-results-for-zigamma-scenario-1-1",
     "title": "",
     "section": "Simulation Results for ZIGamma Scenario 1",
-    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant.\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\))."
+    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\)).\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant."
   },
   {
     "objectID": "index.html#experimental-setup-2",
@@ -392,25 +392,11 @@
     "text": "Evaluation Results\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
   },
   {
-    "objectID": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
-    "href": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
+    "objectID": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
+    "href": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
     "title": "",
-    "section": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
-  },
-  {
-    "objectID": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
-    "href": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
-    "title": "",
-    "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
-    "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
-  },
-  {
-    "objectID": "index.html#prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200",
-    "href": "index.html#prediction-errors-captiondiff-one-step-ahead-zoom-in-view-n-200",
-    "title": "",
-    "section": "Prediction Errors 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
-    "text": "Prediction Errors 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
+    "section": "Prediction Errors 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)",
+    "text": "Prediction Errors 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.See Supplement for additional plots."
   },
   {
     "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
@@ -431,7 +417,7 @@
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta ."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta."
   },
   {
     "objectID": "index.html#conclusion",
@@ -445,14 +431,14 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns.\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns.\n\n\n\n\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks."
   },
   {
     "objectID": "index.html#acknowledgement",
@@ -635,5 +621,19 @@
     "title": "",
     "section": "Training and Validation Loss Curves for LSTM",
     "text": "Training and Validation Loss Curves for LSTM"
+  },
+  {
+    "objectID": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
+    "href": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
+    "title": "",
+    "section": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
+    "text": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+  },
+  {
+    "objectID": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
+    "href": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
+    "title": "",
+    "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
+    "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   }
 ]
