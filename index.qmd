@@ -1138,11 +1138,19 @@ output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 
 ```{r}
 df <- readRDS(file.path(output_dir, "coverage_df_zigamma_s1.rds"))
+rownames(df) <- c(
+  "P01Eps01",
+  "P01Eps04",
+  "P05Eps01",
+  "P05Eps04",
+  "P07Eps01",
+  "P07Eps04"
+)
 df <- df |> kable(digits = 4)
 df 
 ```
 
-[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
+[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01Eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
 
 [^coveragezigamma2]: Each row involves $40$ replicates, consisting of $4$ chains with $8,000$ samples per chain.
 
@@ -1150,6 +1158,14 @@ df
 
 ```{r}
 df <- readRDS(file.path(output_dir, "coverage_df_zigamma_s2.rds"))
+rownames(df) <- c(
+  "P01Eps01",
+  "P01Eps04",
+  "P05Eps01",
+  "P05Eps04",
+  "P07Eps01",
+  "P07Eps04"
+)
 df <- df |> kable(digits = 4)
 df 
 ```
