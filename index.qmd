@@ -28,6 +28,8 @@ format:
 
 November 5, 2025
 
+![](images/github-mark.png){width=1em style="vertical-align:middle; margin-right:0.1em;"} [franceslinyc/phd-dissertation-slides](https://github.com/franceslinyc/phd-dissertation-slides)
+
 ::: 
 
 ::: column
@@ -1885,6 +1887,8 @@ Part III
 - Future work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks. 
 
 # Thank you!
+
+![](images/github-mark.png){width=1em style="vertical-align:middle; margin-right:0.1em;"} [franceslinyc/phd-dissertation-slides](https://github.com/franceslinyc/phd-dissertation-slides)
 
 ## Acknowledgement
 
