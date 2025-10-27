@@ -67,7 +67,7 @@
     "href": "index.html#roadmap-1",
     "title": "",
     "section": "Roadmap",
-    "text": "Roadmap\nPart III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nTraining, Hyperparameter Tuning, and Metrics\n(Skip) Simulation Studies\nData Application"
+    "text": "Roadmap\nPart III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks\n\nIntroduction\nTraining, Hyperparameter Tuning, and Metrics\n(Skip) Simulation Studies\nData Application"
   },
   {
     "objectID": "index.html#introduction",
@@ -81,7 +81,7 @@
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is general."
+    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
@@ -179,7 +179,7 @@
     "href": "index.html#introduction-and-objectives-1",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again general."
+    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again generalizable."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method-1",
@@ -277,7 +277,7 @@
     "href": "index.html#sec-ch2-prediction",
     "title": "",
     "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
-    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across all cases.\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above (i.e., the coverage for data greater than \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes increasingly dominant."
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across all cases.\n\nAbove: coverage for data greater than \\(\\epsilon\\); Below: that for data less than or equal to \\(\\epsilon\\).\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above is more informative.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes dominant."
   },
   {
     "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
@@ -305,21 +305,21 @@
     "href": "index.html#rnn-recurrent-neural-network",
     "title": "",
     "section": "RNN (Recurrent Neural Network)",
-    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\nRNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nRNN is prone to the well-documented vanishing gradient issue when training on long sequences."
+    "text": "RNN (Recurrent Neural Network)\n\n\n\n\n\n\nArchitecture of an RNN unit, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) is the hidden state, and \\(o_t\\) is the output. \\(tanh\\) is the activation function, squashing values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nAn RNN unit computes a weighted combination of input data, \\(x_t\\), and the previous hidden state, \\(h_{t-1}\\), applies an activation function, and updates the hidden state to \\(h_t\\).\n\nIs composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.\nIs prone to the well-documented vanishing gradient issue when training on long sequences."
   },
   {
     "objectID": "index.html#lstm-long-short-term-memory",
     "href": "index.html#lstm-long-short-term-memory",
     "title": "",
     "section": "LSTM (Long Short-Term Memory)",
-    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step."
+    "text": "LSTM (Long Short-Term Memory)\n\n\n\n\n\n\nArchitecture of an LSTM unit with a forget gate, reproduced from Olah (2015). \\(x_t\\) is the input, \\(h_t\\) the hidden state, and \\(c_t\\) the cell state. \\(f_t\\), \\(i_t\\), and \\(o_t\\) are the forget, input, and output gates, respectively. \\(\\sigma\\) is used to squash values to \\((0, 1)\\) for gating, while \\(tanh\\) squashes values to \\((-1, 1)\\) for stability and zero-centered output.\n\n\n\n\n\nLSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.\n\nThe cell state carries long-term dependence, while the hidden state encodes short-term patterns.\nThe gates control information flow, deciding what to forget, add, and pass to the hidden state at each step."
   },
   {
     "objectID": "index.html#training-and-hyperparameter-tuning",
     "href": "index.html#training-and-hyperparameter-tuning",
     "title": "",
     "section": "Training and Hyperparameter Tuning",
-    "text": "Training and Hyperparameter Tuning\nThe network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).\n\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc."
+    "text": "Training and Hyperparameter Tuning\nThe network is typically\n\ntrained using Backpropagation Through Time (BPTT) and\noptimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).\n\n\nHyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:\n\nbatch size,\nnumber of epochs,\nlearning rate\nnumber of hidden units or cell dimension,\nnumber of hidden layers, etc."
   },
   {
     "objectID": "index.html#experimental-setup",
@@ -368,7 +368,7 @@
     "href": "index.html#simulation-results-for-zigamma-scenario-1-1",
     "title": "",
     "section": "Simulation Results for ZIGamma Scenario 1",
-    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\)).\n\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above (which reflects predictive accuracy for values exceeding \\(\\epsilon\\)) is a more informative metric for assessing predictive performance.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant."
+    "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\)).\n\nAbove: reflects predictive accuracy for values exceeding \\(\\epsilon\\); Below: reflects that for values less than or equal to \\(\\epsilon\\).\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above is more informative.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant."
   },
   {
     "objectID": "index.html#experimental-setup-2",
@@ -385,11 +385,11 @@
     "text": "Evaluation Metrics 1\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)\n\n\n\nMAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units."
   },
   {
-    "objectID": "index.html#evaluation-results",
-    "href": "index.html#evaluation-results",
+    "objectID": "index.html#evaluation-results-datares-datares2",
+    "href": "index.html#evaluation-results-datares-datares2",
     "title": "",
-    "section": "Evaluation Results",
-    "text": "Evaluation Results\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537"
+    "section": "Evaluation Results 1 2",
+    "text": "Evaluation Results 1 2\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537\n\n\n\n\n\n\n\n\nLSTM is trained using L1 loss for MAE; L2 loss for all other metrics.MTD does not rely on training with an explicit loss function."
   },
   {
     "objectID": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
@@ -403,7 +403,7 @@
     "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
     "title": "",
     "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nEmpirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nEmpirical coverage is relevant only for probabilistic forecasting methods such as MTD.\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
   },
   {
     "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",

@@ -238,7 +238,7 @@
 </section>
 <section id="roadmap-1" class="slide level2">
 <h2>Roadmap</h2>
-<p>Part III Copula-Based Probabilistic MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
+<p>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
 <ul>
 <li><p>Introduction</p></li>
 <li><p>Training, Hyperparameter Tuning, and Metrics</p></li>
@@ -277,7 +277,7 @@
 </div>
 <div class="fragment">
 <blockquote>
-<p>Develop the Gamma MTD model, but the framework is general.</p>
+<p>Develop the Gamma MTD model, but the framework is generalizable.</p>
 </blockquote>
 </div>
 </section>
@@ -611,7 +611,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </div>
 <div class="fragment">
 <blockquote>
-<p>Develop the ZIGamma MTD model, but the framework is again general.</p>
+<p>Develop the ZIGamma MTD model, but the framework is again generalizable.</p>
 </blockquote>
 </div>
 </section>
@@ -1672,8 +1672,9 @@ f(x) =
 <ul>
 <li class="fragment"><p>The model appropriately captures the predictive uncertainty across all cases.</p>
 <ul>
-<li class="fragment"><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> (i.e., the coverage for data greater than <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
-<li class="fragment"><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> becomes increasingly dominant.</p></li>
+<li class="fragment"><p><strong>Above</strong>: coverage for data greater than <span class="math inline">\(\epsilon\)</span>; <strong>Below</strong>: that for data less than or equal to <span class="math inline">\(\epsilon\)</span>.</p></li>
+<li class="fragment"><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the empirical coverage <strong>above</strong> is more informative.</p></li>
+<li class="fragment"><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), the empirical coverage <strong>below</strong> becomes dominant.</p></li>
 </ul></li>
 </ul>
 </div></div>
@@ -1807,9 +1808,11 @@ f(x) =
 </div><div class="column">
 <h3 id="section-4"></h3>
 <ul>
-<li><p>An RNN unit computes a weighted combination of input data, <span class="math inline">\(x_t\)</span>, and the previous hidden state, <span class="math inline">\(h_{t-1}\)</span>, applies an activation function, and updates the hidden state to <span class="math inline">\(h_t\)</span>.</p></li>
-<li><p>RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.</p></li>
-<li><p>RNN is prone to the well-documented vanishing gradient issue when training on long sequences.</p></li>
+<li><p>An RNN unit computes a weighted combination of input data, <span class="math inline">\(x_t\)</span>, and the previous hidden state, <span class="math inline">\(h_{t-1}\)</span>, applies an activation function, and updates the hidden state to <span class="math inline">\(h_t\)</span>.</p>
+<ul>
+<li><p>Is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next.</p></li>
+<li><p>Is prone to the well-documented <em>vanishing gradient issue</em> when training on long sequences.</p></li>
+</ul></li>
 </ul>
 </div></div>
 </section>
@@ -1827,15 +1830,21 @@ f(x) =
 </div><div class="column">
 <h3 id="section-6"></h3>
 <ul>
-<li><p>LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.</p></li>
+<li><p>LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate.</p>
+<ul>
 <li><p>The cell state carries long-term dependence, while the hidden state encodes short-term patterns.</p></li>
 <li><p>The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.</p></li>
+</ul></li>
 </ul>
 </div></div>
 </section>
 <section id="training-and-hyperparameter-tuning" class="slide level2">
 <h2>Training and Hyperparameter Tuning</h2>
-<p>The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).</p>
+<p>The network is typically</p>
+<ul>
+<li><p>trained using Backpropagation Through Time (BPTT) and</p></li>
+<li><p>optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam).</p></li>
+</ul>
 <div class="fragment">
 <p>Hyperparameter tuning plays a crucial role in improving model performance. Key hyperparameters include:</p>
 <ul>
@@ -2142,7 +2151,8 @@ f(x) =
 <ul>
 <li class="fragment"><p>MTD outperforms LSTM in RMSE <strong>above</strong> for <span class="math inline">\(P = 0.1\)</span> and again yields lower values for RMSE <strong>below</strong> than LSTM at higher levels of zero-inflation (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>).</p>
 <ul>
-<li class="fragment"><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the RMSE <strong>above</strong> (which reflects predictive accuracy for values exceeding <span class="math inline">\(\epsilon\)</span>) is a more informative metric for assessing predictive performance.</p></li>
+<li class="fragment"><p><strong>Above</strong>: reflects predictive accuracy for values exceeding <span class="math inline">\(\epsilon\)</span>; <strong>Below</strong>: reflects that for values less than or equal to <span class="math inline">\(\epsilon\)</span>.</p></li>
+<li class="fragment"><p>When the zero-inflated probability is low (e.g., <span class="math inline">\(P = 0.1\)</span>), the RMSE <strong>above</strong> is more informative.</p></li>
 <li class="fragment"><p>As <span class="math inline">\(P\)</span> increases (e.g., <span class="math inline">\(P = 0.5\)</span>, <span class="math inline">\(0.7\)</span>), this relationship reverses, and the RMSE <strong>below</strong> becomes more relevant.</p></li>
 </ul></li>
 </ul>
@@ -2227,8 +2237,8 @@ f(x) =
 </tbody>
 </table>
 <aside><ol class="aside-footnotes"><li id="fn14"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
-<section id="evaluation-results" class="slide level2">
-<h2>Evaluation Results</h2>
+<section id="evaluation-results-datares-datares2" class="slide level2 scrollable">
+<h2>Evaluation Results <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-10" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-10-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-10-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-10-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2360,7 +2370,7 @@ f(x) =
 </div>
 </div>
 </div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn15"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics.</p></li><li id="fn16"><p>MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
 <section id="prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Prediction Errors <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
@@ -2401,7 +2411,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn15"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn16"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn17"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn18"><p>See Supplement for additional plots.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only" class="slide level2">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="columns">
@@ -2436,7 +2446,7 @@ f(x) =
 </div><div class="column">
 <h3 id="section-12"></h3>
 <ul>
-<li><p>Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.</p></li>
+<li><p>Empirical coverage is relevant only for probabilistic forecasting methods such as MTD.</p></li>
 <li><p>The model appropriately captures the predictive uncertainty across wind speeds at all heights.</p></li>
 </ul>
 </div></div>
@@ -2643,7 +2653,7 @@ w_l = G(l/L) - G((l - 1)/L), \quad l = 1,..., L.
 \end{equation}\]</span>
 <p>Next place a Dirichlet process prior on <span class="math inline">\(G\)</span>, denoted as <span class="math inline">\(DP(\boldsymbol{\alpha}_0, \boldsymbol{G}_0)\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(\boldsymbol{G}_0 = Beta(a_0, b_0)\)</span>. <sup>3</sup></p>
 <p>Then the vector of weights follows a Dirichlet distribution with parameter vector <span class="math inline">\(\alpha_0 {(a_1, ..., a_L)}^T\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn17"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn18"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn19"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn19"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn20"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn21"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
 <section id="shifted-gamma-distribution" class="slide level2">
 <h2>Shifted Gamma Distribution</h2>
 <p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
@@ -3357,7 +3367,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn20"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn22"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
 <h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
@@ -3400,7 +3410,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn21"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn23"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

@@ -157,7 +157,7 @@ Part II Models for Forecasting Zero-Inflated Skewed Time Series
 
 ## Roadmap 
 
-Part III Copula-Based Probabilistic MTD Models vs. Deep Learning LSTM Networks
+Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
 
 - Introduction 
 
@@ -197,7 +197,7 @@ However, for certain invariant marginal distributions, the transition kernel may
 
 . . .
 
-> Develop the Gamma MTD model, but the framework is general.
+> Develop the Gamma MTD model, but the framework is generalizable.
 
 ## Model Framework: DAG; also known as Bayesian Network
 
@@ -482,7 +482,7 @@ However,
 
 . . .
 
-> Develop the ZIGamma MTD model, but the framework is again general.
+> Develop the ZIGamma MTD model, but the framework is again generalizable.
 
 ## Existing Method to Proposed Method  
 
@@ -1209,9 +1209,11 @@ df
 
 - The model appropriately captures the predictive uncertainty across all cases. 
 
-  - When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** (i.e., the coverage for data greater than $\epsilon$) is a more informative metric for assessing predictive performance. 
+  - **Above**: coverage for data greater than $\epsilon$; **Below**: that for data less than or equal to $\epsilon$. 
 
-  - As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** becomes increasingly dominant. 
+  - When the zero-inflated probability is low (e.g., $P = 0.1$), the empirical coverage **above** is more informative. 
+
+  - As $P$ increases (e.g., $P = 0.5$, $0.7$), the empirical coverage **below** becomes dominant. 
 
 :::
 
@@ -1320,9 +1322,9 @@ However,
 
 - An RNN unit computes a weighted combination of input data, $x_t$, and the previous hidden state, $h_{t-1}$, applies an activation function, and updates the hidden state to $h_t$. 
 
-- RNN is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next. 
+  - Is composed of repeating units that unfold over time, where each unit passes recurrent information stored in the hidden state from one time step to the next. 
 
-- RNN is prone to the well-documented vanishing gradient issue when training on long sequences. 
+  - Is prone to the well-documented *vanishing gradient issue* when training on long sequences. 
 
 ::: 
 
@@ -1346,9 +1348,9 @@ However,
 
 - LSTM extends RNN by introducing a cell state and three gates: the forget gate, the input gate, and the output gate. 
 
-- The cell state carries long-term dependence, while the hidden state encodes short-term patterns. 
+  - The cell state carries long-term dependence, while the hidden state encodes short-term patterns. 
 
-- The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.
+  - The gates control information flow, deciding what to forget, add, and pass to the hidden state at each step.
 
 ::: 
 
@@ -1356,7 +1358,11 @@ However,
 
 ## Training and Hyperparameter Tuning 
 
-The network is typically trained using Backpropagation Through Time (BPTT) and optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam). 
+The network is typically 
+
+- trained using Backpropagation Through Time (BPTT) and 
+
+- optimized with gradient-based methods such as Stochastic Gradient Descent (SGD) and Adaptive Moment Estimation (Adam). 
 
 . . .
 
@@ -1586,7 +1592,9 @@ df
 
 - MTD outperforms LSTM in RMSE **above** for $P = 0.1$ and again yields lower values for RMSE **below** than LSTM at higher levels of zero-inflation (e.g., $P = 0.5$, $0.7$).
 
-  - When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** (which reflects predictive accuracy for values exceeding $\epsilon$) is a more informative metric for assessing predictive performance. 
+  - **Above**: reflects predictive accuracy for values exceeding $\epsilon$; **Below**: reflects that for values less than or equal to $\epsilon$. 
+
+  - When the zero-inflated probability is low (e.g., $P = 0.1$), the RMSE **above** is more informative. 
 
   - As $P$ increases (e.g., $P = 0.5$, $0.7$), this relationship reverses, and the RMSE **below** becomes more relevant. 
 
@@ -1657,7 +1665,7 @@ df
 
 [^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
 
-## Evaluation Results 
+## Evaluation Results [^datares] [^datares2]
 
 ::: {.panel-tabset}
 
@@ -1702,6 +1710,10 @@ df
 ```
 
 ::: 
+
+[^datares]: LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. 
+
+[^datares2]: MTD does not rely on training with an explicit loss function. 
 
 ## Prediction Errors [^captiondiff] [^captiondiff2], One-Step Ahead; Zoom-In View $n = 200$ of Full Test Size $n = 1756$  
 
@@ -1762,7 +1774,7 @@ df
 
 ### 
 
-- Empirical coverage is particularly relevant and can only be assessed with probabilistic forecasting methods such as MTD.
+- Empirical coverage is relevant only for probabilistic forecasting methods such as MTD.
 
 - The model appropriately captures the predictive uncertainty across wind speeds at all heights.
 
