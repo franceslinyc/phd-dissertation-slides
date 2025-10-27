@@ -1,33 +1,5 @@
 [
   {
-    "objectID": "graph.html",
-    "href": "graph.html",
-    "title": "",
-    "section": "",
-    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
-  },
-  {
-    "objectID": "shiftedgamma.html",
-    "href": "shiftedgamma.html",
-    "title": "",
-    "section": "",
-    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
-  },
-  {
-    "objectID": "metric.html",
-    "href": "metric.html",
-    "title": "",
-    "section": "",
-    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
-  },
-  {
-    "objectID": "acknowledgement.html#acknowledgement",
-    "href": "acknowledgement.html#acknowledgement",
-    "title": "",
-    "section": "Acknowledgement",
-    "text": "Acknowledgement"
-  },
-  {
     "objectID": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "href": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "title": "",
@@ -642,5 +614,33 @@
     "title": "",
     "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
     "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+  },
+  {
+    "objectID": "misc/shiftedgamma.html",
+    "href": "misc/shiftedgamma.html",
+    "title": "",
+    "section": "",
+    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
+  },
+  {
+    "objectID": "misc/metric.html",
+    "href": "misc/metric.html",
+    "title": "",
+    "section": "",
+    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
+  },
+  {
+    "objectID": "misc/acknowledgement.html#acknowledgement",
+    "href": "misc/acknowledgement.html#acknowledgement",
+    "title": "",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement"
+  },
+  {
+    "objectID": "misc/graph.html",
+    "href": "misc/graph.html",
+    "title": "",
+    "section": "",
+    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
   }
 ]

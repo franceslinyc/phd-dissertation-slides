@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>metric</title>
+<title>graph</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a14e3238c51140e99ccc48519b6ed9ce.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -67,35 +67,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -113,47 +84,237 @@ window.Quarto = {
 
 
 
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Metric</th>
-<th>Definition</th>
-<th>Formula</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RMSE</td>
-<td>Root Mean Squared Error</td>
-<td><span class="math inline">\(\sqrt{\frac{1}{T} \sum_{t=1}^{T} (y_t - \hat{y}_t)^2}\)</span></td>
-</tr>
-<tr class="even">
-<td>MAE</td>
-<td>Mean Absolute Error</td>
-<td><span class="math inline">\(\frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t|\)</span></td>
-</tr>
-<tr class="odd">
-<td>MAPE</td>
-<td>Mean Absolute Percentage Error</td>
-<td><span class="math inline">\(\frac{100}{T} \sum_{t=1}^{T} \left| \frac{y_t - \hat{y}_t}{y_t} \right|\)</span></td>
-</tr>
-<tr class="even">
-<td>SMAPE</td>
-<td>Symmetric MAPE</td>
-<td><span class="math inline">\(\frac{100}{T} \sum_{t=1}^{T} \frac{|y_t - \hat{y}_t|}{(|y_t| + |\hat{y}_t|) / 2}\)</span></td>
-</tr>
-<tr class="odd">
-<td>MASE</td>
-<td>Mean Absolute Scaled Error</td>
-<td><span class="math inline">\(\frac{ \frac{1}{T} \sum_{t=1}^{T} |y_t - \hat{y}_t| }{ \frac{1}{T - 1} \sum_{t=2}^{T} |y_t - y_{t-1}| }\)</span></td>
-</tr>
-</tbody>
-</table>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₁</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₆</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 367.02 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363.02,-108 363.02,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="21.5" y="-17.9" font-family="Times,serif" font-size="12.00">X₂</text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="100.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₃</text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.14,-21.5C54.19,-21.5 67.76,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.51" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="179.51" y="-17.9" font-family="Times,serif" font-size="12.00">X₄</text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.14,-21.5C133.19,-21.5 146.76,-21.5 157.82,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="258.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₅</text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.15,-21.5C212.2,-21.5 225.77,-21.5 236.82,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-17.9" font-family="Times,serif" font-size="12.00">X₆</text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.15,-21.5C291.2,-21.5 304.77,-21.5 315.83,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.52" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="middle" x="337.52" y="-78.9" font-family="Times,serif" font-size="12.00">X₇</text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<svg width="672" height="480" viewbox="0.00 0.00 367.00 112.00" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" style="; max-width: none; max-height: none">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 108)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-108 363,-108 363,4 -4,4"></polygon>
+<!-- X1 -->
+<g id="node1" class="node">
+<title>X1</title>
+<ellipse fill="none" stroke="black" cx="21.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="9.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="12.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="19.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-5</text>
+<text text-anchor="start" x="30.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X2 -->
+<g id="node2" class="node">
+<title>X2</title>
+<ellipse fill="none" stroke="black" cx="100.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="88.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="91.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="98.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-4</text>
+<text text-anchor="start" x="109.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X1&#45;&#45;X2 -->
+<g id="edge1" class="edge">
+<title>X1--X2</title>
+<path fill="none" stroke="black" d="M43.13,-21.5C54.18,-21.5 67.75,-21.5 78.81,-21.5"></path>
+</g>
+<!-- X3 -->
+<g id="node3" class="node">
+<title>X3</title>
+<ellipse fill="none" stroke="black" cx="179.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="167.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="170.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="177.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-3</text>
+<text text-anchor="start" x="188.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X2&#45;&#45;X3 -->
+<g id="edge2" class="edge">
+<title>X2--X3</title>
+<path fill="none" stroke="black" d="M122.13,-21.5C133.18,-21.5 146.75,-21.5 157.81,-21.5"></path>
+</g>
+<!-- X4 -->
+<g id="node4" class="node">
+<title>X4</title>
+<ellipse fill="none" stroke="black" cx="258.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="246.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="249.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="256.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-2</text>
+<text text-anchor="start" x="267.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X3&#45;&#45;X4 -->
+<g id="edge3" class="edge">
+<title>X3--X4</title>
+<path fill="none" stroke="black" d="M201.13,-21.5C212.18,-21.5 225.75,-21.5 236.81,-21.5"></path>
+</g>
+<!-- X5 -->
+<g id="node5" class="node">
+<title>X5</title>
+<ellipse fill="none" stroke="black" cx="337.5" cy="-21.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="325.56" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="328.06" y="-19.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="335.28" y="-19.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t-1</text>
+<text text-anchor="start" x="346.94" y="-19.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+<!-- X4&#45;&#45;X5 -->
+<g id="edge4" class="edge">
+<title>X4--X5</title>
+<path fill="none" stroke="black" d="M280.13,-21.5C291.18,-21.5 304.75,-21.5 315.81,-21.5"></path>
+</g>
+<!-- X6 -->
+<g id="node6" class="node">
+<title>X6</title>
+<ellipse fill="none" stroke="black" cx="337.5" cy="-82.5" rx="21.5" ry="21.5"></ellipse>
+<text text-anchor="start" x="329.72" y="-80.5" font-family="Times,serif" font-size="10.00"> </text>
+<text text-anchor="start" x="332.22" y="-80.5" font-family="Times,serif" font-weight="bold" font-size="10.00">X</text>
+<text text-anchor="start" x="339.45" y="-80.5" font-family="Times,serif" font-weight="bold" baseline-shift="sub" font-size="10.00">t</text>
+<text text-anchor="start" x="342.78" y="-80.5" font-family="Times,serif" font-size="10.00"> </text>
+</g>
+</g>
+</svg>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 
 
 
