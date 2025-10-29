@@ -46,7 +46,7 @@ Committee Members: Dr. James Molyneux, Dr. Claudio Fuentes, Dr. Prasad Tadepalli
 
 ## Motivation  
 
-Modeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation. 
+Modeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation. 
 
 - ⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed. 
 
@@ -56,7 +56,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 - ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
 
-- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting, e.g., disease spread. 
+- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM.
 
 --- 
 
@@ -131,13 +131,13 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 Part I and II of the dissertation
 
-> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns. 
 
 . . .
 
 Part III of the dissertation
 
-> Evaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness.
+> Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness. 
 
 ## Roadmap 
 
@@ -187,11 +187,11 @@ The mixture transition distribution (MTD) models
 
 ## Introduction and Objectives 
 
-Our work builds upon the architecture of the MTD model introduced by Zheng et al. (2022). 
+Our work extends the architecture of the MTD model introduced by Zheng et al. (2022). 
 
-- Includes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics. 
+- Includes various applications, extending beyond linear, Gaussian dynamics (e.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models). 
 
-However, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex. 
+However, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form. 
 
 . . .
 
@@ -220,7 +220,7 @@ As $t$ increases, the size of the conditioning set, $\textbf{X}^{t-1}$ (all of i
 
 . . .
 
-Each conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the $L$ lagged values.
+Each conditional in (1) is modeled as a mixture of first-order transition kernels for each of the $L$ lagged values.
 
 ## MTD Order (Look-Back Steps) $L = 5$
 
@@ -334,15 +334,8 @@ Earlier MTD models were built through frequentist approaches.
 
 The MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies. 
 
-. . .    
-
 - Our proposed copula-based MTD model builds upon this model version. 
-  
-- We consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g., 
 
-  - Lognormal or any continuous distribution. 
-
-  - Clayton or any other copula. 
 
 ## Bayesian Implementation  
 
@@ -454,7 +447,7 @@ We are not gonna discuss them here.
 
 ## Introduction  
 
-Zero-inflated data are characterized by an excess of zero values and  frequently appear in domains such as healthcare, insurance, environment, and transportation. 
+Zero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation. 
 
 Examples include 
 
@@ -496,7 +489,7 @@ Instead of generating exact zeros, our approach applies a soft threshold that re
 
 - Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
 
-- Has only been applied in discrete and spatial settings, not in our setting. 
+- Has been applied in discrete and spatial settings but not in our setting. 
 
 ## Proposed Method  
 
@@ -745,7 +738,7 @@ plot_pzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4)
 
 Simulated data: 
 
-- Generate $n = 2000$ observations from the copula-based ZIGamma MTD model.
+- Generate $n = 2,000$ observations from the copula-based ZIGamma MTD model.
 
 Model fitting: 
 
@@ -753,9 +746,9 @@ Model fitting:
 
 MCMC setting: 
 
-- Run the Gibbs sampler for $165, 000$ iterations, discard the first $5000$ iterations as burn-in, and collect samples every $20$ iterations.
+- Run the Gibbs sampler for $165, 000$ iterations, discard the first $5,000$ iterations as burn-in, and collect samples every $20$ iterations.
 
-- Run $4$ MCMC chains with $8000$ iterations each for all of the following scenarios. 
+- Run $4$ MCMC chains with $8,000$ iterations each for all of the following scenarios. 
 
 ## Simulation Studies
 
@@ -1154,7 +1147,7 @@ df
 
 [^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01Eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
 
-[^coveragezigamma2]: Each row involves $40$ replicates, consisting of $4$ chains with $8,000$ samples per chain.
+[^coveragezigamma2]: Each row involves $40$ replicates of simulated data, consisting of $4$ chains with $8,000$ samples per chain.
 
 ### Uneven arrangement of the relevant lags (s2)
 
@@ -1224,7 +1217,7 @@ df
 ::::: 
 
 
-## Prediction, $95\%$ Predictive Intervals, One-Step Ahead  
+## Prediction, $95\%$ Predictive Intervals, One-Step Ahead [^predzigamma] 
 
 ::: {.panel-tabset}
 
@@ -1270,6 +1263,8 @@ readRDS(file.path(output_dir, "p6.rds"))
 
 ::: 
 
+[^predzigamma]: Reported values show overall empirical coverage, with coverage below and above the threshold ($\leq \epsilon$, $> \epsilon$) in parentheses.
+
 # Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks {background-color="#D73F09" color="white"} 
 
 ## Introduction   
@@ -1294,7 +1289,7 @@ However,
 
 - previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
 
-- A prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.
+- A prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.
 
 . . .
 
@@ -1776,8 +1771,6 @@ df
 
 ### 
 
-- Empirical coverage is relevant only for probabilistic forecasting methods such as MTD.
-
 - The model appropriately captures the predictive uncertainty across wind speeds at all heights.
 
 ::: 
@@ -1835,7 +1828,7 @@ We develop a novel copula-based MTD model that separates the dependence structur
 
 We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
-- This extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta.
+- This extension again demonstrates the framework’s generalizability beyond gamma marginals, e.g., lognormal, beta.
 
 ## Conclusion
 
@@ -1849,7 +1842,7 @@ Through simulation studies and data application,
 
 . . .    
 
-Overall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating better performance compared to LSTM in the settings considered. 
+Our proposed MTD models offers a flexible, robust, and interpretable framework for modeling complex continuous and zero-inflated time series, outperfoming LSTM in the settings considered. 
 
 ---
 
@@ -1868,7 +1861,7 @@ Part I and II
 
 . . .  
 
-- Although the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns. 
+- Although the current framework assumes stationarity and does not incorporate predictors, it can be readily extended with additional terms in the conditional mean structure to capture more complex temporal patterns. 
 
 . . .  
 
@@ -1880,7 +1873,7 @@ Part III
 
 - Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
 
-- It is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
+- It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 
 . . .  
 
@@ -2111,7 +2104,7 @@ Coverage Assessment
 
 - Most parameters achieve full coverage, with a few slightly below $1$, indicating that the credible intervals reliably capture the true parameter values. 
 
-## Coverage Assessment for Scenario 1 and 2, 40 Replicates 
+## Coverage Assessment for Gamma Scenario 1 and 2, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -2141,7 +2134,7 @@ df
 
 ::: 
 
-## Coverage Assessment for Scenario 1, 40 Replicates 
+## Coverage Assessment for Gamma Scenario 1, 40 Replicates 
 
 ::: {.panel-tabset}
 
@@ -2163,7 +2156,7 @@ readRDS(file.path(output_dir, "p_ci_beta.rds"))
 
 ::: 
 
-## Coverage Assessment for Scenario 1, 40 Replicates 
+## Coverage Assessment for Gamma Scenario 1, 40 Replicates 
 
 ::: {.panel-tabset}
 

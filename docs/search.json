@@ -11,7 +11,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task across domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM for predicting, e.g., disease spread."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
   },
   {
     "objectID": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
@@ -25,7 +25,7 @@
     "href": "index.html#objectives",
     "title": "",
     "section": "Objectives",
-    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models alongside deep learning approaches, specifically the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness."
+    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness."
   },
   {
     "objectID": "index.html#roadmap",
@@ -53,14 +53,14 @@
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work builds upon the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, such as Gaussian, Poisson, negative binomial, and Lomax regression MTD models, extending beyond linear, Gaussian dynamics.\n\nHowever, for certain invariant marginal distributions, the transition kernel may either require careful construction or can result in a form that is not explicitly defined or too complex.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
+    "text": "Introduction and Objectives\nOur work extends the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, extending beyond linear, Gaussian dynamics (e.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models).\n\nHowever, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form.\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian Network",
-    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\) (all of its past values), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of transition kernels, with weight assigned to each of the \\(L\\) lagged values."
+    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\) (all of its past values), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of first-order transition kernels for each of the \\(L\\) lagged values."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
@@ -102,7 +102,7 @@
     "href": "index.html#bayesian-implementation",
     "title": "",
     "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nThe MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\n\nOur proposed copula-based MTD model builds upon this model version.\nWe consider the Gaussian copula with Gamma marginals, i.e., Gamma MTD model, but the framework is generalizable, e.g.,\n\nLognormal or any continuous distribution.\nClayton or any other copula."
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches.\nThe MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies.\n\nOur proposed copula-based MTD model builds upon this model version."
   },
   {
     "objectID": "index.html#bayesian-implementation-1",
@@ -158,7 +158,7 @@
     "href": "index.html#existing-method-to-proposed-method-1",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas only been applied in discrete and spatial settings, not in our setting."
+    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas been applied in discrete and spatial settings but not in our setting."
   },
   {
     "objectID": "index.html#proposed-method-1",
@@ -200,7 +200,7 @@
     "href": "index.html#simulation-setting",
     "title": "",
     "section": "Simulation Setting",
-    "text": "Simulation Setting\nSimulated data:\n\nGenerate \\(n = 2000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun \\(4\\) MCMC chains with \\(8000\\) iterations each for all of the following scenarios."
+    "text": "Simulation Setting\nSimulated data:\n\nGenerate \\(n = 2,000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5,000\\) iterations as burn-in, and collect samples every \\(20\\) iterations.\nRun \\(4\\) MCMC chains with \\(8,000\\) iterations each for all of the following scenarios."
   },
   {
     "objectID": "index.html#simulation-studies-1",
@@ -242,7 +242,7 @@
     "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
     "title": "",
     "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2",
-    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01Eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01Eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05Eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05Eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07Eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07Eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01Eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01Eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05Eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05Eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07Eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07Eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value). For example, P01Eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\).Each row involves \\(40\\) replicates, consisting of \\(4\\) chains with \\(8,000\\) samples per chain."
+    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates 1 2\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01Eps01\n0.950\n0.925\n0.950\n0.925\n0.925\n0.925\n1.000\n1.000\n1.000\n0.875\n1.000\n1\n0.975\n1\n\n\nP01Eps04\n0.975\n0.975\n0.975\n0.925\n0.950\n0.950\n0.975\n1.000\n0.975\n0.975\n1.000\n1\n0.975\n1\n\n\nP05Eps01\n0.950\n0.950\n0.925\n0.975\n0.875\n0.950\n1.000\n1.000\n0.925\n0.925\n1.000\n1\n1.000\n1\n\n\nP05Eps04\n0.975\n0.925\n0.950\n1.000\n0.950\n1.000\n1.000\n1.000\n0.925\n0.875\n0.975\n1\n1.000\n1\n\n\nP07Eps01\n0.950\n0.950\n0.925\n0.975\n1.000\n1.000\n1.000\n1.000\n0.950\n0.925\n1.000\n1\n1.000\n1\n\n\nP07Eps04\n0.925\n1.000\n1.000\n0.925\n0.950\n0.925\n0.950\n0.975\n0.950\n1.000\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\mu\\)\n\\(\\beta\\)\n\\(P\\)\n\\(\\epsilon\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\nP01Eps01\n0.925\n0.950\n0.925\n0.900\n1\n0.975\n0.975\n1\n0.975\n1.000\n0.975\n0.975\n1\n0.975\n\n\nP01Eps04\n0.875\n0.950\n0.950\n0.875\n1\n1.000\n0.975\n1\n0.925\n0.975\n0.950\n0.975\n1\n1.000\n\n\nP05Eps01\n0.925\n0.950\n0.950\n0.950\n1\n1.000\n0.975\n1\n0.950\n1.000\n0.975\n1.000\n1\n0.975\n\n\nP05Eps04\n0.950\n0.975\n0.875\n0.975\n1\n1.000\n0.925\n1\n0.975\n1.000\n1.000\n1.000\n1\n0.975\n\n\nP07Eps01\n0.950\n0.950\n0.900\n0.975\n1\n1.000\n0.975\n1\n0.875\n1.000\n0.950\n0.950\n1\n0.900\n\n\nP07Eps04\n0.975\n0.950\n0.975\n0.950\n1\n1.000\n1.000\n1\n0.975\n1.000\n0.975\n0.975\n1\n1.000\n\n\n\n\n\n\n\n\nEach row label indicates the combination of \\(P\\) (zero-inflated probability) and \\(\\epsilon\\) (threshold value). For example, P01Eps01 reads as \\(P = 0.1\\) and \\(\\epsilon = 0.1\\).Each row involves \\(40\\) replicates of simulated data, consisting of \\(4\\) chains with \\(8,000\\) samples per chain."
   },
   {
     "objectID": "index.html#sec-ch2-prediction",
@@ -252,11 +252,11 @@
     "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCoverage\nBelow\nAbove\n\n\n\n\nP01Eps01\n0.9549\n0.6944\n0.9751\n\n\nP01Eps04\n0.9148\n0.3973\n0.9786\n\n\nP05Eps01\n0.9278\n0.9876\n0.8615\n\n\nP05Eps04\n0.9484\n0.9681\n0.9285\n\n\nP07Eps01\n0.8677\n0.9943\n0.5726\n\n\nP07Eps04\n0.9298\n0.9888\n0.7828\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across all cases.\n\nAbove: coverage for data greater than \\(\\epsilon\\); Below: that for data less than or equal to \\(\\epsilon\\).\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the empirical coverage above is more informative.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), the empirical coverage below becomes dominant."
   },
   {
-    "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead",
-    "href": "index.html#prediction-95-predictive-intervals-one-step-ahead",
+    "objectID": "index.html#prediction-95-predictive-intervals-one-step-ahead-predzigamma",
+    "href": "index.html#prediction-95-predictive-intervals-one-step-ahead-predzigamma",
     "title": "",
-    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead",
-    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)"
+    "section": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead 1",
+    "text": "Prediction, \\(95\\%\\) Predictive Intervals, One-Step Ahead 1\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReported values show overall empirical coverage, with coverage below and above the threshold (\\(\\leq \\epsilon\\), \\(&gt; \\epsilon\\)) in parentheses."
   },
   {
     "objectID": "index.html#introduction-2",
@@ -270,7 +270,7 @@
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design."
   },
   {
     "objectID": "index.html#rnn-recurrent-neural-network",
@@ -375,7 +375,7 @@
     "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
     "title": "",
     "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nEmpirical coverage is relevant only for probabilistic forecasting methods such as MTD.\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
   },
   {
     "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",
@@ -389,28 +389,28 @@
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond Gamma marginals, e.g., lognormal, beta."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond gamma marginals, e.g., lognormal, beta."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOverall, our proposed MTD models provides a flexible, robust, and interpretable approach for modeling complex continuous and zero-inflated time series, demonstrating better performance compared to LSTM in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOur proposed MTD models offers a flexible, robust, and interpretable framework for modeling complex continuous and zero-inflated time series, outperfoming LSTM in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate covariates, it can be readily extended by introducing extra model components in the conditional mean structure to enhance flexibility and realism in modeling complex temporal patterns.\n\n\n\n\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate predictors, it can be readily extended with additional terms in the conditional mean structure to capture more complex temporal patterns.\n\n\n\n\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is equally important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks."
   },
   {
     "objectID": "index.html#acknowledgement",
@@ -518,29 +518,29 @@
     "text": "Coverage Assessment\nCoverage Assessment\n\nSimulate \\(40\\) replicates, combine \\(4\\) chains of \\(8,000\\) samples, calculate \\(95\\%\\) CI, and record whether the true parameter value falls within this interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the credible intervals reliably capture the true parameter values."
   },
   {
-    "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates",
-    "href": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates",
+    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1-and-2-40-replicates",
+    "href": "index.html#coverage-assessment-for-gamma-scenario-1-and-2-40-replicates",
     "title": "",
-    "section": "Coverage Assessment for Scenario 1 and 2, 40 Replicates",
-    "text": "Coverage Assessment for Scenario 1 and 2, 40 Replicates\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n0.975\n0.975\n1\n1\n1\n0.9\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n1\n1\n0.975\n0.975\n0.95\n1\n0.975\n0.95\n1\n0.95"
-  },
-  {
-    "objectID": "index.html#coverage-assessment-for-scenario-1-40-replicates",
-    "href": "index.html#coverage-assessment-for-scenario-1-40-replicates",
-    "title": "",
-    "section": "Coverage Assessment for Scenario 1, 40 Replicates",
-    "text": "Coverage Assessment for Scenario 1, 40 Replicates\n\n\\(\\alpha\\)\\(\\beta\\)"
-  },
-  {
-    "objectID": "index.html#coverage-assessment-for-scenario-1-40-replicates-1",
-    "href": "index.html#coverage-assessment-for-scenario-1-40-replicates-1",
-    "title": "",
-    "section": "Coverage Assessment for Scenario 1, 40 Replicates",
-    "text": "Coverage Assessment for Scenario 1, 40 Replicates\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+    "section": "Coverage Assessment for Gamma Scenario 1 and 2, 40 Replicates",
+    "text": "Coverage Assessment for Gamma Scenario 1 and 2, 40 Replicates\n\nExponentially decreasing weights (s1)Uneven arrangement of the relevant lags (s2)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n0.975\n0.975\n1\n1\n1\n0.9\n0.975\n1\n0.975\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(\\alpha\\)\n\\(\\beta\\)\n\\(w_1\\)\n\\(w_2\\)\n\\(w_3\\)\n\\(w_4\\)\n\\(w_5\\)\n\\(\\rho_1\\)\n\\(\\rho_2\\)\n\\(\\rho_3\\)\n\\(\\rho_4\\)\n\\(\\rho_5\\)\n\n\n\n\n0.95\n0.95\n1\n1\n0.975\n0.975\n0.95\n1\n0.975\n0.95\n1\n0.95"
   },
   {
     "objectID": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates",
     "href": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates",
+    "title": "",
+    "section": "Coverage Assessment for Gamma Scenario 1, 40 Replicates",
+    "text": "Coverage Assessment for Gamma Scenario 1, 40 Replicates\n\n\\(\\alpha\\)\\(\\beta\\)"
+  },
+  {
+    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates-1",
+    "href": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates-1",
+    "title": "",
+    "section": "Coverage Assessment for Gamma Scenario 1, 40 Replicates",
+    "text": "Coverage Assessment for Gamma Scenario 1, 40 Replicates\n\n\\(w_1\\)\\(w_2\\)\\(w_3\\)\\(w_4\\)\\(w_5\\)"
+  },
+  {
+    "objectID": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates-2",
+    "href": "index.html#coverage-assessment-for-gamma-scenario-1-40-replicates-2",
     "title": "",
     "section": "Coverage Assessment for Gamma Scenario 1, 40 Replicates",
     "text": "Coverage Assessment for Gamma Scenario 1, 40 Replicates\n\n\\(\\rho_1\\)\\(\\rho_2\\)\\(\\rho_3\\)\\(\\rho_4\\)\\(\\rho_5\\)"
