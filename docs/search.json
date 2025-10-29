@@ -403,14 +403,14 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate predictors, it can be readily extended with additional terms in the conditional mean structure to capture more complex temporal patterns.\n\n\n\n\nWe use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
   },
   {
     "objectID": "index.html#future-work-1",
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models.\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks."
   },
   {
     "objectID": "index.html#acknowledgement",

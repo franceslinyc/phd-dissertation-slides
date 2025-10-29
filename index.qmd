@@ -1857,21 +1857,21 @@ Our proposed MTD models offers a flexible, robust, and interpretable framework f
 
 Part I and II
 
-- Both the Gamma MTD and ZIGamma MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
+- Both of the MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
 
 . . .  
 
-- Although the current framework assumes stationarity and does not incorporate predictors, it can be readily extended with additional terms in the conditional mean structure to capture more complex temporal patterns. 
+- Although the current framework assumes stationarity and does not incorporate predictors, it can be readily extended by introducing additional model terms in the conditional mean structure. 
 
 . . .  
 
-- We use MCMC as our primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
+- We use MCMC as the primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
 
 ## Future Work
 
 Part III
 
-- Given the growing prominence of transformer architectures in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
+- Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
 
 - It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 
