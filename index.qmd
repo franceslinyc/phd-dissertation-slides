@@ -179,7 +179,9 @@ Time series model captures how past values contribute to current value and uses 
 
 The mixture transition distribution (MTD) models 
 
-- Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features. 
+- Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features [^nonlinear]. 
+
+[^nonlinear]: E.g., flat stretches, bursts, outliers, and change points. 
 
 - Model high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights. 
 
@@ -189,7 +191,9 @@ The mixture transition distribution (MTD) models
 
 Our work extends the architecture of the MTD model introduced by Zheng et al. (2022). 
 
-- Includes various applications, extending beyond linear, Gaussian dynamics (e.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models). 
+- Includes various applications, extending beyond linear, Gaussian dynamics [^gaussian]. 
+
+[^gaussian]: E.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models. 
 
 However, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form. 
 
@@ -746,9 +750,9 @@ Model fitting:
 
 MCMC setting: 
 
-- Run the Gibbs sampler for $165, 000$ iterations, discard the first $5,000$ iterations as burn-in, and collect samples every $20$ iterations.
-
 - Run $4$ MCMC chains with $8,000$ iterations each for all of the following scenarios. 
+
+  - Run the Gibbs sampler for $165, 000$ iterations, discard the first $5,000$ iterations as burn-in, and collect samples every $20$ iterations.
 
 ## Simulation Studies
 
@@ -1145,7 +1149,7 @@ df <- df |> kable(digits = 4)
 df 
 ```
 
-[^coveragezigamma]: Each row label indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01Eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
+[^coveragezigamma]: Each row name indicates the combination of $P$ (zero-inflated probability) and $\epsilon$ (threshold value). For example, P01Eps01 reads as $P = 0.1$ and $\epsilon = 0.1$. 
 
 [^coveragezigamma2]: Each row involves $40$ replicates of simulated data, consisting of $4$ chains with $8,000$ samples per chain.
 
@@ -1623,7 +1627,7 @@ df
 
 [^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$. 
 
-- MTD is implemented in `R` and executed on a high-performance computing (HPC) cluster. 
+- MTD is implemented in `R` and `C++` and compiled and executed on a high-performance computing (HPC) cluster. 
 
 ::: 
 
@@ -1871,7 +1875,9 @@ Part I and II
 
 Part III
 
-- Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models. 
+- Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models [^transformer]. 
+
+[^transformer]: E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs. 
 
 - It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 
