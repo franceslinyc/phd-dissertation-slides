@@ -56,6 +56,8 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 - ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
 
+. . .    
+
 - ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM.
 
 --- 
@@ -264,9 +266,13 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 
 There are two components in (2):
 
-  - Transition kernel, $f_l$, captures the influence of the $l$th lag value on the current value.  
+  - Transition kernel [^kernel], $f_l$, captures the influence of the $l$th lag value on the current value. 
   
-  - Weight parameter, $w_l$, determines the relative contribution of that influence. 
+  - Weight parameter [^weight], $w_l$, determines the relative contribution of that influence. 
+
+[^kernel]: Transition kernel generalizes transition probabilities to a more general state space.
+
+[^weight]: See Supplement. 
 
 --- 
 

@@ -11,7 +11,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
   },
   {
     "objectID": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
@@ -74,7 +74,7 @@
     "href": "index.html#model-framework-transition-kernels-and-mixture-weights",
     "title": "",
     "section": "Model Framework: Transition Kernels and Mixture Weights",
-    "text": "Model Framework: Transition Kernels and Mixture Weights\nFor \\(t &gt; L\\), the MTD model specifies the conditional distribution of \\(X_t\\) given \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\) as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \\tag{2}\n\\label{eq:cond_distribution}\n\\end{equation}\\]\n\\(f_l (x_t | x_{t-l})\\) is the conditional pdf of \\(X_t\\) with respect to the \\(l\\)th transition kernel given that \\({X}_{t-l} = {x}_{t-l}\\). \\(w_l\\) are weight parameters, where \\(w_l \\geq 0\\) such that \\(\\sum_{l=1}^L w_l = 1\\).\n\nThere are two components in (2):\n\nTransition kernel, \\(f_l\\), captures the influence of the \\(l\\)th lag value on the current value.\nWeight parameter, \\(w_l\\), determines the relative contribution of that influence."
+    "text": "Model Framework: Transition Kernels and Mixture Weights\nFor \\(t &gt; L\\), the MTD model specifies the conditional distribution of \\(X_t\\) given \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\) as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \\tag{2}\n\\label{eq:cond_distribution}\n\\end{equation}\\]\n\\(f_l (x_t | x_{t-l})\\) is the conditional pdf of \\(X_t\\) with respect to the \\(l\\)th transition kernel given that \\({X}_{t-l} = {x}_{t-l}\\). \\(w_l\\) are weight parameters, where \\(w_l \\geq 0\\) such that \\(\\sum_{l=1}^L w_l = 1\\).\n\nThere are two components in (2):\n\nTransition kernel 1, \\(f_l\\), captures the influence of the \\(l\\)th lag value on the current value.\nWeight parameter 2, \\(w_l\\), determines the relative contribution of that influence.\n\n\nTransition kernel generalizes transition probabilities to a more general state space.See Supplement."
   },
   {
     "objectID": "index.html#copula",
