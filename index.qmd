@@ -54,7 +54,7 @@ Modeling complex patterns in sequence data is a central task in domains such as 
 
 Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence. 
 
-- ⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks. 
+- ⚠️ Claims of LSTM superiority can be misleading with inappropriate benchmarks. 
 
 . . .    
 
@@ -499,7 +499,7 @@ Instead of generating exact zeros, our approach applies a soft threshold that re
 
 - Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
 
-- Has been applied in discrete and spatial settings but not in our setting. 
+- Has been applied in discrete and spatial settings but not in our specific setting. 
 
 ## Proposed Method  
 
@@ -1279,11 +1279,11 @@ readRDS(file.path(output_dir, "p6.rds"))
 
 ## Introduction   
 
-Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture both short- and long-term dependencies.
+Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.
 
 . . .
 
-Beyond natural language processing (NLP), RNNs and LSTMs have also shown effective in time series forecasting and have been employed for applications including
+Beyond natural language processing (NLP), they have also shown effective in time series forecasting and have been employed for applications including
 
 - financial market prediction, 
 
@@ -1297,7 +1297,7 @@ Beyond natural language processing (NLP), RNNs and LSTMs have also shown effecti
 
 However, 
 
-- previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.
+- previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.
 
 - A prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.
 
@@ -1307,7 +1307,7 @@ However,
 
 . . .
 
-> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design. 
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and more involved design. 
 
 # Jump to Data Application (@sec-data-application)
 

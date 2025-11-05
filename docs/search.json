@@ -11,7 +11,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading when compared to inappropriate benchmarks.\n\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading with inappropriate benchmarks.\n\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
   },
   {
     "objectID": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
@@ -158,7 +158,7 @@
     "href": "index.html#existing-method-to-proposed-method-1",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas been applied in discrete and spatial settings but not in our setting."
+    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas been applied in discrete and spatial settings but not in our specific setting."
   },
   {
     "objectID": "index.html#proposed-method-1",
@@ -263,14 +263,14 @@
     "href": "index.html#introduction-2",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture both short- and long-term dependencies.\n\nBeyond natural language processing (NLP), RNNs and LSTMs have also shown effective in time series forecasting and have been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
+    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.\n\nBeyond natural language processing (NLP), they have also shown effective in time series forecasting and have been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
   },
   {
     "objectID": "index.html#introduction-and-objectives-2",
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, a conclusion that can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and the need for more careful design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and more involved design."
   },
   {
     "objectID": "index.html#rnn-recurrent-neural-network",
