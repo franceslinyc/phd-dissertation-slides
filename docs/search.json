@@ -11,7 +11,7 @@
     "href": "index.html#motivation",
     "title": "",
     "section": "Motivation",
-    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading with inappropriate benchmarks.\n\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM."
+    "text": "Motivation\nModeling complex patterns in sequence data is a central task in domains such as energy, insurance, and transportation.\n\n⚠️ Real-world time series often show skewness and zero inflation, which can undermine performance if not properly addressed.\n\n\nRecent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term Memory (LSTM) networks, effectively capture nonlinear and long-range dependence.\n\n⚠️ Claims of LSTM superiority can be misleading with inappropriate benchmarks.\n\n\n\n\n⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM in, e.g., predicting disease spread."
   },
   {
     "objectID": "index.html#hourly-wind-speeds-key-proxy-for-energy-forecasting-nasa-merra-2-data",
@@ -25,7 +25,7 @@
     "href": "index.html#objectives",
     "title": "",
     "section": "Objectives",
-    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness."
+    "text": "Objectives\nPart I and II of the dissertation\n\nDevelop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.\n\n\nPart III of the dissertation\n\nEvaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy, while providing uncertainty quantification and interpretability."
   },
   {
     "objectID": "index.html#roadmap",
@@ -137,7 +137,7 @@
     "href": "index.html#whats-new",
     "title": "",
     "section": "What’s New",
-    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nPrediction\n\nWe are not gonna discuss them here."
+    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis 1\nCoverage Assessment 2\nPrediction\n\nWe are not gonna discuss them here.\nSee Supplement.See Supplement."
   },
   {
     "objectID": "index.html#introduction-1",
@@ -235,7 +235,7 @@
     "href": "index.html#coverage-assessment",
     "title": "",
     "section": "Coverage Assessment",
-    "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+    "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six \\(P \\times \\epsilon\\) cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
   },
   {
     "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
@@ -270,7 +270,7 @@
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and more involved design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, with UE and interpretability, though at higher computational cost and with more involved model design."
   },
   {
     "objectID": "index.html#rnn-recurrent-neural-network",

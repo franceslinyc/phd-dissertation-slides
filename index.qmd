@@ -58,7 +58,7 @@ Recent AI advances, such as Recurrent Neural Networks (RNNs) and Long Short-Term
 
 . . .    
 
-- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM.
+- ⚠️ A prior work found comparable performance between probabilistic Mixture Transition Distribution (MTD) model and deep learning LSTM in, e.g., predicting disease spread.
 
 --- 
 
@@ -139,7 +139,7 @@ Part I and II of the dissertation
 
 Part III of the dissertation
 
-> Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy and robustness. 
+> Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy, while providing uncertainty quantification and interpretability. 
 
 ## Roadmap 
 
@@ -445,13 +445,17 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 Since the preliminary exam, we have also conducted: 
 
-- Sensitivity Analysis 
+- Sensitivity Analysis [^sen]
 
-- Coverage Assessment 
+- Coverage Assessment [^sen]
 
 - Prediction 
 
 We are not gonna discuss them here.
+
+[^sen]: See Supplement. 
+
+
 
 # Part II Models for Forecasting Zero-Inflated Skewed Time Series {background-color="#D73F09" color="white"}
 
@@ -1111,13 +1115,13 @@ t6
 
 :::
 
-[^res]: There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic $R$  and its upper CI $\leq$ $1.1$). 
+[^res]: There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic $R$ and its upper CI $\leq$ $1.1$). 
 
 ## Coverage Assessment
 
 All nine scenarios (s1-9) were analyzed using $4$ chains with only one replicate. 
 
-- Recall that we have six cases per scenario.
+- Recall that we have six $P \times \epsilon$ cases per scenario.
 
 . . .
 
@@ -1307,7 +1311,7 @@ However,
 
 . . .
 
-> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, though at a higher computational cost and more involved design. 
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, with UE and interpretability, though at higher computational cost and with more involved model design. 
 
 # Jump to Data Application (@sec-data-application)
 
