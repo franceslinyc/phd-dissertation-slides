@@ -217,12 +217,12 @@
 <h2>Objectives</h2>
 <p>Part I and II of the dissertation</p>
 <blockquote>
-<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns.</p>
+<p>Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD), effectively capture high-order dependence, skewed behavior, and semicontinuous patterns.</p>
 </blockquote>
 <div class="fragment">
 <p>Part III of the dissertation</p>
 <blockquote>
-<p>Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy, while providing uncertainty quantification and interpretability.</p>
+<p>Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, achieving higher predictive accuracy, while providing uncertainty quantification (UQ) and interpretability.</p>
 </blockquote>
 </div>
 </section>
@@ -246,7 +246,7 @@
 <p>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</p>
 <ul>
 <li><p>Introduction</p></li>
-<li><p>Training, Hyperparameter Tuning, and Metrics</p></li>
+<li><p>(Skip) Training, Hyperparameter Tuning, and Metrics</p></li>
 <li><p>(Skip) Simulation Studies</p></li>
 <li><p>Data Application</p></li>
 </ul>
@@ -260,12 +260,19 @@
 <h2>Introduction</h2>
 <p>Time series model captures how past values contribute to current value and uses this information to predict future value.</p>
 <div class="fragment">
-<p>The mixture transition distribution (MTD) models</p>
+<p>The mixture transition distribution (MTD) models is a flexible extension of autoregressive (AR) models</p>
 <ul>
-<li>Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features <sup>1</sup>.</li>
+<li>Accommodate non-Gaussian and nonlinear features <sup>1</sup>.</li>
 </ul>
+</div>
+<div class="fragment">
 <ul>
-<li><p>Model high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights.</p></li>
+<li>Use a state-space approach based on Markov chains.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><p>Represent high-order dependence as a mixture of first-order transition kernels with stochastic weights.</p></li>
 <li><p>See Berchtold and Raftery (2022) for a complete review.</p></li>
 </ul>
 </div>
@@ -276,7 +283,9 @@
 <ul>
 <li>Includes various applications, extending beyond linear, Gaussian dynamics <sup>1</sup>.</li>
 </ul>
+<div class="fragment">
 <p>However, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form.</p>
+</div>
 <div class="fragment">
 <blockquote>
 <p><strong>Objectives:</strong> Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.</p>
@@ -423,18 +432,25 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 </section>
 <section id="copula" class="slide level2 scrollable">
 <h2>Copula</h2>
-<p>Copula is widely used for dependence modeling.</p>
+<p>Copula provide a flexible framework for dependence modeling.</p>
 <ul>
-<li><p>Is applied in quantitative finance, reliability engineering, hydrology, etc.</p></li>
-<li><p>Consists of families of copula, constituting a substantial research area.</p></li>
+<li>Widely used in quantitative finance, reliability engineering, hydrology, etc.</li>
 </ul>
 <div class="fragment">
-<p>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(\text{Unif}(0, 1)\)</span>.</p>
+<ul>
+<li>Separate the modeling of dependence from marginals.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is <span class="math inline">\(\text{Unif}(0, 1)\)</span>.</li>
+</ul>
 </div>
 <div class="fragment">
 <p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: the copula, <span class="math inline">\(C\)</span>, and the marginal distributions, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
 <ul>
-<li>Rooted in Sklar’s theorem. <sup>1</sup></li>
+<li><p>Families of copula, constituting a substantial research area.</p></li>
+<li><p>Rooted in Sklar’s theorem. <sup>1</sup></p></li>
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn5"><p>See Supplement.</p></li></ol></aside></section>
@@ -469,10 +485,10 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 </section>
 <section id="bayesian-implementation" class="slide level2">
 <h2>Bayesian Implementation</h2>
-<p>Earlier MTD models were built through frequentist approaches.</p>
-<p>The MTD model by Zheng et al.&nbsp;(2022) is constructed with Bayesian methodologies.</p>
+<p>Earlier MTD models were built through frequentist approaches and estimated via EM algorithms.</p>
+<p>Zheng et al.&nbsp;(2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms.</p>
 <ul>
-<li>Our proposed copula-based MTD model builds upon this model version.</li>
+<li>Our work: Copula-based extension of the Bayesian MTD framework.</li>
 </ul>
 </section>
 <section id="bayesian-implementation-1" class="slide level2 scrollable">
@@ -487,7 +503,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \end{equation}\]</span>
 <p><span style="font-size: 80%"><span class="math inline">\(\boldsymbol{w}\)</span> is the mixture weights. <span class="math inline">\(\boldsymbol{\theta}\)</span> collects parameters for the transition kernel. <span class="math inline">\(D_n = {\{x_t\}}_{t=L+1}^n\)</span> is the data.</span></p>
 <div class="fragment">
-<p>With priors specifications <sup>1</sup>, the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms.</p>
+<p>With priors specifications <sup>1</sup>, the full simulation-based Bayesian estimation and prediction can be achieved using MCMC algorithms.</p>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn7"><p>See Supplment.</p></li></ol></aside></section>
 <section id="simulation-studies" class="slide level2">
@@ -1787,7 +1803,7 @@ f(x) =
 </div>
 <div class="fragment">
 <blockquote>
-<p>Demonstrate that our proposed MTDs outperform LSTMs in accuracy, with UE and interpretability, though at higher computational cost and with more involved model design.</p>
+<p>Demonstrate that our proposed MTDs outperform LSTMs in accuracy, with UQ and interpretability, though at higher computational cost and with more involved model design.</p>
 </blockquote>
 </div>
 </section></section>

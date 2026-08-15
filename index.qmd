@@ -133,13 +133,13 @@ plot_variable_by_year(data, "WHuv2", "2")
 
 Part I and II of the dissertation
 
-> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD) to capture high-order dependence, skewed behavior, and semicontinuous patterns. 
+> Develop the copula-based Gamma Mixture Transition Distribution (Gamma MTD) model and its zero-inflated extension (ZIGamma MTD), effectively capture high-order dependence, skewed behavior, and semicontinuous patterns. 
 
 . . .
 
 Part III of the dissertation
 
-> Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, demonstrating higher predictive accuracy, while providing uncertainty quantification and interpretability. 
+> Evaluate the proposed models against the Long Short-Term Memory (LSTM) networks, achieving higher predictive accuracy, while providing uncertainty quantification (UQ) and interpretability. 
 
 ## Roadmap 
 
@@ -165,7 +165,7 @@ Part III Copula-Based Markov MTD Models vs. Deep Learning LSTM Networks
 
 - Introduction 
 
-- Training, Hyperparameter Tuning, and Metrics 
+- (Skip) Training, Hyperparameter Tuning, and Metrics 
 
 - (Skip) Simulation Studies 
 
@@ -179,15 +179,22 @@ Time series model captures how past values contribute to current value and uses 
 
 . . .    
 
-The mixture transition distribution (MTD) models 
+The mixture transition distribution (MTD) models is a flexible extension of autoregressive (AR) models
 
-- Extend the autoregressive (AR) models to accommodate non-Gaussian and nonlinear features [^nonlinear]. 
+- Accommodate non-Gaussian and nonlinear features [^nonlinear]. 
 
 [^nonlinear]: E.g., flat stretches, bursts, outliers, and change points. 
 
-- Model high-order dependence as a mixture of first-order transition kernels, with random, stochastic weights. 
+. . .    
+
+- Use a state-space approach based on Markov chains. 
+
+. . .    
+
+- Represent high-order dependence as a mixture of first-order transition kernels with stochastic weights. 
 
 - See Berchtold and Raftery (2022) for a complete review. 
+
 
 ## Introduction and Objectives 
 
@@ -196,6 +203,8 @@ Our work extends the architecture of the MTD model introduced by Zheng et al. (2
 - Includes various applications, extending beyond linear, Gaussian dynamics [^gaussian]. 
 
 [^gaussian]: E.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models. 
+
+. . .    
 
 However, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form. 
 
@@ -285,19 +294,23 @@ There are two components in (2):
 
 ## Copula 
 
-Copula is widely used for dependence modeling.
+Copula provide a flexible framework for dependence modeling.
 
-  - Is applied in quantitative finance, reliability engineering, hydrology, etc.
-
-  - Consists of families of copula, constituting a substantial research area.
+  - Widely used in quantitative finance, reliability engineering, hydrology, etc.
 
 . . .
 
-Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $\text{Unif}(0, 1)$. 
+  - Separate the modeling of dependence from marginals. 
+
+. . .
+
+  - Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $\text{Unif}(0, 1)$. 
 
 . . .
 
 Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
+
+- Families of copula, constituting a substantial research area.
 
 - Rooted in Sklar’s theorem. [^sklar]
 
@@ -340,11 +353,11 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
 
 ## Bayesian Implementation  
 
-Earlier MTD models were built through frequentist approaches. 
+Earlier MTD models were built through frequentist approaches and estimated via EM algorithms. 
 
-The MTD model by Zheng et al. (2022) is constructed with Bayesian methodologies. 
+Zheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms. 
 
-- Our proposed copula-based MTD model builds upon this model version. 
+- Our work: Copula-based extension of the Bayesian MTD framework. 
 
 
 ## Bayesian Implementation  
@@ -364,7 +377,7 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 
 . . .
 
-With priors specifications [^prior], the full simulation-based Bayesian estimation and prediction can be achieved using Markov chain Monte Carlo (MCMC) algorithms. 
+With priors specifications [^prior], the full simulation-based Bayesian estimation and prediction can be achieved using MCMC algorithms. 
 
 [^prior]: See Supplment. 
 
@@ -1311,7 +1324,7 @@ However,
 
 . . .
 
-> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, with UE and interpretability, though at higher computational cost and with more involved model design. 
+> Demonstrate that our proposed MTDs outperform LSTMs in accuracy, with UQ and interpretability, though at higher computational cost and with more involved model design. 
 
 # Jump to Data Application (@sec-data-application)
 
