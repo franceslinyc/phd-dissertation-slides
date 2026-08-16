@@ -389,28 +389,28 @@
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\nThis extension again demonstrates the framework’s generalizability beyond gamma marginals, e.g., lognormal, beta."
+    "text": "Conclusion\nPart I and II: A flexible copula-based MTD framework\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe further develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\n\n\nKey contribution: A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.\nLSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.\n\n\nOur proposed MTD models offers a flexible, robust, and interpretable framework for modeling complex continuous and zero-inflated time series, outperfoming LSTM in the settings considered."
+    "text": "Conclusion\nPart III: MTD Models vs LSTMs\nThrough simulation studies and data application,\n\nMTD models are more robust and interpretable, but require greater computational time and more involved model design.\nLSTMs are general-purpose and computationally efficient, but their black-box nature limits interpretability and may lead to lower accuracy.\n\n\n\nOverall impact: A flexible, robust, and interpretable framework for forecasting complex zero-inflated, skewed time series (i.e., rare, tail events), outperfoming LSTMs in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored."
+    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nThe current models use Gamma marginals. Future work could consider beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.\n\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
   },
   {
     "objectID": "index.html#future-work-1",
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models 1.\n\n\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks.\n\n\nE.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models 1.\n\n\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.\n\n\nE.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs."
   },
   {
     "objectID": "index.html#acknowledgement",

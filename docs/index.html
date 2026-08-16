@@ -2518,29 +2518,33 @@ f(x) =
 </section>
 <section id="sec-conclusion" class="slide level2">
 <h2>Conclusion</h2>
-<p>Part I and II</p>
+<p>Part I and II: A flexible copula-based MTD framework</p>
 <p>We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation</p>
 <ul>
 <li><p>Enables a choice of copula families that effectively capture dependence.</p></li>
 <li><p>Provides flexibility in marginal selection.</p></li>
 </ul>
 <div class="fragment">
-<p>We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.</p>
-<ul>
-<li>This extension again demonstrates the framework’s generalizability beyond gamma marginals, e.g., lognormal, beta.</li>
-</ul>
+<p>We further develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.</p>
+</div>
+<div class="fragment">
+<blockquote>
+<p><strong>Key contribution:</strong> A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions.</p>
+</blockquote>
 </div>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
-<p>Part III</p>
+<p>Part III: MTD Models vs LSTMs</p>
 <p>Through simulation studies and data application,</p>
 <ul>
-<li><p>MTD models are more robust and explainable but come at the cost of increased computational time and more involved model design.</p></li>
-<li><p>LSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy.</p></li>
+<li><p>MTD models are more robust and interpretable, but require greater computational time and more involved model design.</p></li>
+<li><p>LSTMs are general-purpose and computationally efficient, but their black-box nature limits interpretability and may lead to lower accuracy.</p></li>
 </ul>
 <div class="fragment">
-<p>Our proposed MTD models offers a flexible, robust, and interpretable framework for modeling complex continuous and zero-inflated time series, outperfoming LSTM in the settings considered.</p>
+<blockquote>
+<p><strong>Overall impact:</strong> A flexible, robust, and interpretable framework for forecasting complex zero-inflated, skewed time series (i.e., rare, tail events), outperfoming LSTMs in the settings considered.</p>
+</blockquote>
 </div>
 </section>
 <section class="slide level2">
@@ -2554,16 +2558,21 @@ f(x) =
 <h2>Future Work</h2>
 <p>Part I and II</p>
 <ul>
-<li>Both of the MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</li>
+<li>Both of the MTD models utilize Gaussian copula. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Although the current framework assumes stationarity and does not incorporate predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.</li>
+<li>The current models use Gamma marginals. Future work could consider beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>We use MCMC as the primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored.</li>
+<li>Although the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>We use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages.</li>
 </ul>
 </div>
 </section>
@@ -2578,7 +2587,7 @@ f(x) =
 </ul>
 <div class="fragment">
 <ul>
-<li>Future work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks.</li>
+<li>Future work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.</li>
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn26"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li></ol></aside></section></section>

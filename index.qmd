@@ -1843,33 +1843,35 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ## Conclusion {#sec-conclusion}
 
-Part I and II 
+Part I and II: A flexible copula-based MTD framework 
 
 We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation 
 
-- Enables a choice of copula families that effectively capture dependence.
+- Enables a choice of copula families that effectively capture dependence. 
 
-- Provides flexibility in marginal selection.
+- Provides flexibility in marginal selection. 
+
+. . . 
+
+We further develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
 
 . . .    
 
-We also develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings. 
-
-- This extension again demonstrates the framework’s generalizability beyond gamma marginals, e.g., lognormal, beta.
+> **Key contribution:** A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions. 
 
 ## Conclusion
 
-Part III
+Part III: MTD Models vs LSTMs 
 
 Through simulation studies and data application,
 
-- MTD models are more robust and explainable but come at the cost of increased computational time and more involved model design. 
+- MTD models are more robust and interpretable, but require greater computational time and more involved model design. 
 
-- LSTMs are general-purpose and efficient, but their black-box nature can limit interpretability and, in some cases, reduce accuracy. 
+- LSTMs are general-purpose and computationally efficient, but their black-box nature limits interpretability and may lead to lower accuracy. 
 
 . . .    
 
-Our proposed MTD models offers a flexible, robust, and interpretable framework for modeling complex continuous and zero-inflated time series, outperfoming LSTM in the settings considered. 
+> **Overall impact:** A flexible, robust, and interpretable framework for forecasting complex zero-inflated, skewed time series (i.e., rare, tail events), outperfoming LSTMs in the settings considered. 
 
 ---
 
@@ -1884,15 +1886,19 @@ Our proposed MTD models offers a flexible, robust, and interpretable framework f
 
 Part I and II
 
-- Both of the MTD models utilize Gaussian copula to model dependence. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.
+- Both of the MTD models utilize Gaussian copula. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
 
 . . .  
 
-- Although the current framework assumes stationarity and does not incorporate predictors, it can be readily extended by introducing additional model terms in the conditional mean structure. 
+- The current models use Gamma marginals. Future work could consider beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications. 
 
 . . .  
 
-- We use MCMC as the primary estimation method, but alternative approaches such as Variational Inference or Sequential Monte Carlo could be explored. 
+- Although the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure. 
+
+. . .  
+
+- We use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages. 
 
 ## Future Work
 
@@ -1906,7 +1912,7 @@ Part III
 
 . . .  
 
-- Future work could explore integrated approaches that combine probabilistic models with neural architectures, aiming to leverage the strengths of both frameworks. 
+- Future work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks. 
 
 # Thank you!
 
