@@ -193,6 +193,8 @@ The mixture transition distribution (MTD) models is a flexible extension of auto
 
 - Represent high-order dependence as a mixture of first-order transition kernels with stochastic weights. 
 
+. . .   
+
 - See Berchtold and Raftery (2022) for a complete review. 
 
 
@@ -230,6 +232,8 @@ f(\textbf{x}) = f(x_1) \prod_{t=2}^t f(x_t | \textbf{x}^{t-1}). \tag{1}
 . . .
 
 As $t$ increases, the size of the conditioning set, $\textbf{X}^{t-1}$ (all of its past values), can be large. 
+
+. . .   
 
 - Solution: Use a structured mixture model that restricts each value in the MTD model to depend only on the $L$ (a given number) lagged values.
 
@@ -300,34 +304,38 @@ Copula provide a flexible framework for dependence modeling.
 
 . . .
 
-  - Separate the modeling of dependence from marginals. 
+  - Separate dependence from marginals. 
 
 . . .
 
-  - Copula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is $\text{Unif}(0, 1)$. 
+  - Copula is a multivariate cumulative distribution function (cdf) with $\text{Unif}(0, 1)$ marginals. 
 
 . . .
 
-Using copula, any joint distribution, $F$, can be decomposed into two parts: the copula, $C$, and the marginal distributions, $F_j$, $j = 1,..., p$.
+  - Using copula, any joint distribution, $F$, can be decomposed into two parts: a copula, $C$, and the marginals, $F_j$, $j = 1,..., p$.
 
-- Families of copula, constituting a substantial research area.
+    - Rooted in Sklar’s theorem [^sklar].
 
-- Rooted in Sklar’s theorem. [^sklar]
+    - Families of copula offer a wide range of dependence structures, constituting an active research area.
 
 [^sklar]: See Supplement. 
   
 
 ## Existing Method to Proposed Method 
 
-The bivariate distribution approach, for example, identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
+The bivariate distribution approach, e.g., 
+
+- identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
 
 - Based on Proposition 1 [^prop1] of Zheng et al. (2022).
 
 . . .
 
-This is facilitated by the use of a copula,  
+The construction of such transition kernel can be challenging or lacks a simple explicit form.
 
-- which separates the marginal behavior of the random variables from their dependence structure. 
+. . .
+
+  - Solution: Use a copula to construct the transition kernel with the desired density.
 
 [^prop1]: See Supplement. 
 
@@ -354,6 +362,8 @@ Compared to (2), the transition kernel, $f_l$, is now replaced by two components
 ## Bayesian Implementation  
 
 Earlier MTD models were built through frequentist approaches and estimated via EM algorithms. 
+
+. . .
 
 Zheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms. 
 
@@ -458,13 +468,13 @@ readRDS(file.path(output_dir, "gamma_extreme.rds"))
 
 Since the preliminary exam, we have also conducted: 
 
-- Sensitivity Analysis [^sen]
+- Sensitivity Analysis 
 
-- Coverage Assessment [^sen]
+- Coverage Assessment 
 
 - Prediction 
 
-We are not gonna discuss them here.
+We are not gonna discuss them here [^sen].
 
 [^sen]: See Supplement. 
 
@@ -486,11 +496,15 @@ Examples include
 
 - safety measures.
 
+. . .
+
 If left unaddressed, zero-inflation undermines model robustness and weakens inference.
 
 ## Introduction and Objectives 
 
 In Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals. 
+
+. . .
 
 However, 
 
@@ -517,6 +531,8 @@ Instead of generating exact zeros, our approach applies a soft threshold that re
 - Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
 
 - Has been applied in discrete and spatial settings but not in our specific setting. 
+
+
 
 ## Proposed Method  
 
@@ -1843,7 +1859,7 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ## Conclusion {#sec-conclusion}
 
-Part I and II: A flexible copula-based MTD framework 
+Part I and II
 
 We develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation 
 
@@ -1861,7 +1877,7 @@ We further develop a copula-based zero-inflated MTD model, which preserves the a
 
 ## Conclusion
 
-Part III: MTD Models vs LSTMs 
+Part III
 
 Through simulation studies and data application,
 
@@ -1886,11 +1902,11 @@ Through simulation studies and data application,
 
 Part I and II
 
-- Both of the MTD models utilize Gaussian copula. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
+- Both of the MTD models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
 
 . . .  
 
-- The current models use Gamma marginals. Future work could consider beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications. 
+- The current models use Gamma marginals. Future work could incorporate beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications. 
 
 . . .  
 

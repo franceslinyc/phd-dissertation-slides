@@ -46,7 +46,7 @@
     "href": "index.html#introduction",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nTime series model captures how past values contribute to current value and uses this information to predict future value.\n\nThe mixture transition distribution (MTD) models is a flexible extension of autoregressive (AR) models\n\nAccommodate non-Gaussian and nonlinear features 1.\n\n\n\n\nUse a state-space approach based on Markov chains.\n\n\n\n\nRepresent high-order dependence as a mixture of first-order transition kernels with stochastic weights.\nSee Berchtold and Raftery (2022) for a complete review.\n\n\nE.g., flat stretches, bursts, outliers, and change points."
+    "text": "Introduction\nTime series model captures how past values contribute to current value and uses this information to predict future value.\n\nThe mixture transition distribution (MTD) models is a flexible extension of autoregressive (AR) models\n\nAccommodate non-Gaussian and nonlinear features 1.\n\n\n\n\nUse a state-space approach based on Markov chains.\n\n\n\n\nRepresent high-order dependence as a mixture of first-order transition kernels with stochastic weights.\n\n\n\n\nSee Berchtold and Raftery (2022) for a complete review.\n\n\nE.g., flat stretches, bursts, outliers, and change points."
   },
   {
     "objectID": "index.html#introduction-and-objectives",
@@ -60,7 +60,7 @@
     "href": "index.html#model-framework-dag-also-known-as-bayesian-network",
     "title": "",
     "section": "Model Framework: DAG; also known as Bayesian Network",
-    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\) (all of its past values), can be large.\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of first-order transition kernels for each of the \\(L\\) lagged values."
+    "text": "Model Framework: DAG; also known as Bayesian Network\nLet \\(\\{ X_t: t \\in \\mathbb{N} \\}\\) be a time series. Construct the model on a DAG, the joint distribution of \\(X_1\\) to \\(X_t\\) can be factorized into a product of conditional distributions as\n\\[\\begin{equation}\nf(\\textbf{x}) = f(x_1) \\prod_{t=2}^t f(x_t | \\textbf{x}^{t-1}). \\tag{1}\n\\label{eq:joint_distribution}\n\\end{equation}\\]\n\\(f(x_t | \\textbf{x}^{t-1})\\) is the conditional probability density function (pdf) of current value \\(X_t\\) given all of its past values \\(\\textbf{X}^{t-1} = \\textbf{x}^{t-1}\\), where \\(\\textbf{X}^{t-1} = \\{X_i: i \\leq t - 1 \\}\\) and \\(\\textbf{x}^{t-1} = \\{x_i: i \\leq t - 1 \\}\\).\n\nAs \\(t\\) increases, the size of the conditioning set, \\(\\textbf{X}^{t-1}\\) (all of its past values), can be large.\n\n\n\nSolution: Use a structured mixture model that restricts each value in the MTD model to depend only on the \\(L\\) (a given number) lagged values.\n\n\n\nEach conditional in (1) is modeled as a mixture of first-order transition kernels for each of the \\(L\\) lagged values."
   },
   {
     "objectID": "index.html#mtd-order-look-back-steps-l-5",
@@ -81,14 +81,14 @@
     "href": "index.html#copula",
     "title": "",
     "section": "Copula",
-    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate the modeling of dependence from marginals.\n\n\n\n\nCopula is a multivariate cumulative distribution function (cdf) where its marginal distribution of each random variables is \\(\\text{Unif}(0, 1)\\).\n\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: the copula, \\(C\\), and the marginal distributions, \\(F_j\\), \\(j = 1,..., p\\).\n\nFamilies of copula, constituting a substantial research area.\nRooted in Sklar’s theorem. 1\n\n\nSee Supplement."
+    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate dependence from marginals.\n\n\n\n\nCopula is a multivariate cumulative distribution function (cdf) with \\(\\text{Unif}(0, 1)\\) marginals.\n\n\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: a copula, \\(C\\), and the marginals, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem 1.\nFamilies of copula offer a wide range of dependence structures, constituting an active research area.\n\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method",
     "href": "index.html#existing-method-to-proposed-method",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, for example, identifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThis is facilitated by the use of a copula,\n\nwhich separates the marginal behavior of the random variables from their dependence structure.\n\n\nSee Supplement."
+    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, e.g.,\n\nidentifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThe construction of such transition kernel can be challenging or lacks a simple explicit form.\n\n\n\nSolution: Use a copula to construct the transition kernel with the desired density.\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#proposed-method",
@@ -102,7 +102,7 @@
     "href": "index.html#bayesian-implementation",
     "title": "",
     "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches and estimated via EM algorithms.\nZheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms.\n\nOur work: Copula-based extension of the Bayesian MTD framework."
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches and estimated via EM algorithms.\n\nZheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms.\n\nOur work: Copula-based extension of the Bayesian MTD framework."
   },
   {
     "objectID": "index.html#bayesian-implementation-1",
@@ -137,21 +137,21 @@
     "href": "index.html#whats-new",
     "title": "",
     "section": "What’s New",
-    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis 1\nCoverage Assessment 2\nPrediction\n\nWe are not gonna discuss them here.\nSee Supplement.See Supplement."
+    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nPrediction\n\nWe are not gonna discuss them here 1.\nSee Supplement."
   },
   {
     "objectID": "index.html#introduction-1",
     "href": "index.html#introduction-1",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
+    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
   },
   {
     "objectID": "index.html#introduction-and-objectives-1",
     "href": "index.html#introduction-and-objectives-1",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again generalizable."
+    "text": "Introduction and Objectives\nIn Part I, we propose the copula-based Gamma MTD model, which enables flexible dependence modeling and accommodates arbitrary continuous marginals.\n\nHowever,\n\nit remains limited in handling excessive zeros commonly observed in real-world continuous data.\nCopula-based approaches face identifiability issues when modeling discrete or mixed marginals.\n\n\n\n\nObjectives: Propose reconstructing the marginal distribution to accommodate zero-inflation, while maintaining the same effectiveness and flexibility in modeling dependence structures as described in Part I.\n\n\n\n\nDevelop the ZIGamma MTD model, but the framework is again generalizable."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method-1",
@@ -389,21 +389,21 @@
     "href": "index.html#sec-conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart I and II: A flexible copula-based MTD framework\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe further develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\n\n\nKey contribution: A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions."
+    "text": "Conclusion\nPart I and II\nWe develop a novel copula-based MTD model that separates the dependence structure from the marginal distribution. This separation\n\nEnables a choice of copula families that effectively capture dependence.\nProvides flexibility in marginal selection.\n\n\nWe further develop a copula-based zero-inflated MTD model, which preserves the advantages of copula modeling for capturing dependence in zero-inflated continuous settings.\n\n\n\nKey contribution: A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
     "title": "",
     "section": "Conclusion",
-    "text": "Conclusion\nPart III: MTD Models vs LSTMs\nThrough simulation studies and data application,\n\nMTD models are more robust and interpretable, but require greater computational time and more involved model design.\nLSTMs are general-purpose and computationally efficient, but their black-box nature limits interpretability and may lead to lower accuracy.\n\n\n\nOverall impact: A flexible, robust, and interpretable framework for forecasting complex zero-inflated, skewed time series (i.e., rare, tail events), outperfoming LSTMs in the settings considered."
+    "text": "Conclusion\nPart III\nThrough simulation studies and data application,\n\nMTD models are more robust and interpretable, but require greater computational time and more involved model design.\nLSTMs are general-purpose and computationally efficient, but their black-box nature limits interpretability and may lead to lower accuracy.\n\n\n\nOverall impact: A flexible, robust, and interpretable framework for forecasting complex zero-inflated, skewed time series (i.e., rare, tail events), outperfoming LSTMs in the settings considered."
   },
   {
     "objectID": "index.html#future-work",
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula. Future work should explore alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nThe current models use Gamma marginals. Future work could consider beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.\n\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
+    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nThe current models use Gamma marginals. Future work could incorporate beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.\n\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
   },
   {
     "objectID": "index.html#future-work-1",
