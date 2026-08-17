@@ -81,14 +81,14 @@
     "href": "index.html#copula",
     "title": "",
     "section": "Copula",
-    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate dependence from marginals.\n\n\n\n\nCopula is a multivariate cumulative distribution function (cdf) with \\(\\text{Unif}(0, 1)\\) marginals.\n\n\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: a copula, \\(C\\), and the marginals, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem 1.\n\n\n\n\n- Families of copula offer a wide range of dependence structures, constituting an active research area.\n\nSee Supplement."
+    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate dependence from marginals.\n\n\n\nCopula\n\nis a multivariate cumulative distribution function (cdf) with \\(\\text{Unif}(0, 1)\\) marginals.\n\n\n\n\nAny joint distribution, \\(F\\), can be decomposed into two parts: a copula, \\(C\\), and the marginals, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem 1.\n\n\n\n\n\nFamilies of copula offer a wide range of dependence structures, constituting an active research area.\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method",
     "href": "index.html#existing-method-to-proposed-method",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, e.g.,\n\nidentifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\nThe construction of such transition kernel can be challenging or lacks a simple explicit form.\n\n\n\nSolution: Use a copula to construct the transition kernel with the desired density.\n\n\nSee Supplement."
+    "text": "Existing Method to Proposed Method\nThe bivariate distribution approach, e.g.,\n\nidentifies a bivariate distribution of \\((U_l, V_l)\\) such that the marginal densities, \\(f_{U_l}\\) and \\(f_{V_l}\\), are equal to a pre-specified stationary marginal density \\(f_X\\) for all \\(l\\) transition kernels.\n\nBased on Proposition 1 1 of Zheng et al. (2022).\n\n\n\nThe construction of such transition kernel can be challenging or lacks a simple explicit form.\n\n\n\nSolution: Use a copula to construct the transition kernel with the desired density.\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#proposed-method",
@@ -110,6 +110,13 @@
     "title": "",
     "section": "Bayesian Implementation",
     "text": "Bayesian Implementation\nInference is facilitated through a set of latent variables \\({\\{Z_t\\}}_{t=L+1}^n\\). \\(Z_t = l\\) indicates which \\(l\\)th kernel the data belongs to.\nThe posterior distribution of the parameters, based on the conditional likelihood, is\n\\[\\begin{equation}\n\\begin{split}\np(\\boldsymbol{w}, \\boldsymbol{\\theta}, {\\{z_t\\}}_{t=L+1}^n | D_n) \\propto \\pi_w(\\boldsymbol{w}) \\prod_{l=1}^L \\pi_l(\\boldsymbol{\\theta}_l) \\\\\n\\prod_{t=L+1}^n \\Biggl\\{ f_{z_t} (x_t | x_{t-z_t}, \\boldsymbol{\\theta}_{z_t}) \\sum_{l=1}^L w_l \\delta_l(z_t) \\Biggl\\}.\n\\end{split} \\tag{4}\n\\end{equation}\\]\n\\(\\boldsymbol{w}\\) is the mixture weights. \\(\\boldsymbol{\\theta}\\) collects parameters for the transition kernel. \\(D_n = {\\{x_t\\}}_{t=L+1}^n\\) is the data.\n\nWith priors specifications 1, the full simulation-based Bayesian estimation and prediction can be achieved using MCMC algorithms.\n\nSee Supplment."
+  },
+  {
+    "objectID": "index.html#simulation-setting",
+    "href": "index.html#simulation-setting",
+    "title": "",
+    "section": "Simulation Setting",
+    "text": "Simulation Setting\nSimulated data:\n\nGenerate \\(n = 2,000\\) observations from the copula-based Gamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with Gamma marginals.\n\nMCMC setting:\n\nRun \\(4\\) MCMC chains with \\(8,000\\) iterations each for all of the following scenarios.\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5,000\\) iterations as burn-in, and collect samples every \\(20\\) iterations."
   },
   {
     "objectID": "index.html#simulation-studies",
@@ -196,8 +203,8 @@
     "text": "pzig (cdf of zigamma) 1\n\n\\(P = 0.1\\) \\(\\epsilon = 0.1\\)\\(P = 0.1\\) \\(\\epsilon = 0.4\\)\\(P = 0.5\\) \\(\\epsilon = 0.1\\)\\(P = 0.5\\) \\(\\epsilon = 0.4\\)\\(P = 0.7\\) \\(\\epsilon = 0.1\\)\\(P = 0.7\\) \\(\\epsilon = 0.4\\)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe cdf is continuous and no longer exhibits a point mass at zero."
   },
   {
-    "objectID": "index.html#simulation-setting",
-    "href": "index.html#simulation-setting",
+    "objectID": "index.html#simulation-setting-1",
+    "href": "index.html#simulation-setting-1",
     "title": "",
     "section": "Simulation Setting",
     "text": "Simulation Setting\nSimulated data:\n\nGenerate \\(n = 2,000\\) observations from the copula-based ZIGamma MTD model.\n\nModel fitting:\n\nSet the order \\(L = 5\\) and consider the Gaussian copula with zero-inflated Gamma marginals.\n\nMCMC setting:\n\nRun \\(4\\) MCMC chains with \\(8,000\\) iterations each for all of the following scenarios.\n\nRun the Gibbs sampler for \\(165, 000\\) iterations, discard the first \\(5,000\\) iterations as burn-in, and collect samples every \\(20\\) iterations."
@@ -235,7 +242,7 @@
     "href": "index.html#coverage-assessment",
     "title": "",
     "section": "Coverage Assessment",
-    "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six \\(P \\times \\epsilon\\) cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval.\nMost parameters achieve full coverage, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values."
+    "text": "Coverage Assessment\nAll nine scenarios (s1-9) were analyzed using \\(4\\) chains with only one replicate.\n\nRecall that we have six cases per scenario.\n\n\nScenarios 1 and 2 were further evaluated with \\(40\\) replicates to assess coverage and robustness.\n\nMost parameters achieve full coverage 1, with a few slightly below \\(1\\), indicating that the posterior intervals reliably capture the true parameter values.\n\n\nThe overall coverage is the proportion of replicates for which the true value is contained within the interval."
   },
   {
     "objectID": "index.html#coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2",
@@ -263,7 +270,7 @@
     "href": "index.html#introduction-2",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are\n\nwidely used for modeling sequence data because of their ability to capture short- and long-term dependencies.\n\n\nBeyond natural language processing (NLP), they have also shown effective in time series forecasting and\n\n\n\nhave been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
+    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are\n\nwidely used for modeling sequence data because of their ability to capture short- and long-term dependencies.\n\n\nBeyond natural language processing (NLP),\n\nthey have also shown effective in time series forecasting and\n\n\n\n\nhave been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
   },
   {
     "objectID": "index.html#introduction-and-objectives-2",
@@ -343,6 +350,13 @@
     "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\)).\n\nAbove: reflects predictive accuracy for values exceeding \\(\\epsilon\\); Below: reflects that for values less than or equal to \\(\\epsilon\\).\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above is more informative.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant."
   },
   {
+    "objectID": "index.html#data-application",
+    "href": "index.html#data-application",
+    "title": "",
+    "section": "Data Application",
+    "text": "Data Application\nWind speed is a key proxy variable in energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\nMERRA-2 data\n\nwere accessed from the NASA GES DISC Earthdata API.\nWind speed components at multiple heights for the Limon Wind Energy Center were further processed.\n\n\n\nThe datasets used are\n\nhourly wind speeds (m/s) at heights of 50m above ground level\nhourly wind speeds (m/s) at heights of 10m above ground level\nhourly wind speeds (m/s) at heights of 2m above ground level\n\nfor the year of 2024."
+  },
+  {
     "objectID": "index.html#experimental-setup-2",
     "href": "index.html#experimental-setup-2",
     "title": "",
@@ -403,7 +417,7 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nCurrent models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nCurrent models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.\n\n\n\n\nAlthough current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
+    "text": "Future Work\nPart I and II\n\nCurrent models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nCurrent models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.\n\n\n\nAlthough current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
   },
   {
     "objectID": "index.html#future-work-1",

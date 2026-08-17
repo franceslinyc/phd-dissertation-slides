@@ -309,17 +309,19 @@ Copula provide a flexible framework for dependence modeling.
 
 . . .
 
-  - Copula is a multivariate cumulative distribution function (cdf) with $\text{Unif}(0, 1)$ marginals. 
+Copula 
+
+  - is a multivariate cumulative distribution function (cdf) with $\text{Unif}(0, 1)$ marginals. 
 
 . . .
 
-  - Using copula, any joint distribution, $F$, can be decomposed into two parts: a copula, $C$, and the marginals, $F_j$, $j = 1,..., p$. 
+  - Any joint distribution, $F$, can be decomposed into two parts: a copula, $C$, and the marginals, $F_j$, $j = 1,..., p$. 
 
     - Rooted in Sklar’s theorem [^sklar].
 
-. . .  
+. . .
 
-    - Families of copula offer a wide range of dependence structures, constituting an active research area.
+- Families of copula offer a wide range of dependence structures, constituting an active research area.
 
 [^sklar]: See Supplement. 
   
@@ -330,7 +332,7 @@ The bivariate distribution approach, e.g.,
 
 - identifies a bivariate distribution of $(U_l, V_l)$ such that the marginal densities, $f_{U_l}$ and $f_{V_l}$, are equal to a pre-specified stationary marginal density $f_X$ for all $l$ transition kernels. 
 
-- Based on Proposition 1 [^prop1] of Zheng et al. (2022).
+  - Based on Proposition 1 [^prop1] of Zheng et al. (2022).
 
 . . .
 
@@ -393,6 +395,23 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 With priors specifications [^prior], the full simulation-based Bayesian estimation and prediction can be achieved using MCMC algorithms. 
 
 [^prior]: See Supplment. 
+
+## Simulation Setting   
+
+Simulated data: 
+
+- Generate $n = 2,000$ observations from the copula-based Gamma MTD model.
+
+Model fitting: 
+
+- Set the order $L = 5$ and consider the Gaussian copula with Gamma marginals.
+
+MCMC setting: 
+
+- Run $4$ MCMC chains with $8,000$ iterations each for all of the following scenarios. 
+
+  - Run the Gibbs sampler for $165, 000$ iterations, discard the first $5,000$ iterations as burn-in, and collect samples every $20$ iterations.
+
 
 ## Simulation Studies  
 
@@ -1157,15 +1176,15 @@ t6
 
 All nine scenarios (s1-9) were analyzed using $4$ chains with only one replicate. 
 
-- Recall that we have six $P \times \epsilon$ cases per scenario.
+- Recall that we have six cases per scenario.
 
 . . .
 
 Scenarios 1 and 2 were further evaluated with $40$ replicates to assess coverage and robustness. 
 
-- The overall coverage is the proportion of replicates for which the true value is contained within the interval. 
+- Most parameters achieve full coverage [^coveragedef], with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values. 
 
-- Most parameters achieve full coverage, with a few slightly below $1$, indicating that the posterior intervals reliably capture the true parameter values. 
+[^coveragedef]: The overall coverage is the proportion of replicates for which the true value is contained within the interval. 
 
 ## Coverage Assessment for Scenario 1 and 2, 40 Replicates [^coveragezigamma] [^coveragezigamma2]
 
@@ -1325,7 +1344,9 @@ Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LS
 
 . . .
 
-Beyond natural language processing (NLP), they have also shown effective in time series forecasting and 
+Beyond natural language processing (NLP), 
+
+- they have also shown effective in time series forecasting and 
 
 . . .
 
@@ -1661,6 +1682,42 @@ df
 
 # Data Application {#sec-data-application}
 
+--- 
+
+![](images/windpower.jpg){.absolute top=0 left=0 width="1200" height="675"}
+
+<div style="margin-top: 725px;">
+©️ 林 慕尧 / Chris Lim
+⏭️ Data Application
+</div>
+
+## Data Application
+
+Wind speed is a key proxy variable in energy forecasting.
+
+- Accurate prediction of wind speed is crucial for reliable power generation. 
+
+. . . 
+
+MERRA-2 data
+
+- were accessed from the NASA GES DISC Earthdata API.
+
+- Wind speed components at multiple heights for the Limon Wind Energy Center were further processed. 
+
+. . . 
+
+The datasets used are
+
+- hourly wind speeds (m/s) at heights of 50m above ground level
+
+- hourly wind speeds (m/s) at heights of 10m above ground level
+
+- hourly wind speeds (m/s) at heights of 2m above ground level
+
+for the year of 2024. 
+
+
 ## Experimental Setup   
 
 ::::: columns
@@ -1829,7 +1886,7 @@ df
 
 ### 
 
-- The model appropriately captures the predictive uncertainty across wind speeds at all heights.
+- The model appropriately captures the predictive uncertainty across wind speeds at all heights. 
 
 ::: 
 
@@ -1918,8 +1975,6 @@ Through simulation studies and data application,
 Part I and II
 
 - Current models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
-
-. . .  
 
 - Current models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications. 
 
