@@ -53,7 +53,7 @@
     "href": "index.html#introduction-and-objectives",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nOur work extends the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, extending beyond linear, Gaussian dynamics 1.\n\n\nHowever, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable.\n\n\nE.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models."
+    "text": "Introduction and Objectives\nOur work extends the architecture of the MTD model introduced by Zheng et al. (2022).\n\nIncludes various applications, extending beyond linear, Gaussian dynamics 1.\n\n\nHowever, for certain invariant marginals, the transition kernel may be difficult to construct or lacks a simple explicit form.\n\n\n\nObjectives: Propose to incorporate copulas into the transition kernels to address this limitation, thereby enhancing modeling capabilities and flexibility.\n\n\n\n\nDevelop the Gamma MTD model, but the framework is generalizable.\n\n\nE.g., Gaussian mixture, Poisson, Negative Binomial, and Lomax regression MTD models."
   },
   {
     "objectID": "index.html#model-framework-dag-also-known-as-bayesian-network",
@@ -81,7 +81,7 @@
     "href": "index.html#copula",
     "title": "",
     "section": "Copula",
-    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate dependence from marginals.\n\n\n\n\nCopula is a multivariate cumulative distribution function (cdf) with \\(\\text{Unif}(0, 1)\\) marginals.\n\n\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: a copula, \\(C\\), and the marginals, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem 1.\nFamilies of copula offer a wide range of dependence structures, constituting an active research area.\n\n\n\nSee Supplement."
+    "text": "Copula\nCopula provide a flexible framework for dependence modeling.\n\nWidely used in quantitative finance, reliability engineering, hydrology, etc.\n\n\n\nSeparate dependence from marginals.\n\n\n\n\nCopula is a multivariate cumulative distribution function (cdf) with \\(\\text{Unif}(0, 1)\\) marginals.\n\n\n\n\nUsing copula, any joint distribution, \\(F\\), can be decomposed into two parts: a copula, \\(C\\), and the marginals, \\(F_j\\), \\(j = 1,..., p\\).\n\nRooted in Sklar’s theorem 1.\n\n\n\n\n- Families of copula offer a wide range of dependence structures, constituting an active research area.\n\nSee Supplement."
   },
   {
     "objectID": "index.html#existing-method-to-proposed-method",
@@ -102,7 +102,7 @@
     "href": "index.html#bayesian-implementation",
     "title": "",
     "section": "Bayesian Implementation",
-    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches and estimated via EM algorithms.\n\nZheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms.\n\nOur work: Copula-based extension of the Bayesian MTD framework."
+    "text": "Bayesian Implementation\nEarlier MTD models were built through frequentist approaches and estimated via EM algorithms.\n\nZheng et al. (2022) develope the Bayesian MTD model and estimated via Markov chain Monte Carlo (MCMC) algorithms.\n\nOur work: Copula-based extension of the Bayesian MTD framework."
   },
   {
     "objectID": "index.html#bayesian-implementation-1",
@@ -144,7 +144,7 @@
     "href": "index.html#introduction-1",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
+    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and\n\nfrequently appear in domains such as healthcare, insurance, environment, and transportation.\n\n\n\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\n\n\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
   },
   {
     "objectID": "index.html#introduction-and-objectives-1",
@@ -263,14 +263,14 @@
     "href": "index.html#introduction-2",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.\n\nBeyond natural language processing (NLP), they have also shown effective in time series forecasting and have been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
+    "text": "Introduction\nRecurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are\n\nwidely used for modeling sequence data because of their ability to capture short- and long-term dependencies.\n\n\nBeyond natural language processing (NLP), they have also shown effective in time series forecasting and\n\n\n\nhave been employed for applications including\n\nfinancial market prediction,\nenergy forecasting,\nweather and climate modeling, and\nepidemiological trend analysis."
   },
   {
     "objectID": "index.html#introduction-and-objectives-2",
     "href": "index.html#introduction-and-objectives-2",
     "title": "",
     "section": "Introduction and Objectives",
-    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, with UQ and interpretability, though at higher computational cost and with more involved model design."
+    "text": "Introduction and Objectives\nHowever,\n\nprevious studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.\n\n\n\nA prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.\n\n\n\n\nObjectives: Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.\n\n\n\n\nDemonstrate that our proposed MTDs outperform LSTMs in accuracy, with UQ and interpretability, though at higher computational cost and with more involved model design."
   },
   {
     "objectID": "index.html#rnn-recurrent-neural-network",
@@ -403,7 +403,7 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nBoth of the MTD models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nThe current models use Gamma marginals. Future work could incorporate beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.\n\n\n\n\nAlthough the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
+    "text": "Future Work\nPart I and II\n\nCurrent models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\n\n\n\nCurrent models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.\n\n\n\n\nAlthough current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
   },
   {
     "objectID": "index.html#future-work-1",

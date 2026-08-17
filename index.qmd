@@ -97,7 +97,8 @@ plot_variable_by_year <- function(data, variable, m, plot) {
       axis.text.x = element_text(size = 18), 
       axis.text.y = element_text(size = 18), 
       plot.caption = element_text(size = 18, hjust = 0) 
-    ) 
+    ) + 
+    ylim(0, 23)
   return(p_ts)
 }
 ```
@@ -204,7 +205,7 @@ Our work extends the architecture of the MTD model introduced by Zheng et al. (2
 
 - Includes various applications, extending beyond linear, Gaussian dynamics [^gaussian]. 
 
-[^gaussian]: E.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models. 
+[^gaussian]: E.g., Gaussian mixture, Poisson, Negative Binomial, and Lomax regression MTD models. 
 
 . . .    
 
@@ -312,9 +313,11 @@ Copula provide a flexible framework for dependence modeling.
 
 . . .
 
-  - Using copula, any joint distribution, $F$, can be decomposed into two parts: a copula, $C$, and the marginals, $F_j$, $j = 1,..., p$.
+  - Using copula, any joint distribution, $F$, can be decomposed into two parts: a copula, $C$, and the marginals, $F_j$, $j = 1,..., p$. 
 
     - Rooted in Sklar’s theorem [^sklar].
+
+. . .  
 
     - Families of copula offer a wide range of dependence structures, constituting an active research area.
 
@@ -365,7 +368,7 @@ Earlier MTD models were built through frequentist approaches and estimated via E
 
 . . .
 
-Zheng et al. (2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms. 
+Zheng et al. (2022) develope the Bayesian MTD model and estimated via Markov chain Monte Carlo (MCMC) algorithms. 
 
 - Our work: Copula-based extension of the Bayesian MTD framework. 
 
@@ -484,17 +487,21 @@ We are not gonna discuss them here [^sen].
 
 ## Introduction  
 
-Zero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation. 
+Zero-inflated data are characterized by an excess of zero values and 
 
-Examples include 
+- frequently appear in domains such as healthcare, insurance, environment, and transportation. 
 
-- medical costs, 
+. . .
 
-- insurance claims, 
+- Examples include 
 
-- precipitation amounts, and 
+  - medical costs, 
 
-- safety measures.
+  - insurance claims, 
+
+  - precipitation amounts, and 
+
+  - safety measures.
 
 . . .
 
@@ -1312,25 +1319,33 @@ readRDS(file.path(output_dir, "p6.rds"))
 
 ## Introduction   
 
-Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.
+Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are 
+
+- widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.
 
 . . .
 
-Beyond natural language processing (NLP), they have also shown effective in time series forecasting and have been employed for applications including
+Beyond natural language processing (NLP), they have also shown effective in time series forecasting and 
 
-- financial market prediction, 
+. . .
 
-- energy forecasting,
+- have been employed for applications including
 
-- weather and climate modeling, and
+  - financial market prediction, 
 
-- epidemiological trend analysis.
+  - energy forecasting,
+
+  - weather and climate modeling, and
+
+  - epidemiological trend analysis.
 
 ## Introduction and Objectives  
 
 However, 
 
 - previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.
+
+. . .
 
 - A prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.
 
@@ -1902,15 +1917,15 @@ Through simulation studies and data application,
 
 Part I and II
 
-- Both of the MTD models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
+- Current models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
 
 . . .  
 
-- The current models use Gamma marginals. Future work could incorporate beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications. 
+- Current models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications. 
 
 . . .  
 
-- Although the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure. 
+- Although current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure. 
 
 . . .  
 

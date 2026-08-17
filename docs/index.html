@@ -300,7 +300,7 @@
 <p>Develop the Gamma MTD model, but the framework is generalizable.</p>
 </blockquote>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>E.g., Gaussian mixture, Poisson, negative binomial, and Lomax regression MTD models.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>E.g., Gaussian mixture, Poisson, Negative Binomial, and Lomax regression MTD models.</p></li></ol></aside></section>
 <section id="model-framework-dag-also-known-as-bayesian-network" class="slide level2">
 <h2>Model Framework: DAG; also known as Bayesian Network</h2>
 <p>Let <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span> be a time series. Construct the model on a DAG, the joint distribution of <span class="math inline">\(X_1\)</span> to <span class="math inline">\(X_t\)</span> can be factorized into a product of conditional distributions as</p>
@@ -456,10 +456,12 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <ul>
 <li><p>Using copula, any joint distribution, <span class="math inline">\(F\)</span>, can be decomposed into two parts: a copula, <span class="math inline">\(C\)</span>, and the marginals, <span class="math inline">\(F_j\)</span>, <span class="math inline">\(j = 1,..., p\)</span>.</p>
 <ul>
-<li><p>Rooted in Sklar’s theorem <sup>1</sup>.</p></li>
-<li><p>Families of copula offer a wide range of dependence structures, constituting an active research area.</p></li>
+<li>Rooted in Sklar’s theorem <sup>1</sup>.</li>
 </ul></li>
 </ul>
+</div>
+<div class="fragment">
+<pre><code>- Families of copula offer a wide range of dependence structures, constituting an active research area.</code></pre>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn5"><p>See Supplement.</p></li></ol></aside></section>
 <section id="existing-method-to-proposed-method" class="slide level2 scrollable">
@@ -498,7 +500,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \tag{3
 <h2>Bayesian Implementation</h2>
 <p>Earlier MTD models were built through frequentist approaches and estimated via EM algorithms.</p>
 <div class="fragment">
-<p>Zheng et al.&nbsp;(2022) develope the Bayesian MTD model estimated via Markov chain Monte Carlo (MCMC) algorithms.</p>
+<p>Zheng et al.&nbsp;(2022) develope the Bayesian MTD model and estimated via Markov chain Monte Carlo (MCMC) algorithms.</p>
 <ul>
 <li>Our work: Copula-based extension of the Bayesian MTD framework.</li>
 </ul>
@@ -615,14 +617,21 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 </section>
 <section id="introduction-1" class="slide level2">
 <h2>Introduction</h2>
-<p>Zero-inflated data are characterized by an excess of zero values and frequently appear in domains such as healthcare, insurance, environment, and transportation.</p>
-<p>Examples include</p>
+<p>Zero-inflated data are characterized by an excess of zero values and</p>
+<ul>
+<li>frequently appear in domains such as healthcare, insurance, environment, and transportation.</li>
+</ul>
+<div class="fragment">
+<ul>
+<li><p>Examples include</p>
 <ul>
 <li><p>medical costs,</p></li>
 <li><p>insurance claims,</p></li>
 <li><p>precipitation amounts, and</p></li>
 <li><p>safety measures.</p></li>
+</ul></li>
 </ul>
+</div>
 <div class="fragment">
 <p>If left unaddressed, zero-inflation undermines model robustness and weakens inference.</p>
 </div>
@@ -1795,14 +1804,22 @@ f(x) =
 </section>
 <section id="introduction-2" class="slide level2">
 <h2>Introduction</h2>
-<p>Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.</p>
+<p>Recurrent Neural Networks (RNNs), and their variants, Long Short-Term Memory (LSTMs), are</p>
+<ul>
+<li>widely used for modeling sequence data because of their ability to capture short- and long-term dependencies.</li>
+</ul>
 <div class="fragment">
-<p>Beyond natural language processing (NLP), they have also shown effective in time series forecasting and have been employed for applications including</p>
+<p>Beyond natural language processing (NLP), they have also shown effective in time series forecasting and</p>
+</div>
+<div class="fragment">
+<ul>
+<li><p>have been employed for applications including</p>
 <ul>
 <li><p>financial market prediction,</p></li>
 <li><p>energy forecasting,</p></li>
 <li><p>weather and climate modeling, and</p></li>
 <li><p>epidemiological trend analysis.</p></li>
+</ul></li>
 </ul>
 </div>
 </section>
@@ -1810,9 +1827,13 @@ f(x) =
 <h2>Introduction and Objectives</h2>
 <p>However,</p>
 <ul>
-<li><p>previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.</p></li>
-<li><p>A prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.</p></li>
+<li>previous studies comparing LSTMs to traditional models such as ARIMA often claim LSTM superiority, which can be misleading when the benchmarks chosen are inappropriate.</li>
 </ul>
+<div class="fragment">
+<ul>
+<li>A prior study found comparable performance between the MTD model and the LSTM network for predicting, e.g., disease spread.</li>
+</ul>
+</div>
 <div class="fragment">
 <blockquote>
 <p><strong>Objectives:</strong> Evaluate LSTM and MTD models to ensure a fair and balanced comparison of their performance and robustness.</p>
@@ -2575,16 +2596,16 @@ f(x) =
 <h2>Future Work</h2>
 <p>Part I and II</p>
 <ul>
-<li>Both of the MTD models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</li>
+<li>Current models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</li>
 </ul>
 <div class="fragment">
 <ul>
-<li>The current models use Gamma marginals. Future work could incorporate beta, lognormal, or Weibull distributions to accommodate different data characteristics and applications.</li>
+<li>Current models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>Although the current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.</li>
+<li>Although current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.</li>
 </ul>
 </div>
 <div class="fragment">
