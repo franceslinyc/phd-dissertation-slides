@@ -417,7 +417,7 @@
     "href": "index.html#future-work",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart I and II\n\nCurrent models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nCurrent models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.\n\n\n\nAlthough current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
+    "text": "Future Work\nPart I and II\n\nFuture work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.\nFuture work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.\n\n\n\nAlthough current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.\n\n\n\n\nWe use MCMC as the primary estimation method. Alternative approaches such as Variational Inference or Sequential Monte Carlo could provide additional computational advantages."
   },
   {
     "objectID": "index.html#future-work-1",
@@ -431,7 +431,7 @@
     "href": "index.html#acknowledgement",
     "title": "",
     "section": "Acknowledgement",
-    "text": "Acknowledgement\nThank you to Lisa Madsen and Charlotte Wickham, for your dedication, support, and inspiration throughout the process.\nThank you to my committee memebers, James Molyneux, Claudio Fuentes, and Prasad Tadepalli, for the time you dedicated and valuable feedback.\nThank you to Xiaotian Zheng for being incredibly generous with your time and advices.\n\nThank you to my family, my mom, dad, and brother, for your occational financial support and for your patience and understanding througout the journey.\nThank you to my friends, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.\nSpecial thanks to my partner, Joseph, for your timely distractions and annoyances.\nThank you to many others."
+    "text": "Acknowledgement\nThank you to Lisa Madsen and Charlotte Wickham, for your dedication, support, and inspiration throughout the process.\nThank you to my committee memebers, James Molyneux, Claudio Fuentes, and Prasad Tadepalli, for the time you dedicated and valuable feedback.\nThank you to Xiaotian Zheng for being incredibly generous with your time and advices.\n\nThank you to my family, my mom, dad, and brother, for your occational financial support and for your patience and understanding througout the journey.\nThank you to my friends, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.\nSpecial thanks to my partner, Joseph, for your timely distractions and cute annoyances.\nThank you to many others."
   },
   {
     "objectID": "index.html#acknowledgement-1",

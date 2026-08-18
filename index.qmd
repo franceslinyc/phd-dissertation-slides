@@ -1974,9 +1974,9 @@ Through simulation studies and data application,
 
 Part I and II
 
-- Current models utilize Gaussian copula. Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
+- Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
 
-- Current models use Gamma marginals and their ZI version. Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications. 
+- Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications. 
 
 . . .  
 
@@ -2018,7 +2018,7 @@ Thank you to `my family`, my mom, dad, and brother, for your occational financia
 
 Thank you to `my friends`, including my cohort, for your emotional support and for always being there, from late-night talks and fun hikes to ski trips and random food adventures.
 
-Special thanks to `my partner`, Joseph, for your timely distractions and annoyances. 
+Special thanks to `my partner`, Joseph, for your timely distractions and cute annoyances. 
 
 Thank you to many others. 
 
