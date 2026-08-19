@@ -222,7 +222,7 @@ However, for certain invariant marginals, the transition kernel may be difficult
 ## Model Framework: DAG; also known as Bayesian Network
 
 ::: {.callout-tip}
-## Model Setup
+## Basic Idea
 
 Let $\{ X_t: t \in \mathbb{N} \}$ be a time series. Construct the model on a DAG, the joint distribution of $X_1$ to $X_t$ can be factorized into a product of conditional distributions as
 ```{=latex}
@@ -272,7 +272,7 @@ graph {
 ## Model Framework: Transition Kernels and Mixture Weights 
 
 ::: {.callout-tip}
-## Model Setup
+## Current framework
 
 For $t > L$, the MTD model specifies the conditional distribution of $X_t$ given $\textbf{X}^{t-1} = \textbf{x}^{t-1}$ as 
 ```{=latex}
@@ -355,7 +355,7 @@ The construction of such transition kernel can be challenging or lacks a simple 
 ## Proposed Method  
 
 ::: {.callout-tip}
-## Model Setup
+## Copula extension 
 
 Replace $f_{U_l}$ and $f_{V_l}$ with a pre-specified stationary marginal density, $f_X$, for every $x_t$ and for all $l$. For $t > L$, the proposed copula-based MTD model specifies the conditional distribution as
 ```{=latex}
@@ -389,7 +389,8 @@ Zheng et al. (2022) develope the Bayesian MTD model and estimated via Markov cha
 
 ## Bayesian Implementation  
 
-Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel the data belongs to. 
+::: {.callout-tip}
+## Bayesian Updating
 
 The posterior distribution of the parameters, based on the conditional likelihood, is
 ```{=latex} 
@@ -401,6 +402,11 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 \end{equation}
 ```
 [$\boldsymbol{w}$ is the mixture weights. $\boldsymbol{\theta}$ collects parameters for the transition kernel. $D_n = {\{x_t\}}_{t=L+1}^n$ is the data.]{style="font-size: 80%"}
+::: 
+
+. . .
+
+Inference is facilitated through a set of latent variables ${\{Z_t\}}_{t=L+1}^n$. $Z_t = l$ indicates which $l$th kernel the data belongs to. 
 
 . . .
 
