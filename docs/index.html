@@ -517,7 +517,7 @@ f(x_t | \textbf{x}^{t-1}) = \sum_{l=1}^L w_l f_l (x_t | x_{t-l}). \tag{2}
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Copula extension</strong></p>
+<p><strong>Our copula extension</strong></p>
 </div>
 <div class="callout-content">
 <p>Replace <span class="math inline">\(f_{U_l}\)</span> and <span class="math inline">\(f_{V_l}\)</span> with a pre-specified stationary marginal density, <span class="math inline">\(f_X\)</span>, for every <span class="math inline">\(x_t\)</span> and for all <span class="math inline">\(l\)</span>. For <span class="math inline">\(t &gt; L\)</span>, the proposed copula-based MTD model specifies the conditional distribution as</p>
@@ -736,14 +736,27 @@ p(\boldsymbol{w}, \boldsymbol{\theta}, {\{z_t\}}_{t=L+1}^n | D_n) \propto \pi_w(
 <div class="fragment">
 <p>Instead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.</p>
 <ul>
-<li><p>Based on the continuous extension (CE) approach by Denuit and Lambert (2005).</p></li>
-<li><p>Has been applied in discrete and spatial settings but not in our specific setting.</p></li>
+<li>Based on the continuous extension (CE) approach by Denuit and Lambert (2005).</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Has been applied in discrete and spatial settings but not in our specific setting.</li>
 </ul>
 </div>
 </section>
 <section id="proposed-method-1" class="slide level2">
 <h2>Proposed Method</h2>
 <p>To construct zero-inflated Gamma for the marginal distribution,</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Step 1</strong></p>
+</div>
+<div class="callout-content">
 <ul>
 <li>The Gamma distribution is first reparametrized in terms of the mean, <span class="math inline">\(\mu\)</span>, and the scale parameter, <span class="math inline">\(\beta\)</span>. Specifically,</li>
 </ul>
@@ -752,9 +765,22 @@ f(y; \mu, \beta) =
 \frac{1} {\Gamma(\frac{\mu}{\beta}) \beta^{\frac{\mu}{\beta}}} {y}^{\frac{\mu}{\beta} - 1} \exp(- \frac{y} {\beta}) \quad y \geq 0, \tag{5}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(\frac{\mu}{\beta} &gt; 0\)</span> denotes the shape and <span class="math inline">\(\beta &gt; 0\)</span> the scale parameter.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="proposed-method-2" class="slide level2">
 <h2>Proposed Method</h2>
+<p>To construct zero-inflated Gamma for the marginal distribution,</p>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Step 2</strong></p>
+</div>
+<div class="callout-content">
 <ul>
 <li>Zero values are then replaced with non-zero values drawn from a uniform distribution. Specifically,</li>
 </ul>
@@ -762,9 +788,21 @@ f(y; \mu, \beta) =
 0 \leftarrow U_i, \tag{6}
 \end{equation}\]</span>
 <p>where <span class="math inline">\(U_i\)</span> follows a continuous uniform distribution on <span class="math inline">\((0, \epsilon)\)</span> with <span class="math inline">\(\epsilon\)</span> is a data-driven paramater representing the smallest observed non-zero values.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="proposed-method-3" class="slide level2 scrollable">
 <h2>Proposed Method</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Our ZIGamma Distribution</strong></p>
+</div>
+<div class="callout-content">
 <p>The resulting distribution, denoted as <span class="math inline">\(\text{ZIGamma}(\mu, \beta, P, \epsilon)\)</span>, is expressed as:</p>
 <span class="math display">\[\begin{equation}
 f(x) =
@@ -774,6 +812,9 @@ f(x) =
 \end{cases} \tag{7}
 \end{equation}\]</span>
 <p><span style="font-size: 80%">where <span class="math inline">\(\mu\)</span> denotes the mean and <span class="math inline">\(\beta\)</span> the scale parameter of the shifted Gamma distribution, <span class="math inline">\(P \in [0, 1]\)</span> the zero-inflated probability, and <span class="math inline">\(\epsilon &gt; 0\)</span> the threshold parameter.</span></p>
+</div>
+</div>
+</div>
 <div class="fragment">
 <p>In (7), there are two parts:</p>
 <ul>
@@ -2308,7 +2349,7 @@ f(x) =
 <li>Accurate prediction of wind speed is crucial for reliable power generation.</li>
 </ul>
 <div class="fragment">
-<p>MERRA-2 data</p>
+<p>NASA MERRA-2 data</p>
 <ul>
 <li><p>were accessed from the NASA GES DISC Earthdata API.</p></li>
 <li><p>Wind speed components at multiple heights for the Limon Wind Energy Center were further processed.</p></li>

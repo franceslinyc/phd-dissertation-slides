@@ -95,7 +95,7 @@
     "href": "index.html#proposed-method",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\n\n\n\n\n\n\nCopula extension\n\n\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\n\n\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
+    "text": "Proposed Method\n\n\n\n\n\n\nOur copula extension\n\n\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\n\n\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
   },
   {
     "objectID": "index.html#bayesian-implementation",
@@ -165,28 +165,28 @@
     "href": "index.html#existing-method-to-proposed-method-1",
     "title": "",
     "section": "Existing Method to Proposed Method",
-    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\nHas been applied in discrete and spatial settings but not in our specific setting."
+    "text": "Existing Method to Proposed Method\nOur approach is similar to hurdle models, one of the two primary frameworks for zero-inflated data, where zeros occur only in the binary part.\n\nInstead of generating exact zeros, our approach applies a soft threshold that replaces them with small non-zero values.\n\nBased on the continuous extension (CE) approach by Denuit and Lambert (2005).\n\n\n\n\nHas been applied in discrete and spatial settings but not in our specific setting."
   },
   {
     "objectID": "index.html#proposed-method-1",
     "href": "index.html#proposed-method-1",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\nThe Gamma distribution is first reparametrized in terms of the mean, \\(\\mu\\), and the scale parameter, \\(\\beta\\). Specifically,\n\n\\[\\begin{equation}\nf(y; \\mu, \\beta) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {y}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y} {\\beta}) \\quad y \\geq 0, \\tag{5}\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape and \\(\\beta &gt; 0\\) the scale parameter."
+    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\n\n\n\n\n\nStep 1\n\n\n\nThe Gamma distribution is first reparametrized in terms of the mean, \\(\\mu\\), and the scale parameter, \\(\\beta\\). Specifically,\n\n\\[\\begin{equation}\nf(y; \\mu, \\beta) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {y}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y} {\\beta}) \\quad y \\geq 0, \\tag{5}\n\\end{equation}\\]\nwhere \\(\\frac{\\mu}{\\beta} &gt; 0\\) denotes the shape and \\(\\beta &gt; 0\\) the scale parameter."
   },
   {
     "objectID": "index.html#proposed-method-2",
     "href": "index.html#proposed-method-2",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\n\nZero values are then replaced with non-zero values drawn from a uniform distribution. Specifically,\n\n\\[\\begin{equation}\n0 \\leftarrow U_i, \\tag{6}\n\\end{equation}\\]\nwhere \\(U_i\\) follows a continuous uniform distribution on \\((0, \\epsilon)\\) with \\(\\epsilon\\) is a data-driven paramater representing the smallest observed non-zero values."
+    "text": "Proposed Method\nTo construct zero-inflated Gamma for the marginal distribution,\n\n\n\n\n\n\nStep 2\n\n\n\nZero values are then replaced with non-zero values drawn from a uniform distribution. Specifically,\n\n\\[\\begin{equation}\n0 \\leftarrow U_i, \\tag{6}\n\\end{equation}\\]\nwhere \\(U_i\\) follows a continuous uniform distribution on \\((0, \\epsilon)\\) with \\(\\epsilon\\) is a data-driven paramater representing the smallest observed non-zero values."
   },
   {
     "objectID": "index.html#proposed-method-3",
     "href": "index.html#proposed-method-3",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\nIn (7), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
+    "text": "Proposed Method\n\n\n\n\n\n\nOur ZIGamma Distribution\n\n\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\n\n\n\nIn (7), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -354,7 +354,7 @@
     "href": "index.html#data-application",
     "title": "",
     "section": "Data Application",
-    "text": "Data Application\nWind speed is a key proxy variable in energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\nMERRA-2 data\n\nwere accessed from the NASA GES DISC Earthdata API.\nWind speed components at multiple heights for the Limon Wind Energy Center were further processed.\n\n\n\nThe datasets used are\n\nhourly wind speeds (m/s) at heights of 50m above ground level\nhourly wind speeds (m/s) at heights of 10m above ground level\nhourly wind speeds (m/s) at heights of 2m above ground level\n\nfor the year of 2024."
+    "text": "Data Application\nWind speed is a key proxy variable in energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\nNASA MERRA-2 data\n\nwere accessed from the NASA GES DISC Earthdata API.\nWind speed components at multiple heights for the Limon Wind Energy Center were further processed.\n\n\n\nThe datasets used are\n\nhourly wind speeds (m/s) at heights of 50m above ground level\nhourly wind speeds (m/s) at heights of 10m above ground level\nhourly wind speeds (m/s) at heights of 2m above ground level\n\nfor the year of 2024."
   },
   {
     "objectID": "index.html#experimental-setup-2",

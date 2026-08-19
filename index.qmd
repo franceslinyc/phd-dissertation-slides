@@ -355,7 +355,7 @@ The construction of such transition kernel can be challenging or lacks a simple 
 ## Proposed Method  
 
 ::: {.callout-tip}
-## Copula extension 
+## Our copula extension 
 
 Replace $f_{U_l}$ and $f_{V_l}$ with a pre-specified stationary marginal density, $f_X$, for every $x_t$ and for all $l$. For $t > L$, the proposed copula-based MTD model specifies the conditional distribution as
 ```{=latex}
@@ -574,13 +574,16 @@ Instead of generating exact zeros, our approach applies a soft threshold that re
 
 - Based on the continuous extension (CE) approach by Denuit and Lambert (2005). 
 
+. . .
+
 - Has been applied in discrete and spatial settings but not in our specific setting. 
-
-
 
 ## Proposed Method  
 
 To construct zero-inflated Gamma for the marginal distribution, 
+
+::: {.callout-tip}
+## Step 1
 
 - The Gamma distribution is first reparametrized in terms of the mean, $\mu$, and the scale parameter, $\beta$. Specifically,
 ```{=latex} 
@@ -591,7 +594,14 @@ f(y; \mu, \beta) =
 ```
 where $\frac{\mu}{\beta} > 0$ denotes the shape and $\beta > 0$ the scale parameter.
 
+::: 
+
 ## Proposed Method  
+
+To construct zero-inflated Gamma for the marginal distribution, 
+
+::: {.callout-tip}
+## Step 2
 
 - Zero values are then replaced with non-zero values drawn from a uniform distribution. Specifically,
 ```{=latex} 
@@ -601,7 +611,12 @@ where $\frac{\mu}{\beta} > 0$ denotes the shape and $\beta > 0$ the scale parame
 ```
 where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\epsilon$ is a data-driven paramater representing the smallest observed non-zero values.
 
+::: 
+
 ## Proposed Method  
+
+::: {.callout-tip}
+## Our ZIGamma Distribution
 
 The resulting distribution, denoted as $\text{ZIGamma}(\mu, \beta, P, \epsilon)$, is expressed as:
 ```{=latex} 
@@ -614,6 +629,8 @@ f(x) =
 \end{equation}
 ```
 [where $\mu$ denotes the mean and $\beta$ the scale parameter of the shifted Gamma distribution, $P \in [0, 1]$ the zero-inflated probability, and $\epsilon > 0$ the threshold parameter.]{style="font-size: 80%"} 
+
+::: 
 
 . . .
 
@@ -1717,7 +1734,7 @@ Wind speed is a key proxy variable in energy forecasting.
 
 . . . 
 
-MERRA-2 data
+NASA MERRA-2 data
 
 - were accessed from the NASA GES DISC Earthdata API.
 
