@@ -642,7 +642,7 @@ In (7), there are two parts:
 
 [^shiftedgamma]: See Supplement. 
 
-## dzig (pdf of zigamma)  
+## dzig (pdf of zigamma )
 
 ::: {.panel-tabset}
 
@@ -739,7 +739,7 @@ plot_dzig(mu = 7, beta = 1, Pi = 0.7, eps = 0.4, y_lim = 7)
 
 :::
 
-## pzig (cdf of zigamma) [^pzig]
+## pzig (cdf of zigamma)[^pzig]
 
 ::: {.panel-tabset}
 
