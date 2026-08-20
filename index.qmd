@@ -355,7 +355,7 @@ The construction of such transition kernel can be challenging or lacks a simple 
 ## Proposed Method  
 
 ::: {.callout-tip}
-## Our copula extension 
+## Copula extension 
 
 Replace $f_{U_l}$ and $f_{V_l}$ with a pre-specified stationary marginal density, $f_X$, for every $x_t$ and for all $l$. For $t > L$, the proposed copula-based MTD model specifies the conditional distribution as
 ```{=latex}
@@ -514,7 +514,7 @@ Since the preliminary exam, we have also conducted:
 
 - Prediction 
 
-We are not gonna discuss them here [^sen].
+The model performs well across these evaluations, but we are not gonna discuss them here [^sen].
 
 [^sen]: See Supplement. 
 
@@ -538,7 +538,7 @@ Zero-inflated data are characterized by an excess of zero values and
 
   - precipitation amounts, and 
 
-  - safety measures.
+  - break responses.
 
 . . .
 
@@ -616,7 +616,7 @@ where $U_i$ follows a continuous uniform distribution on $(0, \epsilon)$ with $\
 ## Proposed Method  
 
 ::: {.callout-tip}
-## Our ZIGamma Distribution
+## ZIGamma Distribution
 
 The resulting distribution, denoted as $\text{ZIGamma}(\mu, \beta, P, \epsilon)$, is expressed as:
 ```{=latex} 
@@ -2025,9 +2025,11 @@ Part I and II
 
 Part III
 
-- Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models [^transformer]. 
+- Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models [^transformer] [^transformer2]. 
 
 [^transformer]: E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs. 
+
+[^transformer2]: Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM. 
 
 - It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 

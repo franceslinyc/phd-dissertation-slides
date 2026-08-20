@@ -95,7 +95,7 @@
     "href": "index.html#proposed-method",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\n\n\n\n\n\n\nOur copula extension\n\n\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\n\n\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
+    "text": "Proposed Method\n\n\n\n\n\n\nCopula extension\n\n\nReplace \\(f_{U_l}\\) and \\(f_{V_l}\\) with a pre-specified stationary marginal density, \\(f_X\\), for every \\(x_t\\) and for all \\(l\\). For \\(t &gt; L\\), the proposed copula-based MTD model specifies the conditional distribution as\n\\[\\begin{equation}\nf(x_t | \\textbf{x}^{t-1}) = \\sum_{l=1}^L w_l c_l (x_t, x_{t-l}) f_X(x_t). \\tag{3}\n\\label{eq:cond_distribution_copula}\n\\end{equation}\\]\n\\(c_l (x_t, x_{t-l})\\) is the copula density evaluated at \\(x_t\\) and \\(x_{t-l}\\), and \\(f_X(x_t)\\) is the stationary marginal density evaluated at \\(x_t\\).\n\n\n\n\nCompared to (2), the transition kernel, \\(f_l\\), is now replaced by two components:\n\nCopula density, \\(c_l\\), captures and controls the strength of the dependence through a dependence parameter.\nStationary marginal density, \\(f_X\\), describes the marginal behavior through distribution parameters."
   },
   {
     "objectID": "index.html#bayesian-implementation",
@@ -144,14 +144,14 @@
     "href": "index.html#whats-new",
     "title": "",
     "section": "What’s New",
-    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nPrediction\n\nWe are not gonna discuss them here 1.\nSee Supplement."
+    "text": "What’s New\nSince the preliminary exam, we have also conducted:\n\nSensitivity Analysis\nCoverage Assessment\nPrediction\n\nThe model performs well across these evaluations, but we are not gonna discuss them here 1.\nSee Supplement."
   },
   {
     "objectID": "index.html#introduction-1",
     "href": "index.html#introduction-1",
     "title": "",
     "section": "Introduction",
-    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and\n\nfrequently appear in domains such as healthcare, insurance, environment, and transportation.\n\n\n\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nsafety measures.\n\n\n\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
+    "text": "Introduction\nZero-inflated data are characterized by an excess of zero values and\n\nfrequently appear in domains such as healthcare, insurance, environment, and transportation.\n\n\n\nExamples include\n\nmedical costs,\ninsurance claims,\nprecipitation amounts, and\nbreak responses.\n\n\n\n\nIf left unaddressed, zero-inflation undermines model robustness and weakens inference."
   },
   {
     "objectID": "index.html#introduction-and-objectives-1",
@@ -186,7 +186,7 @@
     "href": "index.html#proposed-method-3",
     "title": "",
     "section": "Proposed Method",
-    "text": "Proposed Method\n\n\n\n\n\n\nOur ZIGamma Distribution\n\n\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\n\n\n\nIn (7), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
+    "text": "Proposed Method\n\n\n\n\n\n\nZIGamma Distribution\n\n\nThe resulting distribution, denoted as \\(\\text{ZIGamma}(\\mu, \\beta, P, \\epsilon)\\), is expressed as:\n\\[\\begin{equation}\nf(x) =\n\\begin{cases}\n\\text{Unif}(0, \\epsilon) & \\text{with probability } P \\\\\n\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon) & \\text{with probability } 1-P,\n\\end{cases} \\tag{7}\n\\end{equation}\\]\nwhere \\(\\mu\\) denotes the mean and \\(\\beta\\) the scale parameter of the shifted Gamma distribution, \\(P \\in [0, 1]\\) the zero-inflated probability, and \\(\\epsilon &gt; 0\\) the threshold parameter.\n\n\n\n\nIn (7), there are two parts:\n\nWe have already discussed the uniform distribution.\nThe shifted Gamma distribution 1, \\(\\text{ShiftedGamma}(\\mu, \\beta; \\epsilon)\\), is a standard Gamma distribution with mean \\(\\mu\\) and scale \\(\\beta\\) that is shifted to the right by \\(\\epsilon\\), with the support \\([\\epsilon, \\infty)\\).\n\n\nSee Supplement."
   },
   {
     "objectID": "index.html#dzig-pdf-of-zigamma",
@@ -424,7 +424,7 @@
     "href": "index.html#future-work-1",
     "title": "",
     "section": "Future Work",
-    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models 1.\n\n\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.\n\n\nE.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs."
+    "text": "Future Work\nPart III\n\nGiven the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models 1 2.\n\n\nIt is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.\n\n\n\nFuture work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.\n\n\nE.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM."
   },
   {
     "objectID": "index.html#acknowledgement",
