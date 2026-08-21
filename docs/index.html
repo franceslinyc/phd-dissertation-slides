@@ -309,7 +309,7 @@
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Basic Idea</strong></p>
+<p><strong>Model construction</strong></p>
 </div>
 <div class="callout-content">
 <p>Let <span class="math inline">\(\{ X_t: t \in \mathbb{N} \}\)</span> be a time series. Construct the model on a DAG, the joint distribution of <span class="math inline">\(X_1\)</span> to <span class="math inline">\(X_t\)</span> can be factorized into a product of conditional distributions as</p>
@@ -1154,8 +1154,8 @@ f(x) =
 </div>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn12"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li><li id="fn13"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
-<section id="simulation-results-res" class="slide level2 scrollable">
-<h2>Simulation Results <sup>1</sup></h2>
+<section id="simulation-results-resmar-resmar2" class="slide level2 scrollable">
+<h2>Simulation Results [^resmar] <sup>1</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-7-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-7-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -1443,7 +1443,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn14"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn14"><p>In our latest model version, <span class="math inline">\(\epsilon\)</span> is fixed at a data-driven value rather than estimated.</p></li></ol></aside></section>
 <section id="coverage-assessment" class="slide level2 scrollable">
 <h2>Coverage Assessment</h2>
 <p>All nine scenarios (s1-9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
@@ -2023,8 +2023,8 @@ f(x) =
 <li><p>batch size,</p></li>
 <li><p>number of epochs,</p></li>
 <li><p>learning rate</p></li>
-<li><p>number of hidden units or cell dimension,</p></li>
-<li><p>number of hidden layers, etc.</p></li>
+<li><p>number of hidden units or cell dimension, and</p></li>
+<li><p>number of hidden layers.</p></li>
 </ul>
 </div>
 </section></section>
@@ -2342,27 +2342,23 @@ f(x) =
 <p>©️ 林 慕尧 / Chris Lim ⏭️ Data Application</p>
 </div>
 </section>
-<section id="data-application" class="slide level2">
-<h2>Data Application</h2>
-<p>Wind speed is a key proxy variable in energy forecasting.</p>
+<section id="data-description" class="slide level2">
+<h2>Data Description</h2>
+<p>Wind speed exhibits a highly skewed distribution with strong temporal dependence.</p>
 <ul>
-<li>Accurate prediction of wind speed is crucial for reliable power generation.</li>
+<li>Accurate forecasting of wind speed is crucial for reliable power generation.</li>
 </ul>
 <div class="fragment">
 <p>NASA MERRA-2 data</p>
 <ul>
-<li><p>were accessed from the NASA GES DISC Earthdata API.</p></li>
-<li><p>Wind speed components at multiple heights for the Limon Wind Energy Center were further processed.</p></li>
+<li>Accessed via the NASA GES DISC Earthdata API and processed to derive wind speeds from wind components at multiple heights.</li>
 </ul>
 </div>
 <div class="fragment">
-<p>The datasets used are</p>
+<p>Datasets</p>
 <ul>
-<li><p>hourly wind speeds (m/s) at heights of 50m above ground level</p></li>
-<li><p>hourly wind speeds (m/s) at heights of 10m above ground level</p></li>
-<li><p>hourly wind speeds (m/s) at heights of 2m above ground level</p></li>
+<li>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024.</li>
 </ul>
-<p>for the year of 2024.</p>
 </div>
 </section>
 <section id="experimental-setup-2" class="slide level2 scrollable">
@@ -2384,7 +2380,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm">LSTM</h3>
 <ul>
-<li><p>For LSTM, we reuse the default configuration for these hyperparameters:</p>
+<li><p>Based on the sensitivity analysis, we use the following LSTM configuration:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
