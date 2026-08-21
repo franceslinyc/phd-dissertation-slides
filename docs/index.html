@@ -1155,7 +1155,7 @@ f(x) =
 </div>
 <aside><ol class="aside-footnotes"><li id="fn12"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li><li id="fn13"><p><span class="math inline">\(\boldsymbol{w}\)</span>, <span class="math inline">\(\boldsymbol{\rho}\)</span> for all other combinations of <span class="math inline">\(P = 0.1, 0.5, 0.7\)</span> and <span class="math inline">\(\epsilon = 0.1, 0.4\)</span> are similar and therefore omitted.</p></li></ol></aside></section>
 <section id="simulation-results-resmar-resmar2" class="slide level2 scrollable">
-<h2>Simulation Results [^resmar] <sup>1</sup></h2>
+<h2>Simulation Results <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
 <ul id="tabset-7" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-7-1"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-2"><span class="math inline">\(P = 0.1\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-7-3"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-4"><span class="math inline">\(P = 0.5\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li><li><a href="#tabset-7-5"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.1\)</span></a></li><li><a href="#tabset-7-6"><span class="math inline">\(P = 0.7\)</span> <span class="math inline">\(\epsilon = 0.4\)</span></a></li></ul>
 <div class="tab-content">
@@ -1443,7 +1443,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn14"><p>In our latest model version, <span class="math inline">\(\epsilon\)</span> is fixed at a data-driven value rather than estimated.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn14"><p>There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic <span class="math inline">\(R\)</span> and its upper CI <span class="math inline">\(\leq\)</span> <span class="math inline">\(1.1\)</span>).</p></li><li id="fn15"><p>In our latest model version, <span class="math inline">\(\epsilon\)</span> is fixed at a data-driven value rather than estimated.</p></li></ol></aside></section>
 <section id="coverage-assessment" class="slide level2 scrollable">
 <h2>Coverage Assessment</h2>
 <p>All nine scenarios (s1-9) were analyzed using <span class="math inline">\(4\)</span> chains with only one replicate.</p>
@@ -1456,7 +1456,7 @@ f(x) =
 <li>Most parameters achieve full coverage <sup>1</sup>, with a few slightly below <span class="math inline">\(1\)</span>, indicating that the posterior intervals reliably capture the true parameter values.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn15"><p>The overall coverage is the proportion of replicates for which the true value is contained within the interval.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn16"><p>The overall coverage is the proportion of replicates for which the true value is contained within the interval.</p></li></ol></aside></section>
 <section id="coverage-assessment-for-scenario-1-and-2-40-replicates-coveragezigamma-coveragezigamma2" class="slide level2 scrollable">
 <h2>Coverage Assessment for Scenario 1 and 2, 40 Replicates <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
@@ -1760,7 +1760,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn16"><p>Each row name indicates the combination of <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value). For example, P01Eps01 reads as <span class="math inline">\(P = 0.1\)</span> and <span class="math inline">\(\epsilon = 0.1\)</span>.</p></li><li id="fn17"><p>Each row involves <span class="math inline">\(40\)</span> replicates of simulated data, consisting of <span class="math inline">\(4\)</span> chains with <span class="math inline">\(8,000\)</span> samples per chain.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn17"><p>Each row name indicates the combination of <span class="math inline">\(P\)</span> (zero-inflated probability) and <span class="math inline">\(\epsilon\)</span> (threshold value). For example, P01Eps01 reads as <span class="math inline">\(P = 0.1\)</span> and <span class="math inline">\(\epsilon = 0.1\)</span>.</p></li><li id="fn18"><p>Each row involves <span class="math inline">\(40\)</span> replicates of simulated data, consisting of <span class="math inline">\(4\)</span> chains with <span class="math inline">\(8,000\)</span> samples per chain.</p></li></ol></aside></section>
 <section id="sec-ch2-prediction" class="slide level2">
 <h2>Prediction, <span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead</h2>
 <div class="columns">
@@ -1909,7 +1909,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn18"><p>Reported values show overall empirical coverage, with coverage below and above the threshold (<span class="math inline">\(\leq \epsilon\)</span>, <span class="math inline">\(&gt; \epsilon\)</span>) in parentheses.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn19"><p>Reported values show overall empirical coverage, with coverage below and above the threshold (<span class="math inline">\(\leq \epsilon\)</span>, <span class="math inline">\(&gt; \epsilon\)</span>) in parentheses.</p></li></ol></aside></section></section>
 <section>
 <section id="part-iii-copula-based-markov-mtd-models-vs.-deep-learning-lstm-networks" class="title-slide slide level1 center" data-background-color="#D73F09" color="white">
 <h1>Part III Copula-Based Markov MTD Models vs.&nbsp;Deep Learning LSTM Networks</h1>
@@ -2357,7 +2357,7 @@ f(x) =
 <div class="fragment">
 <p>Datasets</p>
 <ul>
-<li>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024.</li>
+<li>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024-2025.</li>
 </ul>
 </div>
 </section>
@@ -2390,7 +2390,7 @@ f(x) =
 <li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn19"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn20"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn20"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn21"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
@@ -2434,7 +2434,7 @@ f(x) =
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn21"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn22"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
 <section id="evaluation-results-datares-datares2" class="slide level2 scrollable">
 <h2>Evaluation Results <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
@@ -2568,7 +2568,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn22"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics.</p></li><li id="fn23"><p>MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn23"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics.</p></li><li id="fn24"><p>MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
 <section id="prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Prediction Errors <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
@@ -2609,7 +2609,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn24"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn25"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn25"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn26"><p>See Supplement for additional plots.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only" class="slide level2">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="columns">
@@ -2738,9 +2738,13 @@ f(x) =
 <h2>Future Work</h2>
 <p>Part I and II</p>
 <ul>
-<li><p>Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</p></li>
-<li><p>Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.</p></li>
+<li>Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry.</li>
 </ul>
+<div class="fragment">
+<ul>
+<li>Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications.</li>
+</ul>
+</div>
 <div class="fragment">
 <ul>
 <li>Although current framework assumes stationarity and does not incorporate external predictors, it can be readily extended by introducing additional model terms in the conditional mean structure.</li>
@@ -2758,15 +2762,17 @@ f(x) =
 <ul>
 <li>Given the growing prominence of transformers in sequence modeling, further research should extend performance comparisons to include transformer-based models <sup>1</sup> <sup>2</sup>.</li>
 </ul>
+<div class="fragment">
 <ul>
 <li>It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics.</li>
 </ul>
+</div>
 <div class="fragment">
 <ul>
 <li>Future work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn26"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn27"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn27"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn28"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
 <section>
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank you!</h1>
@@ -2857,7 +2863,7 @@ w_l = G(l/L) - G((l - 1)/L), \quad l = 1,..., L.
 \end{equation}\]</span>
 <p>Next place a Dirichlet process prior on <span class="math inline">\(G\)</span>, denoted as <span class="math inline">\(DP(\boldsymbol{\alpha}_0, \boldsymbol{G}_0)\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(\boldsymbol{G}_0 = Beta(a_0, b_0)\)</span>. <sup>3</sup></p>
 <p>Then the vector of weights follows a Dirichlet distribution with parameter vector <span class="math inline">\(\alpha_0 {(a_1, ..., a_L)}^T\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn28"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn29"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn30"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn29"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn30"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn31"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
 <section id="shifted-gamma-distribution" class="slide level2">
 <h2>Shifted Gamma Distribution</h2>
 <p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
@@ -3571,7 +3577,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn31"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn32"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
 <section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
 <h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
 <div class="panel-tabset">
@@ -3614,7 +3620,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn32"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn33"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

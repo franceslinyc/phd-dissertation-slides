@@ -1205,7 +1205,7 @@ t6
 
 :::
 
-[^ressmar]: There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic $R$ and its upper CI $\leq$ $1.1$). 
+[^resmar]: There is no evidence of lack of convergence for all parameters (Gelman-Rubin statistic $R$ and its upper CI $\leq$ $1.1$). 
 
 [^resmar2]: In our latest model version, $\epsilon$ is fixed at a data-driven value rather than estimated. 
 
@@ -1744,7 +1744,7 @@ NASA MERRA-2 data
 
 Datasets 
 
-- Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024.
+- Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024-2025.
 
 
 ## Experimental Setup   
@@ -2005,6 +2005,8 @@ Part I and II
 
 - Future work should include alternative copulas, like Clayton and Gumbel, to capture tail dependence and asymmetry. 
 
+. . .  
+
 - Future work could incorporate Beta, Lognormal, and Weibull distributions and their ZI versions to accommodate diverse data characteristics and applications. 
 
 . . .  
@@ -2024,6 +2026,8 @@ Part III
 [^transformer]: E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs. 
 
 [^transformer2]: Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM. 
+
+. . .  
 
 - It is important to ensure that evaluations are conducted using appropriate benchmarks and metrics. 
 
