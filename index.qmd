@@ -1728,23 +1728,52 @@ df
 ⏭️ Data Application
 </div>
 
-## Data Description
+## Motivation & Objectives
 
-Wind speed exhibits a highly skewed distribution with strong temporal dependence. 
+Problem
 
-- Accurate forecasting of wind speed is crucial for reliable power generation. 
+- Wind speed forecasting is a challenging time series problem.
+
+  - Strong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches. 
 
 . . . 
+
+- Accurate wind speed forecasting is important for reliable power generation. 
+
+. . . 
+
+Goal 
+
+- Produce accurate forecasts while appropriately capturing temporal dependence and skewness. 
+
+. . . 
+
+Approach 
+
+- Compare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data. 
+
+
+## Data Description & Processing 
 
 NASA MERRA-2 data
 
-- Accessed via the NASA GES DISC Earthdata API and processed to derive wind speeds from wind components at multiple heights.
+- Accessed via the NASA GES DISC Earthdata API. 
+
+- Derived wind speeds from the $U$ and $V$ wind components. 
+
+- Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025. 
 
 . . . 
 
-Datasets 
+Train/Test Split
 
-- Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024-2025.
+- Used an 80/20 chronological split, with the first $80%$ of observations used for training and the final $20%$ used for testing in order to preserve the temporal ordering. 
+
+. . . 
+
+LSTM Preprocessing 
+
+- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale. 
 
 
 ## Experimental Setup   
@@ -1755,7 +1784,7 @@ Datasets
 
 ### MTD
 
-- For MTD, the hyperparameter settings are:
+- For MTD, the hyperparameter settings were:
 
   - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
 
@@ -1775,7 +1804,7 @@ Datasets
 
 ### LSTM
 
-- Based on the sensitivity analysis, we use the following LSTM configuration: 
+- For LSTM, the configurations selected based on the literature and our experiments were: 
 
   - learning rate = $0.001$, 
   
@@ -2586,6 +2615,36 @@ where $\boldsymbol{W}$ denotes the weight matrices, $\boldsymbol{b}$ the bias ve
 
 ![](images/p_loss_real_bs64128256_v2.png)
 
+## Prediction Errors [^captiondiff], One-Step Ahead; Full Test Size $n = 1756$  
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_diff_full.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_diff_full.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_diff_full.rds"))
+```
+
+::: 
+
+[^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
+
 ## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$  
 
 ::: {.panel-tabset}
@@ -2645,3 +2704,4 @@ readRDS(file.path(output_dir, "p3_real_ts.rds"))
 ::: 
 
 [^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+

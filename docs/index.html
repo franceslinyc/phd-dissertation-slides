@@ -2342,22 +2342,51 @@ f(x) =
 <p>©️ 林 慕尧 / Chris Lim ⏭️ Data Application</p>
 </div>
 </section>
-<section id="data-description" class="slide level2">
-<h2>Data Description</h2>
-<p>Wind speed exhibits a highly skewed distribution with strong temporal dependence.</p>
+<section id="motivation-objectives" class="slide level2">
+<h2>Motivation &amp; Objectives</h2>
+<p>Problem</p>
 <ul>
-<li>Accurate forecasting of wind speed is crucial for reliable power generation.</li>
+<li><p>Wind speed forecasting is a challenging time series problem.</p>
+<ul>
+<li>Strong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches.</li>
+</ul></li>
 </ul>
 <div class="fragment">
-<p>NASA MERRA-2 data</p>
 <ul>
-<li>Accessed via the NASA GES DISC Earthdata API and processed to derive wind speeds from wind components at multiple heights.</li>
+<li>Accurate wind speed forecasting is important for reliable power generation.</li>
 </ul>
 </div>
 <div class="fragment">
-<p>Datasets</p>
+<p>Goal</p>
 <ul>
-<li>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024-2025.</li>
+<li>Produce accurate forecasts while appropriately capturing temporal dependence and skewness.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>Approach</p>
+<ul>
+<li>Compare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data.</li>
+</ul>
+</div>
+</section>
+<section id="data-description-processing" class="slide level2">
+<h2>Data Description &amp; Processing</h2>
+<p>NASA MERRA-2 data</p>
+<ul>
+<li><p>Accessed via the NASA GES DISC Earthdata API.</p></li>
+<li><p>Derived wind speeds from the <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> wind components.</p></li>
+<li><p>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025.</p></li>
+</ul>
+<div class="fragment">
+<p>Train/Test Split</p>
+<ul>
+<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80%\)</span> of observations used for training and the final <span class="math inline">\(20%\)</span> used for testing in order to preserve the temporal ordering.</li>
+</ul>
+</div>
+<div class="fragment">
+<p>LSTM Preprocessing</p>
+<ul>
+<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale.</li>
 </ul>
 </div>
 </section>
@@ -2367,7 +2396,7 @@ f(x) =
 <div class="column">
 <h3 id="mtd">MTD</h3>
 <ul>
-<li><p>For MTD, the hyperparameter settings are:</p>
+<li><p>For MTD, the hyperparameter settings were:</p>
 <ul>
 <li><p>marginal parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> <sup>1</sup>: <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)\)</span>, <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta} = 1)\)</span>,</p></li>
 <li><p>dependence parameter <span class="math inline">\(\rho\)</span>: <span class="math inline">\(Unif(\rho_l | -1, 1)\)</span>, and</p></li>
@@ -2380,7 +2409,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm">LSTM</h3>
 <ul>
-<li><p>Based on the sensitivity analysis, we use the following LSTM configuration:</p>
+<li><p>For LSTM, the configurations selected based on the literature and our experiments were:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
@@ -3537,8 +3566,8 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 <h2>Training and Validation Loss Curves for LSTM</h2>
 
 <img data-src="images/p_loss_real_bs64128256_v2.png" class="r-stretch"></section>
-<section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
-<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
+<section id="prediction-errors-captiondiff-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Prediction Errors <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-21" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-21-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-21-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-21-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -3577,9 +3606,9 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn32"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
-<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
+<aside><ol class="aside-footnotes"><li id="fn32"><p>Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-22" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-22-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-22-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-22-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -3618,9 +3647,50 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
+<aside><ol class="aside-footnotes"><li id="fn33"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
+<section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-23" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-23-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-23-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-23-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-23-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-147-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-23-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-148-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-23-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-149-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn33"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn34"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

@@ -350,18 +350,25 @@
     "text": "Simulation Results for ZIGamma Scenario 1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM Below\nMTD Below\nLSTM Above\nMTD Above\n\n\n\n\nP01Eps01\n3.6285\n4.2964\n1.4910\n1.3668\n\n\nP01Eps04\n3.2122\n5.9082\n1.8826\n1.7945\n\n\nP05Eps01\n2.0551\n0.7752\n2.1655\n3.9641\n\n\nP05Eps04\n2.0495\n1.6675\n2.3426\n2.7477\n\n\nP07Eps01\n1.2984\n0.3677\n3.5798\n5.458\n\n\nP07Eps04\n1.2583\n0.5346\n3.3044\n4.6465\n\n\n\n\n\n\n\n\nMTD outperforms LSTM in RMSE above for \\(P = 0.1\\) and again yields lower values for RMSE below than LSTM at higher levels of zero-inflation (e.g., \\(P = 0.5\\), \\(0.7\\)).\n\nAbove: reflects predictive accuracy for values exceeding \\(\\epsilon\\); Below: reflects that for values less than or equal to \\(\\epsilon\\).\nWhen the zero-inflated probability is low (e.g., \\(P = 0.1\\)), the RMSE above is more informative.\nAs \\(P\\) increases (e.g., \\(P = 0.5\\), \\(0.7\\)), this relationship reverses, and the RMSE below becomes more relevant."
   },
   {
-    "objectID": "index.html#data-description",
-    "href": "index.html#data-description",
+    "objectID": "index.html#motivation-objectives",
+    "href": "index.html#motivation-objectives",
     "title": "",
-    "section": "Data Description",
-    "text": "Data Description\nWind speed exhibits a highly skewed distribution with strong temporal dependence.\n\nAccurate forecasting of wind speed is crucial for reliable power generation.\n\n\nNASA MERRA-2 data\n\nAccessed via the NASA GES DISC Earthdata API and processed to derive wind speeds from wind components at multiple heights.\n\n\n\nDatasets\n\nHourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center in 2024-2025."
+    "section": "Motivation & Objectives",
+    "text": "Motivation & Objectives\nProblem\n\nWind speed forecasting is a challenging time series problem.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches.\n\n\n\n\nAccurate wind speed forecasting is important for reliable power generation.\n\n\n\nGoal\n\nProduce accurate forecasts while appropriately capturing temporal dependence and skewness.\n\n\n\nApproach\n\nCompare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data."
+  },
+  {
+    "objectID": "index.html#data-description-processing",
+    "href": "index.html#data-description-processing",
+    "title": "",
+    "section": "Data Description & Processing",
+    "text": "Data Description & Processing\nNASA MERRA-2 data\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from the \\(U\\) and \\(V\\) wind components.\nHourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80%\\) of observations used for training and the final \\(20%\\) used for testing in order to preserve the temporal ordering.\n\n\n\nLSTM Preprocessing\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale."
   },
   {
     "objectID": "index.html#experimental-setup-2",
     "href": "index.html#experimental-setup-2",
     "title": "",
     "section": "Experimental Setup",
-    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings are:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and C++ and compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nBased on the sensitivity analysis, we use the following LSTM configuration:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
+    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings were:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and C++ and compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nFor LSTM, the configurations selected based on the literature and our experiments were:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics",
@@ -614,6 +621,13 @@
     "title": "",
     "section": "Training and Validation Loss Curves for LSTM",
     "text": "Training and Validation Loss Curves for LSTM"
+  },
+  {
+    "objectID": "index.html#prediction-errors-captiondiff-one-step-ahead-full-test-size-n-1756",
+    "href": "index.html#prediction-errors-captiondiff-one-step-ahead-full-test-size-n-1756",
+    "title": "",
+    "section": "Prediction Errors 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
+    "text": "Prediction Errors 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
   },
   {
     "objectID": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
