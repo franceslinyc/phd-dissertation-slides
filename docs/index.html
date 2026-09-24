@@ -2346,14 +2346,17 @@ f(x) =
 <h2>Motivation &amp; Objectives</h2>
 <p>Problem</p>
 <ul>
-<li><p>Wind speed forecasting is a challenging time series problem.</p>
+<li><p>Wind speed is a key proxy variable for energy forecasting.</p>
 <ul>
-<li>Strong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches.</li>
+<li>Accurate prediction of wind speed is crucial for reliable power generation.</li>
 </ul></li>
 </ul>
 <div class="fragment">
 <ul>
-<li>Accurate wind speed forecasting is important for reliable power generation.</li>
+<li><p>Modeling wind speed is challenging.</p>
+<ul>
+<li>Strong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.</li>
+</ul></li>
 </ul>
 </div>
 <div class="fragment">
@@ -2369,57 +2372,131 @@ f(x) =
 </ul>
 </div>
 </section>
-<section id="data-description-processing" class="slide level2">
-<h2>Data Description &amp; Processing</h2>
+<section id="data-description" class="slide level2">
+<h2>Data Description</h2>
 <p>NASA MERRA-2 data</p>
 <ul>
 <li><p>Accessed via the NASA GES DISC Earthdata API.</p></li>
-<li><p>Derived wind speeds from the <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> wind components.</p></li>
-<li><p>Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025.</p></li>
+<li><p>Derived wind speeds from U/V wind components.</p></li>
+<li><p>Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.</p></li>
 </ul>
+</section>
+<section id="data-processing" class="slide level2">
+<h2>Data Processing</h2>
+<p>Feature Engineering</p>
+<ul>
+<li><p>Created lagged features to capture temporal dependence.</p>
+<ul>
+<li>Tested different look-back windows, e.g., <span class="math inline">\(L = 5, 15\)</span>.</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Limitation: The current MTD formulation does not support additional predictors, so we did not include external predictors in either model.</li>
+</ul>
+</div>
 <div class="fragment">
 <p>Train/Test Split</p>
 <ul>
-<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80%\)</span> of observations used for training and the final <span class="math inline">\(20%\)</span> used for testing in order to preserve the temporal ordering.</li>
+<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations used for training and the final <span class="math inline">\(20\%\)</span> used for testing to preserve the temporal ordering.</li>
 </ul>
 </div>
 <div class="fragment">
-<p>LSTM Preprocessing</p>
+<p>LSTM Only</p>
 <ul>
-<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale.</li>
+<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability.</li>
 </ul>
 </div>
 </section>
-<section id="experimental-setup-2" class="slide level2 scrollable">
-<h2>Experimental Setup</h2>
+<section id="modeling-approach-mtd-vs-lstm" class="slide level2">
+<h2>Modeling Approach: MTD vs LSTM</h2>
+<p>MTD</p>
+<ul>
+<li><p>Bayeisan probabilistic model</p></li>
+<li><p>Explicitly models marginal distribution and temporal dependence</p></li>
+<li><p>Gamma marginal + Gaussian copula</p></li>
+</ul>
+<p>LSTM</p>
+<ul>
+<li><p>Neural-network-based model</p></li>
+<li><p>Learns temporal dependencies directly from data</p></li>
+<li><p>Standard PyTorch LSTM</p></li>
+</ul>
+</section>
+<section id="model-configuration" class="slide level2">
+<h2>Model Configuration</h2>
 <div class="columns">
 <div class="column">
 <h3 id="mtd">MTD</h3>
 <ul>
-<li><p>For MTD, the hyperparameter settings were:</p>
+<li><p>For MTD, the model specifications were:</p>
+<ul>
+<li><p>marginal distribution: Gamma</p></li>
+<li><p>copula: Gaussian.</p></li>
+</ul></li>
+</ul>
+</div><div class="column">
+<h3 id="lstm">LSTM</h3>
+<ul>
+<li><p>For LSTM, the architecture consisted of:</p>
+<ul>
+<li>standard LSTM with forget gate, implemented in PyTorch.</li>
+</ul></li>
+</ul>
+</div></div>
+</section>
+<section id="model-configuration-1" class="slide level2 scrollable">
+<h2>Model Configuration</h2>
+<div class="columns">
+<div class="column">
+<h3 id="mtd-1">MTD</h3>
+<ul>
+<li><p>The hyperparameter settings were guided by prior experimentation and coverage analysis:</p>
 <ul>
 <li><p>marginal parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> <sup>1</sup>: <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)\)</span>, <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta} = 1)\)</span>,</p></li>
 <li><p>dependence parameter <span class="math inline">\(\rho\)</span>: <span class="math inline">\(Unif(\rho_l | -1, 1)\)</span>, and</p></li>
 <li><p>weight parameter <span class="math inline">\(w\)</span> <sup>2</sup>: <span class="math inline">\(CDP(w | \alpha_0 = 5, a_0 = 1, b_0 = 3)\)</span>; cdf-based Dirichlet process prior.</p></li>
 </ul></li>
 </ul>
-<ul>
-<li>MTD is implemented in <code>R</code> and <code>C++</code> and compiled and executed on a high-performance computing (HPC) cluster.</li>
-</ul>
 </div><div class="column">
-<h3 id="lstm">LSTM</h3>
+<h3 id="lstm-1">LSTM</h3>
 <ul>
-<li><p>For LSTM, the configurations selected based on the literature and our experiments were:</p>
+<li><p>The configurations were chosen based on a comprehensive literature review and our experiments:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
 <li><p>number of layers = <span class="math inline">\(1\)</span>, and</p></li>
 <li><p>cell dimension = <span class="math inline">\(64\)</span>.</p></li>
 </ul></li>
-<li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
 <aside><ol class="aside-footnotes"><li id="fn20"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>.</p></li><li id="fn21"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>.</p></li></ol></aside></section>
+<section id="model-training" class="slide level2">
+<h2>Model Training</h2>
+<div class="columns">
+<div class="column">
+<h3 id="mtd-2">MTD</h3>
+<ul>
+<li><p>The MCMC settings were:</p>
+<ul>
+<li><p>number of iterations: <span class="math inline">\(85,000\)</span></p></li>
+<li><p>burn-in: <span class="math inline">\(5,000\)</span>, and</p></li>
+<li><p>thinning: <span class="math inline">\(20\)</span>.</p></li>
+</ul></li>
+<li><p>MTD is implemented in <code>R</code> and <code>C++</code> and compiled and executed on a high-performance computing (HPC) cluster.</p></li>
+</ul>
+</div><div class="column">
+<h3 id="lstm-2">LSTM</h3>
+<ul>
+<li><p>LSTM was trained using:</p>
+<ul>
+<li><p>Adam optimizer with a learning rate of <span class="math inline">\(0.001\)</span>.</p></li>
+<li><p>L1 loss for MAE and L2 loss for all other metrics.</p></li>
+</ul></li>
+<li><p>LSTM is implemented in <code>PyTorch</code> and trained on a standard workstation.</p></li>
+</ul>
+</div></div>
+</section>
 <section id="evaluation-metrics-metrics" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup></h2>
 <table class="caption-top">
@@ -2717,6 +2794,12 @@ f(x) =
 </div>
 </div>
 </div>
+</section>
+<section id="next-steps" class="slide level2">
+<h2>Next Steps</h2>
+</section>
+<section id="software" class="slide level2">
+<h2>Software</h2>
 </section>
 <section class="slide level2">
 
@@ -3542,7 +3625,7 @@ o_t &amp;= g(W_{oh} \cdot h_t + b_o),
 <li><p><span class="math inline">\(g\)</span> is the hyperbolic tangent function, denoted as <span class="math inline">\(tanh\)</span>, which outputs values in range <span class="math inline">\((-1, 1)\)</span> to generate output in a stable, zero-centered range.</p></li>
 </ul>
 </section>
-<section id="lstm-1" class="slide level2">
+<section id="lstm-3" class="slide level2">
 <h2>LSTM</h2>
 <p>Let <span class="math inline">\(c_t\)</span> and <span class="math inline">\(h_t\)</span> denote the cell and the hidden state vector. Let <span class="math inline">\(f_t\)</span>, <span class="math inline">\(i_t\)</span>, and <span class="math inline">\(o_t\)</span> represent the forget, the input, and the output gate vector at time <span class="math inline">\(t\)</span>, respectively. Then, an LSTM unit can be expressed as:</p>
 <span class="math display">\[\begin{equation}

@@ -354,21 +354,49 @@
     "href": "index.html#motivation-objectives",
     "title": "",
     "section": "Motivation & Objectives",
-    "text": "Motivation & Objectives\nProblem\n\nWind speed forecasting is a challenging time series problem.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches.\n\n\n\n\nAccurate wind speed forecasting is important for reliable power generation.\n\n\n\nGoal\n\nProduce accurate forecasts while appropriately capturing temporal dependence and skewness.\n\n\n\nApproach\n\nCompare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data."
+    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts while appropriately capturing temporal dependence and skewness.\n\n\n\nApproach\n\nCompare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data."
   },
   {
-    "objectID": "index.html#data-description-processing",
-    "href": "index.html#data-description-processing",
+    "objectID": "index.html#data-description",
+    "href": "index.html#data-description",
     "title": "",
-    "section": "Data Description & Processing",
-    "text": "Data Description & Processing\nNASA MERRA-2 data\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from the \\(U\\) and \\(V\\) wind components.\nHourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80%\\) of observations used for training and the final \\(20%\\) used for testing in order to preserve the temporal ordering.\n\n\n\nLSTM Preprocessing\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale."
+    "section": "Data Description",
+    "text": "Data Description\nNASA MERRA-2 data\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from U/V wind components.\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025."
   },
   {
-    "objectID": "index.html#experimental-setup-2",
-    "href": "index.html#experimental-setup-2",
+    "objectID": "index.html#data-processing",
+    "href": "index.html#data-processing",
     "title": "",
-    "section": "Experimental Setup",
-    "text": "Experimental Setup\n\n\nMTD\n\nFor MTD, the hyperparameter settings were:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nMTD is implemented in R and C++ and compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nFor LSTM, the configurations selected based on the literature and our experiments were:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\nLSTM is implemented in PyTorch and trained on a standard workstation.\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
+    "section": "Data Processing",
+    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\n\nLimitation: The current MTD formulation does not support additional predictors, so we did not include external predictors in either model.\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve the temporal ordering.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability."
+  },
+  {
+    "objectID": "index.html#modeling-approach-mtd-vs-lstm",
+    "href": "index.html#modeling-approach-mtd-vs-lstm",
+    "title": "",
+    "section": "Modeling Approach: MTD vs LSTM",
+    "text": "Modeling Approach: MTD vs LSTM\nMTD\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence\nGamma marginal + Gaussian copula\n\nLSTM\n\nNeural-network-based model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
+  },
+  {
+    "objectID": "index.html#model-configuration",
+    "href": "index.html#model-configuration",
+    "title": "",
+    "section": "Model Configuration",
+    "text": "Model Configuration\n\n\nMTD\n\nFor MTD, the model specifications were:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nFor LSTM, the architecture consisted of:\n\nstandard LSTM with forget gate, implemented in PyTorch."
+  },
+  {
+    "objectID": "index.html#model-configuration-1",
+    "href": "index.html#model-configuration-1",
+    "title": "",
+    "section": "Model Configuration",
+    "text": "Model Configuration\n\n\nMTD\n\nThe hyperparameter settings were guided by prior experimentation and coverage analysis:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nThe configurations were chosen based on a comprehensive literature review and our experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
+  },
+  {
+    "objectID": "index.html#model-training",
+    "href": "index.html#model-training",
+    "title": "",
+    "section": "Model Training",
+    "text": "Model Training\n\n\nMTD\n\nThe MCMC settings were:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is implemented in R and C++ and compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nLSTM was trained using:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics.\n\nLSTM is implemented in PyTorch and trained on a standard workstation."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics",
@@ -404,6 +432,20 @@
     "title": "",
     "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
     "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+  },
+  {
+    "objectID": "index.html#next-steps",
+    "href": "index.html#next-steps",
+    "title": "",
+    "section": "Next Steps",
+    "text": "Next Steps"
+  },
+  {
+    "objectID": "index.html#software",
+    "href": "index.html#software",
+    "title": "",
+    "section": "Software",
+    "text": "Software"
   },
   {
     "objectID": "index.html#sec-conclusion",
@@ -602,8 +644,8 @@
     "text": "RNN\nLet \\(x_t\\), \\(h_t\\), and \\(o_t\\) denote the input data, the hidden state, and the output at time \\(t\\), respectively. Then, an RNN unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:rnn}\nh_t &= f(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\no_t &= g(W_{oh} \\cdot h_t + b_o),\n\\end{split}\n\\end{equation}\\]\nwhere \\(W_{ix}\\), \\(W_{ih}\\) and \\(W_{oh}\\) denote the weight matrices, and \\(b_i\\) and \\(b_o\\) the bias vectors.\nThe subscripts \\(i\\) and \\(o\\) indicate their steps in RNN: \\(i\\) refer to the input/hidden step, and \\(o\\) to the output step.\n\\(f\\) and \\(g\\) denote the activation functions for the hidden layer and output layer, respectively.\n\n\\(f\\) is typically set to the logistic sigmoid function, denoted as \\(\\sigma\\), which outputs values in range \\((0, 1)\\) to act as a gate that controls how much information passes through.\n\\(g\\) is the hyperbolic tangent function, denoted as \\(tanh\\), which outputs values in range \\((-1, 1)\\) to generate output in a stable, zero-centered range."
   },
   {
-    "objectID": "index.html#lstm-1",
-    "href": "index.html#lstm-1",
+    "objectID": "index.html#lstm-3",
+    "href": "index.html#lstm-3",
     "title": "",
     "section": "LSTM",
     "text": "LSTM\nLet \\(c_t\\) and \\(h_t\\) denote the cell and the hidden state vector. Let \\(f_t\\), \\(i_t\\), and \\(o_t\\) represent the forget, the input, and the output gate vector at time \\(t\\), respectively. Then, an LSTM unit can be expressed as:\n\\[\\begin{equation}\n\\begin{split}\n\\label{eq:lstm}\nf_t &= \\sigma(W_{fh} h_{t-1} + W_{fx} x_t + b_f), \\\\\ni_t &= \\sigma(W_{ih} h_{t-1} + W_{ix} x_t + b_i), \\\\\n\\tilde{c}_t &= \\tanh(W_{\\tilde{c} h} h_{t-1} + W_{\\tilde{c} x} x_t + b_{\\tilde{c}}), \\\\\nc_t &= f_t \\cdot c_{t-1} + i_t \\cdot \\tilde{c}_t, \\\\\no_t &= \\sigma(W_{oh} h_{t-1} + W_{ox} x_t + b_o), \\\\\nh_t &= o_t \\cdot \\tanh(c_t),\n\\end{split}\n\\end{equation}\\]\nwhere \\(\\boldsymbol{W}\\) denotes the weight matrices, \\(\\boldsymbol{b}\\) the bias vectors, \\(\\sigma\\) the logistic sigmoid function, and \\(tanh\\) the hyperbolic tangent function."

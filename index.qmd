@@ -1732,13 +1732,15 @@ df
 
 Problem
 
-- Wind speed forecasting is a challenging time series problem.
+- Wind speed is a key proxy variable for energy forecasting. 
 
-  - Strong temporal dependence and skewed distribution, which can pose challengings for standard deep learning approaches. 
+  - Accurate prediction of wind speed is crucial for reliable power generation. 
 
 . . . 
 
-- Accurate wind speed forecasting is important for reliable power generation. 
+- Modeling wind speed is challenging. 
+
+  - Strong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches. 
 
 . . . 
 
@@ -1753,30 +1755,60 @@ Approach
 - Compare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data. 
 
 
-## Data Description & Processing 
+## Data Description 
 
 NASA MERRA-2 data
 
 - Accessed via the NASA GES DISC Earthdata API. 
 
-- Derived wind speeds from the $U$ and $V$ wind components. 
+- Derived wind speeds from U/V wind components. 
 
-- Hourly wind speeds (m/s) at 2 m, 10 m, and 50 m above ground level at the Limon Wind Energy Center from 2024-2025. 
+- Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025. 
+
+## Data Processing 
+
+Feature Engineering
+
+- Created lagged features to capture temporal dependence. 
+
+  - Tested different look-back windows, e.g., $L = 5, 15$. 
+
+. . . 
+
+  - Limitation: The current MTD formulation does not support additional predictors, so we did not include external predictors in either model. 
 
 . . . 
 
 Train/Test Split
 
-- Used an 80/20 chronological split, with the first $80%$ of observations used for training and the final $20%$ used for testing in order to preserve the temporal ordering. 
+- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve the temporal ordering. 
 
 . . . 
 
-LSTM Preprocessing 
+LSTM Only
 
-- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale. 
+- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability. 
+
+## Modeling Approach: MTD vs LSTM
+
+MTD 
+
+- Bayeisan probabilistic model
+
+- Explicitly models marginal distribution and temporal dependence
+
+- Gamma marginal + Gaussian copula
+
+LSTM
+
+- Neural-network-based model
+
+- Learns temporal dependencies directly from data
+
+- Standard PyTorch LSTM 
 
 
-## Experimental Setup   
+## Model Configuration 
 
 ::::: columns
 
@@ -1784,7 +1816,35 @@ LSTM Preprocessing
 
 ### MTD
 
-- For MTD, the hyperparameter settings were:
+- For MTD, the model specifications were:
+
+  - marginal distribution: Gamma
+
+  - copula: Gaussian.
+
+::: 
+
+::: column
+
+### LSTM
+
+- For LSTM, the architecture consisted of: 
+
+  - standard LSTM with forget gate, implemented in PyTorch.
+
+::: 
+
+::::: 
+
+## Model Configuration   
+
+::::: columns
+
+::: column
+
+### MTD
+
+- The hyperparameter settings were guided by prior experimentation and coverage analysis:
 
   - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
 
@@ -1796,15 +1856,13 @@ LSTM Preprocessing
 
 [^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$. 
 
-- MTD is implemented in `R` and `C++` and compiled and executed on a high-performance computing (HPC) cluster. 
-
 ::: 
 
 ::: column
 
 ### LSTM
 
-- For LSTM, the configurations selected based on the literature and our experiments were: 
+- The configurations were chosen based on a comprehensive literature review and our experiments: 
 
   - learning rate = $0.001$, 
   
@@ -1814,8 +1872,41 @@ LSTM Preprocessing
   
   - cell dimension = $64$. 
 
-- LSTM is implemented in `PyTorch` and trained on a standard workstation.
+::: 
 
+::::: 
+
+## Model Training  
+
+::::: columns
+
+::: column
+
+### MTD
+
+- The MCMC settings were:
+
+  - number of iterations: $85,000$ 
+
+  - burn-in: $5,000$, and 
+
+  - thinning: $20$. 
+
+- MTD is implemented in `R` and `C++` and compiled and executed on a high-performance computing (HPC) cluster. 
+
+::: 
+
+::: column
+
+### LSTM
+
+- LSTM was trained using: 
+
+  - Adam optimizer with a learning rate of $0.001$. 
+
+  - L1 loss for MAE and L2 loss for all other metrics. 
+
+- LSTM is implemented in `PyTorch` and trained on a standard workstation.
 
 ::: 
 
@@ -1978,6 +2069,11 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ::: 
 
+
+## Next Steps
+
+## Software
+
 ---
 
 ![](images/conclusion-3.jpg){.absolute top=0 left=0 width="1200" height="675"}
@@ -2004,6 +2100,9 @@ We further develop a copula-based zero-inflated MTD model, which preserves the a
 . . .    
 
 > **Key contribution:** A unified MTD framework that accommodates complex dependence modeling and diverse marginal distributions. 
+
+
+
 
 ## Conclusion
 
