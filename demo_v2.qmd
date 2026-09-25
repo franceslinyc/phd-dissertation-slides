@@ -1,0 +1,98 @@
+---
+format:
+  revealjs:
+    height: 900
+    width: 1600
+    logo: "images/osu.png"
+    slide-number: true
+    scrollable: true
+    code-annotations: hover
+---
+
+## Software `mtd`: Modeling Workflow
+
+1. Load Dependencies & Package
+
+2. Data Preparation
+
+3. Model Configuration
+
+4. Model Fitting
+
+5. MCMC Convergence Diagnostics 
+
+6. Prediction & Evaluation
+
+## Software `mtd`: Code Snippet [^demo]
+
+```r
+# 1. Load dependencies & package
+library(tidyverse)                                      # <1>
+library(devtools)                                       # <1>
+devtools::load_all()                                    # <1>
+
+# 2. Prepare data
+data <- readRDS("MWH.rds")                              # <2>
+test_start <- 7029
+train_dat <- data$WHuv50[1:(test_start - 1)]            # <2>
+
+# 3. Configure model
+mtdorder <- 5                                           # <3>
+mcmc_param <- list(niter = 85000, nburn = 5000, nthin = 20) # <3>
+# prior, starting values, tuning parameters              # <3>
+
+# 4. Fit model
+set.seed(42)                                            # <4>
+runtime <- system.time(                                 # <4>
+  res <- tsMTD(                                         # <4>
+    obs = train_dat,                                    # <4>
+    mtdorder = mtdorder,                                # <4>
+    family = "gamma", # Gamma marginal # <4>
+    cop_family = 1,   # Gaussian copula # <4>
+    weight = "cdp",   # CDP weights # <4>
+    prior = prior, starting = starting, tuning = tuning,# <4>
+    mcmc_param = mcmc_param                             # <4>
+  )                                                    # <4>
+)                                                      # <4>
+
+# Fitting on HPC; Return results & runtime for local analysis 
+saveRDS(res, "res_wind_chain1.RData")       
+saveRDS(runtime, "runtime_wind_chain1.RData") 
+
+# 5. Validate
+# Four chains; Product trace, density, ACF plots & Gelman–Rubin diagnostics via package coda # <5>
+
+# 6. Predict & Evaluate
+res <- readRDS(file.path(data_dir, "res_wind_chain1.RData")) 
+test_dat <- data$WHuv50[(7029 - mtdorder):length(data$WHuv50)] 
+lags <- lagmat(test_dat, mtdorder) 
+
+set.seed(42)                                             # <6>
+res_pred <- predMTD(                                     # <6>
+  res = res, # <6>
+  family = "gamma", # Gamma marginal # <6>
+  lags = lags,  # <6>
+  probs = c(0.025, 0.975) # <6>
+) # <6>
+ 
+obs <- test_dat[-(1:mtdorder)] 
+
+pred <- data.frame(
+  obs = obs,
+  q025 = res_pred[1, ],
+  q975 = res_pred[2, ]
+)
+
+covered <- pred$obs >= pred$q025 & pred$obs <= pred$q975    
+coverage <- mean(covered)  
+```
+
+1. **Initialize:** Load dependencies & package
+2. **Prepare:** Load data
+3. **Configure:** Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning
+4. **Fit:** Run MTD model with reproducibility and runtime tracking
+5. **Validate:** Assess four MCMC chains locally using coda
+6. **Predict & Evaluate:** Generate 95% predictive intervals and calculate empirical coverage 
+
+[^demo]: 5. & 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow.  
+

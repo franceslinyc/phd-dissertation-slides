@@ -1,0 +1,19 @@
+{
+  "hash": "ef036bef625b13d7dae7594be9c8b4ca",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\nformat:\n  revealjs:\n    height: 900\n    width: 1600\n    logo: \"images/osu.png\"\n    slide-number: true\n    scrollable: true\n    code-annotations: true\n---\n\n## Software: Quick Demo\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(tidyverse)       # <1>\nlibrary(devtools)        # <1>\ndevtools::load_all()     # <1>\n\ndata <- readRDS(\"MWH.rds\")  # <2>\n\nmtdorder <- 5            # <3>\n\nset.seed(42)             # <4>\nres <- tsMTD(\n  obs = train_dat,\n  mtdorder = mtdorder,\n  family = \"gamma\",\n  cop_family = 1,\n  weight = \"cdp\",\n  prior = prior,\n  starting = starting,\n  tuning = tuning,\n  mcmc_param = mcmc_param\n)                         # <4>\n\n# MCMC convergence diagnostics                          # <5>\n\nres_pred <- predMTD(\n  res = res,\n  family = \"gamma\",\n  lags = lags,\n  probs = c(0.025, 0.975)\n)                         # <6>\n\ncoverage <- mean(\n  obs >= res_pred[1, ] & obs <= res_pred[2, ]\n)                         # <6>\n```\n:::\n\n\n1. **Initialize:** Load dependencies and the MTD package.\n2. **Prepare:** Load data and create the train/test split.\n3. **Configure:** Specify the MTD model and MCMC settings.\n4. **Fit:** Run Bayesian MTD estimation with reproducible settings.\n5. **Validate:** Assess four MCMC chains using `coda` diagnostics.\n6. **Predict & evaluate:** Generate 95% predictive intervals and calculate empirical coverage.\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {
+      "include-after-body": [
+        "\n<script>\n  // htmlwidgets need to know to resize themselves when slides are shown/hidden.\n  // Fire the \"slideenter\" event (handled by htmlwidgets.js) when the current\n  // slide changes (different for each slide format).\n  (function () {\n    // dispatch for htmlwidgets\n    function fireSlideEnter() {\n      const event = window.document.createEvent(\"Event\");\n      event.initEvent(\"slideenter\", true, true);\n      window.document.dispatchEvent(event);\n    }\n\n    function fireSlideChanged(previousSlide, currentSlide) {\n      fireSlideEnter();\n\n      // dispatch for shiny\n      if (window.jQuery) {\n        if (previousSlide) {\n          window.jQuery(previousSlide).trigger(\"hidden\");\n        }\n        if (currentSlide) {\n          window.jQuery(currentSlide).trigger(\"shown\");\n        }\n      }\n    }\n\n    // hookup for slidy\n    if (window.w3c_slidy) {\n      window.w3c_slidy.add_observer(function (slide_num) {\n        // slide_num starts at position 1\n        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);\n      });\n    }\n\n  })();\n</script>\n\n"
+      ]
+    },
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,5 +1,103 @@
 [
   {
+    "objectID": "demo_v2.html#software-mtd-modeling-workflow",
+    "href": "demo_v2.html#software-mtd-modeling-workflow",
+    "title": "",
+    "section": "Software mtd: Modeling Workflow",
+    "text": "Software mtd: Modeling Workflow\n\nLoad Dependencies & Package\nData Preparation\nModel Configuration\nModel Fitting\nMCMC Convergence Diagnostics\nPrediction & Evaluation"
+  },
+  {
+    "objectID": "demo_v2.html#software-mtd-code-snippet-demo",
+    "href": "demo_v2.html#software-mtd-code-snippet-demo",
+    "title": "",
+    "section": "Software mtd: Code Snippet 1",
+    "text": "Software mtd: Code Snippet 1\n# 1. Load dependencies & package\n1library(tidyverse)\nlibrary(devtools)\ndevtools::load_all()\n\n# 2. Prepare data\n2data &lt;- readRDS(\"MWH.rds\")\ntest_start &lt;- 7029\ntrain_dat &lt;- data$WHuv50[1:(test_start - 1)]\n\n# 3. Configure model\n3mtdorder &lt;- 5\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20)\n# prior, starting values, tuning parameters\n\n# 4. Fit model\n4set.seed(42)\nruntime &lt;- system.time(\n  res &lt;- tsMTD(\n    obs = train_dat,\n    mtdorder = mtdorder,\n    family = \"gamma\", # Gamma marginal\n    cop_family = 1,   # Gaussian copula\n    weight = \"cdp\",   # CDP weights\n    prior = prior, starting = starting, tuning = tuning,\n    mcmc_param = mcmc_param\n  )\n)\n\n# Fitting on HPC; Return results & runtime for local analysis \nsaveRDS(res, \"res_wind_chain1.RData\")       \nsaveRDS(runtime, \"runtime_wind_chain1.RData\") \n\n# 5. Validate\n5# Four chains; Product trace, density, ACF plots & Gelman–Rubin diagnostics via package coda\n\n# 6. Predict & Evaluate\nres &lt;- readRDS(file.path(data_dir, \"res_wind_chain1.RData\")) \ntest_dat &lt;- data$WHuv50[(7029 - mtdorder):length(data$WHuv50)] \nlags &lt;- lagmat(test_dat, mtdorder) \n\n6set.seed(42)\nres_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = c(0.025, 0.975)\n)\n \nobs &lt;- test_dat[-(1:mtdorder)] \n\npred &lt;- data.frame(\n  obs = obs,\n  q025 = res_pred[1, ],\n  q975 = res_pred[2, ]\n)\n\ncovered &lt;- pred$obs &gt;= pred$q025 & pred$obs &lt;= pred$q975    \ncoverage &lt;- mean(covered)  \n\n1\n\nInitialize: Load dependencies & package\n\n2\n\nPrepare: Load data\n\n3\n\nConfigure: Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning\n\n4\n\nFit: Run MTD model with reproducibility and runtime tracking\n\n5\n\nValidate: Assess four MCMC chains locally using coda\n\n6\n\nPredict & Evaluate: Generate 95% predictive intervals and calculate empirical coverage\n\n\n\n\n\n& 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow."
+  },
+  {
+    "objectID": "demo.html#software-quick-demo",
+    "href": "demo.html#software-quick-demo",
+    "title": "",
+    "section": "Software: Quick Demo",
+    "text": "Software: Quick Demo\n\nLoad Dependencies & Package\nData Preparation\nModel Configuration\nModel Fitting\nMCMC Convergence Diagnostics\nPrediction & Evaluation"
+  },
+  {
+    "objectID": "demo.html#load-dependencies-package",
+    "href": "demo.html#load-dependencies-package",
+    "title": "",
+    "section": "1. Load Dependencies & Package",
+    "text": "1. Load Dependencies & Package\n\nlibrary(tidyverse) # Data manipulation, visualization & more\nlibrary(devtools) # Package development\ndevtools::load_all() # Load MTD package in local or HPC environment"
+  },
+  {
+    "objectID": "demo.html#data-preparation",
+    "href": "demo.html#data-preparation",
+    "title": "",
+    "section": "2. Data Preparation",
+    "text": "2. Data Preparation\n\ndata &lt;- readRDS(\"MWH.rds\") # Load data\n\ntest_start &lt;- 7029\n\ntrain_dat &lt;- data$WHuv50[1:(test_start - 1)]\ntest_dat &lt;- data$WHuv50[test_start:length(data$WHuv50)]"
+  },
+  {
+    "objectID": "demo.html#model-configuration",
+    "href": "demo.html#model-configuration",
+    "title": "",
+    "section": "3. Model Configuration",
+    "text": "3. Model Configuration\n\n# Model specification\nmtdorder &lt;- 5\n\n# MCMC configuration\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20, nreport = 40)\n\n# Bayesian priors\nprior &lt;- list(\n  u_alp = u_alp,\n  v_alp = 1, # hyperparmeter for alpha\n  u_be = u_be,\n  v_be = 1, # hyperparmeter for beta\n  dir_shape = rep(1 / mtdorder, mtdorder), # hyperparmeter for DIR weights\n  alpha = 1,\n  alpha_0 = 5,\n  a_G0 = 1,\n  b_G0 = 3\n) # hyperparmeter for SB and CDP weights\n\n# Initialization & sampler tuning\nstarting &lt;- list(rho = rep(0, mtdorder), alp = u_alp, be = u_be)\n\ntuning &lt;- list(\n  step_size = 0.01,\n  upper_alp = u_alp + 5, # upper for alpha\n  upper_be = u_be + 5\n) # upper for beta"
+  },
+  {
+    "objectID": "demo.html#model-fitting",
+    "href": "demo.html#model-fitting",
+    "title": "",
+    "section": "4. Model Fitting",
+    "text": "4. Model Fitting\n\nset.seed(42) # Ensure reproducibility\nruntime &lt;- system.time(\n  res &lt;- tsMTD(\n    obs = train_dat,\n    mtdorder = mtdorder, # MTD order\n    family = \"gamma\", # Gamma marginal\n    cop_family = 1, # Gaussian copula\n    weight = \"cdp\", # CDP weights\n    prior = prior,\n    starting = starting,\n    tuning = tuning,\n    mcmc_param = mcmc_param\n  )\n)"
+  },
+  {
+    "objectID": "demo.html#results-hpc",
+    "href": "demo.html#results-hpc",
+    "title": "",
+    "section": "Results 1",
+    "text": "Results 1\n\nsaveRDS(res, file = \"res_wind_chain1.RData\")\nsaveRDS(runtime, file = \"runtime_wind_chain1.RData\")\n\nModel fitting was performed on an HPC cluster, and the fitted results and runtime were returned for local analysis."
+  },
+  {
+    "objectID": "demo.html#mcmc-convergence-diagnostics-local",
+    "href": "demo.html#mcmc-convergence-diagnostics-local",
+    "title": "",
+    "section": "5. MCMC Convergence Diagnostics 1",
+    "text": "5. MCMC Convergence Diagnostics 1\nMCMC convergence was assessed across four chains using trace, density, ACF, and Gelman–Rubin diagnostics.\nMCMC convergence diagnostics were performed locally using the coda R package."
+  },
+  {
+    "objectID": "demo.html#prediction-evaluation-demo",
+    "href": "demo.html#prediction-evaluation-demo",
+    "title": "",
+    "section": "6. Prediction & Evaluation 1",
+    "text": "6. Prediction & Evaluation 1\n\n# Prepare test data\nres &lt;- readRDS(file.path(data_dir, \"res_wind_chain1.RData\"))\ntest_start &lt;- 7029 - mtdorder\ntest_dat &lt;- data$WHuv50[test_start:length(data$WHuv50)]\n\n# Construct lag matrix\nlags &lt;- lagmat(test_dat, mtdorder)\n\n# Observed values corresponding to predictions\nobs &lt;- test_dat[-(1:mtdorder)]\n\n# Generate 95% predictive intervals\nprobs &lt;- c(0.025, 0.975)\n\nset.seed(42) # Ensure reproducibility\nres_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = probs\n)\n\n# Prediction results\npred &lt;- data.frame(\n  obs = obs,\n  q025 = res_pred[1, ],\n  q975 = res_pred[2, ]\n)\n\n# Evaluate empirical coverage\ncovered &lt;- pred$obs &gt;= pred$q025 & pred$obs &lt;= pred$q975\ncoverage &lt;- mean(covered)\n\n\n\nSimplified here for demonstration; implemented as reusable functions in the workflow."
+  },
+  {
+    "objectID": "misc/shiftedgamma.html",
+    "href": "misc/shiftedgamma.html",
+    "title": "",
+    "section": "",
+    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
+  },
+  {
+    "objectID": "misc/metric.html",
+    "href": "misc/metric.html",
+    "title": "",
+    "section": "",
+    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
+  },
+  {
+    "objectID": "misc/acknowledgement.html#acknowledgement",
+    "href": "misc/acknowledgement.html#acknowledgement",
+    "title": "",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement"
+  },
+  {
+    "objectID": "misc/graph.html",
+    "href": "misc/graph.html",
+    "title": "",
+    "section": "",
+    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
+  },
+  {
     "objectID": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "href": "index.html#copula-based-mixture-transition-distribution-models-for-forecasting-skewed-and-zero-inflated-time-series-methodology-and-comparisons-with-deep-learning-lstm-networks",
     "title": "",
@@ -455,6 +553,20 @@
     "text": "Bonus: MTD Extension to Zero-Inflated Data 1 2\n\nP(zero) = 0.34; precipitation at Quibdó, ColombiaP(zero) = 0.69; precipitation at Medan, North Sumatra\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
   },
   {
+    "objectID": "index.html#software-mtd-modeling-workflow",
+    "href": "index.html#software-mtd-modeling-workflow",
+    "title": "",
+    "section": "Software mtd: Modeling Workflow",
+    "text": "Software mtd: Modeling Workflow\n\nLoad Dependencies & Package\nData Preparation\nModel Configuration\nModel Fitting\nMCMC Convergence Diagnostics\nPrediction & Evaluation"
+  },
+  {
+    "objectID": "index.html#software-mtd-code-snippet-demo",
+    "href": "index.html#software-mtd-code-snippet-demo",
+    "title": "",
+    "section": "Software mtd: Code Snippet 1",
+    "text": "Software mtd: Code Snippet 1\n# 1. Load dependencies & package\n1library(tidyverse)\nlibrary(devtools)\ndevtools::load_all()\n\n# 2. Prepare data\n2data &lt;- readRDS(\"MWH.rds\")\ntest_start &lt;- 7029\ntrain_dat &lt;- data$WHuv50[1:(test_start - 1)]\n\n# 3. Configure model\n3mtdorder &lt;- 5\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20)\n# prior, starting values, tuning parameters\n\n# 4. Fit model\n4set.seed(42)\nruntime &lt;- system.time(\n  res &lt;- tsMTD(\n    obs = train_dat,\n    mtdorder = mtdorder,\n    family = \"gamma\", # Gamma marginal\n    cop_family = 1,   # Gaussian copula\n    weight = \"cdp\",   # CDP weights\n    prior = prior, starting = starting, tuning = tuning,\n    mcmc_param = mcmc_param\n  )\n)\n\n# Fitting on HPC; Return results & runtime for local analysis \nsaveRDS(res, \"res_wind_chain1.RData\")       \nsaveRDS(runtime, \"runtime_wind_chain1.RData\") \n\n# 5. Validate\n5# Four chains; Product trace, density, ACF plots & Gelman–Rubin diagnostics via package coda\n\n# 6. Predict & Evaluate\nres &lt;- readRDS(file.path(data_dir, \"res_wind_chain1.RData\")) \ntest_dat &lt;- data$WHuv50[(7029 - mtdorder):length(data$WHuv50)] \nlags &lt;- lagmat(test_dat, mtdorder) \n\n6set.seed(42)\nres_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = c(0.025, 0.975)\n)\n \nobs &lt;- test_dat[-(1:mtdorder)] \n\npred &lt;- data.frame(\n  obs = obs,\n  q025 = res_pred[1, ],\n  q975 = res_pred[2, ]\n)\n\ncovered &lt;- pred$obs &gt;= pred$q025 & pred$obs &lt;= pred$q975    \ncoverage &lt;- mean(covered)  \n\n1\n\nInitialize: Load dependencies & package\n\n2\n\nPrepare: Load data\n\n3\n\nConfigure: Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning\n\n4\n\nFit: Run MTD model with reproducibility and runtime tracking\n\n5\n\nValidate: Assess four MCMC chains locally using coda\n\n6\n\nPredict & Evaluate: Generate 95% predictive intervals and calculate empirical coverage\n\n\n\n& 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow."
+  },
+  {
     "objectID": "index.html#sec-conclusion",
     "href": "index.html#sec-conclusion",
     "title": "",
@@ -691,33 +803,5 @@
     "title": "",
     "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
     "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
-  },
-  {
-    "objectID": "misc/graph.html",
-    "href": "misc/graph.html",
-    "title": "",
-    "section": "",
-    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
-  },
-  {
-    "objectID": "misc/acknowledgement.html#acknowledgement",
-    "href": "misc/acknowledgement.html#acknowledgement",
-    "title": "",
-    "section": "Acknowledgement",
-    "text": "Acknowledgement"
-  },
-  {
-    "objectID": "misc/metric.html",
-    "href": "misc/metric.html",
-    "title": "",
-    "section": "",
-    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
-  },
-  {
-    "objectID": "misc/shiftedgamma.html",
-    "href": "misc/shiftedgamma.html",
-    "title": "",
-    "section": "",
-    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
   }
 ]

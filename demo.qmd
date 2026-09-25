@@ -1,0 +1,173 @@
+---
+format:
+  revealjs:
+    height: 900
+    width: 1600
+    logo: "images/osu.png"
+    slide-number: true
+    scrollable: true
+    code-annotations: hover
+---
+
+## Software: Quick Demo 
+
+1. Load Dependencies & Package
+
+2. Data Preparation
+
+3. Model Configuration
+
+4. Model Fitting
+
+5. MCMC Convergence Diagnostics 
+
+6. Prediction & Evaluation
+
+
+## 1. Load Dependencies & Package
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+library(tidyverse) # Data manipulation, visualization & more
+library(devtools) # Package development
+devtools::load_all() # Load MTD package in local or HPC environment
+```
+
+## 2. Data Preparation
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+data <- readRDS("MWH.rds") # Load data
+
+test_start <- 7029
+
+train_dat <- data$WHuv50[1:(test_start - 1)]
+test_dat <- data$WHuv50[test_start:length(data$WHuv50)]
+```
+
+## 3. Model Configuration
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+# Model specification
+mtdorder <- 5
+
+# MCMC configuration
+mcmc_param <- list(niter = 85000, nburn = 5000, nthin = 20, nreport = 40)
+
+# Bayesian priors
+prior <- list(
+  u_alp = u_alp,
+  v_alp = 1, # hyperparmeter for alpha
+  u_be = u_be,
+  v_be = 1, # hyperparmeter for beta
+  dir_shape = rep(1 / mtdorder, mtdorder), # hyperparmeter for DIR weights
+  alpha = 1,
+  alpha_0 = 5,
+  a_G0 = 1,
+  b_G0 = 3
+) # hyperparmeter for SB and CDP weights
+
+# Initialization & sampler tuning
+starting <- list(rho = rep(0, mtdorder), alp = u_alp, be = u_be)
+
+tuning <- list(
+  step_size = 0.01,
+  upper_alp = u_alp + 5, # upper for alpha
+  upper_be = u_be + 5
+) # upper for beta
+```
+
+## 4. Model Fitting
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+set.seed(42) # Ensure reproducibility
+runtime <- system.time(
+  res <- tsMTD(
+    obs = train_dat,
+    mtdorder = mtdorder, # MTD order
+    family = "gamma", # Gamma marginal
+    cop_family = 1, # Gaussian copula
+    weight = "cdp", # CDP weights
+    prior = prior,
+    starting = starting,
+    tuning = tuning,
+    mcmc_param = mcmc_param
+  )
+)
+```
+
+## Results [^hpc]
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+saveRDS(res, file = "res_wind_chain1.RData")
+saveRDS(runtime, file = "runtime_wind_chain1.RData")
+```
+
+[^hpc]: Model fitting was performed on an HPC cluster, and the fitted results and runtime were returned for local analysis.
+
+## 5. MCMC Convergence Diagnostics [^local]
+
+MCMC convergence was assessed across four chains using trace, density, ACF, and Gelman–Rubin diagnostics. 
+
+[^local]: MCMC convergence diagnostics were performed locally using the `coda` R package. 
+
+## 6. Prediction & Evaluation [^demo]
+
+```{r}
+#| eval: false
+#| echo: true
+#| output: false
+
+# Prepare test data
+res <- readRDS(file.path(data_dir, "res_wind_chain1.RData"))
+test_start <- 7029 - mtdorder
+test_dat <- data$WHuv50[test_start:length(data$WHuv50)]
+
+# Construct lag matrix
+lags <- lagmat(test_dat, mtdorder)
+
+# Observed values corresponding to predictions
+obs <- test_dat[-(1:mtdorder)]
+
+# Generate 95% predictive intervals
+probs <- c(0.025, 0.975)
+
+set.seed(42) # Ensure reproducibility
+res_pred <- predMTD(
+  res = res,
+  family = "gamma", # Gamma marginal
+  lags = lags,
+  probs = probs
+)
+
+# Prediction results
+pred <- data.frame(
+  obs = obs,
+  q025 = res_pred[1, ],
+  q975 = res_pred[2, ]
+)
+
+# Evaluate empirical coverage
+covered <- pred$obs >= pred$q025 & pred$obs <= pred$q975
+coverage <- mean(covered)
+```
+
+[^demo]: Simplified here for demonstration; implemented as reusable functions in the workflow.  
