@@ -1734,7 +1734,7 @@ Problem
 
 - Wind speed is a key proxy variable for energy forecasting. 
 
-  - Accurate prediction of wind speed is crucial for reliable power generation. 
+  - Accurate prediction of wind speed is crucial for reliable power generation.   
 
 . . . 
 
@@ -1746,36 +1746,26 @@ Problem
 
 Goal 
 
-- Produce accurate forecasts while appropriately capturing temporal dependence and skewness. 
-
-. . . 
-
-Approach 
-
-- Compare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data. 
+- Produce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness. 
 
 
 ## Data Description 
 
 NASA MERRA-2 data
 
-- Accessed via the NASA GES DISC Earthdata API. 
-
-- Derived wind speeds from U/V wind components. 
-
 - Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025. 
+
+  - Accessed via the NASA GES DISC Earthdata API. 
+
+  - Derived wind speeds from U/V wind components. 
 
 ## Data Processing 
 
 Feature Engineering
 
-- Created lagged features to capture temporal dependence. 
+- Created lagged features to capture temporal dependence [^limitation]. 
 
   - Tested different look-back windows, e.g., $L = 5, 15$. 
-
-. . . 
-
-  - Limitation: The current MTD formulation does not support additional predictors, so we did not include external predictors in either model. 
 
 . . . 
 
@@ -1789,24 +1779,27 @@ LSTM Only
 
 - Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability. 
 
+[^limitation]: The current MTD formulation does not support additional predictors, so neither model includes external predictors. This also provides a simple baseline for isolating the impact of added features and model complexity. 
+
 ## Modeling Approach: MTD vs LSTM
 
-MTD 
+MTD (Mixture Transition Distribution)
 
-- Bayeisan probabilistic model
+- Bayeisan probabilistic model 
 
-- Explicitly models marginal distribution and temporal dependence
+- Explicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels 
 
 - Gamma marginal + Gaussian copula
 
-LSTM
+. . . 
 
-- Neural-network-based model
+LSTM (Long Short-Term Memory)
+
+- Neural-network-based recurrent model
 
 - Learns temporal dependencies directly from data
 
 - Standard PyTorch LSTM 
-
 
 ## Model Configuration 
 
@@ -1852,9 +1845,9 @@ LSTM
 
   - weight parameter $w$ [^w]: $CDP(w | \alpha_0 = 5, a_0 = 1, b_0 = 3)$; cdf-based Dirichlet process prior.
 
-[^alpha]: $u_{\alpha}$, $u_{\beta}$ derived from the training data: $u_{\beta}$ = mean/variance, $u_{\alpha}$ = mean $\times$ $u_{\beta}$.
+[^alpha]: $u_{\alpha}$, $u_{\beta}$ derived from the training data: $u_{\beta}$ = mean/variance, $u_{\alpha}$ = mean $\times$ $u_{\beta}$. $u$ and $v$ can be further tuned to control the strength of the prior. 
 
-[^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$. 
+[^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$, where $a_0$ and $b_0$ are the shape parameters.  
 
 ::: 
 
@@ -1892,7 +1885,7 @@ LSTM
 
   - thinning: $20$. 
 
-- MTD is implemented in `R` and `C++` and compiled and executed on a high-performance computing (HPC) cluster. 
+- MTD is designed and built in `R` and `C++`, then compiled and executed on a high-performance computing (HPC) cluster. 
 
 ::: 
 
@@ -1904,9 +1897,9 @@ LSTM
 
   - Adam optimizer with a learning rate of $0.001$. 
 
-  - L1 loss for MAE and L2 loss for all other metrics. 
+  - L1 loss for MAE and L2 loss for all other metrics 🔜. 
 
-- LSTM is implemented in `PyTorch` and trained on a standard workstation.
+- LSTM is implemented with `PyTorch` and trained on a standard workstation.
 
 ::: 
 
@@ -1972,9 +1965,9 @@ df
 
 ::: 
 
-[^datares]: LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. 
+[^datares2]: LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function. 
 
-[^datares2]: MTD does not rely on training with an explicit loss function. 
+[^datares]: MASE $= 1$ serves as the naïve benchmark; MASE $< 1$ indicates better performance. 
 
 ## Prediction Errors [^captiondiff] [^captiondiff2], One-Step Ahead; Zoom-In View $n = 200$ of Full Test Size $n = 1756$  
 
@@ -2004,11 +1997,11 @@ readRDS(file.path(output_dir, "p3_real_diff.rds"))
 
 ::: 
 
-[^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
+[^captiondiff]: Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.
 
 [^captiondiff2]: See Supplement for additional plots. 
 
-## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only
+## $95\%$ Predictive Intervals, One-Step Ahead [^predcoverage]; Full Test Size $n = 1756$; MTD Only
 
 ::::: columns
 
@@ -2041,7 +2034,9 @@ df
 
 ::::: 
 
-## $95\%$ Predictive Intervals, One-Step Ahead; Full Test Size $n = 1756$; MTD Only 
+[^predcoverage]: Coverage is the proportion of test observations falling within their corresponding $95\%$ predictive intervals. 
+
+## $95\%$ Predictive Intervals, One-Step Ahead [^predcoverageplot]; Full Test Size $n = 1756$; MTD Only 
 
 ::: {.panel-tabset}
 
@@ -2069,10 +2064,84 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ::: 
 
+[^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
+
+
+## Takeaway
+
+Results 
+
+- MTD consistently outperformed LSTM across all evaluation metrics and heights.
+
+  - Probabilistic formulation provided uncertainty quantification and model interpretability. 
+
+- LSTM performed *competitively* and was computationally efficient. 
+
+. . . 
+
+Trade-offs
+
+- MTD requires careful model design and is more computationally intensive.
+
+- LSTM is more general-purpose, but less interpretable due to its black-box structure. 
+
+. . . 
+
+Bottom-line
+
+> MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative. 
 
 ## Next Steps
 
-## Software
+Further Experiments & Analysis
+
+  - Complete Transformer experiments and compare performance with MTD and LSTM on the current dataset.
+
+  - Evaluate LSTM and Transformer on the zero-inflated dataset.
+
+. . . 
+
+MTD Extensions [^mtdimprove]
+
+  - Incorporate external predictors to relax the stationarity assumption.
+
+  - Explore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.
+
+. . . 
+
+ML/DL UQ and Interpretability [^lstmimprove]
+
+  - Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts. 
+
+[^mtdimprove]: The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
+
+[^lstmimprove]: Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
+
+## Bonus: MTD Extension to Zero-Inflated Data [^rain] [^predcoverageplot]
+
+::: {.panel-tabset}
+
+### P(zero) = 0.34; precipitation at Quibdó, Colombia
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_rain.rds"))
+```
+
+### P(zero) = 0.69; precipitation at Medan, North Sumatra
+
+```{r}
+readRDS(file.path(output_dir, "p4_real_rain.rds"))
+```
+
+::: 
+
+[^rain]: We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient. 
+
+[^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
 
 ---
 
@@ -2742,7 +2811,7 @@ readRDS(file.path(output_dir, "p3_real_diff_full.rds"))
 
 ::: 
 
-[^captiondiff]: Dashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.
+[^captiondiff]: Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.
 
 ## Predicted Means [^caption], One-Step Ahead; Full Test Size $n = 1756$  
 

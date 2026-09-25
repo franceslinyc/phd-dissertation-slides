@@ -354,28 +354,28 @@
     "href": "index.html#motivation-objectives",
     "title": "",
     "section": "Motivation & Objectives",
-    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts while appropriately capturing temporal dependence and skewness.\n\n\n\nApproach\n\nCompare MTD and LSTM models for wind speed forecasting and evaluate how well they capture the temporal and distributional characteristics of data."
+    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness."
   },
   {
     "objectID": "index.html#data-description",
     "href": "index.html#data-description",
     "title": "",
     "section": "Data Description",
-    "text": "Data Description\nNASA MERRA-2 data\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from U/V wind components.\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025."
+    "text": "Data Description\nNASA MERRA-2 data\n\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from U/V wind components."
   },
   {
     "objectID": "index.html#data-processing",
     "href": "index.html#data-processing",
     "title": "",
     "section": "Data Processing",
-    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\n\nLimitation: The current MTD formulation does not support additional predictors, so we did not include external predictors in either model.\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve the temporal ordering.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability."
+    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence 1.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve the temporal ordering.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability.\n\n\nThe current MTD formulation does not support additional predictors, so neither model includes external predictors. This also provides a simple baseline for isolating the impact of added features and model complexity."
   },
   {
     "objectID": "index.html#modeling-approach-mtd-vs-lstm",
     "href": "index.html#modeling-approach-mtd-vs-lstm",
     "title": "",
     "section": "Modeling Approach: MTD vs LSTM",
-    "text": "Modeling Approach: MTD vs LSTM\nMTD\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence\nGamma marginal + Gaussian copula\n\nLSTM\n\nNeural-network-based model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
+    "text": "Modeling Approach: MTD vs LSTM\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginal + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
   },
   {
     "objectID": "index.html#model-configuration",
@@ -389,14 +389,14 @@
     "href": "index.html#model-configuration-1",
     "title": "",
     "section": "Model Configuration",
-    "text": "Model Configuration\n\n\nMTD\n\nThe hyperparameter settings were guided by prior experimentation and coverage analysis:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nThe configurations were chosen based on a comprehensive literature review and our experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\).\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\)."
+    "text": "Model Configuration\n\n\nMTD\n\nThe hyperparameter settings were guided by prior experimentation and coverage analysis:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nThe configurations were chosen based on a comprehensive literature review and our experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
   },
   {
     "objectID": "index.html#model-training",
     "href": "index.html#model-training",
     "title": "",
     "section": "Model Training",
-    "text": "Model Training\n\n\nMTD\n\nThe MCMC settings were:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is implemented in R and C++ and compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nLSTM was trained using:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics.\n\nLSTM is implemented in PyTorch and trained on a standard workstation."
+    "text": "Model Training\n\n\nMTD\n\nThe MCMC settings were:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nLSTM was trained using:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics",
@@ -410,42 +410,49 @@
     "href": "index.html#evaluation-results-datares-datares2",
     "title": "",
     "section": "Evaluation Results 1 2",
-    "text": "Evaluation Results 1 2\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537\n\n\n\n\n\n\n\n\nLSTM is trained using L1 loss for MAE; L2 loss for all other metrics.MTD does not rely on training with an explicit loss function."
+    "text": "Evaluation Results 1 2\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537\n\n\n\n\n\n\n\n\nMASE \\(= 1\\) serves as the naïve benchmark; MASE \\(&lt; 1\\) indicates better performance.LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function."
   },
   {
     "objectID": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
     "href": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
     "title": "",
     "section": "Prediction Errors 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)",
-    "text": "Prediction Errors 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values.See Supplement for additional plots."
+    "text": "Prediction Errors 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.See Supplement for additional plots."
   },
   {
-    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
-    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only",
+    "objectID": "index.html#predictive-intervals-one-step-ahead-predcoverage-full-test-size-n-1756-mtd-only",
+    "href": "index.html#predictive-intervals-one-step-ahead-predcoverage-full-test-size-n-1756-mtd-only",
     "title": "",
-    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights."
+    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only",
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights.\n\n\nCoverage is the proportion of test observations falling within their corresponding \\(95\\%\\) predictive intervals."
   },
   {
-    "objectID": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",
-    "href": "index.html#predictive-intervals-one-step-ahead-full-test-size-n-1756-mtd-only-1",
+    "objectID": "index.html#predictive-intervals-one-step-ahead-predcoverageplot-full-test-size-n-1756-mtd-only",
+    "href": "index.html#predictive-intervals-one-step-ahead-predcoverageplot-full-test-size-n-1756-mtd-only",
     "title": "",
-    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead; Full Test Size \\(n = 1756\\); MTD Only\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground"
+    "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only",
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
+  },
+  {
+    "objectID": "index.html#takeaway",
+    "href": "index.html#takeaway",
+    "title": "",
+    "section": "Takeaway",
+    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProbabilistic formulation provided uncertainty quantification and model interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model design and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative."
   },
   {
     "objectID": "index.html#next-steps",
     "href": "index.html#next-steps",
     "title": "",
     "section": "Next Steps",
-    "text": "Next Steps"
+    "text": "Next Steps\nFurther Experiments & Analysis\n\nComplete Transformer experiments and compare performance with MTD and LSTM on the current dataset.\nEvaluate LSTM and Transformer on the zero-inflated dataset.\n\n\nMTD Extensions 1\n\nIncorporate external predictors to relax the stationarity assumption.\nExplore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.\n\n\n\nML/DL UQ and Interpretability 2\n\nExplore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.\n\n\nThe current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts."
   },
   {
-    "objectID": "index.html#software",
-    "href": "index.html#software",
+    "objectID": "index.html#bonus-mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
+    "href": "index.html#bonus-mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
     "title": "",
-    "section": "Software",
-    "text": "Software"
+    "section": "Bonus: MTD Extension to Zero-Inflated Data 1 2",
+    "text": "Bonus: MTD Extension to Zero-Inflated Data 1 2\n\nP(zero) = 0.34; precipitation at Quibdó, ColombiaP(zero) = 0.69; precipitation at Medan, North Sumatra\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
   },
   {
     "objectID": "index.html#sec-conclusion",
@@ -669,7 +676,7 @@
     "href": "index.html#prediction-errors-captiondiff-one-step-ahead-full-test-size-n-1756",
     "title": "",
     "section": "Prediction Errors 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "Prediction Errors 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDashed (red) lines show differences between LSTM predicted means and observed values and dashed (blue) lines show differences between MTD predicted means and observed values."
+    "text": "Prediction Errors 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values."
   },
   {
     "objectID": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
@@ -686,18 +693,11 @@
     "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   },
   {
-    "objectID": "misc/shiftedgamma.html",
-    "href": "misc/shiftedgamma.html",
+    "objectID": "misc/graph.html",
+    "href": "misc/graph.html",
     "title": "",
     "section": "",
-    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
-  },
-  {
-    "objectID": "misc/metric.html",
-    "href": "misc/metric.html",
-    "title": "",
-    "section": "",
-    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
+    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
   },
   {
     "objectID": "misc/acknowledgement.html#acknowledgement",
@@ -707,10 +707,17 @@
     "text": "Acknowledgement"
   },
   {
-    "objectID": "misc/graph.html",
-    "href": "misc/graph.html",
+    "objectID": "misc/metric.html",
+    "href": "misc/metric.html",
     "title": "",
     "section": "",
-    "text": "X1\n\nX₁\n\n\n\nX2\n\nX₂\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₃\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₄\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₅\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₆\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\nX₂\n\n\n\nX2\n\nX₃\n\n\n\nX1--X2\n\n\n\n\nX3\n\nX₄\n\n\n\nX2--X3\n\n\n\n\nX4\n\nX₅\n\n\n\nX3--X4\n\n\n\n\nX5\n\nX₆\n\n\n\nX4--X5\n\n\n\n\nX6\n\nX₇\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nX1\n\n \nX\nt-5\n \n\n\n\nX2\n\n \nX\nt-4\n \n\n\n\nX1--X2\n\n\n\n\nX3\n\n \nX\nt-3\n \n\n\n\nX2--X3\n\n\n\n\nX4\n\n \nX\nt-2\n \n\n\n\nX3--X4\n\n\n\n\nX5\n\n \nX\nt-1\n \n\n\n\nX4--X5\n\n\n\n\nX6\n\n \nX\nt"
+    "text": "Metric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)"
+  },
+  {
+    "objectID": "misc/shiftedgamma.html",
+    "href": "misc/shiftedgamma.html",
+    "title": "",
+    "section": "",
+    "text": "\\[\\begin{equation}\nf(y) =\n\\begin{cases}\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta})  & y \\geq \\epsilon \\\\\n0  & x &lt; \\epsilon\n\\end{cases}\n\\end{equation}\\]\n\\[\\begin{equation}\nf(y; \\mu, \\beta, \\epsilon) =\n\\frac{1} {\\Gamma(\\frac{\\mu}{\\beta}) \\beta^{\\frac{\\mu}{\\beta}}} {(y - \\epsilon)}^{\\frac{\\mu}{\\beta} - 1} \\exp(- \\frac{y - \\epsilon} {\\beta}) \\quad y \\geq \\epsilon,\n\\end{equation}\\]"
   }
 ]
