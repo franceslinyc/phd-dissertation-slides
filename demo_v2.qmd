@@ -9,6 +9,131 @@ format:
     code-annotations: hover
 ---
 
+## End-to-End ML Workflow [^workflow] [^variation]
+
+> **Initialize** $\rightarrow$ **Prepare** $\rightarrow$ **Configure** $\rightarrow$ **Train** $\rightarrow$ **Validate** $\rightarrow$ **Predict & Evaluate**
+
+1. **Initialize:** Load dependencies and package
+
+2. **Prepare:** Load, preprocess, and split data
+
+3. **Configure:** Specify model architecture and hyperparameters 
+
+4. **Train:** Train model with reproducibility and runtime tracking 
+
+5. **Validate:** Assess model-specific training/estimation diagnostics 
+
+6. **Predict & Evaluate**: Generate predictions and evaluate forecasting performance 
+
+[^workflow]: Reusable functions support each stage for reproducible analysis. 
+
+[^variation]: Step 3-6 vary by model. 
+
+## Software Implementation [^demo]
+
+::::: columns
+
+::: column
+
+### MTD Package `mtd`
+
+```r
+# 3. Configure model
+mtdorder <- 5                                           # <3>
+mcmc_param <- list(niter = 85000, nburn = 5000, nthin = 20) # <3>
+
+# (Skip) Set prior, starting values, tuning parameters   # <3>
+
+# 4. Train
+res <- tsMTD(                                         # <4>
+  obs = train_dat,                                    # <4>
+  mtdorder = mtdorder,                                # <4>
+  family = "gamma", # Gamma marginal # <4>
+  cop_family = 1,   # Gaussian copula # <4>
+  weight = "cdp",   # CDP weights # <4>
+  prior = prior,    # <4>
+  starting = starting, # <4>
+  tuning = tuning, # <4>
+  mcmc_param = mcmc_param # <4>
+) # <4>
+
+# 5. Valide
+# Four chains; trace, density, ACF & Gelman–Rubin diagnostics via package coda # <5>
+
+# 6. Predict 
+res_pred <- predMTD(                                     # <6>
+  res = res, # <6>
+  family = "gamma", # Gamma marginal # <6>
+  lags = lags,  # <6>
+  probs = c(0.025, 0.975) # <6>
+) # <6>
+```
+
+3. **Configure** 
+4. **Train** 
+5. **Validate**
+6. **Predict** 
+
+::: 
+
+::: column
+
+### LSTM PyTorch Wrapper
+
+```python
+# 3. Configure model
+input_dim = 5 # <3>
+df_features = generate_time_lags(df, input_dim) # <3>
+
+# (Skip) # Set model parameters, including architecture and hyperparameters # <3>
+
+model = get_model("lstm", model_params) # Custom LSTM wrapper for PyTorch nn.LSTM # <3>
+
+loss_fn = nn.MSELoss()  # <3>
+
+optimizer = optim.Adam( # <3>
+    model.parameters(), # <3>
+    lr = learning_rate, # <3>
+    weight_decay = weight_decay # L2 regularization # <3>
+)
+
+# 4. Train
+opt = Optimization( # Custom training/validation wrapper # <4>
+    model = model,  # <4>
+    loss_fn = loss_fn, # <4>
+    optimizer = optimizer # <4>
+) # <4>
+ 
+opt.train( # <4>
+    train_loader, # <4>
+    val_loader, # <4>
+    batch_size = batch_size, # <4>
+    n_epochs = n_epochs, # <4>
+    n_features = input_dim # <4>
+) # <4>
+
+# 5. Validate
+opt.plot_losses()
+
+# 6. Predict 
+predictions, values = opt.evaluate( # <6>
+    test_loader_one, # <6>
+    batch_size = 1, # one-step ahead # <6>
+    n_features = input_dim # <6>
+) # <6>
+```
+
+3. **Configure** 
+4. **Train** 
+5. **Validate**
+6. **Predict** 
+
+::: 
+
+::::: 
+
+[^demo]: Simplified here for demonstration. 
+
 ## Software `mtd`: Modeling Workflow
 
 1. Load Dependencies & Package

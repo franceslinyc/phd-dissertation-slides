@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "demo_v2.html#end-to-end-ml-workflow-workflow-variation",
+    "href": "demo_v2.html#end-to-end-ml-workflow-workflow-variation",
+    "title": "",
+    "section": "End-to-End ML Workflow 1 2",
+    "text": "End-to-End ML Workflow 1 2\n\nInitialize \\(\\rightarrow\\) Prepare \\(\\rightarrow\\) Configure \\(\\rightarrow\\) Train \\(\\rightarrow\\) Validate \\(\\rightarrow\\) Predict & Evaluate\n\n\nInitialize: Load dependencies and package\nPrepare: Load, preprocess, and split data\nConfigure: Specify model architecture and hyperparameters\nTrain: Train model with reproducibility and runtime tracking\nValidate: Assess model-specific training/estimation diagnostics\nPredict & Evaluate: Generate predictions and evaluate forecasting performance\n\nReusable functions support each stage for reproducible analysis.Step 3-6 vary by model."
+  },
+  {
+    "objectID": "demo_v2.html#software-implementation-demo",
+    "href": "demo_v2.html#software-implementation-demo",
+    "title": "",
+    "section": "Software Implementation 1",
+    "text": "Software Implementation 1\n\n\nMTD Package mtd\n# 3. Configure model\n3mtdorder &lt;- 5\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20)\n\n# (Skip) Set prior, starting values, tuning parameters\n\n# 4. Train\n4res &lt;- tsMTD(\n  obs = train_dat,\n  mtdorder = mtdorder,\n  family = \"gamma\", # Gamma marginal\n  cop_family = 1,   # Gaussian copula\n  weight = \"cdp\",   # CDP weights\n  prior = prior,\n  starting = starting,\n  tuning = tuning,\n  mcmc_param = mcmc_param\n)\n\n# 5. Valide\n5# Four chains; trace, density, ACF & Gelman–Rubin diagnostics via package coda\n\n# 6. Predict \n6res_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = c(0.025, 0.975)\n)\n\n3\n\nConfigure\n\n4\n\nTrain\n\n5\n\nValidate\n\n6\n\nPredict\n\n\n\nLSTM PyTorch Wrapper\n# 3. Configure model\n3input_dim = 5\ndf_features = generate_time_lags(df, input_dim)\n\n# (Skip) # Set model parameters, including architecture and hyperparameters\n\nmodel = get_model(\"lstm\", model_params) # Custom LSTM wrapper for PyTorch nn.LSTM\n\nloss_fn = nn.MSELoss()\n\noptimizer = optim.Adam(\n    model.parameters(),\n    lr = learning_rate,\n    weight_decay = weight_decay # L2 regularization\n)\n\n# 4. Train\n4opt = Optimization( # Custom training/validation wrapper\n    model = model,\n    loss_fn = loss_fn,\n    optimizer = optimizer\n)\n \nopt.train(\n    train_loader,\n    val_loader,\n    batch_size = batch_size,\n    n_epochs = n_epochs,\n    n_features = input_dim\n)\n\n# 5. Validate\nopt.plot_losses()\n\n# 6. Predict \n6predictions, values = opt.evaluate(\n    test_loader_one,\n    batch_size = 1, # one-step ahead\n    n_features = input_dim\n)\n\n3\n\nConfigure\n\n4\n\nTrain\n\n6\n\nPredict\n\n\n\n\n& 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow."
+  },
+  {
     "objectID": "demo_v2.html#software-mtd-modeling-workflow",
     "href": "demo_v2.html#software-mtd-modeling-workflow",
     "title": "",
@@ -452,28 +466,28 @@
     "href": "index.html#motivation-objectives",
     "title": "",
     "section": "Motivation & Objectives",
-    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness."
+    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness."
   },
   {
     "objectID": "index.html#data-description",
     "href": "index.html#data-description",
     "title": "",
     "section": "Data Description",
-    "text": "Data Description\nNASA MERRA-2 data\n\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\nAccessed via the NASA GES DISC Earthdata API.\nDerived wind speeds from U/V wind components."
+    "text": "Data Description\nData\n\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\nRetrieved from MERRA-2 [merra] via the NASA GES DISC Earthdata API.\nSpatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.\n\n\n[merra]: MERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2) is a global atmospheric reanalysis produced by the NASA Global Modeling and Assimilation Office."
   },
   {
     "objectID": "index.html#data-processing",
     "href": "index.html#data-processing",
     "title": "",
     "section": "Data Processing",
-    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence 1.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve the temporal ordering.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability.\n\n\nThe current MTD formulation does not support additional predictors, so neither model includes external predictors. This also provides a simple baseline for isolating the impact of added features and model complexity."
+    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\) 1.\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve temporal ordering and prevent data leakage 2.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability.\n\n\nThe current MTD formulation does not support additional predictors, so neither model includes external predictors. This provides a baseline for isolating the impact of added features and model complexity.Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods."
   },
   {
-    "objectID": "index.html#modeling-approach-mtd-vs-lstm",
-    "href": "index.html#modeling-approach-mtd-vs-lstm",
+    "objectID": "index.html#modeling-approach",
+    "href": "index.html#modeling-approach",
     "title": "",
-    "section": "Modeling Approach: MTD vs LSTM",
-    "text": "Modeling Approach: MTD vs LSTM\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginal + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
+    "section": "Modeling Approach",
+    "text": "Modeling Approach\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginal + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
   },
   {
     "objectID": "index.html#model-configuration",
@@ -487,7 +501,7 @@
     "href": "index.html#model-configuration-1",
     "title": "",
     "section": "Model Configuration",
-    "text": "Model Configuration\n\n\nMTD\n\nThe hyperparameter settings were guided by prior experimentation and coverage analysis:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nThe configurations were chosen based on a comprehensive literature review and our experiments:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
+    "text": "Model Configuration\n\n\nMTD\n\nGuided by Bayesian literature review, prior experimentation, and coverage analysis, the hyperparameter settings were:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 1: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\), and\nweight parameter \\(w\\) 2: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nBased on a comprehensive time series review and our experiments, the final configurations were:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\), and\ncell dimension = \\(64\\).\n\n\n\n\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
   },
   {
     "objectID": "index.html#model-training",
@@ -497,18 +511,25 @@
     "text": "Model Training\n\n\nMTD\n\nThe MCMC settings were:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nLSTM was trained using:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation."
   },
   {
-    "objectID": "index.html#evaluation-metrics-metrics",
-    "href": "index.html#evaluation-metrics-metrics",
+    "objectID": "index.html#evaluation-metrics-metrics-metrics2",
+    "href": "index.html#evaluation-metrics-metrics-metrics2",
     "title": "",
-    "section": "Evaluation Metrics 1",
-    "text": "Evaluation Metrics 1\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)\n\n\n\nMAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units."
+    "section": "Evaluation Metrics 1 2",
+    "text": "Evaluation Metrics 1 2\n\n\n\n\n\n\n\n\nMetric\nDefinition\nFormula\n\n\n\n\nRMSE\nRoot Mean Squared Error\n\\(\\sqrt{\\frac{1}{T} \\sum_{t=1}^{T} (y_t - \\hat{y}_t)^2}\\)\n\n\nMAE\nMean Absolute Error\n\\(\\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t|\\)\n\n\nMAPE\nMean Absolute Percentage Error\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\left| \\frac{y_t - \\hat{y}_t}{y_t} \\right|\\)\n\n\nSMAPE\nSymmetric MAPE\n\\(\\frac{100}{T} \\sum_{t=1}^{T} \\frac{|y_t - \\hat{y}_t|}{(|y_t| + |\\hat{y}_t|) / 2}\\)\n\n\nMASE\nMean Absolute Scaled Error\n\\(\\frac{ \\frac{1}{T} \\sum_{t=1}^{T} |y_t - \\hat{y}_t| }{ \\frac{1}{T - 1} \\sum_{t=2}^{T} |y_t - y_{t-1}| }\\)\n\n\n\nMAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.MASE can be used to compare forecasts accuracy against a simple benchmark, e.g., a naive forecast."
   },
   {
     "objectID": "index.html#evaluation-results-datares-datares2",
     "href": "index.html#evaluation-results-datares-datares2",
     "title": "",
     "section": "Evaluation Results 1 2",
-    "text": "Evaluation Results 1 2\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537\n\n\n\n\n\n\n\n\nMASE \\(= 1\\) serves as the naïve benchmark; MASE \\(&lt; 1\\) indicates better performance.LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function."
+    "text": "Evaluation Results 1 2\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.6359\n0.3508\n\n\nMAE\n0.6021\n0.2692\n\n\nMAPE\n11.1103\n4.255\n\n\nSMAPE\n9.9305\n4.2051\n\n\nMASE\n0.6595\n0.366\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4607\n0.2376\n\n\nMAE\n0.3692\n0.1614\n\n\nMAPE\n11.2891\n4.0688\n\n\nSMAPE\n10.2499\n3.9569\n\n\nMASE\n0.6194\n0.2873\n\n\n\n\n\n\n\n\n\n\n\n\n.\nLSTM\nMTD\n\n\n\n\nRMSE\n0.4011\n0.2215\n\n\nMAE\n0.2696\n0.1543\n\n\nMAPE\n11.6386\n6.5935\n\n\nSMAPE\n12.6050\n6.2548\n\n\nMASE\n0.6660\n0.3537\n\n\n\n\n\n\n\n\nMASE \\(= 1\\) serves as the naïve benchmark, where MASE \\(&lt; 1\\) indicates better performance.LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function."
+  },
+  {
+    "objectID": "index.html#predicted-means-captionpred-captionpred2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
+    "href": "index.html#predicted-means-captionpred-captionpred2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
+    "title": "",
+    "section": "Predicted Means 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)",
+    "text": "Predicted Means 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.See Supplement for additional plots."
   },
   {
     "objectID": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
@@ -536,35 +557,35 @@
     "href": "index.html#takeaway",
     "title": "",
     "section": "Takeaway",
-    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProbabilistic formulation provided uncertainty quantification and model interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model design and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative."
+    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProbabilistic formulation provided uncertainty quantification (UQ) and model interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model design and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative."
   },
   {
     "objectID": "index.html#next-steps",
     "href": "index.html#next-steps",
     "title": "",
     "section": "Next Steps",
-    "text": "Next Steps\nFurther Experiments & Analysis\n\nComplete Transformer experiments and compare performance with MTD and LSTM on the current dataset.\nEvaluate LSTM and Transformer on the zero-inflated dataset.\n\n\nMTD Extensions 1\n\nIncorporate external predictors to relax the stationarity assumption.\nExplore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.\n\n\n\nML/DL UQ and Interpretability 2\n\nExplore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.\n\n\nThe current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts."
+    "text": "Next Steps\nFurther Experiments & Analysis\n\nConduct a more rigorous evaluation of the Transformer on the current dataset as preliminary results show no improvement over MTD nor LSTM 1.\nExtend zero-inflated analysis with the Transformer, assessing robustness to a more complex target distribution.\n\n\nMTD Extensions 2\n\nIncorporate external predictors to relax the stationarity assumption.\nExplore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.\n\n\n\nML/DL UQ and Interpretability 3\n\nExplore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.\n\n\nPotential factors include limited training data, univeriate and short-term forecasting, target skewness, model complexity, and hyperparameter choices.The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts."
   },
   {
-    "objectID": "index.html#bonus-mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
-    "href": "index.html#bonus-mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
+    "objectID": "index.html#end-to-end-ml-workflow-workflow-variation",
+    "href": "index.html#end-to-end-ml-workflow-workflow-variation",
     "title": "",
-    "section": "Bonus: MTD Extension to Zero-Inflated Data 1 2",
-    "text": "Bonus: MTD Extension to Zero-Inflated Data 1 2\n\nP(zero) = 0.34; precipitation at Quibdó, ColombiaP(zero) = 0.69; precipitation at Medan, North Sumatra\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
+    "section": "End-to-End ML Workflow 1 2",
+    "text": "End-to-End ML Workflow 1 2\n\nInitialize \\(\\rightarrow\\) Prepare \\(\\rightarrow\\) Configure \\(\\rightarrow\\) Train \\(\\rightarrow\\) Validate \\(\\rightarrow\\) Predict & Evaluate\n\n\nInitialize: Load dependencies and package\nPrepare: Load, preprocess, and split data\nConfigure: Specify model architecture and hyperparameters\nTrain: Train model with reproducibility and runtime tracking\nValidate: Assess model-specific training/estimation diagnostics\nPredict & Evaluate: Generate predictions and evaluate forecasting performance\n\nReusable functions support each stage for reproducible analysis.Step 3-6 vary by model."
   },
   {
-    "objectID": "index.html#software-mtd-modeling-workflow",
-    "href": "index.html#software-mtd-modeling-workflow",
+    "objectID": "index.html#software-implementation-demo",
+    "href": "index.html#software-implementation-demo",
     "title": "",
-    "section": "Software mtd: Modeling Workflow",
-    "text": "Software mtd: Modeling Workflow\n\nLoad Dependencies & Package\nData Preparation\nModel Configuration\nModel Fitting\nMCMC Convergence Diagnostics\nPrediction & Evaluation"
+    "section": "Software Implementation 1",
+    "text": "Software Implementation 1\n\n\nMTD Package mtd\n# 3. Configure model\n3mtdorder &lt;- 5\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20)\n\n# (Skip) Set prior, starting values, tuning parameters\n\n# 4. Train\n4res &lt;- tsMTD(\n  obs = train_dat,\n  mtdorder = mtdorder,\n  family = \"gamma\", # Gamma marginal\n  cop_family = 1,   # Gaussian copula\n  weight = \"cdp\",   # CDP weights\n  prior = prior,\n  starting = starting,\n  tuning = tuning,\n  mcmc_param = mcmc_param\n)\n\n# 5. Validate\n5# Four chains from HPC cluster; trace, density, ACF & Gelman–Rubin diagnostics locally via package coda\n\n# 6. Predict \n6res_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = c(0.025, 0.975)\n)\n\n3\n\nConfigure\n\n4\n\nTrain\n\n5\n\nValidate\n\n6\n\nPredict\n\n\n\nLSTM PyTorch Wrapper\n# 3. Configure model\n3input_dim = 5\ndf_features = generate_time_lags(df, input_dim)\n\n# (Skip) Set model parameters, including architecture and hyperparameters\n\nmodel = get_model(\"lstm\", model_params) # Custom LSTM wrapper for PyTorch nn.LSTM\n\nloss_fn = nn.MSELoss()\n\noptimizer = optim.Adam(\n    model.parameters(),\n    lr = learning_rate,\n    weight_decay = weight_decay # L2 regularization\n)\n\n# 4. Train\n4opt = Optimization( # Custom training/validation wrapper\n    model = model,\n    loss_fn = loss_fn,\n    optimizer = optimizer\n)\n \nopt.train(\n    train_loader,\n    val_loader,\n    batch_size = batch_size,\n    n_epochs = n_epochs,\n    n_features = input_dim\n)\n\n# 5. Validate\nopt.plot_losses()\n\n# 6. Predict \n6predictions, values = opt.evaluate(\n    test_loader_one,\n    batch_size = 1, # one-step ahead prediction\n    n_features = input_dim\n)\n\n3\n\nConfigure\n\n4\n\nTrain\n\n6\n\nPredict\n\n\n\nSimplified here for demonstration."
   },
   {
-    "objectID": "index.html#software-mtd-code-snippet-demo",
-    "href": "index.html#software-mtd-code-snippet-demo",
+    "objectID": "index.html#mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
+    "href": "index.html#mtd-extension-to-zero-inflated-data-rain-predcoverageplot",
     "title": "",
-    "section": "Software mtd: Code Snippet 1",
-    "text": "Software mtd: Code Snippet 1\n# 1. Load dependencies & package\n1library(tidyverse)\nlibrary(devtools)\ndevtools::load_all()\n\n# 2. Prepare data\n2data &lt;- readRDS(\"MWH.rds\")\ntest_start &lt;- 7029\ntrain_dat &lt;- data$WHuv50[1:(test_start - 1)]\n\n# 3. Configure model\n3mtdorder &lt;- 5\nmcmc_param &lt;- list(niter = 85000, nburn = 5000, nthin = 20)\n# prior, starting values, tuning parameters\n\n# 4. Fit model\n4set.seed(42)\nruntime &lt;- system.time(\n  res &lt;- tsMTD(\n    obs = train_dat,\n    mtdorder = mtdorder,\n    family = \"gamma\", # Gamma marginal\n    cop_family = 1,   # Gaussian copula\n    weight = \"cdp\",   # CDP weights\n    prior = prior, starting = starting, tuning = tuning,\n    mcmc_param = mcmc_param\n  )\n)\n\n# Fitting on HPC; Return results & runtime for local analysis \nsaveRDS(res, \"res_wind_chain1.RData\")       \nsaveRDS(runtime, \"runtime_wind_chain1.RData\") \n\n# 5. Validate\n5# Four chains; Product trace, density, ACF plots & Gelman–Rubin diagnostics via package coda\n\n# 6. Predict & Evaluate\nres &lt;- readRDS(file.path(data_dir, \"res_wind_chain1.RData\")) \ntest_dat &lt;- data$WHuv50[(7029 - mtdorder):length(data$WHuv50)] \nlags &lt;- lagmat(test_dat, mtdorder) \n\n6set.seed(42)\nres_pred &lt;- predMTD(\n  res = res,\n  family = \"gamma\", # Gamma marginal\n  lags = lags,\n  probs = c(0.025, 0.975)\n)\n \nobs &lt;- test_dat[-(1:mtdorder)] \n\npred &lt;- data.frame(\n  obs = obs,\n  q025 = res_pred[1, ],\n  q975 = res_pred[2, ]\n)\n\ncovered &lt;- pred$obs &gt;= pred$q025 & pred$obs &lt;= pred$q975    \ncoverage &lt;- mean(covered)  \n\n1\n\nInitialize: Load dependencies & package\n\n2\n\nPrepare: Load data\n\n3\n\nConfigure: Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning\n\n4\n\nFit: Run MTD model with reproducibility and runtime tracking\n\n5\n\nValidate: Assess four MCMC chains locally using coda\n\n6\n\nPredict & Evaluate: Generate 95% predictive intervals and calculate empirical coverage\n\n\n\n& 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow."
+    "section": "MTD Extension to Zero-Inflated Data 1 2",
+    "text": "MTD Extension to Zero-Inflated Data 1 2\n\nP(zero) = 0.34; precipitation at Quibdó, ColombiaP(zero) = 0.69; precipitation at Medan, North Sumatra\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWe initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
   },
   {
     "objectID": "index.html#sec-conclusion",
@@ -795,13 +816,6 @@
     "href": "index.html#predicted-means-caption-one-step-ahead-full-test-size-n-1756",
     "title": "",
     "section": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)",
-    "text": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
-  },
-  {
-    "objectID": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
-    "href": "index.html#predicted-means-caption-one-step-ahead-zoom-in-view-n-200",
-    "title": "",
-    "section": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)",
-    "text": "Predicted Means 1, One-Step Ahead; Zoom-In View \\(n = 200\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
+    "text": "Predicted Means 1, One-Step Ahead; Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means."
   }
 ]

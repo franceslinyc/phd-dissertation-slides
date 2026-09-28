@@ -1579,7 +1579,7 @@ print(p)
 
 ::::: 
 
-## Simulation Results for Gamma Scenario 1, 10 replicates
+## Simulation Results for Gamma Scenario 1, 10 replicates 
 
 ::::: columns
 
@@ -1741,7 +1741,7 @@ Problem
 
 - Modeling wind speed is challenging. 
 
-  - Strong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches. 
+  - Strong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches. 
 
 . . . 
 
@@ -1752,37 +1752,42 @@ Goal
 
 ## Data Description 
 
-NASA MERRA-2 data
+Data
 
 - Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025. 
 
-  - Accessed via the NASA GES DISC Earthdata API. 
+  - Retrieved from **MERRA-2** [merra] via the NASA GES DISC Earthdata API. 
 
-  - Derived wind speeds from U/V wind components. 
+  - Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.  
+
+[merra]: MERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2) is a global atmospheric reanalysis produced by the NASA Global Modeling and Assimilation Office. 
+
 
 ## Data Processing 
 
 Feature Engineering
 
-- Created lagged features to capture temporal dependence [^limitation]. 
+- Created lagged features to capture temporal dependence. 
 
-  - Tested different look-back windows, e.g., $L = 5, 15$. 
+  - Tested different look-back windows, e.g., $L = 5, 15$ [^limitation]. 
 
 . . . 
 
 Train/Test Split
 
-- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve the temporal ordering. 
+- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
 
 . . . 
 
 LSTM Only
 
-- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability. 
+- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability. 
 
-[^limitation]: The current MTD formulation does not support additional predictors, so neither model includes external predictors. This also provides a simple baseline for isolating the impact of added features and model complexity. 
+[^limitation]: The current MTD formulation does not support additional predictors, so neither model includes external predictors. This provides a baseline for isolating the impact of added features and model complexity. 
 
-## Modeling Approach: MTD vs LSTM
+[^limitation2]: Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods.
+
+## Modeling Approach
 
 MTD (Mixture Transition Distribution)
 
@@ -1838,7 +1843,7 @@ LSTM (Long Short-Term Memory)
 
 ### MTD
 
-- The hyperparameter settings were guided by prior experimentation and coverage analysis:
+- Guided by Bayesian literature review, prior experimentation, and coverage analysis, the hyperparameter settings were:
 
   - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
 
@@ -1856,7 +1861,7 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM
 
-- The configurations were chosen based on a comprehensive literature review and our experiments: 
+- Based on a comprehensive time series review and our experiments, the final configurations were: 
 
   - learning rate = $0.001$, 
   
@@ -1906,7 +1911,7 @@ LSTM (Long Short-Term Memory)
 
 ::::: 
 
-## Evaluation Metrics [^metrics]
+## Evaluation Metrics [^metrics] [^metrics2]
 
 | Metric| Definition | Formula |
 |------|------|------|
@@ -1919,6 +1924,8 @@ LSTM (Long Short-Term Memory)
 : {tbl-colwidths="[25, 50, 50]"}
 
 [^metrics]: MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units. 
+
+[^metrics2]: MASE can be used to compare forecasts accuracy against a simple benchmark, e.g., a naive forecast. 
 
 ## Evaluation Results [^datares] [^datares2]
 
@@ -1968,7 +1975,40 @@ df
 
 [^datares2]: LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function. 
 
-[^datares]: MASE $= 1$ serves as the naïve benchmark; MASE $< 1$ indicates better performance. 
+[^datares]: MASE $= 1$ serves as the naïve benchmark, where MASE $< 1$ indicates better performance. 
+
+## Predicted Means [^captionpred] [^captionpred2], One-Step Ahead; Zoom-In View $n = 200$ of Full Test Size $n = 1756$  
+
+::: {.panel-tabset}
+
+### windspeeds at 50m above ground
+
+```{r}
+output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
+```
+
+```{r}
+readRDS(file.path(output_dir, "p1_real_ts.rds"))
+```
+
+### windspeeds at 10m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p2_real_ts.rds"))
+```
+
+### windspeeds at 2m above ground
+
+```{r}
+readRDS(file.path(output_dir, "p3_real_ts.rds"))
+```
+
+::: 
+
+[^captionpred]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+
+[^captionpred2]: See Supplement for additional plots. 
+
 
 ## Prediction Errors [^captiondiff] [^captiondiff2], One-Step Ahead; Zoom-In View $n = 200$ of Full Test Size $n = 1756$  
 
@@ -2073,7 +2113,7 @@ Results
 
 - MTD consistently outperformed LSTM across all evaluation metrics and heights.
 
-  - Probabilistic formulation provided uncertainty quantification and model interpretability. 
+  - Probabilistic formulation provided uncertainty quantification (UQ) and model interpretability. 
 
 - LSTM performed *competitively* and was computationally efficient. 
 
@@ -2095,9 +2135,9 @@ Bottom-line
 
 Further Experiments & Analysis
 
-  - Complete Transformer experiments and compare performance with MTD and LSTM on the current dataset.
+  - Conduct a more rigorous evaluation of the Transformer on the current dataset as preliminary results show no improvement over MTD nor LSTM [^lstmimprove1]. 
 
-  - Evaluate LSTM and Transformer on the zero-inflated dataset.
+  - Extend zero-inflated analysis with the Transformer, assessing robustness to a more complex target distribution. 
 
 . . . 
 
@@ -2109,15 +2149,144 @@ MTD Extensions [^mtdimprove]
 
 . . . 
 
-ML/DL UQ and Interpretability [^lstmimprove]
+ML/DL UQ and Interpretability [^lstmimprove2]
 
   - Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts. 
 
+
+[^lstmimprove1]: Potential factors include limited training data, univeriate and short-term forecasting, target skewness, model complexity, and hyperparameter choices. 
+
 [^mtdimprove]: The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
 
-[^lstmimprove]: Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
+[^lstmimprove2]: Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
 
-## Bonus: MTD Extension to Zero-Inflated Data [^rain] [^predcoverageplot]
+
+## End-to-End ML Workflow [^workflow] [^variation]
+
+> **Initialize** $\rightarrow$ **Prepare** $\rightarrow$ **Configure** $\rightarrow$ **Train** $\rightarrow$ **Validate** $\rightarrow$ **Predict & Evaluate**
+
+1. **Initialize:** Load dependencies and package
+
+2. **Prepare:** Load, preprocess, and split data
+
+3. **Configure:** Specify model architecture and hyperparameters 
+
+4. **Train:** Train model with reproducibility and runtime tracking 
+
+5. **Validate:** Assess model-specific training/estimation diagnostics 
+
+6. **Predict & Evaluate**: Generate predictions and evaluate forecasting performance 
+
+[^workflow]: Reusable functions support each stage for reproducible analysis. 
+
+[^variation]: Step 3-6 vary by model. 
+
+## Software Implementation [^demo]
+
+::::: columns
+
+::: column
+
+### MTD Package `mtd`
+
+```r
+# 3. Configure model
+mtdorder <- 5                                           # <3>
+mcmc_param <- list(niter = 85000, nburn = 5000, nthin = 20) # <3>
+
+# (Skip) Set prior, starting values, tuning parameters   # <3>
+
+# 4. Train
+res <- tsMTD(                                         # <4>
+  obs = train_dat,                                    # <4>
+  mtdorder = mtdorder,                                # <4>
+  family = "gamma", # Gamma marginal # <4>
+  cop_family = 1,   # Gaussian copula # <4>
+  weight = "cdp",   # CDP weights # <4>
+  prior = prior,    # <4>
+  starting = starting, # <4>
+  tuning = tuning, # <4>
+  mcmc_param = mcmc_param # <4>
+) # <4>
+
+# 5. Validate
+# Four chains from HPC cluster; trace, density, ACF & Gelman–Rubin diagnostics locally via package coda # <5>
+
+# 6. Predict 
+res_pred <- predMTD(                                     # <6>
+  res = res, # <6>
+  family = "gamma", # Gamma marginal # <6>
+  lags = lags,  # <6>
+  probs = c(0.025, 0.975) # <6>
+) # <6>
+```
+
+3. **Configure** 
+4. **Train** 
+5. **Validate**
+6. **Predict** 
+
+::: 
+
+::: column
+
+### LSTM PyTorch Wrapper
+
+```python
+# 3. Configure model
+input_dim = 5 # <3>
+df_features = generate_time_lags(df, input_dim) # <3>
+
+# (Skip) Set model parameters, including architecture and hyperparameters # <3>
+
+model = get_model("lstm", model_params) # Custom LSTM wrapper for PyTorch nn.LSTM # <3>
+
+loss_fn = nn.MSELoss()  # <3>
+
+optimizer = optim.Adam( # <3>
+    model.parameters(), # <3>
+    lr = learning_rate, # <3>
+    weight_decay = weight_decay # L2 regularization # <3>
+)
+
+# 4. Train
+opt = Optimization( # Custom training/validation wrapper # <4>
+    model = model,  # <4>
+    loss_fn = loss_fn, # <4>
+    optimizer = optimizer # <4>
+) # <4>
+ 
+opt.train( # <4>
+    train_loader, # <4>
+    val_loader, # <4>
+    batch_size = batch_size, # <4>
+    n_epochs = n_epochs, # <4>
+    n_features = input_dim # <4>
+) # <4>
+
+# 5. Validate
+opt.plot_losses()
+
+# 6. Predict 
+predictions, values = opt.evaluate( # <6>
+    test_loader_one, # <6>
+    batch_size = 1, # one-step ahead prediction # <6>
+    n_features = input_dim # <6>
+) # <6>
+```
+
+3. **Configure** 
+4. **Train** 
+5. **Validate**
+6. **Predict** 
+
+::: 
+
+::::: 
+
+[^demo]: Simplified here for demonstration. 
+
+## MTD Extension to Zero-Inflated Data [^rain] [^predcoverageplot]
 
 ::: {.panel-tabset}
 
@@ -2141,94 +2310,7 @@ readRDS(file.path(output_dir, "p4_real_rain.rds"))
 
 [^rain]: We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient. 
 
-[^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
-
-## Software `mtd`: Modeling Workflow
-
-1. Load Dependencies & Package
-
-2. Data Preparation
-
-3. Model Configuration
-
-4. Model Fitting
-
-5. MCMC Convergence Diagnostics 
-
-6. Prediction & Evaluation
-
-## Software `mtd`: Code Snippet [^demo]
-
-```r
-# 1. Load dependencies & package
-library(tidyverse)                                      # <1>
-library(devtools)                                       # <1>
-devtools::load_all()                                    # <1>
-
-# 2. Prepare data
-data <- readRDS("MWH.rds")                              # <2>
-test_start <- 7029
-train_dat <- data$WHuv50[1:(test_start - 1)]            # <2>
-
-# 3. Configure model
-mtdorder <- 5                                           # <3>
-mcmc_param <- list(niter = 85000, nburn = 5000, nthin = 20) # <3>
-# prior, starting values, tuning parameters              # <3>
-
-# 4. Fit model
-set.seed(42)                                            # <4>
-runtime <- system.time(                                 # <4>
-  res <- tsMTD(                                         # <4>
-    obs = train_dat,                                    # <4>
-    mtdorder = mtdorder,                                # <4>
-    family = "gamma", # Gamma marginal # <4>
-    cop_family = 1,   # Gaussian copula # <4>
-    weight = "cdp",   # CDP weights # <4>
-    prior = prior, starting = starting, tuning = tuning,# <4>
-    mcmc_param = mcmc_param                             # <4>
-  )                                                    # <4>
-)                                                      # <4>
-
-# Fitting on HPC; Return results & runtime for local analysis 
-saveRDS(res, "res_wind_chain1.RData")       
-saveRDS(runtime, "runtime_wind_chain1.RData") 
-
-# 5. Validate
-# Four chains; Product trace, density, ACF plots & Gelman–Rubin diagnostics via package coda # <5>
-
-# 6. Predict & Evaluate
-res <- readRDS(file.path(data_dir, "res_wind_chain1.RData")) 
-test_dat <- data$WHuv50[(7029 - mtdorder):length(data$WHuv50)] 
-lags <- lagmat(test_dat, mtdorder) 
-
-set.seed(42)                                             # <6>
-res_pred <- predMTD(                                     # <6>
-  res = res, # <6>
-  family = "gamma", # Gamma marginal # <6>
-  lags = lags,  # <6>
-  probs = c(0.025, 0.975) # <6>
-) # <6>
- 
-obs <- test_dat[-(1:mtdorder)] 
-
-pred <- data.frame(
-  obs = obs,
-  q025 = res_pred[1, ],
-  q975 = res_pred[2, ]
-)
-
-covered <- pred$obs >= pred$q025 & pred$obs <= pred$q975    
-coverage <- mean(covered)  
-```
-
-1. **Initialize:** Load dependencies & package
-2. **Prepare:** Load data
-3. **Configure:** Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning
-4. **Fit:** Run MTD model with reproducibility and runtime tracking
-5. **Validate:** Assess four MCMC chains locally using coda
-6. **Predict & Evaluate:** Generate 95% predictive intervals and calculate empirical coverage 
-
-[^demo]: 5. & 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow.  
+[^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals. 
 
 ---
 
@@ -2930,33 +3012,4 @@ readRDS(file.path(output_dir, "p3_real_ts_full.rds"))
 
 [^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
 
-## Predicted Means [^caption], One-Step Ahead; Zoom-In View $n = 200$ 
-
-::: {.panel-tabset}
-
-### windspeeds at 50m above ground
-
-```{r}
-output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
-```
-
-```{r}
-readRDS(file.path(output_dir, "p1_real_ts.rds"))
-```
-
-### windspeeds at 10m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p2_real_ts.rds"))
-```
-
-### windspeeds at 2m above ground
-
-```{r}
-readRDS(file.path(output_dir, "p3_real_ts.rds"))
-```
-
-::: 
-
-[^caption]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
 

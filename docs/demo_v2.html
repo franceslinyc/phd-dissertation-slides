@@ -193,6 +193,133 @@
     <div class="slides">
 
 
+<section id="end-to-end-ml-workflow-workflow-variation" class="slide level2 scrollable">
+<h2>End-to-End ML Workflow <sup>1</sup> <sup>2</sup></h2>
+<blockquote>
+<p><strong>Initialize</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Prepare</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Configure</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Train</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Validate</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Predict &amp; Evaluate</strong></p>
+</blockquote>
+<ol type="1">
+<li><p><strong>Initialize:</strong> Load dependencies and package</p></li>
+<li><p><strong>Prepare:</strong> Load, preprocess, and split data</p></li>
+<li><p><strong>Configure:</strong> Specify model architecture and hyperparameters</p></li>
+<li><p><strong>Train:</strong> Train model with reproducibility and runtime tracking</p></li>
+<li><p><strong>Validate:</strong> Assess model-specific training/estimation diagnostics</p></li>
+<li><p><strong>Predict &amp; Evaluate</strong>: Generate predictions and evaluate forecasting performance</p></li>
+</ol>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Reusable functions support each stage for reproducible analysis.</p></li><li id="fn2"><p>Step 3-6 vary by model.</p></li></ol></aside></section>
+<section id="software-implementation-demo" class="slide level2 scrollable">
+<h2>Software Implementation <sup>1</sup></h2>
+<div class="columns">
+<div class="column">
+<h3 id="mtd-package-mtd">MTD Package <code>mtd</code></h3>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a><span class="co"># 3. Configure model</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a>mtdorder <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>mcmc_param <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">niter =</span> <span class="dv">85000</span>, <span class="at">nburn =</span> <span class="dv">5000</span>, <span class="at">nthin =</span> <span class="dv">20</span>)</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a><span class="co"># (Skip) Set prior, starting values, tuning parameters</span></span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a></span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a><span class="co"># 4. Train</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-8" class="code-annotation-target"><a href="#annotated-cell-2-8"></a>res <span class="ot">&lt;-</span> <span class="fu">tsMTD</span>(</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>  <span class="at">obs =</span> train_dat,</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10"></a>  <span class="at">mtdorder =</span> mtdorder,</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12"></a>  <span class="at">cop_family =</span> <span class="dv">1</span>,   <span class="co"># Gaussian copula</span></span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13"></a>  <span class="at">weight =</span> <span class="st">"cdp"</span>,   <span class="co"># CDP weights</span></span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14"></a>  <span class="at">prior =</span> prior,</span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15"></a>  <span class="at">starting =</span> starting,</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16"></a>  <span class="at">tuning =</span> tuning,</span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17"></a>  <span class="at">mcmc_param =</span> mcmc_param</span>
+<span id="annotated-cell-2-18"><a href="#annotated-cell-2-18"></a>)</span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19"></a></span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20"></a><span class="co"># 5. Valide</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-21" class="code-annotation-target"><a href="#annotated-cell-2-21"></a><span class="co"># Four chains; trace, density, ACF &amp; Gelman–Rubin diagnostics via package coda</span></span>
+<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22"></a></span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23"></a><span class="co"># 6. Predict </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-24" class="code-annotation-target"><a href="#annotated-cell-2-24"></a>res_pred <span class="ot">&lt;-</span> <span class="fu">predMTD</span>(</span>
+<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25"></a>  <span class="at">res =</span> res,</span>
+<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27"></a>  <span class="at">lags =</span> lags,</span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)</span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2,3,5" data-code-annotation="3"><strong>Configure</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="8,9,10,11,12,13,14,15,16,17,18" data-code-annotation="4"><strong>Train</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="21" data-code-annotation="5"><strong>Validate</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="24,25,26,27,28,29" data-code-annotation="6"><strong>Predict</strong></span>
+</dd>
+</dl>
+</div><div class="column">
+<h3 id="lstm-pytorch-wrapper">LSTM PyTorch Wrapper</h3>
+<div class="sourceCode" id="annotated-cell-3"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1"></a><span class="co"># 3. Configure model</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="3">3</button><span id="annotated-cell-3-2" class="code-annotation-target"><a href="#annotated-cell-3-2"></a>input_dim <span class="op">=</span> <span class="dv">5</span></span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3"></a>df_features <span class="op">=</span> generate_time_lags(df, input_dim)</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4"></a></span>
+<span id="annotated-cell-3-5"><a href="#annotated-cell-3-5"></a><span class="co"># (Skip) # Set model parameters, including architecture and hyperparameters</span></span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6"></a></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7"></a>model <span class="op">=</span> get_model(<span class="st">"lstm"</span>, model_params) <span class="co"># Custom LSTM wrapper for PyTorch nn.LSTM</span></span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8"></a></span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9"></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10"></a></span>
+<span id="annotated-cell-3-11"><a href="#annotated-cell-3-11"></a>optimizer <span class="op">=</span> optim.Adam(</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12"></a>    model.parameters(),</span>
+<span id="annotated-cell-3-13"><a href="#annotated-cell-3-13"></a>    lr <span class="op">=</span> learning_rate,</span>
+<span id="annotated-cell-3-14"><a href="#annotated-cell-3-14"></a>    weight_decay <span class="op">=</span> weight_decay <span class="co"># L2 regularization</span></span>
+<span id="annotated-cell-3-15"><a href="#annotated-cell-3-15"></a>)</span>
+<span id="annotated-cell-3-16"><a href="#annotated-cell-3-16"></a></span>
+<span id="annotated-cell-3-17"><a href="#annotated-cell-3-17"></a><span class="co"># 4. Train</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="4">4</button><span id="annotated-cell-3-18" class="code-annotation-target"><a href="#annotated-cell-3-18"></a>opt <span class="op">=</span> Optimization( <span class="co"># Custom training/validation wrapper</span></span>
+<span id="annotated-cell-3-19"><a href="#annotated-cell-3-19"></a>    model <span class="op">=</span> model,</span>
+<span id="annotated-cell-3-20"><a href="#annotated-cell-3-20"></a>    loss_fn <span class="op">=</span> loss_fn,</span>
+<span id="annotated-cell-3-21"><a href="#annotated-cell-3-21"></a>    optimizer <span class="op">=</span> optimizer</span>
+<span id="annotated-cell-3-22"><a href="#annotated-cell-3-22"></a>)</span>
+<span id="annotated-cell-3-23"><a href="#annotated-cell-3-23"></a> </span>
+<span id="annotated-cell-3-24"><a href="#annotated-cell-3-24"></a>opt.train(</span>
+<span id="annotated-cell-3-25"><a href="#annotated-cell-3-25"></a>    train_loader,</span>
+<span id="annotated-cell-3-26"><a href="#annotated-cell-3-26"></a>    val_loader,</span>
+<span id="annotated-cell-3-27"><a href="#annotated-cell-3-27"></a>    batch_size <span class="op">=</span> batch_size,</span>
+<span id="annotated-cell-3-28"><a href="#annotated-cell-3-28"></a>    n_epochs <span class="op">=</span> n_epochs,</span>
+<span id="annotated-cell-3-29"><a href="#annotated-cell-3-29"></a>    n_features <span class="op">=</span> input_dim</span>
+<span id="annotated-cell-3-30"><a href="#annotated-cell-3-30"></a>)</span>
+<span id="annotated-cell-3-31"><a href="#annotated-cell-3-31"></a></span>
+<span id="annotated-cell-3-32"><a href="#annotated-cell-3-32"></a><span class="co"># 5. Validate</span></span>
+<span id="annotated-cell-3-33"><a href="#annotated-cell-3-33"></a>opt.plot_losses()</span>
+<span id="annotated-cell-3-34"><a href="#annotated-cell-3-34"></a></span>
+<span id="annotated-cell-3-35"><a href="#annotated-cell-3-35"></a><span class="co"># 6. Predict </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="6">6</button><span id="annotated-cell-3-36" class="code-annotation-target"><a href="#annotated-cell-3-36"></a>predictions, values <span class="op">=</span> opt.evaluate(</span>
+<span id="annotated-cell-3-37"><a href="#annotated-cell-3-37"></a>    test_loader_one,</span>
+<span id="annotated-cell-3-38"><a href="#annotated-cell-3-38"></a>    batch_size <span class="op">=</span> <span class="dv">1</span>, <span class="co"># one-step ahead</span></span>
+<span id="annotated-cell-3-39"><a href="#annotated-cell-3-39"></a>    n_features <span class="op">=</span> input_dim</span>
+<span id="annotated-cell-3-40"><a href="#annotated-cell-3-40"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="2,3,5,7,9,11,12,13,14" data-code-annotation="3"><strong>Configure</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="18,19,20,21,22,24,25,26,27,28,29,30" data-code-annotation="4"><strong>Train</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="36,37,38,39,40" data-code-annotation="6"><strong>Predict</strong></span>
+</dd>
+</dl>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn3"><ol start="5" type="1">
+<li>&amp; 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow.</li>
+</ol>
+</li></ol></aside></section>
 <section id="software-mtd-modeling-workflow" class="slide level2 scrollable">
 <h2>Software <code>mtd</code>: Modeling Workflow</h2>
 <ol type="1">
@@ -293,7 +420,7 @@
 </dl>
 
 
-<aside><ol class="aside-footnotes"><li id="fn1"><ol start="5" type="1">
+<aside><ol class="aside-footnotes"><li id="fn4"><ol start="5" type="1">
 <li>&amp; 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow.</li>
 </ol>
 </li></ol></aside></section>

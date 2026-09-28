@@ -2421,7 +2421,7 @@ f(x) =
 <ul>
 <li><p>Modeling wind speed is challenging.</p>
 <ul>
-<li>Strong temporal dependence and skewed distribution, which can pose challengings for conventional modeling approaches.</li>
+<li>Strong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches.</li>
 </ul></li>
 </ul>
 </div>
@@ -2434,39 +2434,40 @@ f(x) =
 </section>
 <section id="data-description" class="slide level2">
 <h2>Data Description</h2>
-<p>NASA MERRA-2 data</p>
+<p>Data</p>
 <ul>
 <li><p>Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.</p>
 <ul>
-<li><p>Accessed via the NASA GES DISC Earthdata API.</p></li>
-<li><p>Derived wind speeds from U/V wind components.</p></li>
+<li><p>Retrieved from <strong>MERRA-2</strong> [merra] via the NASA GES DISC Earthdata API.</p></li>
+<li><p>Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.</p></li>
 </ul></li>
 </ul>
+<p>[merra]: MERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2) is a global atmospheric reanalysis produced by the NASA Global Modeling and Assimilation Office.</p>
 </section>
 <section id="data-processing" class="slide level2 scrollable">
 <h2>Data Processing</h2>
 <p>Feature Engineering</p>
 <ul>
-<li><p>Created lagged features to capture temporal dependence <sup>1</sup>.</p>
+<li><p>Created lagged features to capture temporal dependence.</p>
 <ul>
-<li>Tested different look-back windows, e.g., <span class="math inline">\(L = 5, 15\)</span>.</li>
+<li>Tested different look-back windows, e.g., <span class="math inline">\(L = 5, 15\)</span> <sup>1</sup>.</li>
 </ul></li>
 </ul>
 <div class="fragment">
 <p>Train/Test Split</p>
 <ul>
-<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations used for training and the final <span class="math inline">\(20\%\)</span> used for testing to preserve the temporal ordering.</li>
+<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations used for training and the final <span class="math inline">\(20\%\)</span> used for testing to preserve temporal ordering and prevent data leakage <sup>2</sup>.</li>
 </ul>
 </div>
 <div class="fragment">
 <p>LSTM Only</p>
 <ul>
-<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved stability.</li>
+<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn20"><p>The current MTD formulation does not support additional predictors, so neither model includes external predictors. This also provides a simple baseline for isolating the impact of added features and model complexity.</p></li></ol></aside></section>
-<section id="modeling-approach-mtd-vs-lstm" class="slide level2">
-<h2>Modeling Approach: MTD vs LSTM</h2>
+<aside><ol class="aside-footnotes"><li id="fn20"><p>The current MTD formulation does not support additional predictors, so neither model includes external predictors. This provides a baseline for isolating the impact of added features and model complexity.</p></li><li id="fn21"><p>Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods.</p></li></ol></aside></section>
+<section id="modeling-approach" class="slide level2">
+<h2>Modeling Approach</h2>
 <p>MTD (Mixture Transition Distribution)</p>
 <ul>
 <li><p>Bayeisan probabilistic model</p></li>
@@ -2510,7 +2511,7 @@ f(x) =
 <div class="column">
 <h3 id="mtd-1">MTD</h3>
 <ul>
-<li><p>The hyperparameter settings were guided by prior experimentation and coverage analysis:</p>
+<li><p>Guided by Bayesian literature review, prior experimentation, and coverage analysis, the hyperparameter settings were:</p>
 <ul>
 <li><p>marginal parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> <sup>1</sup>: <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)\)</span>, <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta} = 1)\)</span>,</p></li>
 <li><p>dependence parameter <span class="math inline">\(\rho\)</span>: <span class="math inline">\(Unif(\rho_l | -1, 1)\)</span>, and</p></li>
@@ -2520,7 +2521,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm-1">LSTM</h3>
 <ul>
-<li><p>The configurations were chosen based on a comprehensive literature review and our experiments:</p>
+<li><p>Based on a comprehensive time series review and our experiments, the final configurations were:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
@@ -2529,7 +2530,7 @@ f(x) =
 </ul></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn21"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>. <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> can be further tuned to control the strength of the prior.</p></li><li id="fn22"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>, where <span class="math inline">\(a_0\)</span> and <span class="math inline">\(b_0\)</span> are the shape parameters.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn22"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>. <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> can be further tuned to control the strength of the prior.</p></li><li id="fn23"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>, where <span class="math inline">\(a_0\)</span> and <span class="math inline">\(b_0\)</span> are the shape parameters.</p></li></ol></aside></section>
 <section id="model-training" class="slide level2">
 <h2>Model Training</h2>
 <div class="columns">
@@ -2556,8 +2557,8 @@ f(x) =
 </ul>
 </div></div>
 </section>
-<section id="evaluation-metrics-metrics" class="slide level2 scrollable">
-<h2>Evaluation Metrics <sup>1</sup></h2>
+<section id="evaluation-metrics-metrics-metrics2" class="slide level2 scrollable">
+<h2>Evaluation Metrics <sup>1</sup> <sup>2</sup></h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -2599,7 +2600,7 @@ f(x) =
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn23"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn24"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li><li id="fn25"><p>MASE can be used to compare forecasts accuracy against a simple benchmark, e.g., a naive forecast.</p></li></ol></aside></section>
 <section id="evaluation-results-datares-datares2" class="slide level2 scrollable">
 <h2>Evaluation Results <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
@@ -2733,9 +2734,9 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn24"><p>MASE <span class="math inline">\(= 1\)</span> serves as the naïve benchmark; MASE <span class="math inline">\(&lt; 1\)</span> indicates better performance.</p></li><li id="fn25"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
-<section id="prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
-<h2>Prediction Errors <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
+<aside><ol class="aside-footnotes"><li id="fn26"><p>MASE <span class="math inline">\(= 1\)</span> serves as the naïve benchmark, where MASE <span class="math inline">\(&lt; 1\)</span> indicates better performance.</p></li><li id="fn27"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
+<section id="predicted-means-captionpred-captionpred2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-11" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-11-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-11-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-11-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -2774,7 +2775,48 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn26"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn27"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn28"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li><li id="fn29"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<section id="prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Prediction Errors <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
+<div class="panel-tabset">
+<ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-12-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-12-3">windspeeds at 2m above ground</a></li></ul>
+<div class="tab-content">
+<div id="tabset-12-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-88-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-89-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-12-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-90-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn30"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn31"><p>See Supplement for additional plots.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-predcoverage-full-test-size-n-1756-mtd-only" class="slide level2 scrollable">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead <sup>1</sup>; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="columns">
@@ -2812,97 +2854,11 @@ f(x) =
 <li>The model appropriately captures the predictive uncertainty across wind speeds at all heights.</li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn28"><p>Coverage is the proportion of test observations falling within their corresponding <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn32"><p>Coverage is the proportion of test observations falling within their corresponding <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-predcoverageplot-full-test-size-n-1756-mtd-only" class="slide level2 scrollable">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead <sup>1</sup>; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="panel-tabset">
-<ul id="tabset-12" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-12-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-12-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-12-3">windspeeds at 2m above ground</a></li></ul>
-<div class="tab-content">
-<div id="tabset-12-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-91-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-92-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-12-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-93-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn29"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
-<section id="takeaway" class="slide level2">
-<h2>Takeaway</h2>
-<p>Results</p>
-<ul>
-<li><p>MTD consistently outperformed LSTM across all evaluation metrics and heights.</p>
-<ul>
-<li>Probabilistic formulation provided uncertainty quantification and model interpretability.</li>
-</ul></li>
-<li><p>LSTM performed <em>competitively</em> and was computationally efficient.</p></li>
-</ul>
-<div class="fragment">
-<p>Trade-offs</p>
-<ul>
-<li><p>MTD requires careful model design and is more computationally intensive.</p></li>
-<li><p>LSTM is more general-purpose, but less interpretable due to its black-box structure.</p></li>
-</ul>
-</div>
-<div class="fragment">
-<p>Bottom-line</p>
-<blockquote>
-<p>MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative.</p>
-</blockquote>
-</div>
-</section>
-<section id="next-steps" class="slide level2 scrollable">
-<h2>Next Steps</h2>
-<p>Further Experiments &amp; Analysis</p>
-<ul>
-<li><p>Complete Transformer experiments and compare performance with MTD and LSTM on the current dataset.</p></li>
-<li><p>Evaluate LSTM and Transformer on the zero-inflated dataset.</p></li>
-</ul>
-<div class="fragment">
-<p>MTD Extensions <sup>1</sup></p>
-<ul>
-<li><p>Incorporate external predictors to relax the stationarity assumption.</p></li>
-<li><p>Explore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.</p></li>
-</ul>
-</div>
-<div class="fragment">
-<p>ML/DL UQ and Interpretability <sup>2</sup></p>
-<ul>
-<li>Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.</li>
-</ul>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn30"><p>The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn31"><p>Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
-<section id="bonus-mtd-extension-to-zero-inflated-data-rain-predcoverageplot" class="slide level2 scrollable">
-<h2>Bonus: MTD Extension to Zero-Inflated Data <sup>1</sup> <sup>2</sup></h2>
-<div class="panel-tabset">
-<ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1">P(zero) = 0.34; precipitation at Quibdó, Colombia</a></li><li><a href="#tabset-13-2">P(zero) = 0.69; precipitation at Medan, North Sumatra</a></li></ul>
+<ul id="tabset-13" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-13-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-13-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-13-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
 <div id="tabset-13-1">
 <div class="cell">
@@ -2926,111 +2882,219 @@ f(x) =
 </div>
 </div>
 </div>
+<div id="tabset-13-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-97-1.png" width="960"></p>
+</figure>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn32"><p>We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn33"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
-<section id="software-mtd-modeling-workflow" class="slide level2 scrollable">
-<h2>Software <code>mtd</code>: Modeling Workflow</h2>
-<ol type="1">
-<li><p>Load Dependencies &amp; Package</p></li>
-<li><p>Data Preparation</p></li>
-<li><p>Model Configuration</p></li>
-<li><p>Model Fitting</p></li>
-<li><p>MCMC Convergence Diagnostics</p></li>
-<li><p>Prediction &amp; Evaluation</p></li>
-</ol>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn33"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<section id="takeaway" class="slide level2">
+<h2>Takeaway</h2>
+<p>Results</p>
+<ul>
+<li><p>MTD consistently outperformed LSTM across all evaluation metrics and heights.</p>
+<ul>
+<li>Probabilistic formulation provided uncertainty quantification (UQ) and model interpretability.</li>
+</ul></li>
+<li><p>LSTM performed <em>competitively</em> and was computationally efficient.</p></li>
+</ul>
+<div class="fragment">
+<p>Trade-offs</p>
+<ul>
+<li><p>MTD requires careful model design and is more computationally intensive.</p></li>
+<li><p>LSTM is more general-purpose, but less interpretable due to its black-box structure.</p></li>
+</ul>
+</div>
+<div class="fragment">
+<p>Bottom-line</p>
+<blockquote>
+<p>MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative.</p>
+</blockquote>
+</div>
 </section>
-<section id="software-mtd-code-snippet-demo" class="slide level2 scrollable">
-<h2>Software <code>mtd</code>: Code Snippet <sup>1</sup></h2>
-<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="co"># 1. Load dependencies &amp; package</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a><span class="fu">library</span>(devtools)</span>
-<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
-<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5"></a></span>
-<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6"></a><span class="co"># 2. Prepare data</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-7" class="code-annotation-target"><a href="#annotated-cell-1-7"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">"MWH.rds"</span>)</span>
-<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8"></a>test_start <span class="ot">&lt;-</span> <span class="dv">7029</span></span>
-<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9"></a>train_dat <span class="ot">&lt;-</span> data<span class="sc">$</span>WHuv50[<span class="dv">1</span><span class="sc">:</span>(test_start <span class="sc">-</span> <span class="dv">1</span>)]</span>
-<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10"></a></span>
-<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11"></a><span class="co"># 3. Configure model</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-12" class="code-annotation-target"><a href="#annotated-cell-1-12"></a>mtdorder <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13"></a>mcmc_param <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">niter =</span> <span class="dv">85000</span>, <span class="at">nburn =</span> <span class="dv">5000</span>, <span class="at">nthin =</span> <span class="dv">20</span>)</span>
-<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14"></a><span class="co"># prior, starting values, tuning parameters</span></span>
-<span id="annotated-cell-1-15"><a href="#annotated-cell-1-15"></a></span>
-<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16"></a><span class="co"># 4. Fit model</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-17" class="code-annotation-target"><a href="#annotated-cell-1-17"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18"></a>runtime <span class="ot">&lt;-</span> <span class="fu">system.time</span>(</span>
-<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19"></a>  res <span class="ot">&lt;-</span> <span class="fu">tsMTD</span>(</span>
-<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20"></a>    <span class="at">obs =</span> train_dat,</span>
-<span id="annotated-cell-1-21"><a href="#annotated-cell-1-21"></a>    <span class="at">mtdorder =</span> mtdorder,</span>
-<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22"></a>    <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
-<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23"></a>    <span class="at">cop_family =</span> <span class="dv">1</span>,   <span class="co"># Gaussian copula</span></span>
-<span id="annotated-cell-1-24"><a href="#annotated-cell-1-24"></a>    <span class="at">weight =</span> <span class="st">"cdp"</span>,   <span class="co"># CDP weights</span></span>
-<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25"></a>    <span class="at">prior =</span> prior, <span class="at">starting =</span> starting, <span class="at">tuning =</span> tuning,</span>
-<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26"></a>    <span class="at">mcmc_param =</span> mcmc_param</span>
-<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27"></a>  )</span>
-<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28"></a>)</span>
-<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29"></a></span>
-<span id="annotated-cell-1-30"><a href="#annotated-cell-1-30"></a><span class="co"># Fitting on HPC; Return results &amp; runtime for local analysis </span></span>
-<span id="annotated-cell-1-31"><a href="#annotated-cell-1-31"></a><span class="fu">saveRDS</span>(res, <span class="st">"res_wind_chain1.RData"</span>)       </span>
-<span id="annotated-cell-1-32"><a href="#annotated-cell-1-32"></a><span class="fu">saveRDS</span>(runtime, <span class="st">"runtime_wind_chain1.RData"</span>) </span>
-<span id="annotated-cell-1-33"><a href="#annotated-cell-1-33"></a></span>
-<span id="annotated-cell-1-34"><a href="#annotated-cell-1-34"></a><span class="co"># 5. Validate</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-35" class="code-annotation-target"><a href="#annotated-cell-1-35"></a><span class="co"># Four chains; Product trace, density, ACF plots &amp; Gelman–Rubin diagnostics via package coda</span></span>
-<span id="annotated-cell-1-36"><a href="#annotated-cell-1-36"></a></span>
-<span id="annotated-cell-1-37"><a href="#annotated-cell-1-37"></a><span class="co"># 6. Predict &amp; Evaluate</span></span>
-<span id="annotated-cell-1-38"><a href="#annotated-cell-1-38"></a>res <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">file.path</span>(data_dir, <span class="st">"res_wind_chain1.RData"</span>)) </span>
-<span id="annotated-cell-1-39"><a href="#annotated-cell-1-39"></a>test_dat <span class="ot">&lt;-</span> data<span class="sc">$</span>WHuv50[(<span class="dv">7029</span> <span class="sc">-</span> mtdorder)<span class="sc">:</span><span class="fu">length</span>(data<span class="sc">$</span>WHuv50)] </span>
-<span id="annotated-cell-1-40"><a href="#annotated-cell-1-40"></a>lags <span class="ot">&lt;-</span> <span class="fu">lagmat</span>(test_dat, mtdorder) </span>
-<span id="annotated-cell-1-41"><a href="#annotated-cell-1-41"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-42" class="code-annotation-target"><a href="#annotated-cell-1-42"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="annotated-cell-1-43"><a href="#annotated-cell-1-43"></a>res_pred <span class="ot">&lt;-</span> <span class="fu">predMTD</span>(</span>
-<span id="annotated-cell-1-44"><a href="#annotated-cell-1-44"></a>  <span class="at">res =</span> res,</span>
-<span id="annotated-cell-1-45"><a href="#annotated-cell-1-45"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
-<span id="annotated-cell-1-46"><a href="#annotated-cell-1-46"></a>  <span class="at">lags =</span> lags,</span>
-<span id="annotated-cell-1-47"><a href="#annotated-cell-1-47"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)</span>
-<span id="annotated-cell-1-48"><a href="#annotated-cell-1-48"></a>)</span>
-<span id="annotated-cell-1-49"><a href="#annotated-cell-1-49"></a> </span>
-<span id="annotated-cell-1-50"><a href="#annotated-cell-1-50"></a>obs <span class="ot">&lt;-</span> test_dat[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span>mtdorder)] </span>
-<span id="annotated-cell-1-51"><a href="#annotated-cell-1-51"></a></span>
-<span id="annotated-cell-1-52"><a href="#annotated-cell-1-52"></a>pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="annotated-cell-1-53"><a href="#annotated-cell-1-53"></a>  <span class="at">obs =</span> obs,</span>
-<span id="annotated-cell-1-54"><a href="#annotated-cell-1-54"></a>  <span class="at">q025 =</span> res_pred[<span class="dv">1</span>, ],</span>
-<span id="annotated-cell-1-55"><a href="#annotated-cell-1-55"></a>  <span class="at">q975 =</span> res_pred[<span class="dv">2</span>, ]</span>
-<span id="annotated-cell-1-56"><a href="#annotated-cell-1-56"></a>)</span>
-<span id="annotated-cell-1-57"><a href="#annotated-cell-1-57"></a></span>
-<span id="annotated-cell-1-58"><a href="#annotated-cell-1-58"></a>covered <span class="ot">&lt;-</span> pred<span class="sc">$</span>obs <span class="sc">&gt;=</span> pred<span class="sc">$</span>q025 <span class="sc">&amp;</span> pred<span class="sc">$</span>obs <span class="sc">&lt;=</span> pred<span class="sc">$</span>q975    </span>
-<span id="annotated-cell-1-59"><a href="#annotated-cell-1-59"></a>coverage <span class="ot">&lt;-</span> <span class="fu">mean</span>(covered)  </span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="next-steps" class="slide level2 scrollable">
+<h2>Next Steps</h2>
+<p>Further Experiments &amp; Analysis</p>
+<ul>
+<li><p>Conduct a more rigorous evaluation of the Transformer on the current dataset as preliminary results show no improvement over MTD nor LSTM <sup>1</sup>.</p></li>
+<li><p>Extend zero-inflated analysis with the Transformer, assessing robustness to a more complex target distribution.</p></li>
+</ul>
+<div class="fragment">
+<p>MTD Extensions <sup>2</sup></p>
+<ul>
+<li><p>Incorporate external predictors to relax the stationarity assumption.</p></li>
+<li><p>Explore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.</p></li>
+</ul>
+</div>
+<div class="fragment">
+<p>ML/DL UQ and Interpretability <sup>3</sup></p>
+<ul>
+<li>Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.</li>
+</ul>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn34"><p>Potential factors include limited training data, univeriate and short-term forecasting, target skewness, model complexity, and hyperparameter choices.</p></li><li id="fn35"><p>The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn36"><p>Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
+<section id="end-to-end-ml-workflow-workflow-variation" class="slide level2 scrollable">
+<h2>End-to-End ML Workflow <sup>1</sup> <sup>2</sup></h2>
+<blockquote>
+<p><strong>Initialize</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Prepare</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Configure</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Train</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Validate</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Predict &amp; Evaluate</strong></p>
+</blockquote>
+<ol type="1">
+<li><p><strong>Initialize:</strong> Load dependencies and package</p></li>
+<li><p><strong>Prepare:</strong> Load, preprocess, and split data</p></li>
+<li><p><strong>Configure:</strong> Specify model architecture and hyperparameters</p></li>
+<li><p><strong>Train:</strong> Train model with reproducibility and runtime tracking</p></li>
+<li><p><strong>Validate:</strong> Assess model-specific training/estimation diagnostics</p></li>
+<li><p><strong>Predict &amp; Evaluate</strong>: Generate predictions and evaluate forecasting performance</p></li>
+</ol>
+<aside><ol class="aside-footnotes"><li id="fn37"><p>Reusable functions support each stage for reproducible analysis.</p></li><li id="fn38"><p>Step 3-6 vary by model.</p></li></ol></aside></section>
+<section id="software-implementation-demo" class="slide level2 scrollable">
+<h2>Software Implementation <sup>1</sup></h2>
+<div class="columns">
+<div class="column">
+<h3 id="mtd-package-mtd">MTD Package <code>mtd</code></h3>
+<div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="co"># 3. Configure model</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a>mtdorder <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a>mcmc_param <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">niter =</span> <span class="dv">85000</span>, <span class="at">nburn =</span> <span class="dv">5000</span>, <span class="at">nthin =</span> <span class="dv">20</span>)</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4"></a></span>
+<span id="annotated-cell-1-5"><a href="#annotated-cell-1-5"></a><span class="co"># (Skip) Set prior, starting values, tuning parameters</span></span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6"></a></span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7"></a><span class="co"># 4. Train</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-8" class="code-annotation-target"><a href="#annotated-cell-1-8"></a>res <span class="ot">&lt;-</span> <span class="fu">tsMTD</span>(</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9"></a>  <span class="at">obs =</span> train_dat,</span>
+<span id="annotated-cell-1-10"><a href="#annotated-cell-1-10"></a>  <span class="at">mtdorder =</span> mtdorder,</span>
+<span id="annotated-cell-1-11"><a href="#annotated-cell-1-11"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
+<span id="annotated-cell-1-12"><a href="#annotated-cell-1-12"></a>  <span class="at">cop_family =</span> <span class="dv">1</span>,   <span class="co"># Gaussian copula</span></span>
+<span id="annotated-cell-1-13"><a href="#annotated-cell-1-13"></a>  <span class="at">weight =</span> <span class="st">"cdp"</span>,   <span class="co"># CDP weights</span></span>
+<span id="annotated-cell-1-14"><a href="#annotated-cell-1-14"></a>  <span class="at">prior =</span> prior,</span>
+<span id="annotated-cell-1-15"><a href="#annotated-cell-1-15"></a>  <span class="at">starting =</span> starting,</span>
+<span id="annotated-cell-1-16"><a href="#annotated-cell-1-16"></a>  <span class="at">tuning =</span> tuning,</span>
+<span id="annotated-cell-1-17"><a href="#annotated-cell-1-17"></a>  <span class="at">mcmc_param =</span> mcmc_param</span>
+<span id="annotated-cell-1-18"><a href="#annotated-cell-1-18"></a>)</span>
+<span id="annotated-cell-1-19"><a href="#annotated-cell-1-19"></a></span>
+<span id="annotated-cell-1-20"><a href="#annotated-cell-1-20"></a><span class="co"># 5. Validate</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="5">5</button><span id="annotated-cell-1-21" class="code-annotation-target"><a href="#annotated-cell-1-21"></a><span class="co"># Four chains from HPC cluster; trace, density, ACF &amp; Gelman–Rubin diagnostics locally via package coda</span></span>
+<span id="annotated-cell-1-22"><a href="#annotated-cell-1-22"></a></span>
+<span id="annotated-cell-1-23"><a href="#annotated-cell-1-23"></a><span class="co"># 6. Predict </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="6">6</button><span id="annotated-cell-1-24" class="code-annotation-target"><a href="#annotated-cell-1-24"></a>res_pred <span class="ot">&lt;-</span> <span class="fu">predMTD</span>(</span>
+<span id="annotated-cell-1-25"><a href="#annotated-cell-1-25"></a>  <span class="at">res =</span> res,</span>
+<span id="annotated-cell-1-26"><a href="#annotated-cell-1-26"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
+<span id="annotated-cell-1-27"><a href="#annotated-cell-1-27"></a>  <span class="at">lags =</span> lags,</span>
+<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)</span>
+<span id="annotated-cell-1-29"><a href="#annotated-cell-1-29"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="2,3,4" data-code-annotation="1"><strong>Initialize:</strong> Load dependencies &amp; package</span>
-</dd>
-<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
-<dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="7,9" data-code-annotation="2"><strong>Prepare:</strong> Load data</span>
-</dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="12,13,14" data-code-annotation="3"><strong>Configure:</strong> Specify the MTD order, MCMC settings, priors, starting values, and sampler tuning</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="2,3,5" data-code-annotation="3"><strong>Configure</strong></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="17,18,19,20,21,22,23,24,25,26,27,28" data-code-annotation="4"><strong>Fit:</strong> Run MTD model with reproducibility and runtime tracking</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="8,9,10,11,12,13,14,15,16,17,18" data-code-annotation="4"><strong>Train</strong></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="5">5</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="35" data-code-annotation="5"><strong>Validate:</strong> Assess four MCMC chains locally using coda</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="21" data-code-annotation="5"><strong>Validate</strong></span>
 </dd>
 <dt data-target-cell="annotated-cell-1" data-target-annotation="6">6</dt>
 <dd>
-<span data-code-cell="annotated-cell-1" data-code-lines="42,43,44,45,46,47,48" data-code-annotation="6"><strong>Predict &amp; Evaluate:</strong> Generate 95% predictive intervals and calculate empirical coverage</span>
+<span data-code-cell="annotated-cell-1" data-code-lines="24,25,26,27,28,29" data-code-annotation="6"><strong>Predict</strong></span>
 </dd>
 </dl>
-<aside><ol class="aside-footnotes"><li id="fn34"><ol start="5" type="1">
-<li>&amp; 6.: Simplified here for demonstration; Implemented as reusable functions in the workflow.</li>
-</ol>
-</li></ol></aside></section>
+</div><div class="column">
+<h3 id="lstm-pytorch-wrapper">LSTM PyTorch Wrapper</h3>
+<div class="sourceCode" id="annotated-cell-2"><pre class="sourceCode numberSource python code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1"></a><span class="co"># 3. Configure model</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2"></a>input_dim <span class="op">=</span> <span class="dv">5</span></span>
+<span id="annotated-cell-2-3"><a href="#annotated-cell-2-3"></a>df_features <span class="op">=</span> generate_time_lags(df, input_dim)</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4"></a></span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5"></a><span class="co"># (Skip) Set model parameters, including architecture and hyperparameters</span></span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6"></a></span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7"></a>model <span class="op">=</span> get_model(<span class="st">"lstm"</span>, model_params) <span class="co"># Custom LSTM wrapper for PyTorch nn.LSTM</span></span>
+<span id="annotated-cell-2-8"><a href="#annotated-cell-2-8"></a></span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9"></a>loss_fn <span class="op">=</span> nn.MSELoss()</span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10"></a></span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11"></a>optimizer <span class="op">=</span> optim.Adam(</span>
+<span id="annotated-cell-2-12"><a href="#annotated-cell-2-12"></a>    model.parameters(),</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13"></a>    lr <span class="op">=</span> learning_rate,</span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14"></a>    weight_decay <span class="op">=</span> weight_decay <span class="co"># L2 regularization</span></span>
+<span id="annotated-cell-2-15"><a href="#annotated-cell-2-15"></a>)</span>
+<span id="annotated-cell-2-16"><a href="#annotated-cell-2-16"></a></span>
+<span id="annotated-cell-2-17"><a href="#annotated-cell-2-17"></a><span class="co"># 4. Train</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-18" class="code-annotation-target"><a href="#annotated-cell-2-18"></a>opt <span class="op">=</span> Optimization( <span class="co"># Custom training/validation wrapper</span></span>
+<span id="annotated-cell-2-19"><a href="#annotated-cell-2-19"></a>    model <span class="op">=</span> model,</span>
+<span id="annotated-cell-2-20"><a href="#annotated-cell-2-20"></a>    loss_fn <span class="op">=</span> loss_fn,</span>
+<span id="annotated-cell-2-21"><a href="#annotated-cell-2-21"></a>    optimizer <span class="op">=</span> optimizer</span>
+<span id="annotated-cell-2-22"><a href="#annotated-cell-2-22"></a>)</span>
+<span id="annotated-cell-2-23"><a href="#annotated-cell-2-23"></a> </span>
+<span id="annotated-cell-2-24"><a href="#annotated-cell-2-24"></a>opt.train(</span>
+<span id="annotated-cell-2-25"><a href="#annotated-cell-2-25"></a>    train_loader,</span>
+<span id="annotated-cell-2-26"><a href="#annotated-cell-2-26"></a>    val_loader,</span>
+<span id="annotated-cell-2-27"><a href="#annotated-cell-2-27"></a>    batch_size <span class="op">=</span> batch_size,</span>
+<span id="annotated-cell-2-28"><a href="#annotated-cell-2-28"></a>    n_epochs <span class="op">=</span> n_epochs,</span>
+<span id="annotated-cell-2-29"><a href="#annotated-cell-2-29"></a>    n_features <span class="op">=</span> input_dim</span>
+<span id="annotated-cell-2-30"><a href="#annotated-cell-2-30"></a>)</span>
+<span id="annotated-cell-2-31"><a href="#annotated-cell-2-31"></a></span>
+<span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a><span class="co"># 5. Validate</span></span>
+<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33"></a>opt.plot_losses()</span>
+<span id="annotated-cell-2-34"><a href="#annotated-cell-2-34"></a></span>
+<span id="annotated-cell-2-35"><a href="#annotated-cell-2-35"></a><span class="co"># 6. Predict </span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-36" class="code-annotation-target"><a href="#annotated-cell-2-36"></a>predictions, values <span class="op">=</span> opt.evaluate(</span>
+<span id="annotated-cell-2-37"><a href="#annotated-cell-2-37"></a>    test_loader_one,</span>
+<span id="annotated-cell-2-38"><a href="#annotated-cell-2-38"></a>    batch_size <span class="op">=</span> <span class="dv">1</span>, <span class="co"># one-step ahead prediction</span></span>
+<span id="annotated-cell-2-39"><a href="#annotated-cell-2-39"></a>    n_features <span class="op">=</span> input_dim</span>
+<span id="annotated-cell-2-40"><a href="#annotated-cell-2-40"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2,3,5,7,9,11,12,13,14" data-code-annotation="3"><strong>Configure</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="18,19,20,21,22,24,25,26,27,28,29,30" data-code-annotation="4"><strong>Train</strong></span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="36,37,38,39,40" data-code-annotation="6"><strong>Predict</strong></span>
+</dd>
+</dl>
+</div></div>
+<aside><ol class="aside-footnotes"><li id="fn39"><p>Simplified here for demonstration.</p></li></ol></aside></section>
+<section id="mtd-extension-to-zero-inflated-data-rain-predcoverageplot" class="slide level2 scrollable">
+<h2>MTD Extension to Zero-Inflated Data <sup>1</sup> <sup>2</sup></h2>
+<div class="panel-tabset">
+<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">P(zero) = 0.34; precipitation at Quibdó, Colombia</a></li><li><a href="#tabset-14-2">P(zero) = 0.69; precipitation at Medan, North Sumatra</a></li></ul>
+<div class="tab-content">
+<div id="tabset-14-1">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-99-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-14-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-100-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn40"><p>We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn41"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
@@ -3114,7 +3178,7 @@ f(x) =
 <li>Future work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn35"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn36"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn42"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn43"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
 <section>
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank you!</h1>
@@ -3205,7 +3269,7 @@ w_l = G(l/L) - G((l - 1)/L), \quad l = 1,..., L.
 \end{equation}\]</span>
 <p>Next place a Dirichlet process prior on <span class="math inline">\(G\)</span>, denoted as <span class="math inline">\(DP(\boldsymbol{\alpha}_0, \boldsymbol{G}_0)\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(\boldsymbol{G}_0 = Beta(a_0, b_0)\)</span>. <sup>3</sup></p>
 <p>Then the vector of weights follows a Dirichlet distribution with parameter vector <span class="math inline">\(\alpha_0 {(a_1, ..., a_L)}^T\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn37"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn38"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn39"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn44"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn45"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn46"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
 <section id="shifted-gamma-distribution" class="slide level2">
 <h2>Shifted Gamma Distribution</h2>
 <p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
@@ -3303,25 +3367,25 @@ f(y; \mu, \beta, \epsilon) =
 <section id="sensitivity-analysis-for-gamma-scenario-1-1" class="slide level2">
 <h2>Sensitivity Analysis for Gamma Scenario 1</h2>
 <div class="panel-tabset">
-<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-14-2"><span class="math inline">\(\beta\)</span></a></li></ul>
+<ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-15-2"><span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-14-1">
+<div id="tabset-15-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-98-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-102-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-14-2">
+<div id="tabset-15-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-99-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-103-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3341,9 +3405,9 @@ f(y; \mu, \beta, \epsilon) =
 <section id="coverage-assessment-for-gamma-scenario-1-and-2-40-replicates" class="slide level2">
 <h2>Coverage Assessment for Gamma Scenario 1 and 2, 40 Replicates</h2>
 <div class="panel-tabset">
-<ul id="tabset-15" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-15-1">Exponentially decreasing weights (s1)</a></li><li><a href="#tabset-15-2">Uneven arrangement of the relevant lags (s2)</a></li></ul>
+<ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1">Exponentially decreasing weights (s1)</a></li><li><a href="#tabset-16-2">Uneven arrangement of the relevant lags (s2)</a></li></ul>
 <div class="tab-content">
-<div id="tabset-15-1">
+<div id="tabset-16-1">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -3397,7 +3461,7 @@ f(y; \mu, \beta, \epsilon) =
 </div>
 </div>
 </div>
-<div id="tabset-15-2">
+<div id="tabset-16-2">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -3457,25 +3521,25 @@ f(y; \mu, \beta, \epsilon) =
 <section id="coverage-assessment-for-gamma-scenario-1-40-replicates" class="slide level2">
 <h2>Coverage Assessment for Gamma Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
-<ul id="tabset-16" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-16-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-16-2"><span class="math inline">\(\beta\)</span></a></li></ul>
+<ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1"><span class="math inline">\(\alpha\)</span></a></li><li><a href="#tabset-17-2"><span class="math inline">\(\beta\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-16-1">
+<div id="tabset-17-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-105-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-16-2">
+<div id="tabset-17-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-106-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3487,58 +3551,58 @@ f(y; \mu, \beta, \epsilon) =
 <section id="coverage-assessment-for-gamma-scenario-1-40-replicates-1" class="slide level2">
 <h2>Coverage Assessment for Gamma Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
-<ul id="tabset-17" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-17-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-17-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-17-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-17-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-17-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<ul id="tabset-18" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-18-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-18-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-18-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-18-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-18-5"><span class="math inline">\(w_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-17-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-108-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-17-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-109-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-17-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-110-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-17-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-111-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-17-5">
+<div id="tabset-18-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-112-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-113-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-114-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-115-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-18-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3550,58 +3614,58 @@ f(y; \mu, \beta, \epsilon) =
 <section id="coverage-assessment-for-gamma-scenario-1-40-replicates-2" class="slide level2">
 <h2>Coverage Assessment for Gamma Scenario 1, 40 Replicates</h2>
 <div class="panel-tabset">
-<ul id="tabset-18" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-18-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-18-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-18-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-18-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-18-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
+<ul id="tabset-19" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-19-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-19-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-19-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-19-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-19-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-18-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-114-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-18-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-115-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-18-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-116-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-18-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-117-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-18-5">
+<div id="tabset-19-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-118-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-19-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-119-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-19-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-120-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-19-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-121-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-19-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-122-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3662,58 +3726,58 @@ f(y; \mu, \beta, \epsilon) =
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-w" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(w\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-19" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-19-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-19-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-19-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-19-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-19-5"><span class="math inline">\(w_5\)</span></a></li></ul>
+<ul id="tabset-20" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-20-1"><span class="math inline">\(w_1\)</span></a></li><li><a href="#tabset-20-2"><span class="math inline">\(w_2\)</span></a></li><li><a href="#tabset-20-3"><span class="math inline">\(w_3\)</span></a></li><li><a href="#tabset-20-4"><span class="math inline">\(w_4\)</span></a></li><li><a href="#tabset-20-5"><span class="math inline">\(w_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-19-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-123-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-124-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-125-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-126-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-19-5">
+<div id="tabset-20-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-127-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-128-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-129-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-130-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-20-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3725,58 +3789,58 @@ f(y; \mu, \beta, \epsilon) =
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-rho" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\rho\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-20" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-20-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-20-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-20-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-20-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-20-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
+<ul id="tabset-21" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-21-1"><span class="math inline">\(\rho_1\)</span></a></li><li><a href="#tabset-21-2"><span class="math inline">\(\rho_2\)</span></a></li><li><a href="#tabset-21-3"><span class="math inline">\(\rho_3\)</span></a></li><li><a href="#tabset-21-4"><span class="math inline">\(\rho_4\)</span></a></li><li><a href="#tabset-21-5"><span class="math inline">\(\rho_5\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-20-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-130-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-131-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-132-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-4">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-133-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-20-5">
+<div id="tabset-21-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/unnamed-chunk-134-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-2">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-135-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-3">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-136-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-4">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-21-5">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3788,47 +3852,47 @@ f(y; \mu, \beta, \epsilon) =
 <section id="trace-and-density-plot-for-zigamma-scenario-1s-mu-beta-p-epsilon" class="slide level2">
 <h2>Trace and Density Plot for ZIGamma Scenario 1’s <span class="math inline">\(\mu, \beta, P, \epsilon\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-21" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-21-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-21-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-21-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-21-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
+<ul id="tabset-22" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-22-1"><span class="math inline">\(\mu\)</span></a></li><li><a href="#tabset-22-2"><span class="math inline">\(\beta\)</span></a></li><li><a href="#tabset-22-3"><span class="math inline">\(P\)</span></a></li><li><a href="#tabset-22-4"><span class="math inline">\(\epsilon\)</span></a></li></ul>
 <div class="tab-content">
-<div id="tabset-21-1">
+<div id="tabset-22-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-137-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-141-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-2">
+<div id="tabset-22-2">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-138-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-3">
+<div id="tabset-22-3">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-139-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-143-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div id="tabset-21-4">
+<div id="tabset-22-4">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-140-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3882,47 +3946,6 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 <section id="prediction-errors-captiondiff-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Prediction Errors <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
-<ul id="tabset-22" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-22-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-22-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-22-3">windspeeds at 2m above ground</a></li></ul>
-<div class="tab-content">
-<div id="tabset-22-1">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-142-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-22-2">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-143-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div id="tabset-22-3">
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-144-1.png" width="960"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<aside><ol class="aside-footnotes"><li id="fn40"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
-<section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
-<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
-<div class="panel-tabset">
 <ul id="tabset-23" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-23-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-23-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-23-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
 <div id="tabset-23-1">
@@ -3960,9 +3983,9 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn41"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section>
-<section id="predicted-means-caption-one-step-ahead-zoom-in-view-n-200" class="slide level2 scrollable">
-<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span></h2>
+<aside><ol class="aside-footnotes"><li id="fn47"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
+<h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
 <ul id="tabset-24" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-24-1">windspeeds at 50m above ground</a></li><li><a href="#tabset-24-2">windspeeds at 10m above ground</a></li><li><a href="#tabset-24-3">windspeeds at 2m above ground</a></li></ul>
 <div class="tab-content">
@@ -4003,7 +4026,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn42"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn48"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
