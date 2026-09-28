@@ -1747,7 +1747,7 @@ Problem
 
 Goal 
 
-- Produce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness. 
+- Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness. 
 
 
 ## Data Description 
@@ -1795,7 +1795,7 @@ MTD (Mixture Transition Distribution)
 
 - Explicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels 
 
-- Gamma marginal + Gaussian copula
+- Gamma marginals + Gaussian copula
 
 . . . 
 
@@ -1807,15 +1807,15 @@ LSTM (Long Short-Term Memory)
 
 - Standard PyTorch LSTM 
 
-## Model Configuration 
+## Modeling Approach
 
 ::::: columns
 
 ::: column
 
-### MTD
+### MTD 
 
-- For MTD, the model specifications were:
+- Model specification:
 
   - marginal distribution: Gamma
 
@@ -1825,9 +1825,9 @@ LSTM (Long Short-Term Memory)
 
 ::: column
 
-### LSTM
+### LSTM 
 
-- For LSTM, the architecture consisted of: 
+- Architecture:
 
   - standard LSTM with forget gate, implemented in PyTorch.
 
@@ -1843,13 +1843,13 @@ LSTM (Long Short-Term Memory)
 
 ### MTD
 
-- The hyperparameter settings were:
+- Model & prior specification:
 
   - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
 
-  - dependence parameter $\rho$: $Unif(\rho_l | -1, 1)$, 
+  - dependence parameter $\mathbf{\rho}$: $Unif(\rho_l | -1, 1)$; look-back window $l$
 
-  - weight parameter $w$ [^w]: $CDP(w | \alpha_0 = 5, a_0 = 1, b_0 = 3)$; cdf-based Dirichlet process prior.
+  - weight parameter $\mathbf{w}$ [^w]: $CDP(\mathbf{w} | \alpha_0 = 5, a_0 = 1, b_0 = 3)$; cdf-based Dirichlet process prior.
 
 [^guide]: MTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Based on a comprehensive time series literature and systematic hyperparameter experiments with random-effects ANOVA. 
 
@@ -1863,7 +1863,7 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM
 
-- The final configurations were: 
+- Architecture & hyperparameters: 
 
   - learning rate = $0.001$, 
   
@@ -1885,7 +1885,7 @@ LSTM (Long Short-Term Memory)
 
 ### MTD
 
-- The MCMC settings were:
+- MCMC settings:
 
   - number of iterations: $85,000$ 
 
@@ -1901,7 +1901,7 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM
 
-- LSTM was trained using: 
+- Training configurations: 
 
   - Adam optimizer with a learning rate of $0.001$. 
 

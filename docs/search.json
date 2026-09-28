@@ -466,7 +466,7 @@
     "href": "index.html#motivation-objectives",
     "title": "",
     "section": "Motivation & Objectives",
-    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness."
+    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness."
   },
   {
     "objectID": "index.html#data-description",
@@ -487,28 +487,28 @@
     "href": "index.html#modeling-approach",
     "title": "",
     "section": "Modeling Approach",
-    "text": "Modeling Approach\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginal + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
+    "text": "Modeling Approach\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginals + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
   },
   {
-    "objectID": "index.html#model-configuration",
-    "href": "index.html#model-configuration",
+    "objectID": "index.html#modeling-approach-1",
+    "href": "index.html#modeling-approach-1",
     "title": "",
-    "section": "Model Configuration",
-    "text": "Model Configuration\n\n\nMTD\n\nFor MTD, the model specifications were:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nFor LSTM, the architecture consisted of:\n\nstandard LSTM with forget gate, implemented in PyTorch."
+    "section": "Modeling Approach",
+    "text": "Modeling Approach\n\n\nMTD\n\nModel specification:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nArchitecture:\n\nstandard LSTM with forget gate, implemented in PyTorch."
   },
   {
     "objectID": "index.html#model-configuration-guide",
     "href": "index.html#model-configuration-guide",
     "title": "",
     "section": "Model Configuration 1",
-    "text": "Model Configuration 1\n\n\nMTD\n\nThe hyperparameter settings were:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 2: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\rho\\): \\(Unif(\\rho_l | -1, 1)\\),\nweight parameter \\(w\\) 3: \\(CDP(w | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nThe final configurations were:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\),\ncell dimension = \\(64\\).\n\n\n\nMTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Based on a comprehensive time series literature and systematic hyperparameter experiments with random-effects ANOVA.\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
+    "text": "Model Configuration 1\n\n\nMTD\n\nModel & prior specification:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 2: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\mathbf{\\rho}\\): \\(Unif(\\rho_l | -1, 1)\\); look-back window \\(l\\)\nweight parameter \\(\\mathbf{w}\\) 3: \\(CDP(\\mathbf{w} | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nArchitecture & hyperparameters:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\),\ncell dimension = \\(64\\).\n\n\n\nMTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Based on a comprehensive time series literature and systematic hyperparameter experiments with random-effects ANOVA.\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
   },
   {
     "objectID": "index.html#model-training",
     "href": "index.html#model-training",
     "title": "",
     "section": "Model Training",
-    "text": "Model Training\n\n\nMTD\n\nThe MCMC settings were:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nLSTM was trained using:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation."
+    "text": "Model Training\n\n\nMTD\n\nMCMC settings:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nTraining configurations:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics-metrics2",

@@ -2428,7 +2428,7 @@ f(x) =
 <div class="fragment">
 <p>Goal</p>
 <ul>
-<li>Produce accurate forecasts and evaluate the strengths and limitations of MTD and LSTM for capturing temporal dependence and skewness.</li>
+<li>Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness.</li>
 </ul>
 </div>
 </section>
@@ -2471,7 +2471,7 @@ f(x) =
 <ul>
 <li><p>Bayeisan probabilistic model</p></li>
 <li><p>Explicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels</p></li>
-<li><p>Gamma marginal + Gaussian copula</p></li>
+<li><p>Gamma marginals + Gaussian copula</p></li>
 </ul>
 <div class="fragment">
 <p>LSTM (Long Short-Term Memory)</p>
@@ -2482,13 +2482,13 @@ f(x) =
 </ul>
 </div>
 </section>
-<section id="model-configuration" class="slide level2">
-<h2>Model Configuration</h2>
+<section id="modeling-approach-1" class="slide level2">
+<h2>Modeling Approach</h2>
 <div class="columns">
 <div class="column">
 <h3 id="mtd">MTD</h3>
 <ul>
-<li><p>For MTD, the model specifications were:</p>
+<li><p>Model specification:</p>
 <ul>
 <li><p>marginal distribution: Gamma</p></li>
 <li><p>copula: Gaussian.</p></li>
@@ -2497,7 +2497,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm">LSTM</h3>
 <ul>
-<li><p>For LSTM, the architecture consisted of:</p>
+<li><p>Architecture:</p>
 <ul>
 <li>standard LSTM with forget gate, implemented in PyTorch.</li>
 </ul></li>
@@ -2510,17 +2510,17 @@ f(x) =
 <div class="column">
 <h3 id="mtd-1">MTD</h3>
 <ul>
-<li><p>The hyperparameter settings were:</p>
+<li><p>Model &amp; prior specification:</p>
 <ul>
 <li><p>marginal parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> <sup>2</sup>: <span class="math inline">\(Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)\)</span>, <span class="math inline">\(Gamma(\beta | u_{\beta}, v_{\beta} = 1)\)</span>,</p></li>
-<li><p>dependence parameter <span class="math inline">\(\rho\)</span>: <span class="math inline">\(Unif(\rho_l | -1, 1)\)</span>,</p></li>
-<li><p>weight parameter <span class="math inline">\(w\)</span> <sup>3</sup>: <span class="math inline">\(CDP(w | \alpha_0 = 5, a_0 = 1, b_0 = 3)\)</span>; cdf-based Dirichlet process prior.</p></li>
+<li><p>dependence parameter <span class="math inline">\(\mathbf{\rho}\)</span>: <span class="math inline">\(Unif(\rho_l | -1, 1)\)</span>; look-back window <span class="math inline">\(l\)</span></p></li>
+<li><p>weight parameter <span class="math inline">\(\mathbf{w}\)</span> <sup>3</sup>: <span class="math inline">\(CDP(\mathbf{w} | \alpha_0 = 5, a_0 = 1, b_0 = 3)\)</span>; cdf-based Dirichlet process prior.</p></li>
 </ul></li>
 </ul>
 </div><div class="column">
 <h3 id="lstm-1">LSTM</h3>
 <ul>
-<li><p>The final configurations were:</p>
+<li><p>Architecture &amp; hyperparameters:</p>
 <ul>
 <li><p>learning rate = <span class="math inline">\(0.001\)</span>,</p></li>
 <li><p>batch size = <span class="math inline">\(32\)</span>,</p></li>
@@ -2536,7 +2536,7 @@ f(x) =
 <div class="column">
 <h3 id="mtd-2">MTD</h3>
 <ul>
-<li><p>The MCMC settings were:</p>
+<li><p>MCMC settings:</p>
 <ul>
 <li><p>number of iterations: <span class="math inline">\(85,000\)</span></p></li>
 <li><p>burn-in: <span class="math inline">\(5,000\)</span>, and</p></li>
@@ -2547,7 +2547,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm-2">LSTM</h3>
 <ul>
-<li><p>LSTM was trained using:</p>
+<li><p>Training configurations:</p>
 <ul>
 <li><p>Adam optimizer with a learning rate of <span class="math inline">\(0.001\)</span>.</p></li>
 <li><p>L1 loss for MAE and L2 loss for all other metrics 🔜.</p></li>
