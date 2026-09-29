@@ -2428,7 +2428,7 @@ f(x) =
 <div class="fragment">
 <p>Goal</p>
 <ul>
-<li>Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) <sup>1</sup> and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness.</li>
+<li>Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) <sup>1</sup> and LSTM (Long Short-Term Memory) for modeling complex, non-Gaussian time series.</li>
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn20"><p>Similar intuition to Gaussian process, think of it as “mixture process”.</p></li></ol></aside></section>
@@ -2442,7 +2442,7 @@ f(x) =
 <li><p>Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.</p></li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn21"><p>MERRA-2 stands for Modern-Era Retrospective analysis for Research and Applications, Version 2 and is produced by the NASA Global Modeling and Assimilation Office.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn21"><p>MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) is provided in NetCDF files (array-oriented scientific data) produced by NASA’s Global Modeling and Assimilation Office.</p></li></ol></aside></section>
 <section id="data-preprocessing" class="slide level2 scrollable">
 <h2>Data Preprocessing</h2>
 <p>Feature Engineering</p>
@@ -2455,16 +2455,16 @@ f(x) =
 <div class="fragment">
 <p>Train/Test Split</p>
 <ul>
-<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations used for training and the final <span class="math inline">\(20\%\)</span> used for testing to preserve temporal ordering and prevent data leakage <sup>2</sup>.</li>
+<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations for training and the final <span class="math inline">\(20\%\)</span> for testing to preserve temporal ordering and prevent data leakage <sup>2</sup>.</li>
 </ul>
 </div>
 <div class="fragment">
 <p>LSTM Only</p>
 <ul>
-<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability.</li>
+<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale to improve training stability.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn22"><p>Current MTD version does not support additional features, so both models use the same baseline, isolating the impact of model complexity and added features.</p></li><li id="fn23"><p>Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn22"><p>Current MTD model version does not support external features, so both models use the same baseline, isolating the impact of model complexity and added features.</p></li><li id="fn23"><p>Time series cross-validation could provide a more robust evaluation of model performance across differnet temporal periods.</p></li></ol></aside></section>
 <section id="modeling-approach" class="slide level2">
 <h2>Modeling Approach</h2>
 <p>MTD (Mixture Transition Distribution)</p>
@@ -2536,7 +2536,7 @@ f(x) =
 <div class="column">
 <h3 id="mtd-2">MTD</h3>
 <ul>
-<li><p>MCMC settings:</p>
+<li><p>MCMC setting:</p>
 <ul>
 <li><p>number of iterations: <span class="math inline">\(85,000\)</span>,</p></li>
 <li><p>burn-in: <span class="math inline">\(5,000\)</span>,</p></li>
@@ -2547,7 +2547,7 @@ f(x) =
 </div><div class="column">
 <h3 id="lstm-2">LSTM</h3>
 <ul>
-<li><p>Training configurations:</p>
+<li><p>Training configuration:</p>
 <ul>
 <li><p>Adam (adaptive moment estimation) optimizer with a learning rate of <span class="math inline">\(0.001\)</span>.</p></li>
 <li><p>L1 loss for MAE and L2 loss for all other metrics 🔜.</p></li>
@@ -2555,7 +2555,7 @@ f(x) =
 <li><p>LSTM is implemented with <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn27"><p>See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validatio loss curves.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn27"><p>See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics-metrics2" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup> <sup>2</sup></h2>
 <table class="caption-top">
@@ -2850,7 +2850,7 @@ f(x) =
 </div><div class="column">
 <h3 id="section-12"></h3>
 <ul>
-<li><span class="math inline">\(95\%\)</span> prediction intervals achieved near-nominal <span class="math inline">\(95\%\)</span> coverage across all heights, demonstrating well-calibrated predictive uncertainty.</li>
+<li>Achieved near-nominal <span class="math inline">\(95\%\)</span> coverage across all heights, demonstrating well-calibrated predictive uncertainty.</li>
 </ul>
 </div></div>
 <aside><ol class="aside-footnotes"><li id="fn36"><p>Coverage is the proportion of test observations falling within their corresponding <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
@@ -2901,14 +2901,14 @@ f(x) =
 <ul>
 <li><p>MTD consistently outperformed LSTM across all evaluation metrics and heights.</p>
 <ul>
-<li>Probabilistic formulation provided uncertainty quantification (UQ) and model interpretability.</li>
+<li>Provided uncertainty quantification (UQ) and model interpretability.</li>
 </ul></li>
 <li><p>LSTM performed <em>competitively</em> and was computationally efficient.</p></li>
 </ul>
 <div class="fragment">
 <p>Trade-offs</p>
 <ul>
-<li><p>MTD requires careful model design and is more computationally intensive.</p></li>
+<li><p>MTD requires careful model spec and design, and is more computationally intensive.</p></li>
 <li><p>LSTM is more general-purpose, but less interpretable due to its black-box structure.</p></li>
 </ul>
 </div>
@@ -2921,25 +2921,25 @@ f(x) =
 </section>
 <section id="next-steps" class="slide level2 scrollable">
 <h2>Next Steps</h2>
-<p>Further Experiments &amp; Analysis</p>
+<p>Further Experiments &amp; Analysis <sup>1</sup></p>
 <ul>
-<li><p>Conduct a more rigorous evaluation of the Transformer on the current dataset as preliminary results show no improvement over MTD nor LSTM <sup>1</sup>.</p></li>
-<li><p>Extend zero-inflated analysis with the Transformer, assessing robustness to a more complex target distribution.</p></li>
+<li><p>Conduct a more rigorous evaluation of the Transformer on the current dataset, as preliminary results show no improvement over MTD nor LSTM.</p></li>
+<li><p>Extend zero-inflated analysis with the Transformer, assessing performance to a more complex target distribution.</p></li>
 </ul>
 <div class="fragment">
-<p>MTD Extensions <sup>2</sup></p>
+<p>MTD Extensions</p>
 <ul>
-<li><p>Incorporate external predictors to relax the stationarity assumption.</p></li>
-<li><p>Explore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.</p></li>
+<li><p>Incorporate external predictors to accommodate nonstationarity.</p></li>
+<li><p>Explore alternative marginals and copula choices, as well as more efficient MCMC methods <sup>2</sup>.</p></li>
 </ul>
 </div>
 <div class="fragment">
-<p>ML/DL UQ and Interpretability <sup>3</sup></p>
+<p>ML/DL UQ &amp; Interpretability</p>
 <ul>
-<li>Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts.</li>
+<li>Explore probabilistic/quantile approaches for UQ <sup>3</sup>, and post-hoc methods for interpretability of LSTM and Transformer forecasts.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn38"><p>Potential factors include limited training data, univeriate and short-term forecasting, target skewness, model complexity, and hyperparameter choices.</p></li><li id="fn39"><p>The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn40"><p>Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn38"><p>Potential factors include target skewness, limited training data, univeriate and short-term forecasting, model complexity, and hyperparameter choices.</p></li><li id="fn39"><p>The general MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn40"><p>Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
 <section id="end-to-end-ml-workflow-workflow-variation" class="slide level2 scrollable">
 <h2>End-to-End ML Workflow <sup>1</sup> <sup>2</sup></h2>
 <blockquote>
@@ -2950,8 +2950,8 @@ f(x) =
 <li><p><strong>Prepare:</strong> Load, preprocess, and split data</p></li>
 <li><p><strong>Configure:</strong> Specify model architecture and hyperparameters</p></li>
 <li><p><strong>Train:</strong> Train model with reproducibility and runtime tracking</p></li>
-<li><p><strong>Validate:</strong> Assess model-specific training/estimation diagnostics</p></li>
-<li><p><strong>Predict &amp; Evaluate</strong>: Generate predictions and evaluate forecasting performance</p></li>
+<li><p><strong>Validate:</strong> Assess model-specific training diagnostics</p></li>
+<li><p><strong>Predict &amp; Evaluate</strong>: Generate predictions and evaluate performance</p></li>
 </ol>
 <aside><ol class="aside-footnotes"><li id="fn41"><p>Reusable functions support each stage for reproducible analysis.</p></li><li id="fn42"><p>Step 3-6 vary by model.</p></li></ol></aside></section>
 <section id="software-implementation-demo" class="slide level2 scrollable">
@@ -2986,7 +2986,7 @@ f(x) =
 <span id="annotated-cell-1-25"><a href="#annotated-cell-1-25"></a>  <span class="at">res =</span> res,</span>
 <span id="annotated-cell-1-26"><a href="#annotated-cell-1-26"></a>  <span class="at">family =</span> <span class="st">"gamma"</span>, <span class="co"># Gamma marginal</span></span>
 <span id="annotated-cell-1-27"><a href="#annotated-cell-1-27"></a>  <span class="at">lags =</span> lags,</span>
-<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>) <span class="co"># 95% predictive intervals</span></span>
+<span id="annotated-cell-1-28"><a href="#annotated-cell-1-28"></a>  <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>) <span class="co"># 95% predictive intervals, one-step ahead</span></span>
 <span id="annotated-cell-1-29"><a href="#annotated-cell-1-29"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
@@ -3040,12 +3040,12 @@ f(x) =
 <span id="annotated-cell-2-30"><a href="#annotated-cell-2-30"></a>)</span>
 <span id="annotated-cell-2-31"><a href="#annotated-cell-2-31"></a></span>
 <span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a><span class="co"># 5. Validate</span></span>
-<span id="annotated-cell-2-33"><a href="#annotated-cell-2-33"></a>opt.plot_losses()</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-33" class="code-annotation-target"><a href="#annotated-cell-2-33"></a>opt.plot_losses() <span class="co"># training and validation loss curves</span></span>
 <span id="annotated-cell-2-34"><a href="#annotated-cell-2-34"></a></span>
 <span id="annotated-cell-2-35"><a href="#annotated-cell-2-35"></a><span class="co"># 6. Predict </span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-36" class="code-annotation-target"><a href="#annotated-cell-2-36"></a>predictions, values <span class="op">=</span> opt.evaluate(</span>
 <span id="annotated-cell-2-37"><a href="#annotated-cell-2-37"></a>    test_loader_one,</span>
-<span id="annotated-cell-2-38"><a href="#annotated-cell-2-38"></a>    batch_size <span class="op">=</span> <span class="dv">1</span>, <span class="co"># one-step ahead prediction</span></span>
+<span id="annotated-cell-2-38"><a href="#annotated-cell-2-38"></a>    batch_size <span class="op">=</span> <span class="dv">1</span>, <span class="co"># point prediction, one-step ahead</span></span>
 <span id="annotated-cell-2-39"><a href="#annotated-cell-2-39"></a>    n_features <span class="op">=</span> input_dim</span>
 <span id="annotated-cell-2-40"><a href="#annotated-cell-2-40"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
@@ -3057,6 +3057,10 @@ f(x) =
 <dd>
 <span data-code-cell="annotated-cell-2" data-code-lines="18,19,20,21,22,24,25,26,27,28,29,30" data-code-annotation="4"><strong>Train</strong></span>
 </dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="5">5</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="33" data-code-annotation="5"><strong>Validate</strong></span>
+</dd>
 <dt data-target-cell="annotated-cell-2" data-target-annotation="6">6</dt>
 <dd>
 <span data-code-cell="annotated-cell-2" data-code-lines="36,37,38,39,40" data-code-annotation="6"><strong>Predict</strong></span>
@@ -3067,14 +3071,14 @@ f(x) =
 <section id="mtd-extension-to-zero-inflated-data-rain-predcoverageplot" class="slide level2 scrollable">
 <h2>MTD Extension to Zero-Inflated Data <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
-<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">P(zero) = 0.34; precipitation at Quibdó, Colombia</a></li><li><a href="#tabset-14-2">P(zero) = 0.69; precipitation at Medan, North Sumatra</a></li></ul>
+<ul id="tabset-14" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-14-1">P(zero) = 0.69; precipitation at Medan, North Sumatra</a></li><li><a href="#tabset-14-2">P(zero) = 0.34; precipitation at Quibdó, Colombia</a></li></ul>
 <div class="tab-content">
 <div id="tabset-14-1">
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-99-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-98-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -3093,7 +3097,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn44"><p>We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn45"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn44"><p>Initially planned to demonstrate using insurance claims, but such data are often private. Could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn45"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>

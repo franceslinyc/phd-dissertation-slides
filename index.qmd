@@ -1747,7 +1747,7 @@ Problem
 
 Goal 
 
-- Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) [^mtdintro] and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness. 
+- Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) [^mtdintro] and LSTM (Long Short-Term Memory) for modeling complex, non-Gaussian time series. 
 
 [^mtdintro]: Similar intuition to Gaussian process, think of it as “mixture process”. 
 
@@ -1762,7 +1762,9 @@ Dataset
 
   - Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.  
 
-[^merra]: MERRA-2 stands for Modern-Era Retrospective analysis for Research and Applications, Version 2 and is produced by the NASA Global Modeling and Assimilation Office. 
+[^merra]: MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) is provided in NetCDF files (array-oriented scientific data) produced by NASA’s Global Modeling and Assimilation Office. 
+
+[^uv]: U: velocity toward east direction. V: velocity toward north direction. 
 
 ## Data Preprocessing 
 
@@ -1776,17 +1778,17 @@ Feature Engineering
 
 Train/Test Split
 
-- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
+- Used an 80/20 chronological split, with the first $80\%$ of observations for training and the final $20\%$ for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
 
 . . . 
 
 LSTM Only
 
-- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability. 
+- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale to improve training stability. 
 
-[^limitation]: Current MTD version does not support additional features, so both models use the same baseline, isolating the impact of model complexity and added features. 
+[^limitation]: Current MTD model version does not support external features, so both models use the same baseline, isolating the impact of model complexity and added features. 
 
-[^limitation2]: Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods.
+[^limitation2]: Time series cross-validation could provide a more robust evaluation of model performance across differnet temporal periods. 
 
 ## Modeling Approach
 
@@ -1886,7 +1888,7 @@ LSTM (Long Short-Term Memory)
 
 ### MTD
 
-- MCMC settings:
+- MCMC setting:
 
   - number of iterations: $85,000$,
 
@@ -1896,7 +1898,7 @@ LSTM (Long Short-Term Memory)
 
 - MTD is designed and built in `R` and `C++`, then compiled and executed on a high-performance computing (HPC) cluster. 
 
-[^trainingdiag]: See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validatio loss curves.
+[^trainingdiag]: See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves. 
 
 ::: 
 
@@ -1904,7 +1906,7 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM
 
-- Training configurations: 
+- Training configuration: 
 
   - Adam (adaptive moment estimation) optimizer with a learning rate of $0.001$. 
 
@@ -2074,7 +2076,7 @@ df
 
 ### 
 
-- $95\%$ prediction intervals achieved near-nominal $95\%$ coverage across all heights, demonstrating well-calibrated predictive uncertainty. 
+- Achieved near-nominal $95\%$ coverage across all heights, demonstrating well-calibrated predictive uncertainty. 
 
 ::: 
 
@@ -2118,7 +2120,7 @@ Results
 
 - MTD consistently outperformed LSTM across all evaluation metrics and heights.
 
-  - Probabilistic formulation provided uncertainty quantification (UQ) and model interpretability. 
+  - Provided uncertainty quantification (UQ) and model interpretability. 
 
 - LSTM performed *competitively* and was computationally efficient. 
 
@@ -2126,7 +2128,7 @@ Results
 
 Trade-offs
 
-- MTD requires careful model design and is more computationally intensive.
+- MTD requires careful model spec and design, and is more computationally intensive. 
 
 - LSTM is more general-purpose, but less interpretable due to its black-box structure. 
 
@@ -2138,30 +2140,30 @@ Bottom-line
 
 ## Next Steps
 
-Further Experiments & Analysis
+Further Experiments & Analysis [^lstmimprove1]
 
-  - Conduct a more rigorous evaluation of the Transformer on the current dataset as preliminary results show no improvement over MTD nor LSTM [^lstmimprove1]. 
+  - Conduct a more rigorous evaluation of the Transformer on the current dataset, as preliminary results show no improvement over MTD nor LSTM. 
 
-  - Extend zero-inflated analysis with the Transformer, assessing robustness to a more complex target distribution. 
-
-. . . 
-
-MTD Extensions [^mtdimprove]
-
-  - Incorporate external predictors to relax the stationarity assumption.
-
-  - Explore alternative marginal distributions and copula choices, as well as more efficient MCMC methods.
+  - Extend zero-inflated analysis with the Transformer, assessing performance to a more complex target distribution. 
 
 . . . 
 
-ML/DL UQ and Interpretability [^lstmimprove2]
+MTD Extensions 
 
-  - Explore probabilistic/quantile approaches for UQ and post-hoc methods for interpretability of LSTM and Transformer forecasts. 
+  - Incorporate external predictors to accommodate nonstationarity.
+
+  - Explore alternative marginals and copula choices, as well as more efficient MCMC methods [^mtdimprove]. 
+
+. . . 
+
+ML/DL UQ & Interpretability 
+
+  - Explore probabilistic/quantile approaches for UQ [^lstmimprove2], and post-hoc methods for interpretability of LSTM and Transformer forecasts. 
 
 
-[^lstmimprove1]: Potential factors include limited training data, univeriate and short-term forecasting, target skewness, model complexity, and hyperparameter choices. 
+[^lstmimprove1]: Potential factors include target skewness, limited training data, univeriate and short-term forecasting, model complexity, and hyperparameter choices. 
 
-[^mtdimprove]: The current model uses Gamma marginals and a Gaussian copula, but the general MTD framework can accommodate other distributions (e.g., Beta, Pareto), copulas (e.g., Clayton, Gumbel), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
+[^mtdimprove]: The general MTD framework can accommodate broader  distributions (e.g., Beta, Pareto), asymetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
 
 [^lstmimprove2]: Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
 
@@ -2178,9 +2180,9 @@ ML/DL UQ and Interpretability [^lstmimprove2]
 
 4. **Train:** Train model with reproducibility and runtime tracking 
 
-5. **Validate:** Assess model-specific training/estimation diagnostics 
+5. **Validate:** Assess model-specific training diagnostics 
 
-6. **Predict & Evaluate**: Generate predictions and evaluate forecasting performance 
+6. **Predict & Evaluate**: Generate predictions and evaluate performance 
 
 [^workflow]: Reusable functions support each stage for reproducible analysis. 
 
@@ -2222,7 +2224,7 @@ res_pred <- predMTD(                                     # <6>
   res = res, # <6>
   family = "gamma", # Gamma marginal # <6>
   lags = lags,  # <6>
-  probs = c(0.025, 0.975) # 95% predictive intervals     # <6>
+  probs = c(0.025, 0.975) # 95% predictive intervals, one-step ahead # <6>
 ) # <6>
 ```
 
@@ -2270,12 +2272,12 @@ opt.train( # <4>
 ) # <4>
 
 # 5. Validate
-opt.plot_losses()
+opt.plot_losses() # training and validation loss curves # <5>
 
 # 6. Predict 
 predictions, values = opt.evaluate( # <6>
     test_loader_one, # <6>
-    batch_size = 1, # one-step ahead prediction # <6>
+    batch_size = 1, # point prediction, one-step ahead # <6>
     n_features = input_dim # <6>
 ) # <6>
 ```
@@ -2295,6 +2297,12 @@ predictions, values = opt.evaluate( # <6>
 
 ::: {.panel-tabset}
 
+### P(zero) = 0.69; precipitation at Medan, North Sumatra
+
+```{r}
+readRDS(file.path(output_dir, "p4_real_rain.rds"))
+```
+
 ### P(zero) = 0.34; precipitation at Quibdó, Colombia
 
 ```{r}
@@ -2305,15 +2313,10 @@ output_dir <- "/Users/franceslin/GitHub/phd-dissertation-slides/data"
 readRDS(file.path(output_dir, "p2_real_rain.rds"))
 ```
 
-### P(zero) = 0.69; precipitation at Medan, North Sumatra
-
-```{r}
-readRDS(file.path(output_dir, "p4_real_rain.rds"))
-```
 
 ::: 
 
-[^rain]: We initially planned to use insurance claims data, but such data are often private. The model could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient. 
+[^rain]: Initially planned to demonstrate using insurance claims, but such data are often private. Could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient. 
 
 [^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals. 
 
