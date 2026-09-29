@@ -1733,7 +1733,7 @@ df
 
 Problem
 
-- Wind speed is a key proxy variable for energy forecasting. 
+- Wind speed is a key proxy for energy forecasting. 
 
   - Accurate prediction of wind speed is crucial for reliable power generation.   
 
@@ -1741,29 +1741,30 @@ Problem
 
 - Modeling wind speed is challenging. 
 
-  - Strong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches. 
+  - Strong temporal dependence and highly skewed distribution, which can pose challenges for conventional time series and ML approaches. 
 
 . . . 
 
 Goal 
 
-- Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness. 
+- Produce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) [^mtdintro] and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness. 
+
+[^mtdintro]: Similar intuition to Gaussian process, think of it as “mixture process”. 
 
 
 ## Data Description 
 
-Data
+Dataset
 
-- Hourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025. 
+- Hourly wind speeds (m/s) for the Limon Wind Energy Center at 50 m, 10 m, and 2 m above ground level from 2024-2025. 
 
   - Retrieved from **MERRA-2** [^merra] via the NASA GES DISC Earthdata API. 
 
   - Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.  
 
-[^merra]: MERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2) is a global atmospheric reanalysis produced by the NASA Global Modeling and Assimilation Office. 
+[^merra]: MERRA-2 stands for Modern-Era Retrospective analysis for Research and Applications, Version 2 and is produced by the NASA Global Modeling and Assimilation Office. 
 
-
-## Data Processing 
+## Data Preprocessing 
 
 Feature Engineering
 
@@ -1775,7 +1776,7 @@ Feature Engineering
 
 Train/Test Split
 
-- Used an 80/20 chronological split [^limitation2], with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve temporal ordering and prevent data leakage. 
+- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
 
 . . . 
 
@@ -1783,7 +1784,7 @@ LSTM Only
 
 - Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability. 
 
-[^limitation]: The current MTD formulation does not support additional predictors, so neither model includes external predictors. This provides a baseline for isolating the impact of added features and model complexity. 
+[^limitation]: Current MTD version does not support additional features, so both models use the same baseline, isolating the impact of model complexity and added features. 
 
 [^limitation2]: Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods.
 
@@ -1827,7 +1828,7 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM 
 
-- Architecture:
+- Network architecture:
 
   - standard LSTM with forget gate, implemented in PyTorch.
 
@@ -1843,7 +1844,7 @@ LSTM (Long Short-Term Memory)
 
 ### MTD
 
-- Model & prior specification:
+- Prior specification:
 
   - marginal parameters $\alpha$, $\beta$ [^alpha]: $Gamma(\alpha | u_{\alpha}, v_{\alpha} = 1)$, $Gamma(\beta | u_{\beta}, v_{\beta} = 1)$,
 
@@ -1851,7 +1852,7 @@ LSTM (Long Short-Term Memory)
 
   - weight parameter $\mathbf{w}$ [^w]: $CDP(\mathbf{w} | \alpha_0 = 5, a_0 = 1, b_0 = 3)$; cdf-based Dirichlet process prior.
 
-[^guide]: MTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Based on a comprehensive time series literature and systematic hyperparameter experiments with random-effects ANOVA. 
+[^guide]: MTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Informed by a comprehensive review, and systematic hyperparameter experiments with random-effects ANOVA. 
 
 [^alpha]: $u_{\alpha}$, $u_{\beta}$ derived from the training data: $u_{\beta}$ = mean/variance, $u_{\alpha}$ = mean $\times$ $u_{\beta}$. $u$ and $v$ can be further tuned to control the strength of the prior. 
 
@@ -1863,21 +1864,21 @@ LSTM (Long Short-Term Memory)
 
 ### LSTM
 
-- Architecture & hyperparameters: 
-
-  - learning rate = $0.001$, 
+- Hyperparameter setting: 
   
-  - batch size = $32$, 
+  - batch size = $32$,
   
-  - number of layers = $1$, 
+  - cell dimension = $64$,
   
-  - cell dimension = $64$. 
+  - number of layers = $1$,
+  
+  - learning rate = $0.001$.
 
 ::: 
 
 ::::: 
 
-## Model Training  
+## Model Training [^trainingdiag]
 
 ::::: columns
 
@@ -1887,13 +1888,15 @@ LSTM (Long Short-Term Memory)
 
 - MCMC settings:
 
-  - number of iterations: $85,000$ 
+  - number of iterations: $85,000$,
 
-  - burn-in: $5,000$, and 
+  - burn-in: $5,000$,
 
   - thinning: $20$. 
 
 - MTD is designed and built in `R` and `C++`, then compiled and executed on a high-performance computing (HPC) cluster. 
+
+[^trainingdiag]: See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validatio loss curves.
 
 ::: 
 
@@ -1903,7 +1906,7 @@ LSTM (Long Short-Term Memory)
 
 - Training configurations: 
 
-  - Adam optimizer with a learning rate of $0.001$. 
+  - Adam (adaptive moment estimation) optimizer with a learning rate of $0.001$. 
 
   - L1 loss for MAE and L2 loss for all other metrics 🔜. 
 
@@ -2007,7 +2010,7 @@ readRDS(file.path(output_dir, "p3_real_ts.rds"))
 
 ::: 
 
-[^captionpred]: Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
+[^captionpred]: Solid (black) lines are observed values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.
 
 [^captionpred2]: See Supplement for additional plots. 
 
@@ -2071,7 +2074,7 @@ df
 
 ### 
 
-- The model appropriately captures the predictive uncertainty across wind speeds at all heights. 
+- $95\%$ prediction intervals achieved near-nominal $95\%$ coverage across all heights, demonstrating well-calibrated predictive uncertainty. 
 
 ::: 
 
@@ -2107,7 +2110,7 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 ::: 
 
-[^predcoverageplot]: Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
+[^predcoverageplot]: Solid (black) line shows observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
 
 ## Takeaway
 

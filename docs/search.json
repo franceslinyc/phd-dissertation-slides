@@ -466,21 +466,21 @@
     "href": "index.html#motivation-objectives",
     "title": "",
     "section": "Motivation & Objectives",
-    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy variable for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and skewed distribution, which can pose challengings for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness."
+    "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and highly skewed distribution, which can pose challenges for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) 1 and LSTM (Long Short-Term Memory) for capturing temporal dependence and skewness.\n\n\nSimilar intuition to Gaussian process, think of it as “mixture process”."
   },
   {
     "objectID": "index.html#data-description",
     "href": "index.html#data-description",
     "title": "",
     "section": "Data Description",
-    "text": "Data Description\nData\n\nHourly wind speeds (m/s) at 50 m, 10 m, and 2 m above ground level at the Limon Wind Energy Center from 2024-2025.\n\nRetrieved from MERRA-2 1 via the NASA GES DISC Earthdata API.\nSpatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.\n\n\nMERRA-2 (Modern-Era Retrospective analysis for Research and Applications, Version 2) is a global atmospheric reanalysis produced by the NASA Global Modeling and Assimilation Office."
+    "text": "Data Description\nDataset\n\nHourly wind speeds (m/s) for the Limon Wind Energy Center at 50 m, 10 m, and 2 m above ground level from 2024-2025.\n\nRetrieved from MERRA-2 1 via the NASA GES DISC Earthdata API.\nSpatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.\n\n\nMERRA-2 stands for Modern-Era Retrospective analysis for Research and Applications, Version 2 and is produced by the NASA Global Modeling and Assimilation Office."
   },
   {
-    "objectID": "index.html#data-processing",
-    "href": "index.html#data-processing",
+    "objectID": "index.html#data-preprocessing",
+    "href": "index.html#data-preprocessing",
     "title": "",
-    "section": "Data Processing",
-    "text": "Data Processing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence 1.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split 2, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve temporal ordering and prevent data leakage.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability.\n\n\nThe current MTD formulation does not support additional predictors, so neither model includes external predictors. This provides a baseline for isolating the impact of added features and model complexity.Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods."
+    "section": "Data Preprocessing",
+    "text": "Data Preprocessing\nFeature Engineering\n\nCreated lagged features to capture temporal dependence 1.\n\nTested different look-back windows, e.g., \\(L = 5, 15\\).\n\n\n\nTrain/Test Split\n\nUsed an 80/20 chronological split, with the first \\(80\\%\\) of observations used for training and the final \\(20\\%\\) used for testing to preserve temporal ordering and prevent data leakage 2.\n\n\n\nLSTM Only\n\nApplied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale for improved training stability.\n\n\nCurrent MTD version does not support additional features, so both models use the same baseline, isolating the impact of model complexity and added features.Time series cross-validation could provide a more robust evaluation of model generalization across different temporal periods."
   },
   {
     "objectID": "index.html#modeling-approach",
@@ -494,21 +494,21 @@
     "href": "index.html#modeling-approach-1",
     "title": "",
     "section": "Modeling Approach",
-    "text": "Modeling Approach\n\n\nMTD\n\nModel specification:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nArchitecture:\n\nstandard LSTM with forget gate, implemented in PyTorch."
+    "text": "Modeling Approach\n\n\nMTD\n\nModel specification:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nNetwork architecture:\n\nstandard LSTM with forget gate, implemented in PyTorch."
   },
   {
     "objectID": "index.html#model-configuration-guide",
     "href": "index.html#model-configuration-guide",
     "title": "",
     "section": "Model Configuration 1",
-    "text": "Model Configuration 1\n\n\nMTD\n\nModel & prior specification:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 2: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\mathbf{\\rho}\\): \\(Unif(\\rho_l | -1, 1)\\); look-back window \\(l\\)\nweight parameter \\(\\mathbf{w}\\) 3: \\(CDP(\\mathbf{w} | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nArchitecture & hyperparameters:\n\nlearning rate = \\(0.001\\),\nbatch size = \\(32\\),\nnumber of layers = \\(1\\),\ncell dimension = \\(64\\).\n\n\n\nMTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Based on a comprehensive time series literature and systematic hyperparameter experiments with random-effects ANOVA.\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
+    "text": "Model Configuration 1\n\n\nMTD\n\nPrior specification:\n\nmarginal parameters \\(\\alpha\\), \\(\\beta\\) 2: \\(Gamma(\\alpha | u_{\\alpha}, v_{\\alpha} = 1)\\), \\(Gamma(\\beta | u_{\\beta}, v_{\\beta} = 1)\\),\ndependence parameter \\(\\mathbf{\\rho}\\): \\(Unif(\\rho_l | -1, 1)\\); look-back window \\(l\\)\nweight parameter \\(\\mathbf{w}\\) 3: \\(CDP(\\mathbf{w} | \\alpha_0 = 5, a_0 = 1, b_0 = 3)\\); cdf-based Dirichlet process prior.\n\n\n\nLSTM\n\nHyperparameter setting:\n\nbatch size = \\(32\\),\ncell dimension = \\(64\\),\nnumber of layers = \\(1\\),\nlearning rate = \\(0.001\\).\n\n\n\nMTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Informed by a comprehensive review, and systematic hyperparameter experiments with random-effects ANOVA.\\(u_{\\alpha}\\), \\(u_{\\beta}\\) derived from the training data: \\(u_{\\beta}\\) = mean/variance, \\(u_{\\alpha}\\) = mean \\(\\times\\) \\(u_{\\beta}\\). \\(u\\) and \\(v\\) can be further tuned to control the strength of the prior.\\(\\alpha_0\\): concentration parameter; \\(G_0\\): base distribution, i.e., \\(G_0 \\sim Beta(a_0, b_0)\\), where \\(a_0\\) and \\(b_0\\) are the shape parameters."
   },
   {
-    "objectID": "index.html#model-training",
-    "href": "index.html#model-training",
+    "objectID": "index.html#model-training-trainingdiag",
+    "href": "index.html#model-training-trainingdiag",
     "title": "",
-    "section": "Model Training",
-    "text": "Model Training\n\n\nMTD\n\nMCMC settings:\n\nnumber of iterations: \\(85,000\\)\nburn-in: \\(5,000\\), and\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nTraining configurations:\n\nAdam optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation."
+    "section": "Model Training 1",
+    "text": "Model Training 1\n\n\nMTD\n\nMCMC settings:\n\nnumber of iterations: \\(85,000\\),\nburn-in: \\(5,000\\),\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a high-performance computing (HPC) cluster.\n\n\nLSTM\n\nTraining configurations:\n\nAdam (adaptive moment estimation) optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation.\n\n\nSee Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validatio loss curves."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics-metrics2",
@@ -529,7 +529,7 @@
     "href": "index.html#predicted-means-captionpred-captionpred2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
     "title": "",
     "section": "Predicted Means 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)",
-    "text": "Predicted Means 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.See Supplement for additional plots."
+    "text": "Predicted Means 1 2, One-Step Ahead; Zoom-In View \\(n = 200\\) of Full Test Size \\(n = 1756\\)\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) lines are observed values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.See Supplement for additional plots."
   },
   {
     "objectID": "index.html#prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756",
@@ -543,7 +543,7 @@
     "href": "index.html#predictive-intervals-one-step-ahead-predcoverage-full-test-size-n-1756-mtd-only",
     "title": "",
     "section": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only",
-    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\nThe model appropriately captures the predictive uncertainty across wind speeds at all heights.\n\n\nCoverage is the proportion of test observations falling within their corresponding \\(95\\%\\) predictive intervals."
+    "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only\n\n\n\n\n\n\n\n\n.\nCoverage\n\n\n\n\nwindspeed50mms\n0.9522\n\n\nwindspeed10mms\n0.9562\n\n\nwindspeed2mms\n0.9567\n\n\n\n\n\n\n\n\n\\(95\\%\\) prediction intervals achieved near-nominal \\(95\\%\\) coverage across all heights, demonstrating well-calibrated predictive uncertainty.\n\n\nCoverage is the proportion of test observations falling within their corresponding \\(95\\%\\) predictive intervals."
   },
   {
     "objectID": "index.html#predictive-intervals-one-step-ahead-predcoverageplot-full-test-size-n-1756-mtd-only",
