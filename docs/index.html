@@ -2432,9 +2432,9 @@ f(x) =
 </ul>
 </div>
 <aside><ol class="aside-footnotes"><li id="fn20"><p>Similar intuition to Gaussian process, think of it as “mixture process”.</p></li></ol></aside></section>
-<section id="data-description" class="slide level2 scrollable">
-<h2>Data Description</h2>
-<p>Dataset</p>
+<section id="data-acquisition-eda" class="slide level2 scrollable">
+<h2>Data Acquisition &amp; EDA</h2>
+<p>Data Acquisition</p>
 <ul>
 <li><p>Hourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025.</p>
 <ul>
@@ -2442,6 +2442,13 @@ f(x) =
 <li><p>Horizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components <sup>2</sup>.</p></li>
 </ul></li>
 </ul>
+<div class="fragment">
+<p>Data Quality &amp; EDA</p>
+<ul>
+<li><p>Check missingness and data coverge</p></li>
+<li><p>Examine distributional characteristics (shape, mean, variance, skewness) and temporal dependence</p></li>
+</ul>
+</div>
 <aside><ol class="aside-footnotes"><li id="fn21"><p>MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables.</p></li><li id="fn22"><p>U: velocity toward east direction. V: velocity toward north direction.</p></li></ol></aside></section>
 <section id="data-preprocessing" class="slide level2 scrollable">
 <h2>Data Preprocessing</h2>
@@ -2503,7 +2510,7 @@ f(x) =
 </ul></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn25"><p>Gamma marginals and Gaussian copula were used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn25"><p>Gamma marginals and Gaussian copula were built/used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices.</p></li></ol></aside></section>
 <section id="model-configuration-guide" class="slide level2 scrollable">
 <h2>Model Configuration <sup>1</sup></h2>
 <div class="columns">
@@ -2915,7 +2922,7 @@ f(x) =
 <ul>
 <li><p>MTD consistently outperformed LSTM across all evaluation metrics and heights.</p>
 <ul>
-<li>Provided uncertainty quantification (UQ) and model interpretability.</li>
+<li>Provided uncertainty quantification (UQ) and interpretability.</li>
 </ul></li>
 <li><p>LSTM performed <em>competitively</em> and was computationally efficient.</p></li>
 </ul>
@@ -2929,7 +2936,7 @@ f(x) =
 <div class="fragment">
 <p>Bottom-line</p>
 <blockquote>
-<p>MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative.</p>
+<p>MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and fast alternative.</p>
 </blockquote>
 </div>
 </section>
@@ -2937,9 +2944,11 @@ f(x) =
 <h2>Next Steps</h2>
 <p>Further Experiments &amp; Analysis</p>
 <ul>
-<li><p>Use error analysis to identify conditions where each model performs poorly.</p></li>
-<li><p>Build on preliminary Transformer results with more systematic tuning and temporal validation <sup>1</sup>.</p></li>
-<li><p>Extend the Transformer analysis to zero-inflated data, assessing performance to a more challenging target distribution.</p></li>
+<li><p>Conduct model-specific diagnostics to understand model behavior and remaining forecast errors.</p></li>
+<li><p>Build on preliminary Transformer results <sup>1</sup> with more systematic tuning and temporal validation.</p>
+<ul>
+<li>Extend the Transformer analysis to zero-inflated data with a more challenging target distribution.</li>
+</ul></li>
 </ul>
 <div class="fragment">
 <p>MTD Extensions</p>

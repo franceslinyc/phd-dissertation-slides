@@ -1752,15 +1752,24 @@ Goal
 [^mtdintro]: Similar intuition to Gaussian process, think of it as “mixture process”. 
 
 
-## Data Description 
+## Data Acquisition & EDA
 
-Dataset
+Data Acquisition
 
 - Hourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025. 
 
   - Retrieved from **MERRA-2** [^merra] via the NASA GES DISC Earthdata API. 
 
   - Horizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components [^uv].  
+
+. . . 
+
+Data Quality & EDA
+
+  - Check missingness and data coverge
+
+  - Examine distributional characteristics (shape, mean, variance, skewness) and temporal dependence 
+
 
 [^merra]: MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables. 
 
@@ -1827,7 +1836,7 @@ LSTM (Long Short-Term Memory)
 ::: 
 
 
-[^mtdplusplus]: Gamma marginals and Gaussian copula were used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices. 
+[^mtdplusplus]: Gamma marginals and Gaussian copula were built/used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices. 
 
 ::: column
 
@@ -2145,7 +2154,7 @@ Results
 
 - MTD consistently outperformed LSTM across all evaluation metrics and heights.
 
-  - Provided uncertainty quantification (UQ) and model interpretability. 
+  - Provided uncertainty quantification (UQ) and interpretability. 
 
 - LSTM performed *competitively* and was computationally efficient. 
 
@@ -2161,23 +2170,23 @@ Trade-offs
 
 Bottom-line
 
-> MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative. 
+> MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and fast alternative. 
 
 ## Next Steps
 
 Further Experiments & Analysis 
 
-  - Use error analysis to identify conditions where each model performs poorly. 
+  - Conduct model-specific diagnostics to understand model behavior and remaining forecast errors. 
 
-  - Build on preliminary Transformer results with more systematic tuning and temporal validation [^lstmimprove1]. 
+  - Build on preliminary Transformer results [^lstmimprove1] with more systematic tuning and temporal validation. 
 
-  - Extend the Transformer analysis to zero-inflated data, assessing performance to a more challenging target distribution. 
+    - Extend the Transformer analysis to zero-inflated data with a more challenging target distribution. 
 
 . . . 
 
 MTD Extensions 
 
-  - Incorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.
+  - Incorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation. 
 
   - Explore alternative marginals and copulas, and more efficient MCMC methods [^mtdimprove]. 
 

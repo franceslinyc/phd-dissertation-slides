@@ -469,11 +469,11 @@
     "text": "Motivation & Objectives\nProblem\n\nWind speed is a key proxy for energy forecasting.\n\nAccurate prediction of wind speed is crucial for reliable power generation.\n\n\n\n\nModeling wind speed is challenging.\n\nStrong temporal dependence and highly skewed distribution, which can pose challenges for conventional time series and ML approaches.\n\n\n\n\nGoal\n\nProduce accurate forecasts and evaluate the strengths and limitations of MTD (Mixture Transition Distribution) 1 and LSTM (Long Short-Term Memory) for modeling complex, non-Gaussian time series.\n\n\nSimilar intuition to Gaussian process, think of it as “mixture process”."
   },
   {
-    "objectID": "index.html#data-description",
-    "href": "index.html#data-description",
+    "objectID": "index.html#data-acquisition-eda",
+    "href": "index.html#data-acquisition-eda",
     "title": "",
-    "section": "Data Description",
-    "text": "Data Description\nDataset\n\nHourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025.\n\nRetrieved from MERRA-2 1 via the NASA GES DISC Earthdata API.\nHorizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components 2.\n\n\nMERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables.U: velocity toward east direction. V: velocity toward north direction."
+    "section": "Data Acquisition & EDA",
+    "text": "Data Acquisition & EDA\nData Acquisition\n\nHourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025.\n\nRetrieved from MERRA-2 1 via the NASA GES DISC Earthdata API.\nHorizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components 2.\n\n\n\nData Quality & EDA\n\nCheck missingness and data coverge\nExamine distributional characteristics (shape, mean, variance, skewness) and temporal dependence\n\n\nMERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables.U: velocity toward east direction. V: velocity toward north direction."
   },
   {
     "objectID": "index.html#data-preprocessing",
@@ -494,7 +494,7 @@
     "href": "index.html#modeling-approach-1",
     "title": "",
     "section": "Modeling Approach",
-    "text": "Modeling Approach\n\n\nMTD\n\nModel specification 1:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nNetwork architecture:\n\nstandard LSTM with forget gate, implemented in PyTorch.\n\n\n\nGamma marginals and Gaussian copula were used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices."
+    "text": "Modeling Approach\n\n\nMTD\n\nModel specification 1:\n\nmarginal distribution: Gamma\ncopula: Gaussian.\n\n\n\nLSTM\n\nNetwork architecture:\n\nstandard LSTM with forget gate, implemented in PyTorch.\n\n\n\nGamma marginals and Gaussian copula were built/used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices."
   },
   {
     "objectID": "index.html#model-configuration-guide",
@@ -564,14 +564,14 @@
     "href": "index.html#takeaway",
     "title": "",
     "section": "Takeaway",
-    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProvided uncertainty quantification (UQ) and model interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model spec and design, and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and computationally efficient alternative."
+    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProvided uncertainty quantification (UQ) and interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model spec and design, and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and fast alternative."
   },
   {
     "objectID": "index.html#next-steps",
     "href": "index.html#next-steps",
     "title": "",
     "section": "Next Steps",
-    "text": "Next Steps\nFurther Experiments & Analysis\n\nUse error analysis to identify conditions where each model performs poorly.\nBuild on preliminary Transformer results with more systematic tuning and temporal validation 1.\nExtend the Transformer analysis to zero-inflated data, assessing performance to a more challenging target distribution.\n\n\nMTD Extensions\n\nIncorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.\nExplore alternative marginals and copulas, and more efficient MCMC methods 2.\n\n\n\nLSTM UQ & Interpretability\n\nExplore probabilistic/quantile approaches for UQ 3, and post-hoc interpretability methods for LSTM forecasts.\n\n\nPotential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices.General MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts."
+    "text": "Next Steps\nFurther Experiments & Analysis\n\nConduct model-specific diagnostics to understand model behavior and remaining forecast errors.\nBuild on preliminary Transformer results 1 with more systematic tuning and temporal validation.\n\nExtend the Transformer analysis to zero-inflated data with a more challenging target distribution.\n\n\n\nMTD Extensions\n\nIncorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.\nExplore alternative marginals and copulas, and more efficient MCMC methods 2.\n\n\n\nLSTM UQ & Interpretability\n\nExplore probabilistic/quantile approaches for UQ 3, and post-hoc interpretability methods for LSTM forecasts.\n\n\nPotential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices.General MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts."
   },
   {
     "objectID": "index.html#implementation-details-demo",
