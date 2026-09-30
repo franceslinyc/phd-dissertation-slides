@@ -1756,13 +1756,13 @@ Goal
 
 Dataset
 
-- Hourly wind speeds (m/s) for the Limon Wind Energy Center at 50 m, 10 m, and 2 m above ground level from 2024-2025. 
+- Hourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025. 
 
   - Retrieved from **MERRA-2** [^merra] via the NASA GES DISC Earthdata API. 
 
-  - Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.  
+  - Horizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components [^uv].  
 
-[^merra]: MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) is provided in NetCDF files (array-oriented scientific data) produced by NASA’s Global Modeling and Assimilation Office. 
+[^merra]: MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables. 
 
 [^uv]: U: velocity toward east direction. V: velocity toward north direction. 
 
@@ -1778,17 +1778,17 @@ Feature Engineering
 
 Train/Test Split
 
-- Used an 80/20 chronological split, with the first $80\%$ of observations for training and the final $20\%$ for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
+- Used an 80/20 chronological split, with the first $80\%$ of observations used for training and the final $20\%$ used for testing to preserve temporal ordering and prevent data leakage [^limitation2]. 
 
 . . . 
 
 LSTM Only
 
-- Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale to improve training stability. 
+- Applied min-max scaling to input features and labels for training stability (, then inverse-transformed predictions to the original scale for evaluation). 
 
-[^limitation]: Current MTD model version does not support external features, so both models use the same baseline, isolating the impact of model complexity and added features. 
+[^limitation]: Current MTD version does not support external features, so both models use the same lagged features to isolate the differences in model complexity. 
 
-[^limitation2]: Time series cross-validation could provide a more robust evaluation of model performance across differnet temporal periods. 
+[^limitation2]: Time series cross-validation could provide more robust evaluation across temporal periods, but a fixed holdout was used for a simple, consistent comparision. 
 
 ## Modeling Approach
 
@@ -1818,13 +1818,16 @@ LSTM (Long Short-Term Memory)
 
 ### MTD 
 
-- Model specification:
+- Model specification [^mtdplusplus]:
 
-  - marginal distribution: Gamma
+  - marginal distribution: Gamma 
 
   - copula: Gaussian.
 
 ::: 
+
+
+[^mtdplusplus]: Gamma marginals and Gaussian copula were used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices. 
 
 ::: column
 
@@ -1858,7 +1861,7 @@ LSTM (Long Short-Term Memory)
 
 [^alpha]: $u_{\alpha}$, $u_{\beta}$ derived from the training data: $u_{\beta}$ = mean/variance, $u_{\alpha}$ = mean $\times$ $u_{\beta}$. $u$ and $v$ can be further tuned to control the strength of the prior. 
 
-[^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$, where $a_0$ and $b_0$ are the shape parameters.  
+[^w]: $\alpha_0$: concentration parameter; $G_0$: base distribution, i.e., $G_0 \sim Beta(a_0, b_0)$, where $a_0$ and $b_0$ are the shape parameters. 
 
 ::: 
 
@@ -1896,9 +1899,9 @@ LSTM (Long Short-Term Memory)
 
   - thinning: $20$. 
 
-- MTD is designed and built in `R` and `C++`, then compiled and executed on a high-performance computing (HPC) cluster. 
+- MTD is designed and built in `R` and `C++`, then compiled and executed on a HPC (high-performance computing) cluster. 
 
-[^trainingdiag]: See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves. 
+[^trainingdiag]: Tools for training diagnostics are available, but not shown. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves. 
 
 ::: 
 
@@ -1917,6 +1920,28 @@ LSTM (Long Short-Term Memory)
 ::: 
 
 ::::: 
+
+
+## End-to-End ML Workflow [^workflow] [^variation] 
+
+> **Initialize** $\rightarrow$ **Prepare** $\rightarrow$ **Configure** $\rightarrow$ **Train** $\rightarrow$ **Validate** $\rightarrow$ **Predict & Evaluate**
+
+1. **Initialize:** Dependencies & package
+
+2. **Prepare:** Load, preprocess & split
+
+3. **Configure:** Architecture & hyperparameters 
+
+4. **Train:** Model training & runtime 
+
+5. **Validate:** Model-specific training diagnostics 
+
+6. **Predict & Evaluate**: Predictions & performance ⏩️
+
+[^workflow]: Reusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch.
+
+[^variation]: Step 3–6 vary by model. Implementation details are included later, if time permits. 
+
 
 ## Evaluation Metrics [^metrics] [^metrics2]
 
@@ -2140,61 +2165,42 @@ Bottom-line
 
 ## Next Steps
 
-Further Experiments & Analysis [^lstmimprove1]
+Further Experiments & Analysis 
 
-  - Conduct a more rigorous evaluation of the Transformer on the current dataset, as preliminary results show no improvement over MTD nor LSTM. 
+  - Use error analysis to identify conditions where each model performs poorly. 
 
-  - Extend zero-inflated analysis with the Transformer, assessing performance to a more complex target distribution. 
+  - Build on preliminary Transformer results with more systematic tuning and temporal validation [^lstmimprove1]. 
+
+  - Extend the Transformer analysis to zero-inflated data, assessing performance to a more challenging target distribution. 
 
 . . . 
 
 MTD Extensions 
 
-  - Incorporate external predictors to accommodate nonstationarity.
+  - Incorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.
 
-  - Explore alternative marginals and copula choices, as well as more efficient MCMC methods [^mtdimprove]. 
+  - Explore alternative marginals and copulas, and more efficient MCMC methods [^mtdimprove]. 
 
 . . . 
 
-ML/DL UQ & Interpretability 
+LSTM UQ & Interpretability 
 
-  - Explore probabilistic/quantile approaches for UQ [^lstmimprove2], and post-hoc methods for interpretability of LSTM and Transformer forecasts. 
-
-
-[^lstmimprove1]: Potential factors include target skewness, limited training data, univeriate and short-term forecasting, model complexity, and hyperparameter choices. 
-
-[^mtdimprove]: The general MTD framework can accommodate broader  distributions (e.g., Beta, Pareto), asymetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
-
-[^lstmimprove2]: Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
+  - Explore probabilistic/quantile approaches for UQ [^lstmimprove2], and post-hoc interpretability methods for LSTM forecasts. 
 
 
-## End-to-End ML Workflow [^workflow] [^variation]
+[^lstmimprove1]: Potential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices. 
 
-> **Initialize** $\rightarrow$ **Prepare** $\rightarrow$ **Configure** $\rightarrow$ **Train** $\rightarrow$ **Validate** $\rightarrow$ **Predict & Evaluate**
+[^mtdimprove]: General MTD framework can accommodate broader  distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
 
-1. **Initialize:** Load dependencies and package
+[^lstmimprove2]: Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts. 
 
-2. **Prepare:** Load, preprocess, and split data
-
-3. **Configure:** Specify model architecture and hyperparameters 
-
-4. **Train:** Train model with reproducibility and runtime tracking 
-
-5. **Validate:** Assess model-specific training diagnostics 
-
-6. **Predict & Evaluate**: Generate predictions and evaluate performance 
-
-[^workflow]: Reusable functions support each stage for reproducible analysis. 
-
-[^variation]: Step 3-6 vary by model. 
-
-## Software Implementation [^demo]
+## Implementation Details [^demo]
 
 ::::: columns
 
 ::: column
 
-### MTD Package `mtd`
+### MTD `mtd` software package 
 
 ```r
 # 3. Configure model
@@ -2272,7 +2278,7 @@ opt.train( # <4>
 ) # <4>
 
 # 5. Validate
-opt.plot_losses() # training and validation loss curves # <5>
+opt.plot_losses() # training/validation loss curves # <5>
 
 # 6. Predict 
 predictions, values = opt.evaluate( # <6>

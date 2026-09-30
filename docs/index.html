@@ -2436,13 +2436,13 @@ f(x) =
 <h2>Data Description</h2>
 <p>Dataset</p>
 <ul>
-<li><p>Hourly wind speeds (m/s) for the Limon Wind Energy Center at 50 m, 10 m, and 2 m above ground level from 2024-2025.</p>
+<li><p>Hourly wind speeds (m/s) for the Limon Wind Energy Center in Colorado at 50 m, 10 m, and 2 m above ground level from 2024-2025.</p>
 <ul>
 <li><p>Retrieved from <strong>MERRA-2</strong> <sup>1</sup> via the NASA GES DISC Earthdata API.</p></li>
-<li><p>Spatially interpolated the data to the wind farm location, then derived wind speeds from U/V wind components.</p></li>
+<li><p>Horizontally interpolated the data to the wind farm location, then derived wind speeds from U/V wind components <sup>2</sup>.</p></li>
 </ul></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn21"><p>MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) is provided in NetCDF files (array-oriented scientific data) produced by NASA’s Global Modeling and Assimilation Office.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn21"><p>MERRA-2 (Modern-Era Retrospective Analysis for Research and Applications, Version 2) data are provided as daily NetCDF files (an array-oriented format for storing scientific data) containing hourly, spatially gridded atmospheric variables.</p></li><li id="fn22"><p>U: velocity toward east direction. V: velocity toward north direction.</p></li></ol></aside></section>
 <section id="data-preprocessing" class="slide level2 scrollable">
 <h2>Data Preprocessing</h2>
 <p>Feature Engineering</p>
@@ -2455,16 +2455,16 @@ f(x) =
 <div class="fragment">
 <p>Train/Test Split</p>
 <ul>
-<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations for training and the final <span class="math inline">\(20\%\)</span> for testing to preserve temporal ordering and prevent data leakage <sup>2</sup>.</li>
+<li>Used an 80/20 chronological split, with the first <span class="math inline">\(80\%\)</span> of observations used for training and the final <span class="math inline">\(20\%\)</span> used for testing to preserve temporal ordering and prevent data leakage <sup>2</sup>.</li>
 </ul>
 </div>
 <div class="fragment">
 <p>LSTM Only</p>
 <ul>
-<li>Applied min-max scaling for input features and labels, and inverse-transformed predictions back to the original scale to improve training stability.</li>
+<li>Applied min-max scaling to input features and labels for training stability (, then inverse-transformed predictions to the original scale for evaluation).</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn22"><p>Current MTD model version does not support external features, so both models use the same baseline, isolating the impact of model complexity and added features.</p></li><li id="fn23"><p>Time series cross-validation could provide a more robust evaluation of model performance across differnet temporal periods.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn23"><p>Current MTD version does not support external features, so both models use the same lagged features to isolate the differences in model complexity.</p></li><li id="fn24"><p>Time series cross-validation could provide more robust evaluation across temporal periods, but a fixed holdout was used for a simple, consistent comparision.</p></li></ol></aside></section>
 <section id="modeling-approach" class="slide level2">
 <h2>Modeling Approach</h2>
 <p>MTD (Mixture Transition Distribution)</p>
@@ -2482,13 +2482,13 @@ f(x) =
 </ul>
 </div>
 </section>
-<section id="modeling-approach-1" class="slide level2">
+<section id="modeling-approach-1" class="slide level2 scrollable">
 <h2>Modeling Approach</h2>
 <div class="columns">
 <div class="column">
 <h3 id="mtd">MTD</h3>
 <ul>
-<li><p>Model specification:</p>
+<li><p>Model specification <sup>1</sup>:</p>
 <ul>
 <li><p>marginal distribution: Gamma</p></li>
 <li><p>copula: Gaussian.</p></li>
@@ -2503,7 +2503,7 @@ f(x) =
 </ul></li>
 </ul>
 </div></div>
-</section>
+<aside><ol class="aside-footnotes"><li id="fn25"><p>Gamma marginals and Gaussian copula were used as starting choices. General MTD framework is flexible, allowing alternative marginal distributions and copula choices.</p></li></ol></aside></section>
 <section id="model-configuration-guide" class="slide level2 scrollable">
 <h2>Model Configuration <sup>1</sup></h2>
 <div class="columns">
@@ -2529,7 +2529,7 @@ f(x) =
 </ul></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn24"><p>MTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Informed by a comprehensive review, and systematic hyperparameter experiments with random-effects ANOVA.</p></li><li id="fn25"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>. <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> can be further tuned to control the strength of the prior.</p></li><li id="fn26"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>, where <span class="math inline">\(a_0\)</span> and <span class="math inline">\(b_0\)</span> are the shape parameters.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn26"><p>MTD: Guided by Bayesian literature, prior experimentation, and coverage analysis. LSTM: Informed by a comprehensive review, and systematic hyperparameter experiments with random-effects ANOVA.</p></li><li id="fn27"><p><span class="math inline">\(u_{\alpha}\)</span>, <span class="math inline">\(u_{\beta}\)</span> derived from the training data: <span class="math inline">\(u_{\beta}\)</span> = mean/variance, <span class="math inline">\(u_{\alpha}\)</span> = mean <span class="math inline">\(\times\)</span> <span class="math inline">\(u_{\beta}\)</span>. <span class="math inline">\(u\)</span> and <span class="math inline">\(v\)</span> can be further tuned to control the strength of the prior.</p></li><li id="fn28"><p><span class="math inline">\(\alpha_0\)</span>: concentration parameter; <span class="math inline">\(G_0\)</span>: base distribution, i.e., <span class="math inline">\(G_0 \sim Beta(a_0, b_0)\)</span>, where <span class="math inline">\(a_0\)</span> and <span class="math inline">\(b_0\)</span> are the shape parameters.</p></li></ol></aside></section>
 <section id="model-training-trainingdiag" class="slide level2 scrollable">
 <h2>Model Training <sup>1</sup></h2>
 <div class="columns">
@@ -2542,7 +2542,7 @@ f(x) =
 <li><p>burn-in: <span class="math inline">\(5,000\)</span>,</p></li>
 <li><p>thinning: <span class="math inline">\(20\)</span>.</p></li>
 </ul></li>
-<li><p>MTD is designed and built in <code>R</code> and <code>C++</code>, then compiled and executed on a high-performance computing (HPC) cluster.</p></li>
+<li><p>MTD is designed and built in <code>R</code> and <code>C++</code>, then compiled and executed on a HPC (high-performance computing) cluster.</p></li>
 </ul>
 </div><div class="column">
 <h3 id="lstm-2">LSTM</h3>
@@ -2555,7 +2555,21 @@ f(x) =
 <li><p>LSTM is implemented with <code>PyTorch</code> and trained on a standard workstation.</p></li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn27"><p>See Supplement for training diagnostics. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn29"><p>Tools for training diagnostics are available, but not shown. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves.</p></li></ol></aside></section>
+<section id="end-to-end-ml-workflow-workflow-variation" class="slide level2 scrollable">
+<h2>End-to-End ML Workflow <sup>1</sup> <sup>2</sup></h2>
+<blockquote>
+<p><strong>Initialize</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Prepare</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Configure</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Train</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Validate</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Predict &amp; Evaluate</strong></p>
+</blockquote>
+<ol type="1">
+<li><p><strong>Initialize:</strong> Dependencies &amp; package</p></li>
+<li><p><strong>Prepare:</strong> Load, preprocess &amp; split</p></li>
+<li><p><strong>Configure:</strong> Architecture &amp; hyperparameters</p></li>
+<li><p><strong>Train:</strong> Model training &amp; runtime</p></li>
+<li><p><strong>Validate:</strong> Model-specific training diagnostics</p></li>
+<li><p><strong>Predict &amp; Evaluate</strong>: Predictions &amp; performance ⏩️</p></li>
+</ol>
+<aside><ol class="aside-footnotes"><li id="fn30"><p>Reusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch.</p></li><li id="fn31"><p>Step 3–6 vary by model. Implementation details are included later, if time permits.</p></li></ol></aside></section>
 <section id="evaluation-metrics-metrics-metrics2" class="slide level2 scrollable">
 <h2>Evaluation Metrics <sup>1</sup> <sup>2</sup></h2>
 <table class="caption-top">
@@ -2599,7 +2613,7 @@ f(x) =
 </tr>
 </tbody>
 </table>
-<aside><ol class="aside-footnotes"><li id="fn28"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li><li id="fn29"><p>MASE can be used to compare forecasts accuracy against a simple benchmark, e.g., a naive forecast.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn32"><p>MAPE, SMAPE, and MASE are scale-independent, allowing for comparison across datasets with different units.</p></li><li id="fn33"><p>MASE can be used to compare forecasts accuracy against a simple benchmark, e.g., a naive forecast.</p></li></ol></aside></section>
 <section id="evaluation-results-datares-datares2" class="slide level2 scrollable">
 <h2>Evaluation Results <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
@@ -2733,7 +2747,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn30"><p>MASE <span class="math inline">\(= 1\)</span> serves as the naive benchmark, where MASE <span class="math inline">\(&lt; 1\)</span> indicates better performance.</p></li><li id="fn31"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn34"><p>MASE <span class="math inline">\(= 1\)</span> serves as the naive benchmark, where MASE <span class="math inline">\(&lt; 1\)</span> indicates better performance.</p></li><li id="fn35"><p>LSTM is trained using L1 loss for MAE; L2 loss for all other metrics. MTD does not rely on training with an explicit loss function.</p></li></ol></aside></section>
 <section id="predicted-means-captionpred-captionpred2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Predicted Means <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
@@ -2774,7 +2788,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn32"><p>Solid (black) lines are observed values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li><li id="fn33"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn36"><p>Solid (black) lines are observed values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li><li id="fn37"><p>See Supplement for additional plots.</p></li></ol></aside></section>
 <section id="prediction-errors-captiondiff-captiondiff2-one-step-ahead-zoom-in-view-n-200-of-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Prediction Errors <sup>1</sup> <sup>2</sup>, One-Step Ahead; Zoom-In View <span class="math inline">\(n = 200\)</span> of Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
@@ -2815,7 +2829,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn34"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn35"><p>See Supplement for additional plots.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn38"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li><li id="fn39"><p>See Supplement for additional plots.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-predcoverage-full-test-size-n-1756-mtd-only" class="slide level2 scrollable">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead <sup>1</sup>; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="columns">
@@ -2853,7 +2867,7 @@ f(x) =
 <li>Achieved near-nominal <span class="math inline">\(95\%\)</span> coverage across all heights, demonstrating well-calibrated predictive uncertainty.</li>
 </ul>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn36"><p>Coverage is the proportion of test observations falling within their corresponding <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn40"><p>Coverage is the proportion of test observations falling within their corresponding <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section id="predictive-intervals-one-step-ahead-predcoverageplot-full-test-size-n-1756-mtd-only" class="slide level2 scrollable">
 <h2><span class="math inline">\(95\%\)</span> Predictive Intervals, One-Step Ahead <sup>1</sup>; Full Test Size <span class="math inline">\(n = 1756\)</span>; MTD Only</h2>
 <div class="panel-tabset">
@@ -2894,7 +2908,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn37"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn41"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section id="takeaway" class="slide level2">
 <h2>Takeaway</h2>
 <p>Results</p>
@@ -2921,44 +2935,31 @@ f(x) =
 </section>
 <section id="next-steps" class="slide level2 scrollable">
 <h2>Next Steps</h2>
-<p>Further Experiments &amp; Analysis <sup>1</sup></p>
+<p>Further Experiments &amp; Analysis</p>
 <ul>
-<li><p>Conduct a more rigorous evaluation of the Transformer on the current dataset, as preliminary results show no improvement over MTD nor LSTM.</p></li>
-<li><p>Extend zero-inflated analysis with the Transformer, assessing performance to a more complex target distribution.</p></li>
+<li><p>Use error analysis to identify conditions where each model performs poorly.</p></li>
+<li><p>Build on preliminary Transformer results with more systematic tuning and temporal validation <sup>1</sup>.</p></li>
+<li><p>Extend the Transformer analysis to zero-inflated data, assessing performance to a more challenging target distribution.</p></li>
 </ul>
 <div class="fragment">
 <p>MTD Extensions</p>
 <ul>
-<li><p>Incorporate external predictors to accommodate nonstationarity.</p></li>
-<li><p>Explore alternative marginals and copula choices, as well as more efficient MCMC methods <sup>2</sup>.</p></li>
+<li><p>Incorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.</p></li>
+<li><p>Explore alternative marginals and copulas, and more efficient MCMC methods <sup>2</sup>.</p></li>
 </ul>
 </div>
 <div class="fragment">
-<p>ML/DL UQ &amp; Interpretability</p>
+<p>LSTM UQ &amp; Interpretability</p>
 <ul>
-<li>Explore probabilistic/quantile approaches for UQ <sup>3</sup>, and post-hoc methods for interpretability of LSTM and Transformer forecasts.</li>
+<li>Explore probabilistic/quantile approaches for UQ <sup>3</sup>, and post-hoc interpretability methods for LSTM forecasts.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn38"><p>Potential factors include target skewness, limited training data, univeriate and short-term forecasting, model complexity, and hyperparameter choices.</p></li><li id="fn39"><p>The general MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn40"><p>Alternative loss functions, such as quantile loss, can also be used to train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
-<section id="end-to-end-ml-workflow-workflow-variation" class="slide level2 scrollable">
-<h2>End-to-End ML Workflow <sup>1</sup> <sup>2</sup></h2>
-<blockquote>
-<p><strong>Initialize</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Prepare</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Configure</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Train</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Validate</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Predict &amp; Evaluate</strong></p>
-</blockquote>
-<ol type="1">
-<li><p><strong>Initialize:</strong> Load dependencies and package</p></li>
-<li><p><strong>Prepare:</strong> Load, preprocess, and split data</p></li>
-<li><p><strong>Configure:</strong> Specify model architecture and hyperparameters</p></li>
-<li><p><strong>Train:</strong> Train model with reproducibility and runtime tracking</p></li>
-<li><p><strong>Validate:</strong> Assess model-specific training diagnostics</p></li>
-<li><p><strong>Predict &amp; Evaluate</strong>: Generate predictions and evaluate performance</p></li>
-</ol>
-<aside><ol class="aside-footnotes"><li id="fn41"><p>Reusable functions support each stage for reproducible analysis.</p></li><li id="fn42"><p>Step 3-6 vary by model.</p></li></ol></aside></section>
-<section id="software-implementation-demo" class="slide level2 scrollable">
-<h2>Software Implementation <sup>1</sup></h2>
+<aside><ol class="aside-footnotes"><li id="fn42"><p>Potential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices.</p></li><li id="fn43"><p>General MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).</p></li><li id="fn44"><p>Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts.</p></li></ol></aside></section>
+<section id="implementation-details-demo" class="slide level2 scrollable">
+<h2>Implementation Details <sup>1</sup></h2>
 <div class="columns">
 <div class="column">
-<h3 id="mtd-package-mtd">MTD Package <code>mtd</code></h3>
+<h3 id="mtd-mtd-software-package">MTD <code>mtd</code> software package</h3>
 <div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="co"># 3. Configure model</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a>mtdorder <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a>mcmc_param <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">niter =</span> <span class="dv">85000</span>, <span class="at">nburn =</span> <span class="dv">5000</span>, <span class="at">nthin =</span> <span class="dv">20</span>)</span>
@@ -3040,7 +3041,7 @@ f(x) =
 <span id="annotated-cell-2-30"><a href="#annotated-cell-2-30"></a>)</span>
 <span id="annotated-cell-2-31"><a href="#annotated-cell-2-31"></a></span>
 <span id="annotated-cell-2-32"><a href="#annotated-cell-2-32"></a><span class="co"># 5. Validate</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-33" class="code-annotation-target"><a href="#annotated-cell-2-33"></a>opt.plot_losses() <span class="co"># training and validation loss curves</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="5">5</button><span id="annotated-cell-2-33" class="code-annotation-target"><a href="#annotated-cell-2-33"></a>opt.plot_losses() <span class="co"># training/validation loss curves</span></span>
 <span id="annotated-cell-2-34"><a href="#annotated-cell-2-34"></a></span>
 <span id="annotated-cell-2-35"><a href="#annotated-cell-2-35"></a><span class="co"># 6. Predict </span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="6">6</button><span id="annotated-cell-2-36" class="code-annotation-target"><a href="#annotated-cell-2-36"></a>predictions, values <span class="op">=</span> opt.evaluate(</span>
@@ -3067,7 +3068,7 @@ f(x) =
 </dd>
 </dl>
 </div></div>
-<aside><ol class="aside-footnotes"><li id="fn43"><p>Simplified here for demonstration.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn45"><p>Simplified here for demonstration.</p></li></ol></aside></section>
 <section id="mtd-extension-to-zero-inflated-data-rain-predcoverageplot" class="slide level2 scrollable">
 <h2>MTD Extension to Zero-Inflated Data <sup>1</sup> <sup>2</sup></h2>
 <div class="panel-tabset">
@@ -3097,7 +3098,7 @@ f(x) =
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn44"><p>Initially planned to demonstrate using insurance claims, but such data are often private. Could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn45"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn46"><p>Initially planned to demonstrate using insurance claims, but such data are often private. Could potentially be applied to time series of insurance claims per policyholder or hospital stays per patient.</p></li><li id="fn47"><p>Solid (black) line shows test observed values and shaded (purple) band shows one-step ahead <span class="math inline">\(95\%\)</span> predictive intervals.</p></li></ol></aside></section>
 <section class="slide level2">
 
 <p><img data-src="images/conclusion-3.jpg" class="absolute" style="top: 0px; left: 0px; width: 1200px; height: 675px; "></p>
@@ -3181,7 +3182,7 @@ f(x) =
 <li>Future work could explore integrated approaches that combine probabilistic models with neural architectures, leveraging the strengths of both frameworks.</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn46"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn47"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn48"><p>E.g., TimeGPT-1 by Nixtla, TimesFM by Google Research, Tiny Time Mixers by IBM Research, and Chronos by AWS AI Labs.</p></li><li id="fn49"><p>Preliminary results from a working transformer implementation show that it does not outperform MTD nor LSTM.</p></li></ol></aside></section></section>
 <section>
 <section id="thank-you" class="title-slide slide level1 center">
 <h1>Thank you!</h1>
@@ -3272,7 +3273,7 @@ w_l = G(l/L) - G((l - 1)/L), \quad l = 1,..., L.
 \end{equation}\]</span>
 <p>Next place a Dirichlet process prior on <span class="math inline">\(G\)</span>, denoted as <span class="math inline">\(DP(\boldsymbol{\alpha}_0, \boldsymbol{G}_0)\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(\boldsymbol{G}_0 = Beta(a_0, b_0)\)</span>. <sup>3</sup></p>
 <p>Then the vector of weights follows a Dirichlet distribution with parameter vector <span class="math inline">\(\alpha_0 {(a_1, ..., a_L)}^T\)</span>, where <span class="math inline">\(\alpha_0 &gt; 0\)</span> and <span class="math inline">\(a_l = G_0(l/L) - G_0((l - 1)/L)\)</span>, for <span class="math inline">\(l = 1,..., L\)</span>.</p>
-<aside><ol class="aside-footnotes"><li id="fn48"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn49"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn50"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn50"><p>Together, these parameters determine how the data is allocated across the <span class="math inline">\(l\)</span> intervals on the support of the weight distribution and the initial shape of the distribution.</p></li><li id="fn51"><p>Using the Dirichlet process as a nonparametric prior for <span class="math inline">\(G\)</span> allows for general distributional shapes and thus provides flexibility in estimating the mixture weights.</p></li><li id="fn52"><p>The base distribution, <span class="math inline">\(G\)</span>, determines the form of the distribution generated by the DP. The concentration parameter, <span class="math inline">\(\alpha\)</span>, controls the degree of shrinkage of the resulting distribution toward the base distribution.</p></li></ol></aside></section>
 <section id="shifted-gamma-distribution" class="slide level2">
 <h2>Shifted Gamma Distribution</h2>
 <p>The shifted Gamma distribution, <span class="math inline">\(\text{ShiftedGamma}(\mu, \beta; \epsilon)\)</span>, is expressed as:</p>
@@ -3986,7 +3987,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 </div>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn51"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn53"><p>Solid (red) lines show differences between LSTM predicted means and observed values and solid (blue) lines show differences between MTD predicted means and observed values.</p></li></ol></aside></section>
 <section id="predicted-means-caption-one-step-ahead-full-test-size-n-1756" class="slide level2 scrollable">
 <h2>Predicted Means <sup>1</sup>, One-Step Ahead; Full Test Size <span class="math inline">\(n = 1756\)</span></h2>
 <div class="panel-tabset">
@@ -4029,7 +4030,7 @@ h_t &amp;= o_t \cdot \tanh(c_t),
 </div>
 
 
-<aside><ol class="aside-footnotes"><li id="fn52"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
+<aside><ol class="aside-footnotes"><li id="fn54"><p>Solid (black) lines are true values. Dashed (red) lines are LSTM predicted means and dashed (blue) lines are MTD predicted means.</p></li></ol></aside></section></section>
 
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
