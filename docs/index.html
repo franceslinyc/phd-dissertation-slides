@@ -2471,7 +2471,7 @@ f(x) =
 <li>Applied min-max scaling to input features and labels for training stability (, then inverse-transformed predictions to the original scale for evaluation).</li>
 </ul>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn23"><p>Current MTD version does not support external features, so both models use the same lagged features to isolate the differences in model complexity.</p></li><li id="fn24"><p>Time series cross-validation could provide more robust evaluation across temporal periods, but a fixed holdout was used for a simple, consistent comparision.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn23"><p>Current MTD version does not support external features, so both models use the same lagged features to isolate the source of variations.</p></li><li id="fn24"><p>Time series cross-validation could be more robust, but a fixed holdout was used for a simple, consistent comparision.</p></li></ol></aside></section>
 <section id="modeling-approach" class="slide level2 scrollable">
 <h2>Modeling Approach</h2>
 <p>MTD (Mixture Transition Distribution)</p>
@@ -2967,7 +2967,7 @@ f(x) =
 <h2>Implementation Details <sup>1</sup></h2>
 <div class="columns">
 <div class="column">
-<h3 id="mtd-mtd-software-package">MTD <code>mtd</code> software package</h3>
+<h3 id="mtd-mtd-r-software">MTD <code>mtd</code> R Software</h3>
 <div class="sourceCode" id="annotated-cell-1"><pre class="sourceCode numberSource r code-annotation-code number-lines code-with-copy code-annotated"><code class="sourceCode r"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1"></a><span class="co"># 3. Configure model</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-2" class="code-annotation-target"><a href="#annotated-cell-1-2"></a>mtdorder <span class="ot">&lt;-</span> <span class="dv">5</span></span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3"></a>mcmc_param <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">niter =</span> <span class="dv">85000</span>, <span class="at">nburn =</span> <span class="dv">5000</span>, <span class="at">nthin =</span> <span class="dv">20</span>)</span>

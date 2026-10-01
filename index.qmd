@@ -1795,9 +1795,9 @@ LSTM Only
 
 - Applied min-max scaling to input features and labels for training stability (, then inverse-transformed predictions to the original scale for evaluation). 
 
-[^limitation]: Current MTD version does not support external features, so both models use the same lagged features to isolate the differences in model complexity. 
+[^limitation]: Current MTD version does not support external features, so both models use the same lagged features to isolate the source of variations. 
 
-[^limitation2]: Time series cross-validation could provide more robust evaluation across temporal periods, but a fixed holdout was used for a simple, consistent comparision. 
+[^limitation2]: Time series cross-validation could be more robust, but a fixed holdout was used for a simple, consistent comparision. 
 
 ## Modeling Approach
 
@@ -2209,7 +2209,7 @@ LSTM UQ & Interpretability
 
 ::: column
 
-### MTD `mtd` software package 
+### MTD `mtd` R Software
 
 ```r
 # 3. Configure model
