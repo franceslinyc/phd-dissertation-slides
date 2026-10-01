@@ -487,7 +487,7 @@
     "href": "index.html#modeling-approach",
     "title": "",
     "section": "Modeling Approach",
-    "text": "Modeling Approach\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginals + Gaussian copula\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM"
+    "text": "Modeling Approach\nMTD (Mixture Transition Distribution)\n\nBayeisan probabilistic model\nExplicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels\nGamma marginals + Gaussian copula 1\n\n\nLSTM (Long Short-Term Memory)\n\nNeural-network-based recurrent model\nLearns temporal dependencies directly from data\nStandard PyTorch LSTM\n\n\nWe assume wind speed follow a gamma distribution with symmetric dependence."
   },
   {
     "objectID": "index.html#modeling-approach-1",
@@ -508,14 +508,14 @@
     "href": "index.html#model-training-trainingdiag",
     "title": "",
     "section": "Model Training 1",
-    "text": "Model Training 1\n\n\nMTD\n\nMCMC setting:\n\nnumber of iterations: \\(85,000\\),\nburn-in: \\(5,000\\),\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a HPC (high-performance computing) cluster.\n\n\nLSTM\n\nTraining configuration:\n\nAdam (adaptive moment estimation) optimizer with a learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation.\n\n\nTools for training diagnostics are available, but not shown. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves."
+    "text": "Model Training 1\n\n\nMTD\n\nMCMC setting:\n\nnumber of iterations: \\(85,000\\),\nburn-in: \\(5,000\\),\nthinning: \\(20\\).\n\nMTD is designed and built in R and C++, then compiled and executed on a HPC (high-performance computing) cluster.\n\n\nLSTM\n\nTraining configuration:\n\nAdam (adaptive moment estimation) optimizer with a base learning rate of \\(0.001\\).\nL1 loss for MAE and L2 loss for all other metrics 🔜.\n\nLSTM is implemented with PyTorch and trained on a standard workstation.\n\n\nTools for training diagnostics are available, but not shown. MTD: trace, density, ACF plots, and Gelman-Rubin diagnostics. LSTM: training and validation loss curves."
   },
   {
     "objectID": "index.html#end-to-end-ml-workflow-workflow-variation",
     "href": "index.html#end-to-end-ml-workflow-workflow-variation",
     "title": "",
     "section": "End-to-End ML Workflow 1 2",
-    "text": "End-to-End ML Workflow 1 2\n\nInitialize \\(\\rightarrow\\) Prepare \\(\\rightarrow\\) Configure \\(\\rightarrow\\) Train \\(\\rightarrow\\) Validate \\(\\rightarrow\\) Predict & Evaluate\n\n\nInitialize: Dependencies & package\nPrepare: Load, preprocess & split\nConfigure: Architecture & hyperparameters\nTrain: Model training & runtime\nValidate: Model-specific training diagnostics\nPredict & Evaluate: Predictions & performance ⏩️\n\nReusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch.Step 3–6 vary by model. Implementation details are included later, if time permits."
+    "text": "End-to-End ML Workflow 1 2\n\nInitialize \\(\\rightarrow\\) Prepare \\(\\rightarrow\\) Configure \\(\\rightarrow\\) Train \\(\\rightarrow\\) Validate \\(\\rightarrow\\) Predict & Evaluate\n\n\nInitialize: Dependencies & package\nPrepare: Load, preprocess & split\nConfigure: Architecture & hyperparameters\nTrain: Model training & runtime\nValidate: Model-specific training diagnostics\nPredict & Evaluate: Predictions & performance ⏩️\n\nReusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch.Step 3–6 vary by model. We will discuss implementation details later, if time permits."
   },
   {
     "objectID": "index.html#evaluation-metrics-metrics-metrics2",
@@ -560,18 +560,18 @@
     "text": "\\(95\\%\\) Predictive Intervals, One-Step Ahead 1; Full Test Size \\(n = 1756\\); MTD Only\n\nwindspeeds at 50m above groundwindspeeds at 10m above groundwindspeeds at 2m above ground\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSolid (black) line shows test observed values and shaded (purple) band shows one-step ahead \\(95\\%\\) predictive intervals."
   },
   {
-    "objectID": "index.html#takeaway",
-    "href": "index.html#takeaway",
+    "objectID": "index.html#key-takeaway",
+    "href": "index.html#key-takeaway",
     "title": "",
-    "section": "Takeaway",
-    "text": "Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProvided uncertainty quantification (UQ) and interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model spec and design, and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\nBottom-line\n\nMTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and fast alternative."
+    "section": "Key Takeaway",
+    "text": "Key Takeaway\nResults\n\nMTD consistently outperformed LSTM across all evaluation metrics and heights.\n\nProvided uncertainty quantification (UQ) and interpretability.\n\nLSTM performed competitively and was computationally efficient.\n\n\nTrade-offs\n\nMTD requires careful model spec and design, and is more computationally intensive.\nLSTM is more general-purpose, but less interpretable due to its black-box structure.\n\n\n\n\nBottom-line: MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose, fast and scalable alternative."
   },
   {
     "objectID": "index.html#next-steps",
     "href": "index.html#next-steps",
     "title": "",
     "section": "Next Steps",
-    "text": "Next Steps\nFurther Experiments & Analysis\n\nConduct model-specific diagnostics to understand model behavior and remaining forecast errors.\nBuild on preliminary Transformer results 1 with more systematic tuning and temporal validation.\n\nExtend the Transformer analysis to zero-inflated data with a more challenging target distribution.\n\n\n\nMTD Extensions\n\nIncorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.\nExplore alternative marginals and copulas, and more efficient MCMC methods 2.\n\n\n\nLSTM UQ & Interpretability\n\nExplore probabilistic/quantile approaches for UQ 3, and post-hoc interpretability methods for LSTM forecasts.\n\n\nPotential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices.General MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts."
+    "text": "Next Steps\nFurther Experiments & Analysis\n\nConduct additional diagnostics to understand model behavior and remaining forecast errors.\nBuild on preliminary Transformer results 1 with systematic tuning and temporal validation.\n\nExtend the Transformer analysis to zero-inflated data with a more challenging target distribution.\n\n\n\nMTD Extensions\n\nIncorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation.\nConsider alternative marginals and copulas, and more efficient MCMC methods 2.\n\n\n\nLSTM UQ & Interpretability\n\nExplore probabilistic/quantile approaches for UQ 3, and post-hoc interpretability methods for LSTM forecasts.\n\n\nPotential factors include target skewness, limited training data, univariate and short-term forecasting, model complexity, and hyperparameter choices.General MTD framework can accommodate broader distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo).Quantile loss, e.g., can be used to train LSTMs to produce predictive uncertainty in addition to point forecasts."
   },
   {
     "objectID": "index.html#implementation-details-demo",

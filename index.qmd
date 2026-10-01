@@ -1807,7 +1807,7 @@ MTD (Mixture Transition Distribution)
 
 - Explicitly models marginal distribution and temporal dependence through a weighted mixture of transition kernels 
 
-- Gamma marginals + Gaussian copula
+- Gamma marginals + Gaussian copula [^modelassumption]
 
 . . . 
 
@@ -1818,6 +1818,8 @@ LSTM (Long Short-Term Memory)
 - Learns temporal dependencies directly from data
 
 - Standard PyTorch LSTM 
+
+[^modelassumption]: We assume wind speed follow a gamma distribution with symmetric dependence. 
 
 ## Modeling Approach
 
@@ -1920,7 +1922,7 @@ LSTM (Long Short-Term Memory)
 
 - Training configuration: 
 
-  - Adam (adaptive moment estimation) optimizer with a learning rate of $0.001$. 
+  - Adam (adaptive moment estimation) optimizer with a base learning rate of $0.001$. 
 
   - L1 loss for MAE and L2 loss for all other metrics 🔜. 
 
@@ -1947,9 +1949,9 @@ LSTM (Long Short-Term Memory)
 
 6. **Predict & Evaluate**: Predictions & performance ⏩️
 
-[^workflow]: Reusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch.
+[^workflow]: Reusable functions support each stage for reproducible analysis. MTD: Implemented as reusable software. LSTM: Use wrappers around PyTorch. 
 
-[^variation]: Step 3–6 vary by model. Implementation details are included later, if time permits. 
+[^variation]: Step 3–6 vary by model. We will discuss implementation details later, if time permits. 
 
 
 ## Evaluation Metrics [^metrics] [^metrics2]
@@ -2148,7 +2150,7 @@ readRDS(file.path(output_dir, "p3_real.rds"))
 
 [^predcoverageplot]: Solid (black) line shows observed values and shaded (purple) band shows one-step ahead $95\%$ predictive intervals.  
 
-## Takeaway
+## Key Takeaway
 
 Results 
 
@@ -2168,17 +2170,15 @@ Trade-offs
 
 . . . 
 
-Bottom-line
-
-> MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose and fast alternative. 
+> **Bottom-line:** MTD achieved better predictive performance and provided UQ and interpretability, while LSTM offered a more general-purpose, fast and scalable alternative. 
 
 ## Next Steps
 
 Further Experiments & Analysis 
 
-  - Conduct model-specific diagnostics to understand model behavior and remaining forecast errors. 
+  - Conduct additional diagnostics to understand model behavior and remaining forecast errors. 
 
-  - Build on preliminary Transformer results [^lstmimprove1] with more systematic tuning and temporal validation. 
+  - Build on preliminary Transformer results [^lstmimprove1] with systematic tuning and temporal validation. 
 
     - Extend the Transformer analysis to zero-inflated data with a more challenging target distribution. 
 
@@ -2188,7 +2188,7 @@ MTD Extensions
 
   - Incorporate external predictors to accommodate nonstationarity and capture additional drivers of power generation. 
 
-  - Explore alternative marginals and copulas, and more efficient MCMC methods [^mtdimprove]. 
+  - Consider alternative marginals and copulas, and more efficient MCMC methods [^mtdimprove]. 
 
 . . . 
 
@@ -2201,7 +2201,7 @@ LSTM UQ & Interpretability
 
 [^mtdimprove]: General MTD framework can accommodate broader  distributions (e.g., Beta, Pareto), asymmetric dependence (e.g., Clayton, Gumbel copula), and more efficient MCMC methods (e.g., variational inference, sequential Monte Carlo). 
 
-[^lstmimprove2]: Quantile loss, e.g., can train LSTMs to produce predictive uncertainty in addition to point forecasts. 
+[^lstmimprove2]: Quantile loss, e.g., can be used to train LSTMs to produce predictive uncertainty in addition to point forecasts. 
 
 ## Implementation Details [^demo]
 
